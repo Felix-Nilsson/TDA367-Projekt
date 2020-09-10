@@ -20,10 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd56c14-f152-451a-aa65-b4f8e40c9d2c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Model/SimpleTower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Tower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Tower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Updatable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Updatable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/BaseTower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/BaseTower.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/SimpleTower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/SimpleTower.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,10 +63,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser" timestamp="1599739954089">
+    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser" timestamp="1599740598391">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1599739954089" />
+    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1599740598391" />
     <state x="549" y="122" key="FileChooserDialogImpl" timestamp="1599739109595">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
