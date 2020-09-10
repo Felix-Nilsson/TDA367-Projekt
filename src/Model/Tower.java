@@ -1,4 +1,6 @@
 package Model;
 
-public interface Tower {
+public interface Tower extends Updatable{
+    public void update();
+
 }
