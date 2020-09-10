@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fb07079b-0a9a-47cd-a1fe-878db43c8497" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="D:\Intellij\OOP_projekt\TDA367-Projekt\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Design_och_konstruktion/DAT216-iMat" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="546" y="246" key="FileChooserDialogImpl" timestamp="1599739567610">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="546" y="246" key="FileChooserDialogImpl/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599739567610" />
+    <state x="320" y="79" key="SettingsEditor" timestamp="1599739081376">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="320" y="79" key="SettingsEditor/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599739081376" />
+  </component>
+</project>
