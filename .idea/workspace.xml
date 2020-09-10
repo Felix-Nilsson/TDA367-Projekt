@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0bd56c14-f152-451a-aa65-b4f8e40c9d2c" name="Default Changelist" comment="" />
+    <list default="true" id="0bd56c14-f152-451a-aa65-b4f8e40c9d2c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -11,8 +13,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PATH_TO_FX$" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -23,17 +25,19 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="122" key="FileChooserDialogImpl" timestamp="1599739109595">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="600" y="150" key="FileChooserDialogImpl" timestamp="1599740334163">
+      <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="549" y="122" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599739109595" />
+    <state x="600" y="150" key="FileChooserDialogImpl/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599740334163" />
     <state x="439" y="117" width="664" height="590" key="NewModule_or_Project.wizard" timestamp="1599739116429">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="439" y="117" width="664" height="590" key="NewModule_or_Project.wizard/0.0.1536.824@0.0.1536.824" timestamp="1599739116429" />
-    <state x="249" y="0" key="SettingsEditor" timestamp="1599739135038">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="272" y="0" key="SettingsEditor" timestamp="1599740345569">
+      <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1599739135038" />
+    <state x="272" y="0" key="SettingsEditor/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599740345569" />
   </component>
 </project>
