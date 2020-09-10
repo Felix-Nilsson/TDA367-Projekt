@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2223885-cfa8-4166-97e3-e316f075d966" name="Default Changelist" comment="" />
+    <list default="true" id="c2223885-cfa8-4166-97e3-e316f075d966" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,7 +27,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="11" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -41,14 +47,18 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="648" y="292" key="FileChooserDialogImpl" timestamp="1599038722604">
+    <state x="1000" y="105" key="FileChooserDialogImpl" timestamp="1599737472860">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="648" y="292" key="FileChooserDialogImpl/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599038722604" />
+    <state x="1000" y="105" key="FileChooserDialogImpl/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599737472860" />
     <state x="2420" y="250" key="FileChooserDialogImpl/0.0.1680.1010/1680.-85.1920.1160@1680.-85.1920.1160" timestamp="1599034047909" />
-    <state x="65" y="140" key="new project wizard" timestamp="1599037051866">
+    <state x="320" y="79" key="SettingsEditor" timestamp="1599737566182">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="65" y="140" key="new project wizard/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599037051866" />
+    <state x="320" y="79" key="SettingsEditor/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599737566182" />
+    <state x="65" y="140" key="new project wizard" timestamp="1599737305057">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="65" y="140" key="new project wizard/0.0.1680.1010/1680.-85.1920.1160@0.0.1680.1010" timestamp="1599737305057" />
   </component>
 </project>
