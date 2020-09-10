@@ -1,10 +1,7 @@
 package Model;
 
 public class SimpleTower implements Tower{
-    private int x;
-    private int y;
-
-    private
+    BaseTower baseTower;
 
     @Override
     public void update() {
