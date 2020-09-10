@@ -1,4 +1,4 @@
 package Model;
 
-public abstract class BaseCell {
+public class BaseCell implements Cell{
 }
