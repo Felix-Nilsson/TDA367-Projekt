@@ -4,7 +4,7 @@ public class BaseTower implements Tower{
     private int x;
     private int y;
 
-    private DamageType damageType;
+
     private int damageAmount;
 
 
