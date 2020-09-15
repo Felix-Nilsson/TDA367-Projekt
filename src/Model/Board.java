@@ -17,7 +17,7 @@ public class Board {
 
 
     public void createBoard(){
-        mapController.createMap();
+
     }
 
 

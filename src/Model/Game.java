@@ -1,9 +1,9 @@
 package Model;
 
 public class Game {
-
+    Board board= new Board();
     public void startGame(){
-        Board board= new Board();
+
         board.createBoard();
     }
 }
