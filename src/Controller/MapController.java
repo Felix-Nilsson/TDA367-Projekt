@@ -1,5 +1,8 @@
 package Controller;
 
+import Model.Cell;
+import Model.GroundCell;
+import Model.PathCell;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -12,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MapController implements Initializable {
@@ -32,16 +36,48 @@ public class MapController implements Initializable {
 
     }
 
+    private ArrayList<Cell> createMapGrid(){
+        ArrayList<Cell> mapList = new ArrayList<>();
+
+
+        return mapList;
+    }
+
     public void createMap(){
         gameBoardGrid.setPrefSize(1100, 768);
+        ArrayList<Model.Cell> mapList = new ArrayList<>();
         for (int i = 0; i < BOARD_HEIGHT; i++) {
             for (int j = 0; j < BOARD_WIDTH; j++) {
+                if(i == j) {
+                    mapList.add(new PathCell(i, j, false, 50, 50));
+                }
+                else{
+                    mapList.add(new GroundCell(i,j, false, 50, 50));
+                }
+            }
+        }
+
+        for (Cell p: mapList) {
+
+            Rectangle tile = new Rectangle(50,50);
+            tile.setFill(p.getColor());
+            tile.setStroke(Color.BLACK);
+            gameBoardGrid.add(tile, p.getY(), p.getX());
+        }
+
+        /*
+        for (int i = 0; i < BOARD_HEIGHT; i++) {
+            for (int j = 0; j < BOARD_WIDTH; j++) {
+
                 Rectangle tile = new Rectangle(50, 50);
                 tile.setFill(Color.BURLYWOOD);
                 tile.setStroke(Color.BLACK);
                 gameBoardGrid.add(tile, j, i);
+
             }
         }
+
+         */
 
     }
 

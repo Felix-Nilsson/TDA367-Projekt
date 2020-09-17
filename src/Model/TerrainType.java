@@ -1,5 +1,5 @@
 package Model;
 
 public enum TerrainType {
-    GROUND,WATER,PATH
+    GROUND,WATER,PATH,OBSTACLE
 }

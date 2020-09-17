@@ -14,13 +14,15 @@ public class Main extends Application{
         Scene scene = new Scene(root,1366,768);
         stage.setTitle("Tower Defense");
         stage.setScene(scene);
+        Game game = new Game();
+        game.startGame();
         stage.show();
+
     }
 
     public static void main(String[] args) {
         launch(args);
-        Game game = new Game();
-        game.startGame();
+
 
 
     }

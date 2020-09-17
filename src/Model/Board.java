@@ -20,6 +20,10 @@ public class Board {
 
     }
 
+    public void createCell(){
+
+    }
+
 
 
 }
