@@ -11,6 +11,8 @@ public class SidebarController extends AnchorPane {
     @FXML
     private Label balance;
 
+    private MapController parentController;
+
     public SidebarController(MapController mapController){
         balance.setText("$" + 100);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("View/Sidebar.fxml"));
@@ -21,6 +23,8 @@ public class SidebarController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.parentController = mapController;
 
     }
 

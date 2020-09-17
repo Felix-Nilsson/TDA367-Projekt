@@ -35,12 +35,12 @@ public class MapController extends AnchorPane implements Initializable {
 
         createMap();
         money.setText("7558");
-        this.getChildren().clear();
+        sidebarController.getChildren().clear();
 
-        sidebarController = new SidebarController(this);
+        SidebarController s = new SidebarController(this);
 
 
-        this.getChildren().add(sidebarController);
+        sidebarController.getChildren().add(s);
 
 
     }
