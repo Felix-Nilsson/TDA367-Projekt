@@ -1,7 +1,7 @@
 package Model.Towers;
 
 import Model.BaseCell;
-import Model.Towers.Tower;
+
 
 public class BaseTower implements Tower {
     private BaseCell position;

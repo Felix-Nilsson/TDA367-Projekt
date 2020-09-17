@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import javafx.scene.paint.Color;
@@ -14,7 +15,7 @@ import javafx.scene.shape.Rectangle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MapController implements Initializable {
+public class MapController extends AnchorPane {
 
     private int BOARD_WIDTH = 26;
     private int BOARD_HEIGHT = 18;
@@ -25,12 +26,7 @@ public class MapController implements Initializable {
     @FXML private ImageView redTower;
     @FXML private ImageView blueTower;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        createMap();
-        money.setText("7558");
 
-    }
 
     public void createMap(){
         gameBoardGrid.setPrefSize(1100, 768);

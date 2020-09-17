@@ -7,6 +7,6 @@ public class MageTowerFactory {
     BaseCell baseCell= new BaseCell();
     public void createTower() {
         //TODO Basecell
-        ArcherTower archerTower = new ArcherTower(baseCell,0,10,150,50,0.5);
+        MageTower mageTower = new MageTower(baseCell,0,10,150,50,0.5);
     }
 }
