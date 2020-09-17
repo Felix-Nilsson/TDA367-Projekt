@@ -1,6 +1,6 @@
 package Model;
 
-import Controller.MapController;
+import View.MapController;
 
 
 
