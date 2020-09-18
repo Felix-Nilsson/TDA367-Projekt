@@ -9,12 +9,10 @@ public class BaseEnemy implements Enemy{
     private int positionY;
 
     public enum Direction {NORTH,EAST,SOUTH,WEST}
-    public enum Difficulty {EASY, MEDIUM, HARD}
 
     protected Direction direction;
-    protected Difficulty difficulty;
 
-    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, Direction direction, Difficulty difficulty){
+    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, Direction direction){
         this.health=health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
@@ -22,7 +20,6 @@ public class BaseEnemy implements Enemy{
         this.positionX=positionX;
         this.positionY=positionY;
         this.direction=direction;
-        this.difficulty=difficulty;
     }
     @Override
     public void update(){
@@ -49,17 +46,14 @@ public class BaseEnemy implements Enemy{
             //TODO delete this object
         }
     }
-    protected int getPositionX(){
+    public int getPositionX(){
         return positionX;
     }
-    protected int getPositionY(){
+    public int getPositionY(){
         return positionY;
     }
     protected Direction getDirection(){
         return direction;
-    }
-    protected Difficulty getDifficulty(){
-        return difficulty;
     }
     protected int getHealth(){
         return health;
