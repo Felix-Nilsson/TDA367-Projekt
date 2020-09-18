@@ -25,8 +25,7 @@ public class MapController extends AnchorPane implements Initializable {
     @FXML private Rectangle tile;
     @FXML private ImageView toolbarBackgroundImage;
     @FXML private Label money;
-    @FXML private ImageView redTower;
-    @FXML private ImageView blueTower;
+
 
     @FXML private AnchorPane sidebarController;
 
@@ -34,13 +33,13 @@ public class MapController extends AnchorPane implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         createMap();
-        money.setText("7558");
-        sidebarController.getChildren().clear();
 
-        SidebarController s = new SidebarController(this);
+        try {
+            sidebarController.getChildren().add(FXMLLoader.load(getClass().getResource("Sidebar.fxml")));
 
-
-        sidebarController.getChildren().add(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
