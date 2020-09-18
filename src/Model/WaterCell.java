@@ -8,7 +8,7 @@ public class WaterCell implements Cell{
     private Color color;
 
     public WaterCell(int x, int y, boolean occupied, int width, int height){
-        base = new BaseCell(x, y, TerrainType.WATER, occupied, width, height, Color.BLUE);
+        base = new BaseCell(x, y, TerrainType.WATER, occupied, width, height, "2d6ecf");
 
     }
 
@@ -23,7 +23,7 @@ public class WaterCell implements Cell{
     }
 
     @Override
-    public Color getColor() {
+    public String getColor() {
         return base.getColor();
     }
 

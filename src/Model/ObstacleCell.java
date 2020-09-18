@@ -8,7 +8,7 @@ public class ObstacleCell implements Cell{
     private Color color;
 
     public ObstacleCell(int x, int y, boolean occupied, int width, int height){
-        base = new BaseCell(x, y, TerrainType.OBSTACLE, occupied, width, height, Color.GRAY);
+        base = new BaseCell(x, y, TerrainType.OBSTACLE, occupied, width, height, "#6f747a");
 
     }
 
@@ -23,7 +23,7 @@ public class ObstacleCell implements Cell{
     }
 
     @Override
-    public Color getColor() {
+    public String getColor() {
         return base.getColor();
     }
 

@@ -46,7 +46,6 @@ public class MapController implements Initializable {
             {0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
             {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             {0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0},
-
     };
 
 
@@ -102,9 +101,8 @@ public class MapController implements Initializable {
 
         ArrayList<Model.Cell> mapList = createMapGrid(map_1);
         for (Cell p: mapList) {
-
             Rectangle tile = new Rectangle(50,50);
-            tile.setFill(p.getColor());
+            tile.setFill(Color.web(p.getColor()));
             tile.setStroke(Color.BLACK);
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }

@@ -8,7 +8,7 @@ public class PathCell implements Cell{
     private Color color;
 
     public PathCell(int x, int y, boolean occupied, int width, int height){
-        base = new BaseCell(x, y, TerrainType.PATH, occupied, width, height, Color.web("#7C4E4E"));
+        base = new BaseCell(x, y, TerrainType.PATH, occupied, width, height, "#7C4E4E");
 
     }
 
@@ -23,7 +23,7 @@ public class PathCell implements Cell{
     }
 
     @Override
-    public Color getColor() {
+    public String getColor() {
         return base.getColor();
     }
 

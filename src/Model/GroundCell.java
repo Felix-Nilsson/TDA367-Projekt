@@ -7,7 +7,7 @@ public class GroundCell implements Cell{
     private Color color;
 
     public GroundCell(int x, int y, boolean occupied, int width, int height){
-        base = new BaseCell(x, y, TerrainType.GROUND, occupied, width, height, Color.GREEN);
+        base = new BaseCell(x, y, TerrainType.GROUND, occupied, width, height, "2aa84c");
 
     }
 
@@ -22,7 +22,7 @@ public class GroundCell implements Cell{
     }
 
     @Override
-    public Color getColor() {
+    public String getColor() {
         return base.getColor();
     }
 

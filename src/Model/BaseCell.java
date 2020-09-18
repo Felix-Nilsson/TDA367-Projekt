@@ -1,7 +1,5 @@
 package Model;
 
-import javafx.scene.paint.Color;
-
 public class BaseCell implements Cell{
     private int x;
     private int y;
@@ -9,9 +7,9 @@ public class BaseCell implements Cell{
     private boolean occupied;
     private int width;
     private int height;
-    private Color color;
+    private String color;
 
-    public BaseCell(int x, int y, TerrainType terrain, boolean occupied, int width, int height, Color color){
+    public BaseCell(int x, int y, TerrainType terrain, boolean occupied, int width, int height, String color){
         this.x = x;
         this.y = y;
         this.terrain = terrain;
@@ -31,10 +29,7 @@ public class BaseCell implements Cell{
         return this.occupied;
     }
 
-    @Override
-    public Color getColor() {
-        return this.color;
-    }
+    public String getColor(){return this.color;}
 
     public int getX(){
         return this.x;

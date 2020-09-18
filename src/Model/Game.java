@@ -1,9 +1,12 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Game {
     Board board= new Board();
+    ArrayList<Cell> map = new ArrayList<>();
     public void startGame(){
 
-        board.createBoard();
+        map=board.createBoard(1);
     }
 }
