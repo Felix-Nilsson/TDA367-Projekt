@@ -1,0 +1,12 @@
+.buttonMainMenu{
+    -fx-background-color: #09cdda;
+    -fx-pref-width: 125px;
+    -fx-pref-height: 50px;
+    -fx-max-height: 125px;
+    -fx-font-size: 22px;
+    -fx-font-family: "Berlin Sans FB";
+    -fx-background-radius: 120px;
+    -fx-text-fill: white;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
