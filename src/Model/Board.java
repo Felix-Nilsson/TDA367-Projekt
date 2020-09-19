@@ -9,10 +9,7 @@ import java.util.List;
 public class Board {
     private int BOARD_WIDTH = 26;
     private int BOARD_HEIGHT = 18;
-    public Board(int mapNumber){
-        createBoard(mapNumber);
-    }
-
+    private  ArrayList<Cell> board;
 
     private int[][] map_1= {
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -36,39 +33,46 @@ public class Board {
 
     };
 
-
-
-    public ArrayList<Cell> createBoard(int mapNumber){
-        ArrayList<Cell> map = new ArrayList<>();
-        switch (mapNumber){
-            case 1: map = createMapGrid(map_1);
-        }
-
-        return map;
+    public ArrayList<Cell> getBoard(){
+        return this.board;
     }
 
-    public ArrayList<Cell> createMapGrid(int[][] map){
-       
+    public void setBoard(ArrayList<Cell> board) {
+        this.board = board;
+    }
 
-        ArrayList<Cell> mapList = new ArrayList<>();
+    public void createBoard(int id){
+        switch (id){
+
+            case 1:
+                createMapGrid(map_1);
+            case 2:
+                System.out.println("hi");
+
+        }
+
+    }
+
+    public void createMapGrid(int[][] map){
+        ArrayList<Cell> tempBoard = new ArrayList<>();
         for (int i = 0; i < BOARD_WIDTH; i++){
             for(int j = 0; j < BOARD_HEIGHT; j++){
                 if(map[j][i] == 0){
-                    mapList.add(new GroundCell(i,j, false, 50, 50));
+                    tempBoard.add(new GroundCell(i,j, false, 50, 50));
                 }
                 else if(map[j][i] == 1){
-                    mapList.add(new PathCell(i, j, false, 50, 50));
+                    tempBoard.add(new PathCell(i, j, false, 50, 50));
                 }
                 else if(map[j][i] == 2){
-                    mapList.add(new WaterCell(i, j, false, 50, 50));
+                    tempBoard.add(new WaterCell(i, j, false, 50, 50));
                 }
                 else if(map[j][i] == 3){
-                    mapList.add(new ObstacleCell(i, j, false, 50, 50));
+                    tempBoard.add(new ObstacleCell(i, j, false, 50, 50));
                 }
             }
-        }
 
-        return mapList;
+        }
+        setBoard(tempBoard);
 
     }
 

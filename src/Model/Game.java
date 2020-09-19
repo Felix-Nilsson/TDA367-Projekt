@@ -1,20 +1,28 @@
 package Model;
 
 import View.MapController;
+import View.MenuController;
+import javafx.fxml.Initializable;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class Game {
-    public Game(){
-        startGame();
-    }
-    private void startGame(){
-        Board board= new Board(1);
+    MapController mapController;
 
-        ArrayList<Cell> map = new ArrayList<>();
-        map=board.createBoard(1);
-        MapController mapController = new MapController(map);
+    public void startGame(){
+        Board b= new Board();
+        b.createBoard(1);
+        mapController = new MapController(b.getBoard());
+
+
+
     }
+    public MapController getMapController(){
+        return mapController;
+    }
+
 
 
 }

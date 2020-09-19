@@ -17,29 +17,39 @@ import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
 public class MapController extends AnchorPane {
-
     @FXML private GridPane gameBoardGrid;
     @FXML private Rectangle tile;
     @FXML private ImageView toolbarBackgroundImage;
     @FXML private Label money;
-    @FXML private AnchorPane sidebarController;
-
+    @FXML private AnchorPane sidebar;
+    private ArrayList<Cell> map;
 
     public MapController(ArrayList<Cell> map){
-        createMap(map);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.map = map;
+
+        createMap();
     }
 
 
-    private void createMap(ArrayList<Cell> map){
-        gameBoardGrid.setPrefSize(1100, 768);
 
+    public void createMap(){
 
         try {
-            sidebarController.getChildren().add(FXMLLoader.load(getClass().getResource("Sidebar.fxml")));
+            sidebar.getChildren().add(FXMLLoader.load(getClass().getResource("Sidebar.fxml")));
 
         } catch (IOException e) {
             e.printStackTrace();
