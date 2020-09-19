@@ -1,10 +1,11 @@
-package Controller;
+package View;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 
 public class MenuController {
+
     @FXML private Button newGameButton;
     @FXML private Button loadGameButton;
     @FXML private Button optionsButton;
@@ -21,4 +22,5 @@ public class MenuController {
     private void credits(){ }
     @FXML
     private void exitGame(){ }
+
 }
