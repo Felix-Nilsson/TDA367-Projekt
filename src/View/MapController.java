@@ -67,7 +67,7 @@ public class MapController extends AnchorPane implements Initializable {
             e.printStackTrace();
         }
 
-
+    }
 
     private ArrayList<Cell> createMapGrid(int[][] map){
 
@@ -96,21 +96,7 @@ public class MapController extends AnchorPane implements Initializable {
 
     public void createMap(){
         gameBoardGrid.setPrefSize(1100, 768);
-        /*
-        ArrayList<Model.Cell> mapList = new ArrayList<>();
-        for (int i = 0; i < BOARD_HEIGHT; i++) {
-            for (int j = 0; j < BOARD_WIDTH; j++) {
-                if(i == j) {
-                    mapList.add(new PathCell(i, j, false, 50, 50));
-                }
-                else{
-                    mapList.add(new GroundCell(i,j, false, 50, 50));
-                }
-            }
-        }
 
-
-         */
 
         ArrayList<Model.Cell> mapList = createMapGrid(map_1);
         for (Cell p: mapList) {
@@ -120,25 +106,15 @@ public class MapController extends AnchorPane implements Initializable {
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
 
-        /*
-        for (int i = 0; i < BOARD_HEIGHT; i++) {
-            for (int j = 0; j < BOARD_WIDTH; j++) {
 
-                Rectangle tile = new Rectangle(50, 50);
-                tile.setFill(Color.BURLYWOOD);
-                tile.setStroke(Color.BLACK);
-                gameBoardGrid.add(tile, j, i);
+    }
 
-            }
+
+        public int getMoney () {
+            return Integer.parseInt(money.getText());
         }
 
-         */
 
-    }
-
-    public int getMoney(){
-        return Integer.parseInt(money.getText());
-    }
 
 
 
