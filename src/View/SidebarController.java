@@ -2,20 +2,27 @@ package View;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 
 public class SidebarController extends AnchorPane {
     @FXML
-    private Label balance;
-
+    private Label money;
     @FXML
     private ImageView moneyIcon;
+    @FXML
+    private Label health;
+    @FXML
+    private Button nextRound;
+    @FXML
+    private GridPane gridPane;
 
-    private MapController parentController;
+
 
     public SidebarController(){
 
@@ -35,9 +42,6 @@ public class SidebarController extends AnchorPane {
 
     }
 
-    public void setBalance(String s){
-        balance.setText(s);
-    }
 
 
 }
