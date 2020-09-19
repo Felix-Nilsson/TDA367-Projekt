@@ -21,8 +21,10 @@ public class SidebarController extends AnchorPane {
     private Button nextRound;
     @FXML
     private GridPane gridPane;
+    @FXML
+    private ImageView healthIcon;
 
-
+    //MapController parentController;
 
     public SidebarController(){
 
@@ -39,6 +41,7 @@ public class SidebarController extends AnchorPane {
         this.parentController = mapController;
 
          */
+
 
     }
 

@@ -7,8 +7,8 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MapController">
     <children>
-      <AnchorPane fx:id="sidebarController" layoutX="1100.0" prefHeight="768.0" prefWidth="266.0" />
-      <GridPane fx:id="gameBoardGrid" prefHeight="768.0" prefWidth="1100.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="sidebarController" layoutX="1069.0" prefHeight="768.0" prefWidth="266.0" />
+      <GridPane fx:id="gameBoardGrid" prefHeight="768.0" prefWidth="1131.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
