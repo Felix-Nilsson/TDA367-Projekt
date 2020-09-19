@@ -1,19 +1,34 @@
 package View;
 
+import Model.Game;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MenuController {
+
+public class MenuController implements Initializable {
 
     @FXML private Button newGameButton;
     @FXML private Button loadGameButton;
     @FXML private Button optionsButton;
     @FXML private Button creditsButton;
     @FXML private Button exitGameButton;
-    // HEJ4
+    private MapController mapController;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("hi");
+    }
     @FXML
-    private void newGame(){ }
+    private void newGame(){
+       Game game = new Game();
+    }
     @FXML
     private void loadGame(){ }
     @FXML
@@ -22,5 +37,6 @@ public class MenuController {
     private void credits(){ }
     @FXML
     private void exitGame(){ }
+
 
 }

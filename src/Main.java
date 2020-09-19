@@ -9,21 +9,19 @@ import javafx.scene.Parent;
 public class Main extends Application{
 
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("View/Map.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/MainMenu.fxml"));
 
         Scene scene = new Scene(root,1366,768);
         stage.setTitle("Tower Defense");
         stage.setScene(scene);
-        Game game = new Game();
-        game.startGame();
         stage.show();
+
+
 
     }
 
     public static void main(String[] args) {
         launch(args);
-
-
 
     }
 

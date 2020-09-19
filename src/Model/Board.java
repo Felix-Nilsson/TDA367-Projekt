@@ -9,6 +9,9 @@ import java.util.List;
 public class Board {
     private int BOARD_WIDTH = 26;
     private int BOARD_HEIGHT = 18;
+    public Board(int mapNumber){
+        createBoard(mapNumber);
+    }
 
 
     private int[][] map_1= {
