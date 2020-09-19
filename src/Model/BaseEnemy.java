@@ -28,10 +28,10 @@ public class BaseEnemy implements Enemy{
     @Override
     public void move(){
         switch (direction) {
-            case NORTH -> positionY = positionY - movementSpeed;
-            case EAST -> positionX = positionX + movementSpeed;
-            case SOUTH -> positionY = positionY + movementSpeed;
-            case WEST -> positionX = positionX - movementSpeed;
+            case NORTH : positionY = positionY - movementSpeed;
+            case EAST : positionX = positionX + movementSpeed;
+            case SOUTH : positionY = positionY + movementSpeed;
+            case WEST : positionX = positionX - movementSpeed;
         }
     }
 
