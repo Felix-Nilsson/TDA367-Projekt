@@ -43,24 +43,24 @@ public class MapController extends AnchorPane implements Initializable {
             e.printStackTrace();
         }
 
+    }
 
-
-    public void createMap(){
-        gameBoardGrid.setPrefSize(1100, 768);
-        for (int i = 0; i < BOARD_HEIGHT; i++) {
-            for (int j = 0; j < BOARD_WIDTH; j++) {
-                Rectangle tile = new Rectangle(50, 50);
-                tile.setFill(Color.BURLYWOOD);
-                tile.setStroke(Color.BLACK);
-                gameBoardGrid.add(tile, j, i);
+        public void createMap () {
+            gameBoardGrid.setPrefSize(1100, 768);
+            for (int i = 0; i < BOARD_HEIGHT; i++) {
+                for (int j = 0; j < BOARD_WIDTH; j++) {
+                    Rectangle tile = new Rectangle(50, 50);
+                    tile.setFill(Color.BURLYWOOD);
+                    tile.setStroke(Color.BLACK);
+                    gameBoardGrid.add(tile, j, i);
+                }
             }
+
+        }
+        public int getMoney () {
+            return Integer.parseInt(money.getText());
         }
 
-    }
-
-    public int getMoney(){
-        return Integer.parseInt(money.getText());
-    }
 
 
 
