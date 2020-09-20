@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Game {
-    MapController mapController;
+    private MapController mapController;
 
     public void startGame(){
         Board b= new Board();
         b.createBoard(1);
-        mapController = new MapController(b.getBoard());
+        mapController = new MapController(this,b.getBoard());
 
 
 
