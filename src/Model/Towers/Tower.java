@@ -8,5 +8,7 @@ public interface Tower extends Updatable {
     void checkRadius();
     void attack();
     Image getImage();
+    int getPrice();
+
 
 }

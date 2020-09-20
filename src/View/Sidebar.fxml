@@ -53,7 +53,7 @@
          <font>
             <Font size="30.0" />
          </font></Label>
-      <Button fx:id="nextRound" layoutX="60.0" layoutY="641.0" mnemonicParsing="false" prefHeight="96.0" prefWidth="206.0" style="-fx-background-color: #4dd2ff; -fx-border-color: black;" textFill="WHITE">
+      <Button fx:id="nextRound" layoutX="22.0" layoutY="648.0" mnemonicParsing="false" prefHeight="89.0" prefWidth="137.0" style="-fx-background-color: #4dd2ff; -fx-border-color: black;" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -67,6 +67,11 @@
       <ImageView fx:id="healthIcon" fitHeight="67.0" fitWidth="74.0" layoutX="34.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/health.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="83.0" fitWidth="102.0" layoutX="182.0" layoutY="651.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/settings.png" />
          </image>
       </ImageView>
    </children>

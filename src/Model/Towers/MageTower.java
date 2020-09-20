@@ -31,4 +31,9 @@ public class MageTower implements Tower {
     public Image getImage() {
         return baseTower.getImage();
     }
+
+    @Override
+    public int getPrice() {
+        return baseTower.getPrice();
+    }
 }
