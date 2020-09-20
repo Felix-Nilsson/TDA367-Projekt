@@ -30,7 +30,7 @@ public class MapController extends AnchorPane {
     private ArrayList<Cell> map;
     private Game game;
 
-    public MapController(Game game,ArrayList<Cell> map){
+    public MapController(Game game, ArrayList<Cell> map){
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
         fxmlLoader.setRoot(this);

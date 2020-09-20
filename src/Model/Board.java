@@ -1,10 +1,7 @@
 package Model;
 
-import View.MapController;
-
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Board {
     private int BOARD_WIDTH = 26;

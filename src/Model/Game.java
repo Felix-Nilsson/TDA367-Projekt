@@ -1,12 +1,6 @@
 package Model;
 
 import View.MapController;
-import View.MenuController;
-import javafx.fxml.Initializable;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class Game {
     private MapController mapController;

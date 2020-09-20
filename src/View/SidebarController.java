@@ -40,7 +40,7 @@ public class SidebarController extends AnchorPane {
             e.printStackTrace();
         }
         this.game = game;
-        
+
 
     }
 
