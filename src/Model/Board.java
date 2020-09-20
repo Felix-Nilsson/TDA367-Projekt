@@ -1,5 +1,7 @@
 package Model;
 
+import Model.Towers.ArcherTower;
+import Model.Towers.Tower;
 import View.MapController;
 
 
@@ -26,7 +28,7 @@ public class Board {
             {0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,2,2,2,2,2,2,2,1,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,1,2,2},
             {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2},
-            {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
             {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             {0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -67,7 +69,14 @@ public class Board {
                     tempBoard.add(new WaterCell(i, j, false, 50, 50));
                 }
                 else if(map[j][i] == 3){
-                    tempBoard.add(new ObstacleCell(i, j, false, 50, 50));
+                    tempBoard.add(new ObstacleCell(i, j, true, 50, 50));
+                }
+                else if(map[j][i] == 4){
+                    BaseCell baseCell = new BaseCell(i,j,TerrainType.GROUND,
+                            true,50,50,"ffffff");
+                    ArcherTower archerTower = new ArcherTower(baseCell,5,5,5,5,5);
+
+                    tempBoard.add(new TowerCell(archerTower,i,j,true,50,50));
                 }
             }
 
