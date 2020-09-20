@@ -1,6 +1,8 @@
 package Model;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 
 public class Board {
@@ -11,7 +13,7 @@ public class Board {
     private int[][] map_1= {
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,3,0},
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+            {8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,1,0,0,0},
             {0,0,0,3,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,3,0,1,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,1,0,0,0},
@@ -66,13 +68,45 @@ public class Board {
                 else if(map[j][i] == 3){
                     tempBoard.add(new ObstacleCell(i, j, false, 50, 50));
                 }
+                else if(map[j][i] == 8){
+                    tempBoard.add(new PathCell(i, j, false, 50, 50));
+                    System.out.println("j= " + (j*50 + 25) + ", i=" + (i*50 + 25));
+                }
             }
 
         }
         setBoard(tempBoard);
-
     }
 
+    LinkedHashMap <Point, BaseEnemy.Direction> array = new LinkedHashMap<>();
+    ArrayList<Integer> listX = new ArrayList<>();
+    ArrayList<Integer> listY = new ArrayList<>();
+    ArrayList<BaseEnemy.Direction> path = new ArrayList<>();
 
+    // j och i är index för spawnet i första iterationen.
+    private void fillPath(int j, int i, int[][]map, BaseEnemy.Direction prevDir){
+        while(i<BOARD_WIDTH){
+                //checks to the right
+                if((map[j][i+1]==1) && prevDir!= BaseEnemy.Direction.WEST){
+                    path.add(BaseEnemy.Direction.EAST);
+                    i=i+1;
+                }
+                //checks below
+                else if((map[j+1][i]==1) && prevDir!= BaseEnemy.Direction.NORTH){
+                    path.add(BaseEnemy.Direction.SOUTH);
+                    j=j+1;
+                }
+                //checks above
+                else if((map[j-1][i]==1) && prevDir!= BaseEnemy.Direction.SOUTH){
+                    path.add(BaseEnemy.Direction.NORTH);
+                    j=j-1;
+                }
+                //checks left
+                else if((map[j][i-1]==1) && prevDir!= BaseEnemy.Direction.EAST){
+                    path.add(BaseEnemy.Direction.WEST);
+                    i=i-1;
+                }
+            }
+        }
+    }
 
-}

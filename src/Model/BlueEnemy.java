@@ -21,6 +21,19 @@ public class BlueEnemy implements Enemy{
         parent.tookDamage(damage);
     }
 
+    protected void turnNORTH(){
+        parent.turnNORTH();
+    }
+    protected void turnEAST(){
+        parent.turnEAST();
+    }
+    protected void turnSOUTH(){
+        parent.turnSOUTH();
+    }
+    protected void turnWEST(){
+        parent.turnWEST();
+    }
+
     public int getPositionX(){
         return parent.getPositionX();
     }
