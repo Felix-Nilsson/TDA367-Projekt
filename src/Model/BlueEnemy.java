@@ -1,11 +1,13 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class BlueEnemy implements Enemy{
 
     private final BaseEnemy parent;
 
-    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, BaseEnemy.Direction direction){
-        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY, direction);
+    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
+        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY, path);
     }
     @Override
     public void update(){
@@ -13,8 +15,8 @@ public class BlueEnemy implements Enemy{
         parent.update();
     }
     @Override
-    public void move(){
-        parent.move();
+    public void followPath(){
+        parent.followPath();
     }
     @Override
     public void tookDamage(int damage){

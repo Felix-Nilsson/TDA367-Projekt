@@ -81,32 +81,39 @@ public class Board {
     LinkedHashMap <Point, BaseEnemy.Direction> array = new LinkedHashMap<>();
     ArrayList<Integer> listX = new ArrayList<>();
     ArrayList<Integer> listY = new ArrayList<>();
-    ArrayList<BaseEnemy.Direction> path = new ArrayList<>();
 
     // j och i är index för spawnet i första iterationen.
-    private void fillPath(int j, int i, int[][]map, BaseEnemy.Direction prevDir){
-        while(i<BOARD_WIDTH){
+    public ArrayList<BaseEnemy.Direction> fillPath(int j, int i, int[][]map){
+        ArrayList<BaseEnemy.Direction> path = new ArrayList<>();
+        //sätter start direction till EAST för att enemies antagligen aldrig börjar åka åt vänster så while-loopen fungerar
+        BaseEnemy.Direction prevDir = BaseEnemy.Direction.EAST;
+        while(i+1<BOARD_WIDTH){
                 //checks to the right
                 if((map[j][i+1]==1) && prevDir!= BaseEnemy.Direction.WEST){
                     path.add(BaseEnemy.Direction.EAST);
+                    prevDir=BaseEnemy.Direction.EAST;
                     i=i+1;
                 }
                 //checks below
                 else if((map[j+1][i]==1) && prevDir!= BaseEnemy.Direction.NORTH){
                     path.add(BaseEnemy.Direction.SOUTH);
+                    prevDir=BaseEnemy.Direction.SOUTH;
                     j=j+1;
                 }
                 //checks above
                 else if((map[j-1][i]==1) && prevDir!= BaseEnemy.Direction.SOUTH){
                     path.add(BaseEnemy.Direction.NORTH);
+                    prevDir=BaseEnemy.Direction.NORTH;
                     j=j-1;
                 }
                 //checks left
                 else if((map[j][i-1]==1) && prevDir!= BaseEnemy.Direction.EAST){
                     path.add(BaseEnemy.Direction.WEST);
+                    prevDir=BaseEnemy.Direction.WEST;
                     i=i-1;
                 }
             }
+        return path;
         }
     }
 

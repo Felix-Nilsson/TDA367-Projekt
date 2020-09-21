@@ -18,22 +18,24 @@ public class BaseEnemy implements Enemy{
     private ArrayList <Direction> path;
 
     protected Direction direction;
-
-    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, Direction direction){
+//TODO ta bort Direction som param, path borde kompensera.
+    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
         this.health=health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
         this.armor=armor;
         this.positionX=positionX;
         this.positionY=positionY;
-        this.direction=direction;
+        this.path=path;
     }
     @Override
     public void update(){
+        followPath();
         move();
+
     }
-    @Override
-    public void move(){
+
+    private void move(){
         switch (direction) {
             case NORTH -> positionY = positionY - movementSpeed;
             case EAST -> positionX = positionX + movementSpeed;
@@ -56,6 +58,24 @@ public class BaseEnemy implements Enemy{
     }
     protected void turn(Direction dir){
         this.direction=dir;
+    }
+
+    private int stepNr=0;
+
+    @Override
+    public void followPath(){
+        if(movementSpeed<=1){
+            if(positionX%50==25 && positionY%50==25 && stepNr<path.size()){
+                turn(path.get(stepNr));
+                ++stepNr;
+            }
+        }
+        /*
+        else if (position)
+        turn(path.get(stepNr));
+
+         */
+
     }
 
     @Override

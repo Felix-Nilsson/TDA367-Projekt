@@ -2,6 +2,6 @@ package Model;
 
 public interface Enemy {
     void update();
-    void move();
+    void followPath();
     void tookDamage(int damage);
 }
