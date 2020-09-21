@@ -11,6 +11,7 @@ public class Game {
     private int mapNumber;
     private int health;
     private int money;
+    private Updatable updatable;
 
     public Game(String difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -52,7 +53,9 @@ public class Game {
         }
     }
     public void update(){
-        mapController.update();
+        mapController.update(); //not good change later
+        updatable.update();
+
     }
     public void startRound(){
 
