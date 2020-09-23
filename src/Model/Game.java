@@ -54,7 +54,7 @@ public class Game {
     }
     public void update(){
         mapController.update(); //not good change later
-        updatable.update();
+        //updatable.update();
 
     }
     public void startRound(){

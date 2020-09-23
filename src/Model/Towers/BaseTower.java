@@ -61,4 +61,8 @@ public class BaseTower implements Tower {
     public void setTowerImage(String img){
         towerImage = new Image(getClass().getClassLoader().getResourceAsStream(img));
     }
+
+    public void setColor(String s){
+        this.position.setColor(s);
+    }
 }

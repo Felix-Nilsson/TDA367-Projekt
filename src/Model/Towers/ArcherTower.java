@@ -16,6 +16,7 @@ public class ArcherTower implements Tower {
 
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/archerTower.png");
+        baseTower.setColor("000000");
     }
 
 
