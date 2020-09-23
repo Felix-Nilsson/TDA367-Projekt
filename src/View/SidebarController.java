@@ -30,8 +30,9 @@ public class SidebarController extends AnchorPane implements Observer{
 
     private Observable observable;
     private Game game;
+    private MapController parentController;
 
-    public SidebarController(Game game, Observable observable) {
+    public SidebarController(Game game, Observable observable,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -42,12 +43,16 @@ public class SidebarController extends AnchorPane implements Observer{
         }
         this.game = game;
         this.observable = observable;
+        this.parentController = parentController;
         observable.add(this);
 
     }
     public void update(){
         money.setText(""+ game.getMoney());
         health.setText(""+ game.getHealth());
+    }
+    @FXML private void settings(){
+        parentController.openSettings();
     }
 
 

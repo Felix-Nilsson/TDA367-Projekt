@@ -58,7 +58,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="playButton" fitHeight="55.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="playButton" fitHeight="72.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/play_button.png" />
                </image>
@@ -69,7 +69,7 @@
             <Image url="@../img/health.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="83.0" fitWidth="102.0" layoutX="182.0" layoutY="651.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="83.0" fitWidth="102.0" layoutX="182.0" layoutY="651.0" onMouseClicked="#settings" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
             <Image url="@../img/settings.png" />
          </image>

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +27,19 @@ public class MapController extends AnchorPane implements Observer{
     @FXML private Rectangle tile;
     @FXML private ImageView toolbarBackgroundImage;
     @FXML private Label money;
+
+    @FXML private Button continueButton;
+    @FXML private Button home;
+    @FXML private Button exit;
+    @FXML private Button restart;
+
     @FXML private AnchorPane sidebar;
+    @FXML private AnchorPane settings;
+    @FXML private AnchorPane settingsPane;
+    @FXML private AnchorPane mapAnchorPane;
+
+
+
     private ArrayList<Cell> map;
     private Game game;
     private SidebarController sidebarController;
@@ -54,7 +67,7 @@ public class MapController extends AnchorPane implements Observer{
 
     public void createMap(){
         //add sidebar fxml
-        sidebarController = new SidebarController(game,observable);
+        sidebarController = new SidebarController(game,observable,this);
         sidebar.getChildren().add(sidebarController);
 
         //add all cells to GUI
@@ -68,6 +81,13 @@ public class MapController extends AnchorPane implements Observer{
     public void update(){
         System.out.println("update mapcontroller");
         //sidebarController.update();
+    }
+    public void openSettings(){
+        settingsPane.toFront();
+    }
+    @FXML
+    public void openMap(){
+        mapAnchorPane.toFront();
     }
 
 
