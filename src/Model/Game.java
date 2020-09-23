@@ -1,6 +1,8 @@
 package Model;
 
 import Model.Towers.ArcherTower;
+import Model.Towers.BaseTower;
+import Model.Towers.Tower;
 import View.MapController;
 
 public class Game {
@@ -12,8 +14,11 @@ public class Game {
     private int health;
     private int money;
     private Updatable updatable;
+    private Observable observable;
 
     public Game(String difficulty, int mapNumber){
+        //Updatable updateTower = new BaseTower();
+        observable = new Observable();
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         startGame();
@@ -54,7 +59,7 @@ public class Game {
     }
     public void update(){
         mapController.update(); //not good change later
-        updatable.update();
+        //updatable.update();
 
     }
     public void startRound(){

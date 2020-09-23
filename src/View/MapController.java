@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class MapController extends AnchorPane {
+public class MapController extends AnchorPane implements Observer{
     @FXML private GridPane gameBoardGrid;
     @FXML private Rectangle tile;
     @FXML private ImageView toolbarBackgroundImage;
@@ -30,6 +30,7 @@ public class MapController extends AnchorPane {
     private ArrayList<Cell> map;
     private Game game;
     private SidebarController sidebarController;
+
 
     public MapController(Game game, ArrayList<Cell> map){
 
@@ -43,10 +44,7 @@ public class MapController extends AnchorPane {
         }
         this.map = map;
         this.game = game;
-
         createMap();
-
-        //do update last
         update();
     }
 
@@ -64,7 +62,8 @@ public class MapController extends AnchorPane {
         }
     }
     public void update(){
-        sidebarController.update();
+        System.out.println("update mapcontroller");
+        //sidebarController.update();
     }
 
 
