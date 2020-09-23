@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Towers.ArcherTower;
+import Model.Towers.ArcherTowerFactory;
 import Model.Towers.Tower;
 import View.MapController;
 
@@ -72,11 +73,11 @@ public class Board {
                     tempBoard.add(new ObstacleCell(i, j, true, 50, 50));
                 }
                 else if(map[j][i] == 4){
-                    BaseCell baseCell = new BaseCell(i,j,TerrainType.GROUND,
-                            true,50,50,"ffffff");
-                    ArcherTower archerTower = new ArcherTower(baseCell,5,5,5,5,5);
+                    //temp, example of adding a tower to a cell
+                    GroundCell cell = new GroundCell(i,j,false,50,50);
+                    ArcherTower archerTower = new ArcherTowerFactory().createTower(cell);
 
-                    tempBoard.add(new TowerCell(archerTower,i,j,true,50,50));
+                    tempBoard.add(cell);
                 }
             }
 

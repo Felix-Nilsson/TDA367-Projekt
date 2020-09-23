@@ -1,23 +1,27 @@
 package Model.Towers;
 
 import Model.BaseCell;
+import Model.GroundCell;
 
 
 public class BaseTower implements Tower {
-    private BaseCell position;
+    private GroundCell position;
     private int physicalDmg;
     private int magicDmg;
     private int price;
     private int range;
     private double attackSpeed;
 
-    public BaseTower(BaseCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public BaseTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
         this.position = position;
         this.physicalDmg = physicalDmg;
         this.magicDmg = magicDmg;
         this.price = price;
         this.range = range;
         this.attackSpeed = attackSpeed;
+
+        //Temp, example of tower setting the color to the cell
+        position.setColor("000000");
     }
 
 

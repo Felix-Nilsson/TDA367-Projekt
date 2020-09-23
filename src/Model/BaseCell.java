@@ -29,6 +29,8 @@ public class BaseCell implements Cell{
         return this.occupied;
     }
 
+    public void setColor(String s){ this.color = s; }
+
     public String getColor(){return this.color;}
 
     public int getX(){
@@ -38,4 +40,5 @@ public class BaseCell implements Cell{
     public int getY(){
         return this.y;
     }
+
 }

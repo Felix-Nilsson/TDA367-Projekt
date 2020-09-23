@@ -35,4 +35,6 @@ public class GroundCell implements Cell{
     public int getY() {
         return base.getY();
     }
+
+    public void setColor(String s){base.setColor(s);}
 }
