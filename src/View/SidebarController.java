@@ -1,19 +1,20 @@
 package View;
 
 import Model.Game;
+import Model.Observable;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 import java.io.IOException;
-import java.net.URL;
 
-public class SidebarController extends AnchorPane {
+
+public class SidebarController extends AnchorPane implements Observer{
     @FXML private ImageView sidebarBackground;
     @FXML private ImageView moneyIcon;
     @FXML private ImageView healthIcon;
@@ -27,10 +28,10 @@ public class SidebarController extends AnchorPane {
     @FXML private GridPane gridPane;
     @FXML private Label money;
 
-
+    private Observable observable;
     private Game game;
 
-    public SidebarController(Game game){
+    public SidebarController(Game game, Observable observable) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -40,9 +41,15 @@ public class SidebarController extends AnchorPane {
             e.printStackTrace();
         }
         this.game = game;
-
+        this.observable = observable;
+        observable.add(this);
 
     }
+    public void update(){
+        money.setText(""+ game.getMoney());
+        health.setText(""+ game.getHealth());
+    }
+
 
 
 

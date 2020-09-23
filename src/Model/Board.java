@@ -1,6 +1,11 @@
 package Model;
 
-import java.awt.*;
+
+import Model.Towers.ArcherTower;
+import Model.Towers.ArcherTowerFactory;
+import Model.Towers.Tower;
+import View.MapController;
+
 import java.util.ArrayList;
 
 
@@ -9,6 +14,8 @@ public class Board {
     private int BOARD_WIDTH = 26;
     private int BOARD_HEIGHT = 18;
     private  ArrayList<Cell> board;
+    private int mapNumber;
+
 
     private int[][] map_1= {
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -32,27 +39,20 @@ public class Board {
 
     };
 
-    public ArrayList<Cell> getBoard(){
-        return this.board;
+
+    public Board(int mapNumber){
+        this.mapNumber = mapNumber;
+        createBoard();
+
     }
 
-    public void setBoard(ArrayList<Cell> board) {
-        this.board = board;
-    }
-
-    public void createBoard(int id){
-        switch (id){
-
-            case 1:
-                createMapGrid(map_1);
-            case 2:
-                System.out.println("hi");
-
+    private void createBoard(){
+        switch (mapNumber){
+            case 1: createMapGrid(map_1);
+            case 2: /*create another map */;
         }
-
     }
-
-    public void createMapGrid(int[][] map){
+    private void createMapGrid(int[][] map){
         ArrayList<Cell> tempBoard = new ArrayList<>();
         for (int i = 0; i < BOARD_WIDTH; i++){
             for(int j = 0; j < BOARD_HEIGHT; j++){
@@ -66,7 +66,14 @@ public class Board {
                     tempBoard.add(new WaterCell(i, j, false, 50, 50));
                 }
                 else if(map[j][i] == 3){
-                    tempBoard.add(new ObstacleCell(i, j, false, 50, 50));
+                    tempBoard.add(new ObstacleCell(i, j, true, 50, 50));
+                }
+                else if(map[j][i] == 4){
+                    //temp, example of adding a tower to a cell
+                    GroundCell cell = new GroundCell(i,j,false,50,50);
+                   // ArcherTower archerTower = new ArcherTowerFactory().createTower(cell);
+
+                    tempBoard.add(cell);
                 }
                 else if(map[j][i] == 8){
                     tempBoard.add(new PathCell(i, j, false, 50, 50));
@@ -76,6 +83,15 @@ public class Board {
 
         }
         setBoard(tempBoard);
+
+    }
+
+    public ArrayList<Cell> getBoard(){
+        return this.board;
+    }
+
+    private void setBoard(ArrayList<Cell> board) {
+        this.board = board;
     }
 
     // j och i är index för spawnet i första iterationen.
@@ -112,4 +128,5 @@ public class Board {
         return path;
         }
     }
+
 

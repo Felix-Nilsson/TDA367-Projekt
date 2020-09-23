@@ -1,5 +1,8 @@
 package Model.Towers;
 
+import Model.GroundCell;
+import Model.UpdateModel;
+
 public interface TowerFactory {
-    void createTower();
+    Tower createTower(GroundCell cell, UpdateModel updateModel);
 }

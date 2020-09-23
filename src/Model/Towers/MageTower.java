@@ -1,14 +1,21 @@
 package Model.Towers;
 
 import Model.BaseCell;
+
+import Model.GroundCell;
+
+import Model.UpdateModel;
 import javafx.scene.image.Image;
 
 public class MageTower implements Tower {
     private BaseTower baseTower ;
+    private UpdateModel updateModel;
 
-    public MageTower(BaseCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public MageTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/mageTower.png");
+        this.updateModel = updateModel;
+        updateModel.add(this);
     }
 
 
@@ -30,5 +37,10 @@ public class MageTower implements Tower {
     @Override
     public Image getImage() {
         return baseTower.getImage();
+    }
+
+    @Override
+    public int getPrice() {
+        return baseTower.getPrice();
     }
 }
