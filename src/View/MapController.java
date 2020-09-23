@@ -50,7 +50,6 @@ public class MapController extends AnchorPane implements Observer{
 
         observable.add(this);
         createMap();
-        update();
     }
 
     public void createMap(){

@@ -35,6 +35,7 @@ public class BaseTower implements Tower {
 
     @Override
     public void update() {
+        System.out.println("updated basetower");
 
     }
 

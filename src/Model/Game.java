@@ -14,6 +14,7 @@ public class Game implements Updatable{
     private int health;
     private int money;
     private Observable observable;
+    private UpdateModel updateModel;
 
     private static Game single_instance = null;
 
@@ -32,7 +33,7 @@ public class Game implements Updatable{
     }
 
     private void startGame(){
-
+        updateModel = new UpdateModel();
         observable = new Observable();
 
         Board b= new Board(mapNumber);
@@ -69,7 +70,11 @@ public class Game implements Updatable{
         }
     }
     public void update(){
-        observable.notifyAllObservers();
+
+            updateModel.notifyAllUpdatables();
+            observable.notifyAllObservers();
+
+
         //mapController.update(); //not good change later
         //updatable.update();
 

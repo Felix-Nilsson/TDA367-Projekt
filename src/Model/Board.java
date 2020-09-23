@@ -47,7 +47,7 @@ public class Board {
                 else if(map[j][i] == 4){
                     //temp, example of adding a tower to a cell
                     GroundCell cell = new GroundCell(i,j,false,50,50);
-                    ArcherTower archerTower = new ArcherTowerFactory().createTower(cell);
+                   // ArcherTower archerTower = new ArcherTowerFactory().createTower(cell);
 
                     tempBoard.add(cell);
                 }
