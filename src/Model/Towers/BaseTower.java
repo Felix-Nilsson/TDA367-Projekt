@@ -1,7 +1,11 @@
 package Model.Towers;
 
 import Model.BaseCell;
+
 import Model.GroundCell;
+
+import javafx.scene.image.Image;
+
 
 
 public class BaseTower implements Tower {
@@ -11,6 +15,7 @@ public class BaseTower implements Tower {
     private int price;
     private int range;
     private double attackSpeed;
+    private Image towerImage;
 
     public BaseTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
         this.position = position;
@@ -20,9 +25,12 @@ public class BaseTower implements Tower {
         this.range = range;
         this.attackSpeed = attackSpeed;
 
+
         //Temp, example of tower setting the color to the cell
         position.setColor("000000");
+
     }
+
 
 
     @Override
@@ -38,5 +46,19 @@ public class BaseTower implements Tower {
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public Image getImage() {
+        return towerImage;
+    }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
+
+    public void setTowerImage(String img){
+        towerImage = new Image(getClass().getClassLoader().getResourceAsStream(img));
     }
 }

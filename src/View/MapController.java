@@ -29,8 +29,9 @@ public class MapController extends AnchorPane {
     @FXML private AnchorPane sidebar;
     private ArrayList<Cell> map;
     private Game game;
+    private SidebarController sidebarController;
 
-    public MapController(Game game,ArrayList<Cell> map){
+    public MapController(Game game, ArrayList<Cell> map){
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
         fxmlLoader.setRoot(this);
@@ -44,23 +45,27 @@ public class MapController extends AnchorPane {
         this.game = game;
 
         createMap();
+
+        //do update last
+        update();
     }
 
     public void createMap(){
-        SidebarController sidebarController = new SidebarController(game);
+        //add sidebar fxml
+        sidebarController = new SidebarController(game);
         sidebar.getChildren().add(sidebarController);
 
+        //add all cells to GUI
         for (Cell p: map) {
             Rectangle tile = new Rectangle(50,50);
             tile.setFill(Color.web(p.getColor()));
             tile.setStroke(Color.BLACK);
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
-
-
     }
-
-    public int getMoney () { return Integer.parseInt(money.getText()); }
+    public void update(){
+        sidebarController.update();
+    }
 
 
 }

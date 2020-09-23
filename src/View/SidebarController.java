@@ -1,17 +1,17 @@
 package View;
 
 import Model.Game;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 import java.io.IOException;
-import java.net.URL;
+
 
 public class SidebarController extends AnchorPane {
     @FXML private ImageView sidebarBackground;
@@ -40,9 +40,32 @@ public class SidebarController extends AnchorPane {
             e.printStackTrace();
         }
         this.game = game;
-        
+/*
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                moveTower("archer");
+
+            }
+        };
+        archerTower.addEventHandler(MouseEvent.MOUSE_PRESSED,eventHandler);
+
+ */
 
     }
+/*
+    public void moveTower(String tower){
+        game.moveTower(tower);
+    }
+
+ */
+
+
+    public void update(){
+        money.setText(""+ game.getMoney());
+        health.setText(""+ game.getHealth());
+    }
+
 
 
 
