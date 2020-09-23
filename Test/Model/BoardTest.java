@@ -10,8 +10,8 @@ class BoardTest {
 
     @Test
     void fillPath() {
-        Board b= new Board();
-        b.createBoard(1);
+        //båda dessa ska inte behöva finnas med egentligen
+        Board b= new Board(1);
         int[][] map_1= {
                 {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,3,0},
