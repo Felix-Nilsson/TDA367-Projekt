@@ -85,4 +85,12 @@ public class Game implements Updatable{
     public void setMoney(int money) {
         this.money = money;
     }
+
+    public String getDifficulty() {return difficulty;}
+    
+    public void setDifficulty(String difficulty) {this.difficulty = difficulty;}
+
+    public int getMapNumber(){return mapNumber;}
+
+    public void setMapNumber(int mapNumber){this.mapNumber = mapNumber;}
 }
