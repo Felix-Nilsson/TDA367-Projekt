@@ -22,6 +22,7 @@ public class ArcherTower implements Tower {
 
     @Override
     public void update() {
+        System.out.println("archertowerUpdated");
         baseTower.update();
     }
 

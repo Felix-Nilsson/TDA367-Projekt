@@ -30,9 +30,10 @@ public class MapController extends AnchorPane implements Observer{
     private ArrayList<Cell> map;
     private Game game;
     private SidebarController sidebarController;
+    private Observable observable;
 
 
-    public MapController(Game game, ArrayList<Cell> map){
+    public MapController(Game game, ArrayList<Cell> map,Observable observable){
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
         fxmlLoader.setRoot(this);
@@ -44,13 +45,17 @@ public class MapController extends AnchorPane implements Observer{
         }
         this.map = map;
         this.game = game;
+        this.observable = observable;
+
+
+        observable.add(this);
         createMap();
         update();
     }
 
     public void createMap(){
         //add sidebar fxml
-        sidebarController = new SidebarController(game);
+        sidebarController = new SidebarController(game,observable);
         sidebar.getChildren().add(sidebarController);
 
         //add all cells to GUI

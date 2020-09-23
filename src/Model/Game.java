@@ -13,9 +13,10 @@ public class Game implements Updatable{
     private int mapNumber;
     private int health;
     private int money;
+    private Observable observable;
 
     private static Game single_instance = null;
-    //private Updatable updatable;
+
 
     public static Game getInstance(){
         if(single_instance == null){
@@ -31,11 +32,14 @@ public class Game implements Updatable{
     }
 
     private void startGame(){
-        setValues();
-        Board b= new Board(mapNumber);
-        mapController = new MapController(this,b.getBoard());
 
-        //do update last
+        observable = new Observable();
+
+        Board b= new Board(mapNumber);
+        mapController = new MapController(this,b.getBoard(),observable);
+
+
+        setValues();
         update();
     }
     //sets values of health and money
@@ -65,7 +69,8 @@ public class Game implements Updatable{
         }
     }
     public void update(){
-        mapController.update(); //not good change later
+        observable.notifyAllObservers();
+        //mapController.update(); //not good change later
         //updatable.update();
 
     }
