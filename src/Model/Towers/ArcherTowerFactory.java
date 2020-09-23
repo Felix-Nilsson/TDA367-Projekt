@@ -1,14 +1,17 @@
 package Model.Towers;
 
 import Model.BaseCell;
+import Model.GroundCell;
 import Model.TerrainType;
+
 
 public class ArcherTowerFactory implements TowerFactory{
 
-    //temp
-    BaseCell baseCell= new BaseCell(1,1 , TerrainType.GROUND, false, 50, 50, "2aa84c");
-    public void createTower() {
+    @Override
+    public ArcherTower createTower(GroundCell cell) {
         //TODO Basecell
-        ArcherTower archerTower = new ArcherTower(baseCell,10,0,100,50,0.5);
+        ArcherTower archerTower = new ArcherTower(cell,10,0,100,50,0.5);
+        return archerTower;
     }
+
 }

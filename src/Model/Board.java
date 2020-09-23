@@ -1,5 +1,11 @@
 package Model;
 
+import Model.Towers.ArcherTower;
+import Model.Towers.ArcherTowerFactory;
+import Model.Towers.Tower;
+import View.MapController;
+
+
 import java.util.ArrayList;
 
 
@@ -9,9 +15,11 @@ public class Board {
     private  ArrayList<Cell> board;
     private int mapNumber;
 
+
     public Board(int mapNumber){
         this.mapNumber = mapNumber;
         createBoard();
+
     }
 
     private void createBoard(){
@@ -34,7 +42,14 @@ public class Board {
                     tempBoard.add(new WaterCell(i, j, false, 50, 50));
                 }
                 else if(map[j][i] == 3){
-                    tempBoard.add(new ObstacleCell(i, j, false, 50, 50));
+                    tempBoard.add(new ObstacleCell(i, j, true, 50, 50));
+                }
+                else if(map[j][i] == 4){
+                    //temp, example of adding a tower to a cell
+                    GroundCell cell = new GroundCell(i,j,false,50,50);
+                    ArcherTower archerTower = new ArcherTowerFactory().createTower(cell);
+
+                    tempBoard.add(cell);
                 }
             }
 
@@ -61,7 +76,7 @@ public class Board {
             {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
             {0,0,1,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0},
             {0,0,1,0,0,0,0,3,0,0,0,0,0,2,2,3,2,0,0,0,0,0,0,0,0,0},
-            {0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0},
+            {0,0,1,4,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0},
             {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
             {0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,2,2,2,2,2,2,2,1,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,1,2,2},
