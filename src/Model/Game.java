@@ -5,7 +5,7 @@ import Model.Towers.BaseTower;
 import Model.Towers.Tower;
 import View.MapController;
 
-public class Game {
+public class Game implements Updatable{
 
     private MapController mapController;
     private ArcherTower archerTower;
@@ -13,16 +13,23 @@ public class Game {
     private int mapNumber;
     private int health;
     private int money;
-    private Updatable updatable;
-    private Observable observable;
 
-    public Game(String difficulty, int mapNumber){
-        //Updatable updateTower = new BaseTower();
-        observable = new Observable();
+    private static Game single_instance = null;
+    //private Updatable updatable;
+
+    public static Game getInstance(){
+        if(single_instance == null){
+            single_instance = new Game("easy", 1);
+        }
+        return single_instance;
+    }
+
+    private Game (String difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         startGame();
     }
+
     private void startGame(){
         setValues();
         Board b= new Board(mapNumber);
@@ -81,4 +88,12 @@ public class Game {
     public void setMoney(int money) {
         this.money = money;
     }
+
+    public String getDifficulty() {return difficulty;}
+    
+    public void setDifficulty(String difficulty) {this.difficulty = difficulty;}
+
+    public int getMapNumber(){return mapNumber;}
+
+    public void setMapNumber(int mapNumber){this.mapNumber = mapNumber;}
 }
