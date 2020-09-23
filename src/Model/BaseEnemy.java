@@ -13,12 +13,12 @@ public class BaseEnemy implements Enemy{
     public enum Direction {NORTH,EAST,SOUTH,WEST}
 
     //TODO path ska finnas med som parameter i BaseEnemy. Då vet varje enemy hur de ska gå m.h.a. path, t.ex. EAST,EAST,SOUTH,SOUTH med 50 pixlar mellan varje.
-    //TODO update ska alltså innehålla en loop ska går igenom path-listan: if(positionX % 50 == 25), turn(path.get(stepNr)), stepNr=stepNr+1
+    //TODO update ska t.ex. kolla: if(positionX % 50 == 25), turn(path.get(stepNr)), stepNr=stepNr+1
     //TODO OBS! för att modulo-beräkningen ska fungera måste movementSpeed vara väldigt låg. Hitta bättre sätt.
     private ArrayList <Direction> path;
 
     protected Direction direction;
-//TODO ta bort Direction som param, path borde kompensera.
+
     public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
         this.health=health;
         this.movementSpeed=movementSpeed;

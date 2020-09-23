@@ -2,7 +2,7 @@ package Model;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+
 
 
 public class Board {
@@ -77,10 +77,6 @@ public class Board {
         }
         setBoard(tempBoard);
     }
-
-    LinkedHashMap <Point, BaseEnemy.Direction> array = new LinkedHashMap<>();
-    ArrayList<Integer> listX = new ArrayList<>();
-    ArrayList<Integer> listY = new ArrayList<>();
 
     // j och i är index för spawnet i första iterationen.
     public ArrayList<BaseEnemy.Direction> fillPath(int j, int i, int[][]map){
