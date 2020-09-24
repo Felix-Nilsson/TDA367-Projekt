@@ -33,7 +33,7 @@ public class SidebarController extends AnchorPane implements Observer {
     private MapController parentController;
 
     public SidebarController(Game game, Observable observable,MapController parentController) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Sidebar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {

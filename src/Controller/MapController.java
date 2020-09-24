@@ -44,7 +44,8 @@ public class MapController extends AnchorPane implements Observer {
 
     public MapController(Game game, ArrayList<Cell> map,Observable observable){
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
+        System.out.println(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
