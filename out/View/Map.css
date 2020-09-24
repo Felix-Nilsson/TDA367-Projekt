@@ -1,0 +1,19 @@
+.settingsBackground{
+    -fx-background-color:white;
+}
+.settingsButton{
+    -fx-border-width:1px;
+    -fx-border-color:white;
+}
+.continueButton{
+    -fx-background-color:green;
+}
+.restartButton{
+    -fx-background-color:blue;
+}
+.homeButton{
+    -fx-background-color:blue;
+}
+.exitButton{
+    -fx-background-color:red;
+}

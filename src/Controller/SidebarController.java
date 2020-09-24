@@ -55,7 +55,7 @@ public class SidebarController extends AnchorPane implements Observer {
         parentController.openSettings();
     }
 
-
+    
 
 
 
