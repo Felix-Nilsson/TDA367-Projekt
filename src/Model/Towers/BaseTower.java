@@ -4,6 +4,7 @@ import Model.BaseCell;
 
 import Model.GroundCell;
 
+import Model.UpdateModel;
 import javafx.scene.image.Image;
 
 
@@ -17,7 +18,9 @@ public class BaseTower implements Tower {
     private double attackSpeed;
     private Image towerImage;
 
-    public BaseTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    private UpdateModel updateModel;
+
+    public BaseTower(UpdateModel updateModel, GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
         this.position = position;
         this.physicalDmg = physicalDmg;
         this.magicDmg = magicDmg;
@@ -25,6 +28,7 @@ public class BaseTower implements Tower {
         this.range = range;
         this.attackSpeed = attackSpeed;
 
+        this.updateModel = updateModel;
 
         //Temp, example of tower setting the color to the cell
         position.setColor("000000");
