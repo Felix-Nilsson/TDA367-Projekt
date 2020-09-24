@@ -2,11 +2,14 @@ package Controller;
 
 import Model.*;
 import View.Observer;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -14,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -87,6 +92,29 @@ public class MapController extends AnchorPane implements Observer {
         mapAnchorPane.toFront();
     }
 
+    @FXML public void dragOver(){
+        gameBoardGrid.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+
+                if(dragEvent.getGestureSource() != gameBoardGrid && dragEvent.getDragboard().hasImage()){
+                    dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                }
+                dragEvent.consume();
+            }
+        });
+    }
+
+    @FXML public void onDragEntered(){
+        gameBoardGrid.setOnDragEntered(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                if(dragEvent.getGestureSource() != gameBoardGrid && dragEvent.getDragboard().hasImage()){
+                    
+                }
+            }
+        });
+    }
 
 }
 

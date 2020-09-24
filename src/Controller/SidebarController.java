@@ -3,14 +3,18 @@ package Controller;
 import Controller.MapController;
 import Model.Game;
 import Model.Observable;
+import Model.Towers.MageTower;
 import View.Observer;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+
 import java.io.IOException;
 
 
@@ -55,7 +59,21 @@ public class SidebarController extends AnchorPane implements Observer {
         parentController.openSettings();
     }
 
-    
+    @FXML private void dragTower(){
+        mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Dragboard db = startDragAndDrop(TransferMode.ANY);
+
+                ClipboardContent content = new ClipboardContent();
+                content.putImage(mageTower.getImage());
+
+                db.setContent(content);
+
+                mouseEvent.consume();
+            }
+        });
+    }
 
 
 
