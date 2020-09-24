@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.*;
-import View.Observer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;

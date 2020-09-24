@@ -1,7 +1,12 @@
 package Model;
 
-import View.Observer;
+import Controller.Observer;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +23,11 @@ public  class Observable {
     public void add(Observer observer){
         observers.add(observer);
     }
-    public void notifyAllObservers(){
+    public void notifyAllObservers() throws IOException {
         for(Observer observer : observers){
             observer.update();
         }
+
     }
 
 }

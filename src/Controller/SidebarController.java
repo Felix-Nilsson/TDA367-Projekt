@@ -1,9 +1,7 @@
 package Controller;
 
-import Controller.MapController;
 import Model.Game;
 import Model.Observable;
-import View.Observer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
