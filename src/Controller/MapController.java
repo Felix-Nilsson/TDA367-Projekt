@@ -1,10 +1,9 @@
-package View;
+package Controller;
 
 import Model.*;
+import View.Observer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -16,13 +15,10 @@ import javafx.scene.shape.Rectangle;
 
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 
-public class MapController extends AnchorPane implements Observer{
+public class MapController extends AnchorPane implements Observer {
     @FXML private GridPane gameBoardGrid;
     @FXML private Rectangle tile;
     @FXML private ImageView toolbarBackgroundImage;
@@ -40,10 +36,10 @@ public class MapController extends AnchorPane implements Observer{
 
 
 
-    private ArrayList<Cell> map;
-    private Game game;
+    private final ArrayList<Cell> map;
+    private final Game game;
     private SidebarController sidebarController;
-    private Observable observable;
+    private final Observable observable;
 
 
     public MapController(Game game, ArrayList<Cell> map,Observable observable){

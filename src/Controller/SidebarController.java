@@ -1,20 +1,20 @@
-package View;
+package Controller;
 
+import Controller.MapController;
 import Model.Game;
 import Model.Observable;
-import javafx.event.EventHandler;
+import View.Observer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import java.io.IOException;
 
 
-public class SidebarController extends AnchorPane implements Observer{
+public class SidebarController extends AnchorPane implements Observer {
     @FXML private ImageView sidebarBackground;
     @FXML private ImageView moneyIcon;
     @FXML private ImageView healthIcon;

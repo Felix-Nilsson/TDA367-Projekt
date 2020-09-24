@@ -1,11 +1,6 @@
 package Model;
 
 
-import Model.Towers.ArcherTower;
-import Model.Towers.ArcherTowerFactory;
-import Model.Towers.Tower;
-import View.MapController;
-
 import java.util.ArrayList;
 
 

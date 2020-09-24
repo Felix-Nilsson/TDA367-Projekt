@@ -1,6 +1,5 @@
 package Model;
 
-import View.MapController;
 import View.Observer;
 
 import java.util.ArrayList;

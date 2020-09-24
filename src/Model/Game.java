@@ -1,9 +1,9 @@
 package Model;
 
 import Model.Towers.ArcherTower;
-import Model.Towers.BaseTower;
-import Model.Towers.Tower;
-import View.MapController;
+import Controller.MapController;
+
+import java.util.ArrayList;
 
 public class Game implements Updatable{
 
@@ -15,6 +15,7 @@ public class Game implements Updatable{
     private int money;
     private Observable observable;
     private UpdateModel updateModel;
+    private Board b;
 
     private static Game single_instance = null;
 
@@ -36,12 +37,16 @@ public class Game implements Updatable{
         updateModel = new UpdateModel();
         observable = new Observable();
 
-        Board b= new Board(mapNumber);
-        mapController = new MapController(this,b.getBoard(),observable);
-
+         b= new Board(mapNumber);
 
         setValues();
         update();
+    }
+    public ArrayList<Cell> getBoard(){
+        return b.getBoard();
+    }
+    public Observable getObservable(){
+        return observable;
     }
     //sets values of health and money
     private void setValues(){
