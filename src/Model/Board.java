@@ -74,7 +74,7 @@ public class Board {
                 //skapar en path
                 else if(map[j][i] == 8){
                     tempBoard.add(new PathCell(i, j, false, 50, 50));
-                    System.out.println("j= " + (j*50 + 25) + ", i=" + (i*50 + 25));
+
                     fillPath(j,i,map);
                 }
             }

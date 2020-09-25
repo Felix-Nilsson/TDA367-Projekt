@@ -1,20 +1,17 @@
 package Model;
 
 import Model.Towers.ArcherTower;
-import Controller.MapController;
-
 import java.util.ArrayList;
 
 public class Game implements Updatable{
 
-    private MapController mapController;
     private ArcherTower archerTower;
     private String difficulty;
     private int mapNumber;
     private int health;
     private int money;
-    private Observable observable;
-    private UpdateModel updateModel;
+    private  final Observable observable;
+    private final UpdateModel updateModel;
     private Board b;
 
     private static Game single_instance = null;
@@ -22,7 +19,7 @@ public class Game implements Updatable{
 
     public static Game getInstance(){
         if(single_instance == null){
-            single_instance = new Game("easy", 1);
+            single_instance = new Game("easy", 1); //temp, change later
         }
         return single_instance;
     }
@@ -30,42 +27,40 @@ public class Game implements Updatable{
     private Game (String difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
+        observable = new Observable();
+        updateModel = new UpdateModel();
         startGame();
+
+
     }
+
 
     private void startGame(){
-        updateModel = new UpdateModel();
-        observable = new Observable();
 
-         b= new Board(mapNumber);
-
+        b= new Board(mapNumber);
         setValues();
+        update();
+    }
 
-    }
-    public ArrayList<Cell> getBoard(){
-        return b.getBoard();
-    }
-    public Observable getObservable(){
-        return observable;
-    }
+
     //sets values of health and money
     private void setValues(){
-        if(difficulty.equals("easy")){
-            setHealth(100);
-            setMoney(200);
-        }
-        else if(difficulty.equals("medium")){
-            setMoney(150);
-            setHealth(50);
-        }
-        else if(difficulty.equals("hard")){
-            setHealth(10);
-            setMoney(80);
+        switch (difficulty) {
+            case "easy":
+                setHealth(100);
+                setMoney(200);
+                break;
+            case "medium":
+                setMoney(150);
+                setHealth(50);
+                break;
+            case "hard":
+                setHealth(10);
+                setMoney(80);
+                break;
         }
     }
-    public MapController getMapController(){
-        return mapController;
-    }
+
 
     public void moveTower(String tower){
         if(tower.equals("archer")){
@@ -75,41 +70,33 @@ public class Game implements Updatable{
         }
     }
     public void update(){
-
             updateModel.notifyAllUpdatables();
             observable.notifyAllObservers();
 
-
-
-        //mapController.update(); //not good change later
-        //updatable.update();
-
     }
-    public void startRound(){
+    public void startRound(){}
 
+    public Observable getObservable(){
+        return observable;
     }
-
+    public ArrayList<Cell> getBoard(){
+        return b.getBoard();
+    }
+    public int getMapNumber(){return mapNumber;}
     public int getHealth() {
         return health;
     }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
     public int getMoney() {
         return money;
     }
+    public String getDifficulty() {return difficulty;}
 
     public void setMoney(int money) {
         this.money = money;
     }
-
-    public String getDifficulty() {return difficulty;}
-    
     public void setDifficulty(String difficulty) {this.difficulty = difficulty;}
-
-    public int getMapNumber(){return mapNumber;}
-
+    public void setHealth(int health) {
+        this.health = health;
+    }
     public void setMapNumber(int mapNumber){this.mapNumber = mapNumber;}
 }

@@ -11,6 +11,7 @@
     -fx-padding: 0;
 }
 .buttonMainMenu{
+
     -fx-background-color: -standard_red;
     -fx-opacity: 0.85;
     -fx-font-family: "Berlin Sans FB";
@@ -19,7 +20,15 @@
     -fx-padding: 0;
     -fx-cursor: hand;
 }
-
+.buttonMainMenuSmall{
+    -fx-font-size:22 px;
+}
+.buttonMainMenuLarge{
+    -fx-font-size: 36px;
+}
+.buttonMainMenu:hover{
+    -fx-background-color: -standard_blue;
+}
 
 
 

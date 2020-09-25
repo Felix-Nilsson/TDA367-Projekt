@@ -26,11 +26,10 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private GridPane gridPane;
     @FXML private Label money;
 
-    private Observable observable;
-    private Game game;
-    private MapController parentController;
+    private final Game game;
+    private final MapController parentController;
 
-    public SidebarController(Game game, Observable observable,MapController parentController) {
+    public SidebarController(Game game,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -40,9 +39,9 @@ public class SidebarController extends AnchorPane implements Observer {
             e.printStackTrace();
         }
         this.game = game;
-        this.observable = observable;
         this.parentController = parentController;
-        observable.add(this);
+        game.getObservable().add(this);
+
 
     }
     public void update(){

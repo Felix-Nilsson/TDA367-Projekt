@@ -36,8 +36,6 @@ public class MenuController implements Initializable {
     @FXML private AnchorPane options;
     @FXML private AnchorPane mapSelectionAnchorPane;
 
-    private MapController mapController;
-
     private String difficulty;
     private int mapNumber;
 
@@ -49,7 +47,6 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         activateRadioButtons();
         update();
-
     }
     private void activateRadioButtons(){
         radioButtonEasy.setToggleGroup(radioButtonGroupDifficulty);
@@ -65,30 +62,34 @@ public class MenuController implements Initializable {
 
     @FXML
     private void newGame(){
-        mapNumber = 1; //temp change later
-        Game game = Game.getInstance();
-        //playClickUIButtonSound();
+        playClickUIButtonSound();
 
-        mapController = new MapController(game,game.getBoard(),game.getObservable());
+        Game game = Game.getInstance();
+        game.setDifficulty(difficulty);
+        game.setMapNumber(mapNumber);
+
+        MapController mapController = new MapController(game,game.getBoard());
         map.toFront();
         map.getChildren().add(mapController);
+        game.update();
 
 
     }
-    @FXML
-    private void loadGame(){ }
-    @FXML
-    private void options(){
+    @FXML private void loadGame(){
+        playClickUIButtonSound();
+    }
+    @FXML private void options(){
+        playClickUIButtonSound();
         options.toFront();
     }
-    @FXML
-    private void mapSelection(){
+    @FXML private void mapSelection(){
+        playClickUIButtonSound();
         mapSelectionAnchorPane.toFront();
     }
-    @FXML
-    private void exitGame(){
-        System.exit(0);
+    @FXML private void backToMenu(){
+        mainMenuAnchorPane.toFront();
     }
+    @FXML private void exitGame(){ System.exit(0); }
 
     public void update(){
         if(radioButtonEasy.isSelected()){
@@ -157,18 +158,17 @@ public class MenuController implements Initializable {
         update();
     }
 
-    @FXML private void backToMenu(){
-        mainMenuAnchorPane.toFront();
-    }
-    /*
+
+
      private void playClickUIButtonSound(){
-        Media media = new Media(new File("click.mp3").toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-       mediaPlayer.play();
+         URL resource = getClass().getResource("/sound/click.mp3");
+         Media media = new Media(resource.toString());
+         MediaPlayer mediaPlayer = new MediaPlayer(media);
+         mediaPlayer.play();
 
     }
 
-     */
+
 
 
 
