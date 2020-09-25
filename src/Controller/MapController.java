@@ -81,6 +81,8 @@ public class MapController extends AnchorPane implements Observer {
         //add all cells to GUI
         for (Cell p: map) {
             Rectangle tile = new Rectangle(50,50);
+            tile.setX(p.getX());
+            tile.setY(p.getY());
             tile.setFill(Color.web(p.getColor()));
             tile.setStroke(Color.BLACK);
             gameBoardGrid.add(tile, p.getX(), p.getY());
@@ -147,18 +149,41 @@ public class MapController extends AnchorPane implements Observer {
                     y_placement = rIndex == null ? 0 : rIndex;
                     //Place the image in the cell
                     ImageView image = new ImageView(db.getImage());
-                    gameBoardGrid.add(image, x_placement, y_placement );
+                    gameBoardGrid.add(image, x_placement, y_placement ); //ADDS ANOTHER ONE ON THE END, DOES NOT REPLACE
+
+                    System.out.println(x_placement + " " + y_placement);
 
 
-                    //TODO Update the cell with the tower
+                    //TODO Update the cell with the tower MIGHT MAKE METHOD
+                    setTowerOnCell(x_placement, y_placement);
+
                 }
 
-                System.out.println(x_placement + " " + y_placement);
+
                 dragEvent.setDropCompleted(true);
                 dragEvent.consume();
             }
         });
     }
 
+    private void setTowerOnCell(int x, int y){
+        for(Node grid_node : gameBoardGrid.getChildren()){
+            //System.out.println(GridPane.getColumnIndex(grid_node));
+            if(GridPane.getColumnIndex(grid_node) == y_placement && GridPane.getRowIndex(grid_node) == x_placement){
+                //System.out.println(map.toString());
+            }
+        }
+    }
+    /*
+    private Cell getCell(){
+        for(int row = 0; row <26; row++){
+            for(int col = 0; col < 18; col++){
+
+            }
+        }
+    }
+
+
+     */
 }
 
