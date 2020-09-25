@@ -1,18 +1,16 @@
-package View;
+package Controller;
 
 import Model.Game;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import View.MapController;
+import Controller.MapController;
 
 public class MenuController implements Initializable {
 
@@ -65,10 +63,10 @@ public class MenuController implements Initializable {
     @FXML
     private void newGame(){
         mapNumber = 1; //temp change later
-
         Game game = Game.getInstance();
+
+        mapController = new MapController(game,game.getBoard(),game.getObservable());
         map.toFront();
-        mapController = game.getMapController();
         map.getChildren().add(mapController);
 
     }
