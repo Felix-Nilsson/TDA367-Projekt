@@ -5,9 +5,11 @@ import java.util.List;
 
 public class WaveManager {
     ArrayList<BaseEnemy.Direction> path;
+    int round;
 
-    public WaveManager(ArrayList<BaseEnemy.Direction> path) {
+    public WaveManager(ArrayList<BaseEnemy.Direction> path, int round) {
         this.path = path;
+        this.round = round;
     }
     //Difficulty difficulty;
 
@@ -27,10 +29,10 @@ public class WaveManager {
     }
 
     private List<Enemy> createWave(){
-
         List<Enemy> wave = new ArrayList<>();
-
-        wave.addAll(enemyCreator(5,"BlueEnemy"));
+        wave.addAll(enemyCreator(5 + (round*2),"BlueEnemy"));
+        //wave.addAll(enemyCreator(((round - 1) * 2),"RedEnemy"));
+        //wave.addAll(enemyCreator(((round - 3) * 2),"GreenEnemy"));
         return wave;
     }
 
