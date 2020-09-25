@@ -135,9 +135,11 @@ public class MapController extends AnchorPane implements Observer {
         gameBoardGrid.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
+
                 Dragboard db = dragEvent.getDragboard();
                 Node node = dragEvent.getPickResult().getIntersectedNode();
                 if(node != gameBoardGrid && db.hasImage()){
+
                     //Find Cell to place the tower
                     Integer cIndex = GridPane.getColumnIndex(node);
                     Integer rIndex = GridPane.getRowIndex(node);
@@ -146,6 +148,7 @@ public class MapController extends AnchorPane implements Observer {
                     //Place the image in the cell
                     ImageView image = new ImageView(db.getImage());
                     gameBoardGrid.add(image, x_placement, y_placement );
+
 
                     //TODO Update the cell with the tower
                 }
