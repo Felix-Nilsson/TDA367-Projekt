@@ -23,7 +23,7 @@ public  class Observable {
     public void add(Observer observer){
         observers.add(observer);
     }
-    public void notifyAllObservers() throws IOException {
+    public void notifyAllObservers()  {
         for(Observer observer : observers){
             observer.update();
         }

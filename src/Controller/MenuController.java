@@ -8,9 +8,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
+
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import Controller.MapController;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class MenuController implements Initializable {
 
@@ -64,10 +67,12 @@ public class MenuController implements Initializable {
     private void newGame(){
         mapNumber = 1; //temp change later
         Game game = Game.getInstance();
+        //playClickUIButtonSound();
 
         mapController = new MapController(game,game.getBoard(),game.getObservable());
         map.toFront();
         map.getChildren().add(mapController);
+
 
     }
     @FXML
@@ -94,6 +99,15 @@ public class MenuController implements Initializable {
         }
         else if(radioButtonHard.isSelected()){
             difficulty = "hard";
+        }
+        if(radioButtonMap1.isSelected()){
+            mapNumber = 1;
+        }
+        else if(radioButtonMap2.isSelected()){
+            mapNumber = 2;
+        }
+        else if(radioButtonMap3.isSelected()){
+            mapNumber = 3;
         }
     }
 
@@ -146,6 +160,15 @@ public class MenuController implements Initializable {
     @FXML private void backToMenu(){
         mainMenuAnchorPane.toFront();
     }
+    /*
+     private void playClickUIButtonSound(){
+        Media media = new Media(new File("click.mp3").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+       mediaPlayer.play();
+
+    }
+
+     */
 
 
 

@@ -40,7 +40,7 @@ public class Game implements Updatable{
          b= new Board(mapNumber);
 
         setValues();
-        update();
+
     }
     public ArrayList<Cell> getBoard(){
         return b.getBoard();
@@ -78,6 +78,7 @@ public class Game implements Updatable{
 
             updateModel.notifyAllUpdatables();
             observable.notifyAllObservers();
+
 
 
         //mapController.update(); //not good change later
