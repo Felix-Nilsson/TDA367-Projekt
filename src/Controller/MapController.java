@@ -2,19 +2,24 @@ package Controller;
 
 import Model.*;
 import View.Observer;
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.w3c.dom.ls.LSOutput;
 
 
 import java.awt.*;
@@ -40,11 +45,12 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane mapAnchorPane;
 
 
-
     private final ArrayList<Cell> map;
     private final Game game;
     private SidebarController sidebarController;
     private final Observable observable;
+    private int x_placement;
+    private int y_placement;
 
 
     public MapController(Game game, ArrayList<Cell> map,Observable observable){
@@ -96,8 +102,7 @@ public class MapController extends AnchorPane implements Observer {
         gameBoardGrid.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-
-                if(dragEvent.getGestureSource() != gameBoardGrid && dragEvent.getDragboard().hasImage()){
+                if(dragEvent.getGestureSource() != gameBoardGrid){
                     dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
                 }
                 dragEvent.consume();
@@ -109,9 +114,45 @@ public class MapController extends AnchorPane implements Observer {
         gameBoardGrid.setOnDragEntered(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-                if(dragEvent.getGestureSource() != gameBoardGrid && dragEvent.getDragboard().hasImage()){
-                    
+                //TODO add a image to the cell that is hovered over
+            }
+
+
+
+        });
+    }
+
+    @FXML public void onDragExited(){
+        gameBoardGrid.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                //TODO Remove the image from the cell when the hover leaves
+            }
+        });
+    }
+
+    @FXML public void onDragDropped(){
+        gameBoardGrid.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                Dragboard db = dragEvent.getDragboard();
+                Node node = dragEvent.getPickResult().getIntersectedNode();
+                if(node != gameBoardGrid && db.hasImage()){
+                    //Find Cell to place the tower
+                    Integer cIndex = GridPane.getColumnIndex(node);
+                    Integer rIndex = GridPane.getRowIndex(node);
+                    x_placement = cIndex == null ? 0 : cIndex;
+                    y_placement = rIndex == null ? 0 : rIndex;
+                    //Place the image in the cell
+                    ImageView image = new ImageView(db.getImage());
+                    gameBoardGrid.add(image, x_placement, y_placement );
+
+                    //TODO Update the cell with the tower
                 }
+
+                System.out.println(x_placement + " " + y_placement);
+                dragEvent.setDropCompleted(true);
+                dragEvent.consume();
             }
         });
     }

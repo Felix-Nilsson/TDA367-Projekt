@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -64,12 +65,11 @@ public class SidebarController extends AnchorPane implements Observer {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Dragboard db = startDragAndDrop(TransferMode.ANY);
-
                 ClipboardContent content = new ClipboardContent();
-                content.putImage(mageTower.getImage());
+                Image tempIMG = new Image("/img/mageTower.png", 40, 40, false, false, false);
 
+                content.putImage(tempIMG);
                 db.setContent(content);
-
                 mouseEvent.consume();
             }
         });
