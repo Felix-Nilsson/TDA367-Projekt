@@ -16,7 +16,7 @@ public class Game implements Updatable{
 
     private static Game single_instance = null;
 
-
+    //TODO remove singleton
     public static Game getInstance(){
         if(single_instance == null){
             single_instance = new Game("easy", 1); //temp, change later
@@ -31,7 +31,10 @@ public class Game implements Updatable{
         updateModel = new UpdateModel();
         startGame();
 
-
+        run();
+    }
+    private void run(){
+        updateModel.notifyAllUpdatables();
     }
 
 
@@ -70,7 +73,7 @@ public class Game implements Updatable{
         }
     }
     public void update(){
-            updateModel.notifyAllUpdatables();
+
             observable.notifyAllObservers();
 
     }
