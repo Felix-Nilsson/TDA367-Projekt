@@ -72,6 +72,7 @@ public class MapController extends AnchorPane implements Observer {
 
         //EventHandlers
 
+        //When dragged over GridPane
         gameBoardGrid.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
@@ -82,6 +83,7 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
+        //When entering a node in GridPane
         gameBoardGrid.setOnDragEntered(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
@@ -89,6 +91,7 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
+        //When exiting a node in GridPane
         gameBoardGrid.setOnDragExited(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
@@ -96,6 +99,7 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
+        //Upon releasing the mouse over a specific node
         gameBoardGrid.setOnDragDropped(new EventHandler<DragEvent>() {
 
             @Override
@@ -104,20 +108,31 @@ public class MapController extends AnchorPane implements Observer {
                 Dragboard db = dragEvent.getDragboard();
                 Node node = dragEvent.getPickResult().getIntersectedNode();
 
+
+
                 if(node != gameBoardGrid && db.hasImage()){
+
+
 
                     //Find Cell to place the tower
                     Integer cIndex = GridPane.getColumnIndex(node);
                     Integer rIndex = GridPane.getRowIndex(node);
                     x_placement = cIndex == null ? 0 : cIndex;
                     y_placement = rIndex == null ? 0 : rIndex;
+
+                    //Check if the cell is available
+                    int index = game.getArrayIndex(x_placement, y_placement);
+                    boolean occupied = game.isCellOccupied(index);
+                   
+
+
                     //Place the image in the cell
                     ImageView image = new ImageView(db.getImage());
                     gameBoardGrid.add(image, x_placement, y_placement ); // Just adds an image to the gridpane grid
 
                     //TODO Update the cell with the tower MIGHT MAKE METHOD
-                    int index = game.getArrayIndex(x_placement, y_placement);
-                    setTowerOnCell(index);
+
+                    setTowerOnCell(index); //TODO futher down
 
                 }
 

@@ -121,5 +121,13 @@ public class Game implements Updatable{
         return 0;
     }
 
-    
+    public boolean isCellOccupied(int index){
+        return b.isCellOccupied(index);
+    }
+
+    public void updateArrayWithTower(int index){
+
+    }
+
+
 }

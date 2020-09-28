@@ -56,7 +56,7 @@ public class Board {
                     tempBoard.add(new GroundCell(i,j, false, 50, 50));
                 }
                 else if(map[j][i] == 1){
-                    tempBoard.add(new PathCell(i, j, false, 50, 50));
+                    tempBoard.add(new PathCell(i, j, true, 50, 50));
                 }
                 else if(map[j][i] == 2){
                     tempBoard.add(new WaterCell(i, j, false, 50, 50));
@@ -133,6 +133,10 @@ public class Board {
         }
         public int getBOARD_HEIGHT(){
             return this.BOARD_HEIGHT;
+        }
+
+        public boolean isCellOccupied(int index){
+            return board.get(index).isOccupied();
         }
     }
 
