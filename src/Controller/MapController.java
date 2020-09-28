@@ -104,15 +104,10 @@ public class MapController extends AnchorPane implements Observer {
 
             @Override
             public void handle(DragEvent dragEvent) {
-                System.out.println("hej");
                 Dragboard db = dragEvent.getDragboard();
                 Node node = dragEvent.getPickResult().getIntersectedNode();
 
-
-
                 if(node != gameBoardGrid && db.hasImage()){
-
-
 
                     //Find Cell to place the tower
                     Integer cIndex = GridPane.getColumnIndex(node);
@@ -123,16 +118,19 @@ public class MapController extends AnchorPane implements Observer {
                     //Check if the cell is available
                     int index = game.getArrayIndex(x_placement, y_placement);
                     boolean occupied = game.isCellOccupied(index);
-                   
+                    if(occupied == false){
+                        //Place the image in the cell
+                        ImageView image = new ImageView(db.getImage());
+                        gameBoardGrid.add(image, x_placement, y_placement ); // Just adds an image to the gridpane grid
+
+                        setTowerOnCell(index); //TODO futher down
+                    }
+                    else{
+                        //TODO Some sort of error or could just leave it empty
+                    }
 
 
-                    //Place the image in the cell
-                    ImageView image = new ImageView(db.getImage());
-                    gameBoardGrid.add(image, x_placement, y_placement ); // Just adds an image to the gridpane grid
 
-                    //TODO Update the cell with the tower MIGHT MAKE METHOD
-
-                    setTowerOnCell(index); //TODO futher down
 
                 }
 
@@ -172,8 +170,8 @@ public class MapController extends AnchorPane implements Observer {
     }
 
 
-    private void setTowerOnCell(int index){
-        //TODO Set Tower on the specified cell, should be done in Game
+    private void setTowerOnCell(int index/*Tower tower */){
+        //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
     }
 
 }

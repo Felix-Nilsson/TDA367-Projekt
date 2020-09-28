@@ -138,6 +138,10 @@ public class Board {
         public boolean isCellOccupied(int index){
             return board.get(index).isOccupied();
         }
+
+        public void setCellOccupied(int index){
+            board.get(index).setOccupiedTrue();
+        }
     }
 
 

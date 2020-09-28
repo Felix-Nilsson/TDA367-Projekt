@@ -106,8 +106,6 @@ public class Game implements Updatable{
 
     public int getArrayIndex(int x_placement, int y_placement){
         int placeInArray = 0;
-        System.out.println("x" + x_placement);
-        System.out.println("y" + y_placement);
         for(int i =0; i < b.getBOARD_WIDTH(); i++){
             for(int j = 0; j < b.getBOARD_HEIGHT(); j++){
                 if(i == x_placement && j == y_placement){
@@ -125,8 +123,12 @@ public class Game implements Updatable{
         return b.isCellOccupied(index);
     }
 
-    public void updateArrayWithTower(int index){
+    public void setCellOccupied(int index){
+        b.setCellOccupied(index);
+    }
 
+    public void updateArrayWithTower(int index){
+        //TODO update cell to occupied
     }
 
 

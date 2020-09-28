@@ -36,5 +36,15 @@ public class GroundCell implements Cell{
         return base.getY();
     }
 
+    @Override
+    public void setOccupiedTrue() {
+        base.setOccupiedTrue();
+    }
+
+    @Override
+    public void setOccupiedFalse() {
+        base.setOccupiedFalse();
+    }
+
     public void setColor(String s){base.setColor(s);}
 }
