@@ -149,7 +149,7 @@ public class MapController extends AnchorPane implements Observer {
                     y_placement = rIndex == null ? 0 : rIndex;
                     //Place the image in the cell
                     ImageView image = new ImageView(db.getImage());
-                    gameBoardGrid.add(image, x_placement, y_placement ); //ADDS ANOTHER ONE ON THE END, DOES NOT REPLACE
+                    gameBoardGrid.add(image, x_placement, y_placement ); // Just adds an image to the gridpane grid
 
                     System.out.println(x_placement + " " + y_placement);
 
