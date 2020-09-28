@@ -9,12 +9,11 @@ import javafx.scene.image.Image;
 
 public class MageTower implements Tower {
     private BaseTower baseTower ;
-    private UpdateModel updateModel;
+
 
     public MageTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
-        this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed);
+        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/mageTower.png");
-        this.updateModel = updateModel;
         updateModel.add(this);
     }
 

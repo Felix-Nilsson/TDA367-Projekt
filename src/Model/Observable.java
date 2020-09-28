@@ -1,12 +1,11 @@
 package Model;
 
-import View.Observer;
-
+import Controller.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class Observable {
-    private List<Observer> observers = new ArrayList<Observer>();
+public final class Observable {
+    private final List<Observer> observers = new ArrayList<Observer>();
     private int state;
 
     public int getState(){
@@ -18,10 +17,11 @@ public  class Observable {
     public void add(Observer observer){
         observers.add(observer);
     }
-    public void notifyAllObservers(){
+    public void notifyAllObservers()  {
         for(Observer observer : observers){
             observer.update();
         }
+
     }
 
 }

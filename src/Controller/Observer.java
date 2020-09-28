@@ -1,6 +1,4 @@
-package View;
-
-import Model.Observable;
+package Controller;
 
 public interface Observer {
     void update();

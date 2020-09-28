@@ -1,11 +1,13 @@
 package Controller;
 
-import Controller.MapController;
 import Model.Game;
 import Model.Observable;
+
 import Model.Towers.MageTower;
 import View.Observer;
 import javafx.event.EventHandler;
+
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -33,11 +35,10 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private GridPane gridPane;
     @FXML private Label money;
 
-    private Observable observable;
-    private Game game;
-    private MapController parentController;
+    private final Game game;
+    private final MapController parentController;
 
-    public SidebarController(Game game, Observable observable,MapController parentController) {
+    public SidebarController(Game game,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -47,9 +48,9 @@ public class SidebarController extends AnchorPane implements Observer {
             e.printStackTrace();
         }
         this.game = game;
-        this.observable = observable;
         this.parentController = parentController;
-        observable.add(this);
+        game.getObservable().add(this);
+
 
     }
     public void update(){

@@ -10,6 +10,7 @@ public class Board {
     private int BOARD_HEIGHT = 18;
     private  ArrayList<Cell> board;
     private int mapNumber;
+    private final ArrayList<BaseEnemy.Direction> path = new ArrayList<>();
 
 
     private int[][] map_1= {
@@ -65,14 +66,16 @@ public class Board {
                 }
                 else if(map[j][i] == 4){
                     //temp, example of adding a tower to a cell
-                    GroundCell cell = new GroundCell(i,j,false,50,50);
-                   // ArcherTower archerTower = new ArcherTowerFactory().createTower(cell);
+                    //GroundCell cell = new GroundCell(i,j,false,50,50);
+                    //ArcherTower archerTower = new ArcherTowerFactory().createTower(cell,);
 
-                    tempBoard.add(cell);
+                    //tempBoard.add(cell);
                 }
+                //skapar en path
                 else if(map[j][i] == 8){
                     tempBoard.add(new PathCell(i, j, false, 50, 50));
-                    System.out.println("j= " + (j*50 + 25) + ", i=" + (i*50 + 25));
+
+                    fillPath(j,i,map);
                 }
             }
 
@@ -88,10 +91,13 @@ public class Board {
     private void setBoard(ArrayList<Cell> board) {
         this.board = board;
     }
+    public ArrayList<BaseEnemy.Direction> getPath(){
+        return path;
+    }
 
     // j och i är index för spawnet i första iterationen.
-    public ArrayList<BaseEnemy.Direction> fillPath(int j, int i, int[][]map){
-        ArrayList<BaseEnemy.Direction> path = new ArrayList<>();
+    private void fillPath(int j, int i, int[][]map){
+
         //sätter start direction till EAST för att enemies antagligen aldrig börjar åka åt vänster så while-loopen fungerar
         BaseEnemy.Direction prevDir = BaseEnemy.Direction.EAST;
         while(i+1<BOARD_WIDTH){
@@ -120,7 +126,6 @@ public class Board {
                     i=i-1;
                 }
             }
-        return path;
         }
     }
 

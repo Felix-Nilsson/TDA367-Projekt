@@ -45,6 +45,7 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane mapAnchorPane;
 
 
+
     private final ArrayList<Cell> map;
     private final Game game;
     private SidebarController sidebarController;
@@ -54,9 +55,12 @@ public class MapController extends AnchorPane implements Observer {
 
 
     public MapController(Game game, ArrayList<Cell> map,Observable observable){
+    private final ArrayList<Cell> map;
+    private final Game game;
 
+
+    public MapController(Game game, ArrayList<Cell> map) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
-        System.out.println(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -66,16 +70,14 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
-        this.observable = observable;
+        game.getObservable().add(this);
 
-
-        observable.add(this);
         createMap();
     }
 
     public void createMap(){
         //add sidebar fxml
-        sidebarController = new SidebarController(game,observable,this);
+        SidebarController sidebarController = new SidebarController(game,this);
         sidebar.getChildren().add(sidebarController);
 
         //add all cells to GUI
@@ -89,8 +91,7 @@ public class MapController extends AnchorPane implements Observer {
         }
     }
     public void update(){
-        System.out.println("update mapcontroller");
-        //sidebarController.update();
+
     }
     public void openSettings(){
         settingsPane.toFront();

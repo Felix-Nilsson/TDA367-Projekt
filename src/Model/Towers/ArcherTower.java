@@ -12,15 +12,14 @@ import javafx.scene.image.Image;
 public class ArcherTower implements Tower {
 
     private BaseTower baseTower ;
-    private UpdateModel updateModel;
 
 
-    public ArcherTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, UpdateModel updateModel) {
+    public ArcherTower(UpdateModel updateModel,GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
 
-        this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed);
+        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/archerTower.png");
         baseTower.setColor("000000");
-        this.updateModel = updateModel;
+
         updateModel.add(this);
 
     }
