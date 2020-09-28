@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="152.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Toolbar">
    <children>
-      <Label fx:id="towername" layoutX="5.0" layoutY="9.0" prefHeight="30.0" prefWidth="144.0" text="[tower name here]" />
-      <ImageView fitHeight="97.0" fitWidth="128.0" layoutX="14.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="towerLabel" layoutX="14.0" layoutY="7.0" prefHeight="30.0" prefWidth="144.0" text="[tower name here]" />
+      <ImageView fx:id="towerImageView" fitHeight="97.0" fitWidth="128.0" layoutX="14.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
