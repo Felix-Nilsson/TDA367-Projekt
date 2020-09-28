@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.*;
-import View.Observer;
+//import View.Observer;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -49,14 +49,10 @@ public class MapController extends AnchorPane implements Observer {
     private final ArrayList<Cell> map;
     private final Game game;
     private SidebarController sidebarController;
-    private final Observable observable;
+    //private final Observable observable;
     private int x_placement;
     private int y_placement;
 
-
-    public MapController(Game game, ArrayList<Cell> map,Observable observable){
-    private final ArrayList<Cell> map;
-    private final Game game;
 
 
     public MapController(Game game, ArrayList<Cell> map) {
@@ -152,11 +148,9 @@ public class MapController extends AnchorPane implements Observer {
                     ImageView image = new ImageView(db.getImage());
                     gameBoardGrid.add(image, x_placement, y_placement ); // Just adds an image to the gridpane grid
 
-                    System.out.println(x_placement + " " + y_placement);
-
-
                     //TODO Update the cell with the tower MIGHT MAKE METHOD
-                    setTowerOnCell(x_placement, y_placement);
+                    int index = game.getArrayIndex(x_placement, y_placement);
+                    setTowerOnCell(index);
 
                 }
 
@@ -167,13 +161,8 @@ public class MapController extends AnchorPane implements Observer {
         });
     }
 
-    private void setTowerOnCell(int x, int y){
-        for(Node grid_node : gameBoardGrid.getChildren()){
-            //System.out.println(GridPane.getColumnIndex(grid_node));
-            if(GridPane.getColumnIndex(grid_node) == y_placement && GridPane.getRowIndex(grid_node) == x_placement){
-                //System.out.println(map.toString());
-            }
-        }
+    private void setTowerOnCell(int index){
+
     }
     /*
     private Cell getCell(){

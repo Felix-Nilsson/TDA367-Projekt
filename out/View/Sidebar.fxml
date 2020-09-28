@@ -33,7 +33,7 @@
                   <Image url="@../img/archerTower.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="mageTower" fitHeight="112.0" fitWidth="128.0" onDragDetected="#dragTower" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mageTower" fitHeight="112.0" fitWidth="128.0" onMousePressed="#dragTower" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/mageTower.png" />
                </image>

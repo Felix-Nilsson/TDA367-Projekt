@@ -127,6 +127,13 @@ public class Board {
                 }
             }
         }
+
+        public int getBOARD_WIDTH(){
+            return this.BOARD_WIDTH;
+        }
+        public int getBOARD_HEIGHT(){
+            return this.BOARD_HEIGHT;
+        }
     }
 
 

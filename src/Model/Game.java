@@ -102,4 +102,22 @@ public class Game implements Updatable{
         this.health = health;
     }
     public void setMapNumber(int mapNumber){this.mapNumber = mapNumber;}
+
+
+    public int getArrayIndex(int x_placement, int y_placement){
+        int placeInArray = 0;
+        System.out.println("x" + x_placement);
+        System.out.println("y" + y_placement);
+        for(int i =0; i < b.getBOARD_WIDTH(); i++){
+            for(int j = 0; j < b.getBOARD_HEIGHT(); j++){
+                if(i == x_placement && j == y_placement){
+                    return placeInArray;
+                }
+                placeInArray++;
+            }
+        }
+
+        //TODO Replace with exception
+        return 0;
+    }
 }

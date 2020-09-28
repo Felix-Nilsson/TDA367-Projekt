@@ -4,7 +4,8 @@ import Model.Game;
 import Model.Observable;
 
 import Model.Towers.MageTower;
-import View.Observer;
+//import View.Observer;
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.event.EventHandler;
 
 
@@ -17,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 
@@ -61,6 +63,8 @@ public class SidebarController extends AnchorPane implements Observer {
         parentController.openSettings();
     }
 
+
+
     @FXML private void dragTower(){
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -68,7 +72,6 @@ public class SidebarController extends AnchorPane implements Observer {
                 Dragboard db = startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 Image tempIMG = new Image("/img/mageTower.png", 40, 40, false, false, false);
-
                 content.putImage(tempIMG);
                 db.setContent(content);
                 mouseEvent.consume();
