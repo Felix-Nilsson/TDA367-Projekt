@@ -53,19 +53,6 @@ public class SidebarController extends AnchorPane implements Observer {
         this.parentController = parentController;
         game.getObservable().add(this);
 
-
-    }
-    public void update(){
-        money.setText(""+ game.getMoney());
-        health.setText(""+ game.getHealth());
-    }
-    @FXML private void settings(){
-        parentController.openSettings();
-    }
-
-
-
-    @FXML private void dragTower(){
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -78,6 +65,16 @@ public class SidebarController extends AnchorPane implements Observer {
             }
         });
     }
+    public void update(){
+        money.setText(""+ game.getMoney());
+        health.setText(""+ game.getHealth());
+    }
+    @FXML private void settings(){
+        parentController.openSettings();
+    }
+
+
+
 
 
 
