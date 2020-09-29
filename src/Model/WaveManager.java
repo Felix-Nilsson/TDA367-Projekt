@@ -6,10 +6,13 @@ import java.util.List;
 public class WaveManager {
     ArrayList<BaseEnemy.Direction> path;
     int round;
+    Difficulty difficulty;
 
-    public WaveManager(ArrayList<BaseEnemy.Direction> path, int round) {
+    public WaveManager(ArrayList<BaseEnemy.Direction> path, int round, Difficulty difficulty) {
         this.path = path;
         this.round = round;
+        this.difficulty = difficulty;
+
     }
     //Difficulty difficulty;
 
@@ -22,8 +25,20 @@ public class WaveManager {
 
     private List<Enemy> enemyCreator(int amount, String choice){
         List<Enemy> enemies = new ArrayList<>();
-        for (int i = 0; i < amount; i++){
-            enemies.add(getEnemyFactory(choice).createEnemyEasy(path));
+        if (difficulty == Difficulty.EASY){
+            for (int i = 0; i < amount; i++){
+                enemies.add(getEnemyFactory(choice).createEnemyEasy(path));
+            }
+        }
+        else if (difficulty == Difficulty.MEDIUM){
+            for (int i = 0; i < amount; i++){
+                enemies.add(getEnemyFactory(choice).createEnemyMedium(path));
+            }
+        }
+        if (difficulty == Difficulty.HARD){
+            for (int i = 0; i < amount; i++){
+                enemies.add(getEnemyFactory(choice).createEnemyHard(path));
+            }
         }
         return enemies;
     }
