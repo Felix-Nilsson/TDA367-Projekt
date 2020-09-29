@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Game;
+import Model.Observable;
 import Model.Towers.ArcherTower;
 import Model.Towers.Tower;
 import javafx.fxml.FXML;
@@ -38,6 +39,7 @@ public class ToolbarController extends AnchorPane implements Observer {
 
     private final Game game;
     private final MapController parentController;
+    private final Observable observable;
 
     private ArcherTower tower; // temp should be more general
 
@@ -52,7 +54,7 @@ public class ToolbarController extends AnchorPane implements Observer {
         }
         this.game = game;
         this.parentController = parentController;
-        game.getObservable().add(this);
+        this.observable = new Observable();
 
         init();
     }
