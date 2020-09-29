@@ -32,7 +32,7 @@ public class Observable implements Observer{
         for(Observer observer : observers){
             observer.update();
         }
-        System.out.println(observers.toString());
+
 
     }
 

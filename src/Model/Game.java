@@ -4,6 +4,7 @@ package Model;
 import Controller.Observer;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Game implements Updatable{
 
@@ -14,6 +15,8 @@ public class Game implements Updatable{
     private final Observable observable;
     private final UpdateModel updateModel;
     private final Board b;
+    private boolean running = false;
+    public Thread gameLoopThread;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -21,17 +24,46 @@ public class Game implements Updatable{
         observable = new Observable();
         updateModel = new UpdateModel();
         b= new Board(mapNumber);
-
-        run();
-
-    }
-    private void run(){
         setValues();
 
-        for (int i = 0; i<20; i++){
+    }
+    public void startGame(){
+        running = true;
+        run();
+    }
+    private void run(){
 
+        gameLoopThread = new Thread(()-> {
+            int seconds = 0;
+           while(running){
+
+               update();
+               try {
+                   Thread.sleep(1000);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+
+               System.out.println("running for: "+ seconds + " seconds");
+               seconds++;
+           }
+        });
+        gameLoopThread.setDaemon(true);
+        gameLoopThread.start();
+
+
+    }
+    public void nextRound(){
+
+    }
+    private void delay(int seconds){
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
+
 
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
@@ -40,16 +72,14 @@ public class Game implements Updatable{
         return this.observable.removeObserver(observer);
     }
 
-    public void nextRound(){
 
-    }
 
-    public void startGame(){
 
-    }
     public void update(){
+
         observable.update();
         updateModel.update();
+
     }
 
 
