@@ -17,7 +17,7 @@
     <children>
       <AnchorPane fx:id="settingsPane" prefHeight="768.0" prefWidth="1366.0">
          <children>
-            <AnchorPane fx:id="settingsShadowPane" onMouseClicked="#openMap" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: black; -fx-opacity: 0.4;" />
+            <AnchorPane fx:id="settingsShadowPane" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: black; -fx-opacity: 0.4;" />
             <AnchorPane fx:id="settings" layoutX="200.0" layoutY="100.0" prefHeight="568.0" prefWidth="966.0" styleClass="settingsBackground">
                <children>
                   <Button fx:id="continueButton" layoutX="792.0" layoutY="353.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="129.0">
@@ -193,7 +193,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <AnchorPane fx:id="toolbarAnchorPane" layoutX="277.0" layoutY="629.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: white;" />
+            <AnchorPane fx:id="toolbarAnchorPane" layoutX="287.0" layoutY="625.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: white;" />
          </children>
       </AnchorPane>
     </children>
