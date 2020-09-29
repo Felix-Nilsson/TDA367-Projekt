@@ -1,3 +1,7 @@
+.root{
+    -standard_red: #e60000;
+    -standard_blue:#1dccc5;
+}
 .settingsBackground{
     -fx-background-color:white;
 }

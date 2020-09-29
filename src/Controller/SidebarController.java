@@ -26,6 +26,9 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private GridPane gridPane;
     @FXML private Label money;
 
+    @FXML private Button toolbarTestButton; //remove later, just for testing
+    @FXML private AnchorPane toolbar;
+
     private final Game game;
     private final MapController parentController;
 
@@ -50,6 +53,11 @@ public class SidebarController extends AnchorPane implements Observer {
     }
     @FXML private void settings(){
         parentController.openSettings();
+    }
+
+    @FXML
+    public void toolbarButtonOnclick(){
+        toolbar.toFront();
     }
 
 

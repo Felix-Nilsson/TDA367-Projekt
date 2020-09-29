@@ -11,20 +11,20 @@
          <image>
             <Image url="@../../../../../Downloads/towerimg.png" />
          </image></ImageView>
-      <Label layoutX="297.0" layoutY="118.0" text="[left upgrade cost]" />
-      <Label layoutX="452.0" layoutY="118.0" text="[right upgrade cost]" />
-      <Label layoutX="121.0" layoutY="46.0" prefHeight="18.0" prefWidth="74.0" text="Attack: 0" />
-      <Label layoutX="121.0" layoutY="65.0" prefHeight="18.0" prefWidth="74.0" text="Magic: 0" />
-      <Label layoutX="121.0" layoutY="83.0" prefHeight="18.0" prefWidth="74.0" text="Range: 0" />
-      <RadioButton layoutX="199.0" layoutY="46.0" mnemonicParsing="false" text="First">
+      <Label fx:id="leftUpgradeCostLabel" layoutX="297.0" layoutY="118.0" text="[left upgrade cost]" />
+      <Label fx:id="rightUpgradeCostLabel" layoutX="452.0" layoutY="118.0" text="[right upgrade cost]" />
+      <Label fx:id="attackLabel" layoutX="121.0" layoutY="46.0" prefHeight="18.0" prefWidth="74.0" text="Attack: 0" />
+      <Label fx:id="magicLabel" layoutX="121.0" layoutY="65.0" prefHeight="18.0" prefWidth="74.0" text="Magic: 0" />
+      <Label fx:id="rangeLabel" layoutX="121.0" layoutY="83.0" prefHeight="18.0" prefWidth="74.0" text="Range: 0" />
+      <RadioButton fx:id="firstRadioButton" layoutX="199.0" layoutY="46.0" mnemonicParsing="false" text="First">
          <toggleGroup>
             <ToggleGroup fx:id="targetingToggleGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="199.0" layoutY="65.0" mnemonicParsing="false" text="Strongest" toggleGroup="$targetingToggleGroup" />
-      <RadioButton layoutX="199.0" layoutY="84.0" mnemonicParsing="false" text="Closest" toggleGroup="$targetingToggleGroup" />
-      <Button layoutX="115.0" layoutY="112.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="144.0" style="-fx-background-color: #e34a4a;" text="Sell for: 0" textFill="WHITE" />
-      <Button layoutX="288.0" layoutY="14.0" mnemonicParsing="false" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE" />
-      <Button layoutX="447.0" layoutY="16.0" mnemonicParsing="false" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE" />
+      <RadioButton fx:id="strongestRadioButton" layoutX="199.0" layoutY="65.0" mnemonicParsing="false" text="Strongest" toggleGroup="$targetingToggleGroup" />
+      <RadioButton fx:id="closestRadioButton" layoutX="199.0" layoutY="84.0" mnemonicParsing="false" text="Closest" toggleGroup="$targetingToggleGroup" />
+      <Button fx:id="sellButton" layoutX="115.0" layoutY="112.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="144.0" style="-fx-background-color: #e34a4a;" text="Sell for: 0" textFill="WHITE" />
+      <Button fx:id="leftUpgradeButton" layoutX="288.0" layoutY="14.0" mnemonicParsing="false" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE" />
+      <Button fx:id="rightUpgradeButton" layoutX="447.0" layoutY="16.0" mnemonicParsing="false" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE" />
    </children>
 </AnchorPane>

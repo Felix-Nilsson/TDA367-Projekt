@@ -8,15 +8,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class ToolbarController extends AnchorPane implements Observer {
     @FXML private Label towerLabel;
     @FXML private Label attackLabel;
     @FXML private Label magicLabel;
+    @FXML private Label attackSpeedLabel;
     @FXML private Label rangeLabel;
     @FXML private Label leftUpgradeCostLabel;
     @FXML private Label rightUpgradeCostLabel;
@@ -30,6 +33,8 @@ public class ToolbarController extends AnchorPane implements Observer {
     @FXML private RadioButton firstRadioButton;
     @FXML private RadioButton strongestRadioButton;
     @FXML private RadioButton closestRadioButton;
+
+    private ToggleGroup targetingToggleGroup;
 
     private final Game game;
     private final MapController parentController;
@@ -58,9 +63,16 @@ public class ToolbarController extends AnchorPane implements Observer {
     }
     
     private void init(){
+        strongestRadioButton.setToggleGroup(targetingToggleGroup);
+        firstRadioButton.setToggleGroup(targetingToggleGroup);
+        closestRadioButton.setToggleGroup(targetingToggleGroup);
+
         towerImageView.setImage(tower.getImage());
-        //TODO: init all attributes w tower
+        towerLabel.setText("Archer"); //temp
+
+        sellButton.setText((tower.getPrice()*(0.5)) + "");
+
     }
 
-    //TODO add connection so that testing ingame is possible
+
 }
