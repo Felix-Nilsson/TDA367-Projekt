@@ -76,22 +76,22 @@ public class BaseEnemy implements Enemy{
         for (Direction d : path) {
             switch (d) {
                 case NORTH : {
-                    nextY = nextY - 50;
+                    nextY = nextY - 40;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case EAST : {
-                    nextX = nextX + 50;
+                    nextX = nextX + 40;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case SOUTH : {
-                    nextY = nextY + 50;
+                    nextY = nextY + 40;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case WEST : {
-                    nextX = nextX - 50;
+                    nextX = nextX - 40;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
@@ -107,31 +107,37 @@ public class BaseEnemy implements Enemy{
 
     @Override
     public void followPath(){
+        if (stepNr<path.size()){
+            switch (direction){
+                case EAST:
+                    if (positionList.get(stepNr).x-positionX<=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+                    break;
+                case SOUTH:
+                    if (positionList.get(stepNr).y-positionY<=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+                    break;
+                case WEST:
+                    if (positionList.get(stepNr).x-positionX>=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+                    break;
+                case NORTH:
+                    if (positionList.get(stepNr).y-positionY>=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+            }
+        }
+        else {
+            System.out.println("out of bounds. should be removed from the world");
+        }
 
-        if (direction==Direction.EAST){
-            if (positionList.get(stepNr).x-positionX<=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
-        else if (direction==Direction.SOUTH){
-            if (positionList.get(stepNr).y-positionY<=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
-        else if (direction==Direction.WEST){
-            if (positionList.get(stepNr).x-positionX>=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
-        else if (direction==Direction.NORTH){
-            if (positionList.get(stepNr).y-positionY>=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
 
     }
 

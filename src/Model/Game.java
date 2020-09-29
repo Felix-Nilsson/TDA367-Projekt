@@ -1,6 +1,8 @@
 package Model;
 
 
+import Controller.Observer;
+
 import java.util.List;
 
 public class Game implements Updatable{
@@ -19,24 +21,35 @@ public class Game implements Updatable{
         observable = new Observable();
         updateModel = new UpdateModel();
         b= new Board(mapNumber);
-        startGame();
 
         run();
-        System.out.println("inuti Game konstruktor");
+
     }
     private void run(){
-        updateModel.notifyAllUpdatables();
+        setValues();
+
         for (int i = 0; i<20; i++){
-            System.out.println("inuti Game run()");
+
         }
     }
 
+    public boolean addObserver(final Observer observer){
+        return this.observable.addObserver(observer);
+    }
+    public boolean removeObserver(final Observer observer){
+        return this.observable.removeObserver(observer);
+    }
 
+    public void nextRound(){
 
-    private void startGame(){
-        setValues();
-        update();
-        System.out.println("inuti Game startGame()");
+    }
+
+    public void startGame(){
+
+    }
+    public void update(){
+        observable.update();
+        updateModel.update();
     }
 
 
@@ -58,11 +71,7 @@ public class Game implements Updatable{
         }
     }
 
-    public void update(){
 
-            observable.update();
-
-    }
     public List<Cell> getBoard(){
         return b.getBoard();
     }
