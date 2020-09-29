@@ -52,7 +52,6 @@ public class ToolbarController extends AnchorPane implements Observer {
         }
         this.game = game;
         this.parentController = parentController;
-        game.getObservable().add(this);
 
         init();
     }
