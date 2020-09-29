@@ -21,18 +21,24 @@ public class BaseEnemy implements Enemy{
     protected Direction direction;
     private int stepNr = 0;
 
-    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
+    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY){
         this.health=health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
         this.armor=armor;
         this.positionX=positionX;
         this.positionY=positionY;
-        this.path=path;
+        //this.path=path;
         //så länge enemy spawnas på 25,75... ska denna inte behövas
-        this.direction=path.get(0);
-        convertPathToCoordinates();
+        //this.direction=path.get(0);
+        this.direction=Direction.EAST;
 
+
+    }
+    @Override
+    public void setPath(ArrayList<BaseEnemy.Direction> path) {
+        this.path=path;
+        convertPathToCoordinates();
     }
     @Override
     public void update(){
@@ -152,6 +158,9 @@ public class BaseEnemy implements Enemy{
             //TODO delete this object
         }
     }
+
+
+
     public int getPositionX(){
         return positionX;
     }

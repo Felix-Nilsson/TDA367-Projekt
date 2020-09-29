@@ -10,9 +10,13 @@ public class BlueEnemy implements Enemy{
     private final BaseEnemy parent;
     private ImageView imageView;
 
-    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
-        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY, path);
+    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY){
+        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY);
         init();
+    }
+    @Override
+    public void setPath(ArrayList<BaseEnemy.Direction> path){
+        parent.setPath(path);
     }
 
     @Override

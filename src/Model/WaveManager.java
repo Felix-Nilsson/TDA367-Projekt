@@ -23,7 +23,9 @@ public class WaveManager {
     private List<Enemy> enemyCreator(int amount, String choice){
         List<Enemy> enemies = new ArrayList<>();
         for (int i = 0; i < amount; i++){
-            enemies.add(getEnemyFactory(choice).createEnemyEasy(path));
+            Enemy tmpEnemy=getEnemyFactory(choice).createEnemyEasy();
+            tmpEnemy.setPath(path);
+            enemies.add(tmpEnemy);
         }
         return enemies;
     }

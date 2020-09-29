@@ -128,7 +128,8 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
-        BlueEnemy tmp = new BlueEnemy(10,1,1,1,25,105,game.getTmpBoard().getPath());
+        BlueEnemy tmp = new BlueEnemy(10,1,1,1,25,105);
+        tmp.setPath(game.getTmpBoard().getPath());
         mapAnchorPane.getChildren().add(tmp.getImageView());
 
         //BlueEnemy tmp1 = new BlueEnemy(10,1,1,1,25,75,game.getTmpBoard().getPath());
