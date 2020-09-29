@@ -43,10 +43,10 @@ public class BaseEnemy implements Enemy{
 
     private void move(){
         switch (direction) {
-            case NORTH -> positionY = positionY - movementSpeed;
-            case EAST -> positionX = positionX + movementSpeed;
-            case SOUTH -> positionY = positionY + movementSpeed;
-            case WEST -> positionX = positionX - movementSpeed;
+            case NORTH : positionY = positionY - movementSpeed; break;
+            case EAST : positionX = positionX + movementSpeed; break;
+            case SOUTH : positionY = positionY + movementSpeed; break;
+            case WEST : positionX = positionX - movementSpeed; break;
         }
     }
 
@@ -75,26 +75,26 @@ public class BaseEnemy implements Enemy{
         int nextY = positionY;
         for (Direction d : path) {
             switch (d) {
-                case NORTH -> {
+                case NORTH : {
                     nextY = nextY - 50;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
-                }
-                case EAST -> {
+                } break;
+                case EAST : {
                     nextX = nextX + 50;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
-                }
-                case SOUTH -> {
+                } break;
+                case SOUTH : {
                     nextY = nextY + 50;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
-                }
-                case WEST -> {
+                } break;
+                case WEST : {
                     nextX = nextX - 50;
                     positionList.add(new Point(nextX, nextY));
                     System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
-                }
+                } break;
             }
           counter++;
         }

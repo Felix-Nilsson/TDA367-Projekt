@@ -41,4 +41,11 @@ public class BaseCell implements Cell{
         return this.y;
     }
 
+    public void setOccupiedTrue(){
+        this.occupied = true;
+    }
+
+    public void setOccupiedFalse(){this.occupied = false;}
+
+
 }

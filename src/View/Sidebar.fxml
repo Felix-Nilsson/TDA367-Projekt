@@ -28,12 +28,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="archerTower" fitHeight="102.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="archerTower" fitHeight="112.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
                   <Image url="@../img/archerTower.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="mageTower" fitHeight="89.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mageTower" fitHeight="112.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/mageTower.png" />
                </image>
@@ -58,7 +58,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="playButton" fitHeight="72.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="playButton" fitHeight="72.0" fitWidth="111.0" onMouseClicked="#nextRound" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/play_button.png" />
                </image>
@@ -74,5 +74,7 @@
             <Image url="@../img/settings.png" />
          </image>
       </ImageView>
+      <Button fx:id="toolbarTestButton" layoutX="160.0" layoutY="177.0" mnemonicParsing="false" text="Try the toolbar" />
+      <AnchorPane fx:id="toolbar" layoutX="-610.0" layoutY="616.0" prefHeight="152.0" prefWidth="600.0" />
    </children>
 </fx:root>

@@ -36,4 +36,14 @@ public class ObstacleCell implements Cell{
     public int getY() {
         return base.getY();
     }
+
+    @Override
+    public void setOccupiedTrue() {
+        base.setOccupiedTrue();
+    }
+
+    @Override
+    public void setOccupiedFalse() {
+        base.setOccupiedFalse();
+    }
 }

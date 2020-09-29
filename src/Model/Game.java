@@ -9,13 +9,9 @@ public class Game implements Updatable{
     private final int mapNumber;
     private int health;
     private int money;
-
     private final Observable observable;
     private final UpdateModel updateModel;
     private final Board b;
-
-
-
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -34,6 +30,7 @@ public class Game implements Updatable{
             System.out.println("inuti Game run()");
         }
     }
+
 
 
     private void startGame(){
@@ -62,7 +59,9 @@ public class Game implements Updatable{
     }
 
     public void update(){
+
             observable.update();
+
     }
     public List<Cell> getBoard(){
         return b.getBoard();
@@ -79,5 +78,34 @@ public class Game implements Updatable{
     public int getMoney() {
         return money;
     }
+
+
+    public int getArrayIndex(int x_placement, int y_placement){
+        int placeInArray = 0;
+        for(int i =0; i < b.getBOARD_WIDTH(); i++){
+            for(int j = 0; j < b.getBOARD_HEIGHT(); j++){
+                if(i == x_placement && j == y_placement){
+                    return placeInArray;
+                }
+                placeInArray++;
+            }
+        }
+
+        //TODO Replace with exception
+        return 0;
+    }
+
+    public boolean isCellOccupied(int index){
+        return b.isCellOccupied(index);
+    }
+
+    public void setCellOccupied(int index){
+        b.setCellOccupied(index);
+    }
+
+    public void updateArrayWithTower(int index){
+        //TODO update cell to occupied
+    }
+
 
 }
