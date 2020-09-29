@@ -42,6 +42,7 @@ public class MapController extends AnchorPane implements Observer {
     private int x_placement;
     private int y_placement;
     private final List<Cell> map;
+    private BlueEnemy tmpEnemy;
 
 
     public MapController(Game game, List<Cell> map) {
@@ -128,14 +129,11 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
-        BlueEnemy tmp = new BlueEnemy(10,1,1,1,25,105);
-        tmp.setPath(game.getTmpBoard().getPath());
-        mapAnchorPane.getChildren().add(tmp.getImageView());
-
-        //BlueEnemy tmp1 = new BlueEnemy(10,1,1,1,25,75,game.getTmpBoard().getPath());
-        //mapAnchorPane.getChildren().add(tmp1.getImageView());
-
-
+        //Finns endast här för att genomföra tester. OBS! tmpEnemy.update() kallas 40 gånger innan man tryckt på start just nu och därför startar enemy på 65
+        tmpEnemy = new BlueEnemy(10,1,1,1,25,105);
+        tmpEnemy.setPath(game.getTmpBoard().getPath());
+        mapAnchorPane.getChildren().add(tmpEnemy.getImageView());
+        //fungerar som ett test: tryck på knapp så rör sig tmpEnemy.
         Button updateButton = new Button();
         mapAnchorPane.getChildren().add(updateButton);
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -145,10 +143,8 @@ public class MapController extends AnchorPane implements Observer {
                 System.out.println("just clicked");
 
                 for (int i=0; i<40;i++){
-                    tmp.update();
+                    tmpEnemy.update();
                 }
-                //mapAnchorPane.getChildren().remove(tmp1.getImageView());
-
             }
         });
 
@@ -174,8 +170,11 @@ public class MapController extends AnchorPane implements Observer {
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }
+    //kallas i game loopen (bara 1 gång/sekund just nu)
     public void update(){
-
+        for (int i=0; i<40;i++){
+            tmpEnemy.update();
+        }
     }
 
 

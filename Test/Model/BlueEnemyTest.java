@@ -49,16 +49,16 @@ class BlueEnemyTest {
         BlueEnemy tmp = new BlueEnemy(100,1,10,10,10,10);
         tmp.setPath(path);
 
-        tmp.turnSOUTH();
+        tmp.turn(BaseEnemy.Direction.SOUTH);
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.SOUTH);
 
-        tmp.turnEAST();
+        tmp.turn(BaseEnemy.Direction.EAST);
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.EAST);
 
-        tmp.turnNORTH();
+        tmp.turn(BaseEnemy.Direction.NORTH);
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.NORTH);
 
-        tmp.turnWEST();
+        tmp.turn(BaseEnemy.Direction.WEST);
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.WEST);
     }
 }

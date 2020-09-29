@@ -6,6 +6,7 @@ import java.util.List;
 public class WaveManager {
     private Difficulty difficulty;
     private List<Enemy> enemies;
+    private ArrayList<BaseEnemy.Direction>path;
 
 
     public WaveManager(Difficulty difficulty) {
@@ -34,7 +35,7 @@ public class WaveManager {
         List<Enemy> enemies = new ArrayList<>();
 
         for (int i = 0; i < amount; i++){
-            Enemy tmpEnemy=getEnemyFactory(choice).createEnemyEasy();
+            Enemy tmpEnemy=getEnemyFactory(enemy).createEnemyEasy();
             tmpEnemy.setPath(path);
             enemies.add(tmpEnemy);
 
