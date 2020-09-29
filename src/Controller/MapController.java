@@ -42,8 +42,8 @@ public class MapController extends AnchorPane implements Observer {
     private final Game game;
     private final Observable observable;
 
-
     public MapController(Game game, List<Cell> map) {
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -64,9 +64,7 @@ public class MapController extends AnchorPane implements Observer {
         //BlueEnemy tmp1 = new BlueEnemy(10,1,1,1,25,75,game.getTmpBoard().getPath());
         //mapAnchorPane.getChildren().add(tmp1.getImageView());
 
-        System.out.println(game.getTmpBoard().getPath());
-        System.out.println("mapController konstruktor end");
-
+        //System.out.println(game.getTmpBoard().getPath());
         Button updateButton = new Button();
         mapAnchorPane.getChildren().add(updateButton);
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
