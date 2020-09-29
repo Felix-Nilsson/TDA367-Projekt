@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Difficulty;
 import Model.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,7 +37,7 @@ public class MenuController implements Initializable {
     @FXML private AnchorPane options;
     @FXML private AnchorPane mapSelectionAnchorPane;
 
-    private String difficulty;
+    private Difficulty difficulty;
     private int mapNumber;
 
     private final ToggleGroup radioButtonGroupDifficulty = new ToggleGroup();
@@ -64,9 +65,7 @@ public class MenuController implements Initializable {
     private void newGame(){
         playClickUIButtonSound();
 
-        Game game = Game.getInstance();
-        game.setDifficulty(difficulty);
-        game.setMapNumber(mapNumber);
+        Game game = new Game(difficulty,mapNumber);
 
         MapController mapController = new MapController(game,game.getBoard());
         map.toFront();
@@ -93,13 +92,13 @@ public class MenuController implements Initializable {
 
     public void update(){
         if(radioButtonEasy.isSelected()){
-            difficulty = "easy";
+            difficulty = Difficulty.EASY;
         }
         else if(radioButtonMedium.isSelected()){
-            difficulty = "medium";
+            difficulty = Difficulty.MEDIUM;
         }
         else if(radioButtonHard.isSelected()){
-            difficulty = "hard";
+            difficulty = Difficulty.HARD;
         }
         if(radioButtonMap1.isSelected()){
             mapNumber = 1;

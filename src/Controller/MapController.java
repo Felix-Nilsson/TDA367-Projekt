@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MapController extends AnchorPane implements Observer {
@@ -33,10 +34,11 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane settingsPane;
     @FXML private AnchorPane mapAnchorPane;
 
-    private final ArrayList<Cell> map;
+    private final List<Cell> map;
     private final Game game;
+    private final Observable observable;
 
-    public MapController(Game game, ArrayList<Cell> map) {
+    public MapController(Game game, List<Cell> map) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -47,7 +49,7 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
-        game.getObservable().add(this);
+        this.observable = new Observable();
 
         createMap();
     }
