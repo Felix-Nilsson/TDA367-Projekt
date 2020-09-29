@@ -1,12 +1,6 @@
 package Controller;
-
 import Model.*;
-
-//import View.Observer;
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
-
 import javafx.event.ActionEvent;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,19 +13,9 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import org.w3c.dom.ls.LSOutput;
-
-
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,6 +34,7 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane settings;
     @FXML private AnchorPane settingsPane;
     @FXML private AnchorPane mapAnchorPane;
+    @FXML private AnchorPane toolbarAnchorPane;
 
 
     private final Game game;
@@ -57,7 +42,7 @@ public class MapController extends AnchorPane implements Observer {
     private int x_placement;
     private int y_placement;
     private final List<Cell> map;
-    private final Observable observable;
+
 
 
     public MapController(Game game, List<Cell> map) {
@@ -71,9 +56,9 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
-        this.observable = new Observable();
-
+        game.addObserver(this);
         createMap();
+        addToolbar();
 
 
         //EventHandlers
@@ -149,8 +134,7 @@ public class MapController extends AnchorPane implements Observer {
         //BlueEnemy tmp1 = new BlueEnemy(10,1,1,1,25,75,game.getTmpBoard().getPath());
         //mapAnchorPane.getChildren().add(tmp1.getImageView());
 
-        System.out.println(game.getTmpBoard().getPath());
-        System.out.println("mapController konstruktor end");
+
 
         Button updateButton = new Button();
         mapAnchorPane.getChildren().add(updateButton);
@@ -170,6 +154,10 @@ public class MapController extends AnchorPane implements Observer {
 
 
     }
+    private void addToolbar(){
+        ToolbarController toolbarController = new ToolbarController(game,this);
+        toolbarAnchorPane.getChildren().add(toolbarController);
+    }
 
     public void createMap(){
         //add sidebar fxml
@@ -178,7 +166,7 @@ public class MapController extends AnchorPane implements Observer {
 
         //add all cells to GUI
         for (Cell p: map) {
-            Rectangle tile = new Rectangle(50,50);
+            Rectangle tile = new Rectangle(40,40);
             tile.setX(p.getX());
             tile.setY(p.getY());
             tile.setFill(Color.web(p.getColor()));
@@ -187,7 +175,7 @@ public class MapController extends AnchorPane implements Observer {
         }
     }
     public void update(){
-        System.out.println("mapcontrollerns update");
+
     }
 
 

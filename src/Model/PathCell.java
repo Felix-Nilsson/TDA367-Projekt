@@ -7,8 +7,8 @@ public class PathCell implements Cell{
     BaseCell base;
     private Color color;
 
-    public PathCell(int x, int y, boolean occupied, int width, int height){
-        base = new BaseCell(x, y, TerrainType.PATH, occupied, width, height, "#7C4E4E");
+    public PathCell(int x, int y, boolean occupied){
+        base = new BaseCell(x, y, TerrainType.PATH, occupied, "#7C4E4E");
 
     }
 

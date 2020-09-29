@@ -6,8 +6,8 @@ public class GroundCell implements Cell{
     BaseCell base;
     private Color color;
 
-    public GroundCell(int x, int y, boolean occupied, int width, int height){
-        base = new BaseCell(x, y, TerrainType.GROUND, occupied, width, height, "2aa84c");
+    public GroundCell(int x, int y, boolean occupied){
+        base = new BaseCell(x, y, TerrainType.GROUND, occupied,  "2aa84c");
 
     }
 
