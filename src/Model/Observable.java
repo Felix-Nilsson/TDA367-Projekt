@@ -1,29 +1,21 @@
 package Model;
 
 import Controller.Observer;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class Observable {
-    private List<Observer> observers = new ArrayList<Observer>();
-    private int state;
+public final class Observable {
+    private final List<Observer> observers = new ArrayList<Observer>();
 
-    public int getState(){
-        return state;
+
+    public void addObserver(Observer observer){
+        final boolean alreadyObserving = this.observers.contains(observer);
+        if(!alreadyObserving){
+            this.observers.add(observer);
+        }
     }
-    public void setState(int state){
-        this.state = state;
-    }
-    public void add(Observer observer){
-        observers.add(observer);
-    }
-    public void notifyAllObservers() throws IOException {
+
+    public void update(){
         for(Observer observer : observers){
             observer.update();
         }

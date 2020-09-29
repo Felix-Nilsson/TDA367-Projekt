@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Difficulty;
 import Model.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,9 +9,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
+
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import Controller.MapController;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class MenuController implements Initializable {
 
@@ -33,9 +37,7 @@ public class MenuController implements Initializable {
     @FXML private AnchorPane options;
     @FXML private AnchorPane mapSelectionAnchorPane;
 
-    private MapController mapController;
-
-    private String difficulty;
+    private Difficulty difficulty;
     private int mapNumber;
 
     private final ToggleGroup radioButtonGroupDifficulty = new ToggleGroup();
@@ -46,7 +48,6 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         activateRadioButtons();
         update();
-
     }
     private void activateRadioButtons(){
         radioButtonEasy.setToggleGroup(radioButtonGroupDifficulty);
@@ -62,38 +63,51 @@ public class MenuController implements Initializable {
 
     @FXML
     private void newGame(){
-        mapNumber = 1; //temp change later
-        Game game = Game.getInstance();
+        playClickUIButtonSound();
 
-        mapController = new MapController(game,game.getBoard(),game.getObservable());
+        Game game = new Game(difficulty,mapNumber);
+
+        MapController mapController = new MapController(game,game.getBoard());
         map.toFront();
         map.getChildren().add(mapController);
+        game.update();
+
 
     }
-    @FXML
-    private void loadGame(){ }
-    @FXML
-    private void options(){
+    @FXML private void loadGame(){
+        playClickUIButtonSound();
+    }
+    @FXML private void options(){
+        playClickUIButtonSound();
         options.toFront();
     }
-    @FXML
-    private void mapSelection(){
+    @FXML private void mapSelection(){
+        playClickUIButtonSound();
         mapSelectionAnchorPane.toFront();
     }
-    @FXML
-    private void exitGame(){
-        System.exit(0);
+    @FXML private void backToMenu(){
+        mainMenuAnchorPane.toFront();
     }
+    @FXML private void exitGame(){ System.exit(0); }
 
     public void update(){
         if(radioButtonEasy.isSelected()){
-            difficulty = "easy";
+            difficulty = Difficulty.EASY;
         }
         else if(radioButtonMedium.isSelected()){
-            difficulty = "medium";
+            difficulty = Difficulty.MEDIUM;
         }
         else if(radioButtonHard.isSelected()){
-            difficulty = "hard";
+            difficulty = Difficulty.HARD;
+        }
+        if(radioButtonMap1.isSelected()){
+            mapNumber = 1;
+        }
+        else if(radioButtonMap2.isSelected()){
+            mapNumber = 2;
+        }
+        else if(radioButtonMap3.isSelected()){
+            mapNumber = 3;
         }
     }
 
@@ -143,9 +157,17 @@ public class MenuController implements Initializable {
         update();
     }
 
-    @FXML private void backToMenu(){
-        mainMenuAnchorPane.toFront();
+
+
+     private void playClickUIButtonSound(){
+         URL resource = getClass().getResource("/sound/click.mp3");
+         Media media = new Media(resource.toString());
+         MediaPlayer mediaPlayer = new MediaPlayer(media);
+         mediaPlayer.play();
+
     }
+
+
 
 
 
