@@ -46,15 +46,11 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane mapAnchorPane;
 
 
-
-
-    private final ArrayList<Cell> map;
     private final Game game;
     private SidebarController sidebarController;
     private int x_placement;
     private int y_placement;
     private final List<Cell> map;
-    private final Game game;
     private final Observable observable;
 
     public MapController(Game game, List<Cell> map) {
@@ -174,6 +170,8 @@ public class MapController extends AnchorPane implements Observer {
 
     private void setTowerOnCell(int index/*Tower tower */){
         //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
+        //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
+        //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
     }
 
 }

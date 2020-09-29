@@ -14,9 +14,6 @@ public class Game implements Updatable{
     private final UpdateModel updateModel;
     private final Board b;
 
-
-
-
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
@@ -68,15 +65,6 @@ public class Game implements Updatable{
     public int getMoney() {
         return money;
     }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
-    public void setDifficulty(String difficulty) {this.difficulty = difficulty;}
-    public void setHealth(int health) {
-        this.health = health;
-    }
-    public void setMapNumber(int mapNumber){this.mapNumber = mapNumber;}
 
 
     public int getArrayIndex(int x_placement, int y_placement){
