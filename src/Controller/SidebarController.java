@@ -9,6 +9,9 @@ import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.event.EventHandler;
 
 
+
+import Model.WaveManager;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,6 +39,10 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private Button nextRound;
     @FXML private GridPane gridPane;
     @FXML private Label money;
+
+    @FXML private Button toolbarTestButton; //remove later, just for testing
+    @FXML private AnchorPane toolbar;
+
 
     private final Game game;
     private final MapController parentController;
@@ -70,8 +77,14 @@ public class SidebarController extends AnchorPane implements Observer {
         money.setText(""+ game.getMoney());
         health.setText(""+ game.getHealth());
     }
+    @FXML public void nextRound(){ }
     @FXML private void settings(){
         parentController.openSettings();
+    }
+
+    @FXML
+    public void toolbarButtonOnclick(){
+        toolbar.toFront();
     }
 
 

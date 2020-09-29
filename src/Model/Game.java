@@ -9,7 +9,6 @@ public class Game implements Updatable{
     private final int mapNumber;
     private int health;
     private int money;
-
     private final Observable observable;
     private final UpdateModel updateModel;
     private final Board b;
@@ -27,6 +26,7 @@ public class Game implements Updatable{
     private void run(){
         updateModel.notifyAllUpdatables();
     }
+
 
 
     private void startGame(){
@@ -54,7 +54,9 @@ public class Game implements Updatable{
     }
 
     public void update(){
+
             observable.update();
+
     }
     public List<Cell> getBoard(){
         return b.getBoard();
