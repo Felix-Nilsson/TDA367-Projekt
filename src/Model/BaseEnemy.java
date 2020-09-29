@@ -1,5 +1,6 @@
 package Model;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class BaseEnemy implements Enemy{
@@ -18,6 +19,7 @@ public class BaseEnemy implements Enemy{
     private ArrayList <Direction> path;
 
     protected Direction direction;
+    private int stepNr = 0;
 
     public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
         this.health=health;
@@ -27,6 +29,10 @@ public class BaseEnemy implements Enemy{
         this.positionX=positionX;
         this.positionY=positionY;
         this.path=path;
+        //så länge enemy spawnas på 25,75... ska denna inte behövas
+        this.direction=path.get(0);
+        convertPathToCoordinates();
+
     }
     @Override
     public void update(){
@@ -37,10 +43,10 @@ public class BaseEnemy implements Enemy{
 
     private void move(){
         switch (direction) {
-            case NORTH : positionY = positionY - movementSpeed;
-            case EAST : positionX = positionX + movementSpeed;
-            case SOUTH : positionY = positionY + movementSpeed;
-            case WEST : positionX = positionX - movementSpeed;
+            case NORTH -> positionY = positionY - movementSpeed;
+            case EAST -> positionX = positionX + movementSpeed;
+            case SOUTH -> positionY = positionY + movementSpeed;
+            case WEST -> positionX = positionX - movementSpeed;
         }
     }
 
@@ -60,23 +66,75 @@ public class BaseEnemy implements Enemy{
         this.direction=dir;
     }
 
-    private int stepNr=0;
+
+    private ArrayList<Point> positionList;
+    private void convertPathToCoordinates(){
+        int counter = 0;
+        positionList = new ArrayList<>();
+        int nextX = positionX;
+        int nextY = positionY;
+        for (Direction d : path) {
+            switch (d) {
+                case NORTH -> {
+                    nextY = nextY - 50;
+                    positionList.add(new Point(nextX, nextY));
+                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                }
+                case EAST -> {
+                    nextX = nextX + 50;
+                    positionList.add(new Point(nextX, nextY));
+                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                }
+                case SOUTH -> {
+                    nextY = nextY + 50;
+                    positionList.add(new Point(nextX, nextY));
+                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                }
+                case WEST -> {
+                    nextX = nextX - 50;
+                    positionList.add(new Point(nextX, nextY));
+                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                }
+            }
+          counter++;
+        }
+
+
+
+    }
+
+
 
     @Override
     public void followPath(){
-        if(movementSpeed<=1){
-            if(positionX%50==25 && positionY%50==25 && stepNr<path.size()){
+
+        if (direction==Direction.EAST){
+            if (positionList.get(stepNr).x-positionX<=0){
                 turn(path.get(stepNr));
-                ++stepNr;
+                stepNr++;
             }
         }
-        /*
-        else if (position)
-        turn(path.get(stepNr));
-
-         */
+        else if (direction==Direction.SOUTH){
+            if (positionList.get(stepNr).y-positionY<=0){
+                turn(path.get(stepNr));
+                stepNr++;
+            }
+        }
+        else if (direction==Direction.WEST){
+            if (positionList.get(stepNr).x-positionX>=0){
+                turn(path.get(stepNr));
+                stepNr++;
+            }
+        }
+        else if (direction==Direction.NORTH){
+            if (positionList.get(stepNr).y-positionY>=0){
+                turn(path.get(stepNr));
+                stepNr++;
+            }
+        }
 
     }
+
 
     @Override
     // ska antagligen ta in damage type (ad/ap)

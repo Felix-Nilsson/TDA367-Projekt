@@ -87,6 +87,9 @@ public class Board {
     public ArrayList<Cell> getBoard(){
         return this.board;
     }
+    public Board getTmpBoard(){
+        return this;
+    }
 
     private void setBoard(ArrayList<Cell> board) {
         this.board = board;

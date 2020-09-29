@@ -1,8 +1,12 @@
 package Controller;
 
 import Model.*;
+
 //import View.Observer;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
+
+import javafx.event.ActionEvent;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +28,8 @@ import org.w3c.dom.ls.LSOutput;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +59,7 @@ public class MapController extends AnchorPane implements Observer {
     private final List<Cell> map;
     private final Observable observable;
 
+
     public MapController(Game game, List<Cell> map) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
@@ -67,6 +74,7 @@ public class MapController extends AnchorPane implements Observer {
         this.observable = new Observable();
 
         createMap();
+
 
         //EventHandlers
 
@@ -105,7 +113,7 @@ public class MapController extends AnchorPane implements Observer {
                 Dragboard db = dragEvent.getDragboard();
                 Node node = dragEvent.getPickResult().getIntersectedNode();
 
-                if(node != gameBoardGrid && db.hasImage()){
+                if (node != gameBoardGrid && db.hasImage()) {
 
                     //Find Cell to place the tower
                     Integer cIndex = GridPane.getColumnIndex(node);
@@ -116,18 +124,15 @@ public class MapController extends AnchorPane implements Observer {
                     //Check if the cell is available
                     int index = game.getArrayIndex(x_placement, y_placement);
                     boolean occupied = game.isCellOccupied(index);
-                    if(occupied == false){
+                    if (occupied == false) {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
-                        gameBoardGrid.add(image, x_placement, y_placement ); // Just adds an image to the gridpane grid
+                        gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
 
                         setTowerOnCell(index); //TODO futher down
-                    }
-                    else{
+                    } else {
                         //TODO Some sort of error or could just leave it empty
                     }
-
-
 
 
                 }
@@ -135,6 +140,31 @@ public class MapController extends AnchorPane implements Observer {
 
                 dragEvent.setDropCompleted(true);
                 dragEvent.consume();
+            }
+        });
+
+        BlueEnemy tmp = new BlueEnemy(10,1,1,1,25,25,game.getTmpBoard().getPath());
+        mapAnchorPane.getChildren().add(tmp.getImageView());
+
+        //BlueEnemy tmp1 = new BlueEnemy(10,1,1,1,25,75,game.getTmpBoard().getPath());
+        //mapAnchorPane.getChildren().add(tmp1.getImageView());
+
+        System.out.println(game.getTmpBoard().getPath());
+        System.out.println("mapController konstruktor end");
+
+        Button updateButton = new Button();
+        mapAnchorPane.getChildren().add(updateButton);
+        updateButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                System.out.println("just clicked");
+
+                for (int i=0; i<50;i++){
+                    tmp.update();
+                }
+                //mapAnchorPane.getChildren().remove(tmp1.getImageView());
+
             }
         });
 
@@ -157,8 +187,10 @@ public class MapController extends AnchorPane implements Observer {
         }
     }
     public void update(){
-
+        System.out.println("mapcontrollerns update");
     }
+
+
     public void openSettings(){
         settingsPane.toFront();
     }
@@ -168,11 +200,13 @@ public class MapController extends AnchorPane implements Observer {
     }
 
 
+
     private void setTowerOnCell(int index/*Tower tower */){
         //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
         //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
         //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
     }
+
 
 }
 
