@@ -32,9 +32,13 @@ public class Game implements Updatable{
         startGame();
 
         run();
+        System.out.println("inuti Game konstruktor");
     }
     private void run(){
         updateModel.notifyAllUpdatables();
+        for (int i = 0; i<20; i++){
+            System.out.println("inuti Game run()");
+        }
     }
 
 
@@ -43,6 +47,7 @@ public class Game implements Updatable{
         b= new Board(mapNumber);
         setValues();
         update();
+        System.out.println("inuti Game startGame()");
     }
 
 
@@ -84,6 +89,9 @@ public class Game implements Updatable{
     }
     public ArrayList<Cell> getBoard(){
         return b.getBoard();
+    }
+    public Board getTmpBoard(){
+        return b.getTmpBoard();
     }
     public int getMapNumber(){return mapNumber;}
     public int getHealth() {

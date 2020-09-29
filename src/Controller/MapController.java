@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -13,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,6 +41,7 @@ public class MapController extends AnchorPane implements Observer {
     private final Game game;
 
     public MapController(Game game, ArrayList<Cell> map) {
+        System.out.println("mapController konstruktor start");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -50,6 +55,32 @@ public class MapController extends AnchorPane implements Observer {
         game.getObservable().add(this);
 
         createMap();
+
+        BlueEnemy tmp = new BlueEnemy(10,1,1,1,25,25,game.getTmpBoard().getPath());
+        mapAnchorPane.getChildren().add(tmp.getImageView());
+
+        //BlueEnemy tmp1 = new BlueEnemy(10,1,1,1,25,75,game.getTmpBoard().getPath());
+        //mapAnchorPane.getChildren().add(tmp1.getImageView());
+
+        System.out.println(game.getTmpBoard().getPath());
+        System.out.println("mapController konstruktor end");
+
+        Button updateButton = new Button();
+        mapAnchorPane.getChildren().add(updateButton);
+        updateButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                System.out.println("just clicked");
+
+                for (int i=0; i<50;i++){
+                    tmp.update();
+                }
+                //mapAnchorPane.getChildren().remove(tmp1.getImageView());
+            }
+        });
+
+
     }
 
     public void createMap(){
@@ -66,8 +97,10 @@ public class MapController extends AnchorPane implements Observer {
         }
     }
     public void update(){
-
+        System.out.println("mapcontrollerns update");
     }
+
+
     public void openSettings(){
         settingsPane.toFront();
     }
@@ -75,7 +108,6 @@ public class MapController extends AnchorPane implements Observer {
     public void openMap(){
         mapAnchorPane.toFront();
     }
-
 
 }
 
