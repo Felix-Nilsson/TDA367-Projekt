@@ -16,7 +16,7 @@ public class BaseEnemy implements Enemy{
     //TODO path ska finnas med som parameter i BaseEnemy. Då vet varje enemy hur de ska gå m.h.a. path, t.ex. EAST,EAST,SOUTH,SOUTH med 50 pixlar mellan varje.
     //TODO update ska t.ex. kolla: if(positionX % 50 == 25), turn(path.get(stepNr)), stepNr=stepNr+1
     //TODO OBS! för att modulo-beräkningen ska fungera måste movementSpeed vara väldigt låg. Hitta bättre sätt.
-    private ArrayList <Direction> path;
+    private final ArrayList <Direction> path;
 
     protected Direction direction;
     private int stepNr = 0;
@@ -84,22 +84,22 @@ public class BaseEnemy implements Enemy{
                 case NORTH : {
                     nextY = nextY - 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case EAST : {
                     nextX = nextX + 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case SOUTH : {
                     nextY = nextY + 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case WEST : {
                     nextX = nextX - 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
             }
           counter++;
