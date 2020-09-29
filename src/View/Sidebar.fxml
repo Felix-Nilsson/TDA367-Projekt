@@ -74,5 +74,7 @@
             <Image url="@../img/settings.png" />
          </image>
       </ImageView>
+      <Button fx:id="toolbarTestButton" layoutX="160.0" layoutY="177.0" mnemonicParsing="false" text="Try the toolbar" />
+      <AnchorPane fx:id="toolbar" layoutX="-610.0" layoutY="616.0" prefHeight="152.0" prefWidth="600.0" />
    </children>
 </fx:root>
