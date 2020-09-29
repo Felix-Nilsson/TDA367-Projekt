@@ -6,18 +6,16 @@ import java.util.List;
 
 public final class Observable {
     private final List<Observer> observers = new ArrayList<Observer>();
-    private int state;
 
-    public int getState(){
-        return state;
+
+    public void addObserver(Observer observer){
+        final boolean alreadyObserving = this.observers.contains(observer);
+        if(!alreadyObserving){
+            this.observers.add(observer);
+        }
     }
-    public void setState(int state){
-        this.state = state;
-    }
-    public void add(Observer observer){
-        observers.add(observer);
-    }
-    public void notifyAllObservers()  {
+
+    public void update(){
         for(Observer observer : observers){
             observer.update();
         }
