@@ -3,6 +3,7 @@ package Model;
 
 import Controller.Observer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game implements Updatable{
@@ -14,6 +15,8 @@ public class Game implements Updatable{
     private final Observable observable;
     private final UpdateModel updateModel;
     private final Board b;
+    private final WaveManager waveManager;
+    private List<Enemy> enemies;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -21,6 +24,8 @@ public class Game implements Updatable{
         observable = new Observable();
         updateModel = new UpdateModel();
         b= new Board(mapNumber);
+        this.waveManager = new WaveManager(b.getPath(),0,Difficulty.EASY);
+        this.enemies = new ArrayList<>();
 
         run();
 
@@ -41,6 +46,7 @@ public class Game implements Updatable{
     }
 
     public void nextRound(){
+       enemies = waveManager.createWave();
 
     }
 

@@ -43,11 +43,12 @@ public class WaveManager {
         return enemies;
     }
 
-    private List<Enemy> createWave(){
+    public List<Enemy> createWave(){
         List<Enemy> wave = new ArrayList<>();
         wave.addAll(enemyCreator(5 + (round*2),"BlueEnemy"));
         //wave.addAll(enemyCreator(((round - 1) * 2),"RedEnemy"));
         //wave.addAll(enemyCreator(((round - 3) * 2),"GreenEnemy"));
+        round++;
         return wave;
     }
 
