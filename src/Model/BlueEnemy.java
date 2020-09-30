@@ -8,11 +8,16 @@ import java.util.ArrayList;
 public class BlueEnemy implements Enemy{
 
     private final BaseEnemy parent;
+    //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private ImageView imageView;
 
-    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
-        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY, path);
+    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY){
+        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY);
         init();
+    }
+    @Override
+    public void setPath(ArrayList<BaseEnemy.Direction> path){
+        parent.setPath(path);
     }
 
     @Override
@@ -21,7 +26,7 @@ public class BlueEnemy implements Enemy{
         parent.update();
         imageToPos();
     }
-
+//skapar bilden som tillhör enemyn. Ska också flyttas till View senare
     private void init() {
 
         Image image = new Image((getClass().getClassLoader().getResourceAsStream("img/bluemonster1.png")));
@@ -38,6 +43,7 @@ public class BlueEnemy implements Enemy{
         //imageView.setPreserveRatio(true);
         imageView.toFront();
     }
+    //får image att följa enemy-objektet. Ska också flyttas till View senare
     private void imageToPos(){
         imageView.setX(parent.getPositionX());
         imageView.setY(parent.getPositionY());
@@ -45,6 +51,7 @@ public class BlueEnemy implements Enemy{
         System.out.println("x = "+parent.getPositionX());
         System.out.println(" y = "+parent.getPositionY());
     }
+    //ska också bort senare
     public ImageView getImageView(){
         return imageView;
     }
@@ -56,18 +63,8 @@ public class BlueEnemy implements Enemy{
     public void tookDamage(int damage){
         parent.tookDamage(damage);
     }
-
-    protected void turnNORTH(){
-        parent.turnNORTH();
-    }
-    protected void turnEAST(){
-        parent.turnEAST();
-    }
-    protected void turnSOUTH(){
-        parent.turnSOUTH();
-    }
-    protected void turnWEST(){
-        parent.turnWEST();
+    protected void turn(BaseEnemy.Direction dir){
+        parent.direction=dir;
     }
 
     public int getPositionX(){

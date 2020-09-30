@@ -19,26 +19,35 @@ public class BaseEnemy implements Enemy{
     private ArrayList <Direction> path;
 
     protected Direction direction;
+
+    //används för att gå igenom path
     private int stepNr = 0;
 
-    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, ArrayList<BaseEnemy.Direction> path){
+    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY){
         this.health=health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
         this.armor=armor;
         this.positionX=positionX;
         this.positionY=positionY;
-        this.path=path;
+        //this.path=path;
         //så länge enemy spawnas på 25,75... ska denna inte behövas
-        this.direction=path.get(0);
-        convertPathToCoordinates();
+        //this.direction=path.get(0);
+
 
     }
+    //Istället för att ha path i konstruktorn så flyttades det hit
+    @Override
+    public void setPath(ArrayList<BaseEnemy.Direction> path) {
+        this.path=path;
+        this.direction=path.get(0);
+        convertPathToCoordinates();
+    }
+    //Dessa metoder ska kallas varje gång model ska uppdateras
     @Override
     public void update(){
         followPath();
         move();
-
     }
 
     private void move(){
@@ -50,53 +59,42 @@ public class BaseEnemy implements Enemy{
         }
     }
 
-    protected void turnNORTH(){
-        this.direction=Direction.NORTH;
-    }
-    protected void turnEAST(){
-        this.direction=Direction.EAST;
-    }
-    protected void turnSOUTH(){
-        this.direction=Direction.SOUTH;
-    }
-    protected void turnWEST(){
-        this.direction=Direction.WEST;
-    }
     protected void turn(Direction dir){
         this.direction=dir;
     }
 
-
+//Lista med alla pathens nodpositioner
     private ArrayList<Point> positionList;
+    //Fyller positionList
     private void convertPathToCoordinates(){
-        int counter = 0;
+
         positionList = new ArrayList<>();
         int nextX = positionX;
         int nextY = positionY;
         for (Direction d : path) {
             switch (d) {
                 case NORTH : {
-                    nextY = nextY - 50;
+                    nextY = nextY - 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case EAST : {
-                    nextX = nextX + 50;
+                    nextX = nextX + 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case SOUTH : {
-                    nextY = nextY + 50;
+                    nextY = nextY + 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case WEST : {
-                    nextX = nextX - 50;
+                    nextX = nextX - 40;
                     positionList.add(new Point(nextX, nextY));
-                    System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
+                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
             }
-          counter++;
+
         }
 
 
@@ -104,34 +102,40 @@ public class BaseEnemy implements Enemy{
     }
 
 
-
+//Ser till så att enemy är vänd åt rätt håll.
     @Override
     public void followPath(){
+        if (stepNr<path.size()){
+            switch (direction){
+                case EAST:
+                    if (positionList.get(stepNr).x-positionX<=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+                    break;
+                case SOUTH:
+                    if (positionList.get(stepNr).y-positionY<=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+                    break;
+                case WEST:
+                    if (positionList.get(stepNr).x-positionX>=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+                    break;
+                case NORTH:
+                    if (positionList.get(stepNr).y-positionY>=0){
+                        turn(path.get(stepNr));
+                        stepNr++;
+                    }
+            }
+        }
+        else {
+            System.out.println("out of bounds. should be removed from the world");
+        }
 
-        if (direction==Direction.EAST){
-            if (positionList.get(stepNr).x-positionX<=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
-        else if (direction==Direction.SOUTH){
-            if (positionList.get(stepNr).y-positionY<=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
-        else if (direction==Direction.WEST){
-            if (positionList.get(stepNr).x-positionX>=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
-        else if (direction==Direction.NORTH){
-            if (positionList.get(stepNr).y-positionY>=0){
-                turn(path.get(stepNr));
-                stepNr++;
-            }
-        }
 
     }
 
@@ -146,6 +150,9 @@ public class BaseEnemy implements Enemy{
             //TODO delete this object
         }
     }
+
+
+
     public int getPositionX(){
         return positionX;
     }

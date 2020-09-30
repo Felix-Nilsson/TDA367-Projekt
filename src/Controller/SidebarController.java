@@ -46,7 +46,8 @@ public class SidebarController extends AnchorPane implements Observer {
 
     private final Game game;
     private final MapController parentController;
-    private boolean gameStarted;
+    private boolean gameRunning = false;
+    private boolean gameStarted = false;
 
 
     public SidebarController(Game game,MapController parentController) {
@@ -78,13 +79,19 @@ public class SidebarController extends AnchorPane implements Observer {
         money.setText(""+ game.getMoney());
         health.setText(""+ game.getHealth());
     }
-    @FXML public void nextRound(){
-        if(gameStarted){
-            game.nextRound();
-        }
-        else{
+    @FXML private void nextRound(){
+        if(!gameStarted){ // start waves
             game.startGame();
+            gameStarted = true;
+            if(!gameRunning){ //next round
+                gameRunning = true;
+                game.nextRound();
+            }
+            else{
+                game.startGame();
+            }
         }
+
     }
     @FXML private void settings(){
         parentController.openSettings();

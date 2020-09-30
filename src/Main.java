@@ -14,13 +14,12 @@ public class Main extends Application{
         stage.setTitle("Tower Defense");
         stage.setScene(scene);
         stage.show();
-        System.out.println("inuti start");
 
     }
 
     public static void main(String[] args) {
         launch(args);
-        System.out.println("inuti main");
+        System.out.println("Application closed");
     }
 
 }
