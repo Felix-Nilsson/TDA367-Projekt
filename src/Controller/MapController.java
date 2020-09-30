@@ -122,7 +122,6 @@ public class MapController extends AnchorPane implements Observer {
 
                 }
 
-
                 dragEvent.setDropCompleted(true);
                 dragEvent.consume();
             }

@@ -17,7 +17,7 @@
     <children>
       <AnchorPane fx:id="settingsPane" prefHeight="768.0" prefWidth="1366.0">
          <children>
-            <AnchorPane fx:id="settingsShadowPane" onMouseClicked="#openMap" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: black; -fx-opacity: 0.4;" />
+            <AnchorPane fx:id="settingsShadowPane" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: black; -fx-opacity: 0.4;" />
             <AnchorPane fx:id="settings" layoutX="200.0" layoutY="100.0" prefHeight="568.0" prefWidth="966.0" styleClass="settingsBackground">
                <children>
                   <Button fx:id="continueButton" layoutX="792.0" layoutY="353.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="129.0">
@@ -140,10 +140,10 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="mapAnchorPane" prefHeight="768.0" prefWidth="1366.0">
+      <AnchorPane fx:id="mapAnchorPane" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: green;">
          <children>
             <AnchorPane fx:id="sidebar" layoutX="1100.0" prefHeight="768.0" prefWidth="266.0" />
-            <GridPane fx:id="gameBoardGrid" prefHeight="768.0" prefWidth="1100.0" AnchorPane.topAnchor="0.0">
+            <GridPane fx:id="gameBoardGrid" layoutX="26.0" layoutY="24.0" prefHeight="720.0" prefWidth="1040.0" AnchorPane.topAnchor="24.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -193,6 +193,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
+            <AnchorPane fx:id="toolbarAnchorPane" layoutX="287.0" layoutY="625.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: white;" />
          </children>
       </AnchorPane>
     </children>
