@@ -15,14 +15,18 @@ public class Game implements Updatable{
     private final Observable observable;
     private final UpdateModel updateModel;
     private final Board b;
+    private final WaveManager waveManager;
     private boolean running = false;
     public Thread gameLoopThread;
+    private List<Enemy> enemies;
+    private int round = 0;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         observable = new Observable();
         updateModel = new UpdateModel();
+        waveManager = new WaveManager(difficulty);
         b= new Board(mapNumber);
         setValues();
 
@@ -54,7 +58,8 @@ public class Game implements Updatable{
 
     }
     public void nextRound(){
-
+        enemies = waveManager.createWave(round);
+        round++;
     }
     private void delay(int seconds){
         try {
