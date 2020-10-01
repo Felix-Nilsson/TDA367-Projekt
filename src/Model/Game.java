@@ -22,7 +22,6 @@ public class Game implements Updatable {
     public Thread gameLoopThread;
 
     private Updatable updatable;
-    private final WaveManager waveManager;
     private final List<BaseEnemy.Direction> enemyPath;
     private List<Enemy> enemiesInWave;
     int round = 1;

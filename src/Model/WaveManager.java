@@ -28,17 +28,7 @@ public class WaveManager  {
         //wave.addAll(enemyCreator(((round - 3) * 2),"GreenEnemy"));
         return wave;
     }
-    private List<Enemy> enemyCreator(int amount, String enemy){
-        List<Enemy> enemies = new ArrayList<>();
 
-        for (int i = 0; i < amount; i++){
-            Enemy tmpEnemy=getEnemyFactory(enemy).createEnemyEasy();
-            enemies.add(tmpEnemy);
-
-        }
-        System.out.println("list of enemies: "+ enemies.toString());
-        return enemies;
-    }
 
 
 
@@ -58,19 +48,16 @@ public class WaveManager  {
             case EASY:
                 for (int i = 0; i < amount; i++) {
                     Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyEasy();
-                    tmpEnemy.setPath(path);
                     enemies.add(tmpEnemy);
                 }
             case MEDIUM:
                 for (int i = 0; i < amount; i++) {
                     Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyMedium();
-                    tmpEnemy.setPath(path);
                     enemies.add(tmpEnemy);
                 }
             case HARD:
                 for (int i = 0; i < amount; i++) {
                     Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyHard();
-                    tmpEnemy.setPath(path);
                     enemies.add(tmpEnemy);
                 }
 
