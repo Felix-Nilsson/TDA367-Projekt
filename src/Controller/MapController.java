@@ -1,11 +1,23 @@
 package Controller;
 
 import Model.*;
+<<<<<<< Updated upstream
+=======
+import Model.Towers.MageTower;
+import Model.Towers.Tower;
+import Model.Towers.TowerFactory;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+>>>>>>> Stashed changes
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+<<<<<<< Updated upstream
+=======
+import javafx.scene.input.*;
+>>>>>>> Stashed changes
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -49,7 +61,101 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
+<<<<<<< Updated upstream
         this.observable = new Observable();
+=======
+        game.addObserver(this);
+        createMap();
+        addToolbar();
+
+
+        //EventHandlers
+
+        //When dragged over GridPane
+        gameBoardGrid.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                if(dragEvent.getGestureSource() != gameBoardGrid){
+                    dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                }
+                dragEvent.consume();
+            }
+        });
+
+        //When entering a node in GridPane
+        gameBoardGrid.setOnDragEntered(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                //TODO add a image to the cell that is hovered over
+            }
+        });
+
+        //When exiting a node in GridPane
+        gameBoardGrid.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                //TODO Remove the image from the cell when the hover leaves
+            }
+        });
+
+        //Upon releasing the mouse over a specific node
+        gameBoardGrid.setOnDragDropped(new EventHandler<DragEvent>() {
+
+            @Override
+            public void handle(DragEvent dragEvent) {
+                Dragboard db = dragEvent.getDragboard();
+                Node node = dragEvent.getPickResult().getIntersectedNode();
+
+                if (node != gameBoardGrid && db.hasImage()) {
+
+                    //Find Cell to place the tower
+                    Integer cIndex = GridPane.getColumnIndex(node);
+                    Integer rIndex = GridPane.getRowIndex(node);
+                    x_placement = cIndex == null ? 0 : cIndex;
+                    y_placement = rIndex == null ? 0 : rIndex;
+
+                    //Check if the cell is available
+                    int index = game.getArrayIndex(x_placement, y_placement);
+                    boolean occupied = game.isCellOccupied(index);
+                    if (occupied == false) {
+                        //Place the image in the cell
+                        ImageView image = new ImageView(db.getImage());
+                        gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
+
+                        //setTowerOnCell(index,); //TODO futher down
+                        game.setCellOccupied(index);
+                    } else {
+                        //TODO Some sort of error or could just leave it empty
+                    }
+
+
+                }
+
+                dragEvent.setDropCompleted(true);
+                dragEvent.consume();
+            }
+        });
+
+        //Finns endast här för att genomföra tester. OBS! tmpEnemy.update() kallas 40 gånger innan man tryckt på start just nu och därför startar enemy på 65
+        tmpEnemy = new BlueEnemy(10,1,1,1,25,105);
+        tmpEnemy.setPath(game.getTmpBoard().getPath());
+        mapAnchorPane.getChildren().add(tmpEnemy.getImageView());
+        //fungerar som ett test: tryck på knapp så rör sig tmpEnemy.
+        Button updateButton = new Button();
+        mapAnchorPane.getChildren().add(updateButton);
+        updateButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                System.out.println("just clicked");
+
+                for (int i=0; i<40;i++){
+                    tmpEnemy.update();
+                }
+            }
+        });
+
+>>>>>>> Stashed changes
 
         createMap();
     }
@@ -79,5 +185,20 @@ public class MapController extends AnchorPane implements Observer {
     }
 
 
+<<<<<<< Updated upstream
+=======
+
+    private <T extends Tower,TF extends TowerFactory> void setTowerOnCell(int index, T tower, TF towerFactory){
+        /*
+        Want to send a type to game, such that the game understands which tower to place
+         */
+
+        game.updateArrayWithTower(index,tower, towerFactory);
+        //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
+        //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
+    }
+
+
+>>>>>>> Stashed changes
 }
 

@@ -13,7 +13,6 @@ public class MageTower implements Tower {
 
     public MageTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
         this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
-        baseTower.setTowerImage("img/mageTower.png");
         updateModel.add(this);
     }
 

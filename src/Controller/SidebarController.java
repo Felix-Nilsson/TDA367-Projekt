@@ -2,6 +2,18 @@ package Controller;
 
 import Model.Game;
 import Model.Observable;
+<<<<<<< Updated upstream
+=======
+
+import Model.Towers.MageTower;
+//import View.Observer;
+import Model.Towers.MageTowerFactory;
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
+import javafx.event.EventHandler;
+
+
+
+>>>>>>> Stashed changes
 import Model.WaveManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,9 +58,27 @@ public class SidebarController extends AnchorPane implements Observer {
         }
         this.game = game;
         this.parentController = parentController;
+<<<<<<< Updated upstream
         this.observable = new Observable();
 
 
+=======
+        game.addObserver(this);
+
+        mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Dragboard db = startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                Image tempIMG = new Image("/img/mageTower.png", 40, 40, false, false, false);
+                content.putImage(tempIMG);
+
+                content.put(DataFormat.PLAIN_TEXT,mageTower);
+                db.setContent(content);
+                mouseEvent.consume();
+            }
+        });
+>>>>>>> Stashed changes
     }
     public void update(){
         money.setText(""+ game.getMoney());
