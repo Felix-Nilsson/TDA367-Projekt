@@ -39,14 +39,12 @@ public class ToolbarController extends AnchorPane implements Observer {
 
     private final Game game;
     private final MapController parentController;
-
     private final Observable observable;
-
 
     private ArcherTower tower; // temp should be more general
 
     public ToolbarController(Game game, MapController parentController){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Toolbar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -56,11 +54,7 @@ public class ToolbarController extends AnchorPane implements Observer {
         }
         this.game = game;
         this.parentController = parentController;
-
         this.observable = new Observable();
-
-        game.addObserver(this);
-
 
         init();
     }
@@ -74,12 +68,11 @@ public class ToolbarController extends AnchorPane implements Observer {
         strongestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setToggleGroup(targetingToggleGroup);
         closestRadioButton.setToggleGroup(targetingToggleGroup);
-        firstRadioButton.setSelected(true);
 
-        //towerImageView.setImage(tower.getImage());
-        //towerLabel.setText("Archer"); //temp
+        towerImageView.setImage(tower.getImage());
+        towerLabel.setText("Archer"); //temp
 
-        //sellButton.setText((tower.getPrice()*(0.5)) + "");
+        sellButton.setText((tower.getPrice()*(0.5)) + "");
 
     }
 

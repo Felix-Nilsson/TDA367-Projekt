@@ -13,8 +13,7 @@ class BlueEnemyTest {
     void update() {
         path.add(BaseEnemy.Direction.SOUTH);
         path.add(BaseEnemy.Direction.EAST);
-        BlueEnemy tmp = new BlueEnemy(10,1,10,10,25,25);
-        tmp.setPath(path);
+        BlueEnemy tmp = new BlueEnemy(10,1,10,10,25,25,path);
         tmp.update();
         assertEquals(tmp.getPositionY(),26);
         assertEquals(tmp.getPositionX(),25);
@@ -29,8 +28,7 @@ class BlueEnemyTest {
     @Test
     void followPath() {
         path.add(BaseEnemy.Direction.SOUTH);
-        BlueEnemy tmp = new BlueEnemy(10,1,10,10,25,25);
-        tmp.setPath(path);
+        BlueEnemy tmp = new BlueEnemy(10,1,10,10,25,25,path);
         tmp.followPath();
         assertEquals(tmp.getPositionY(),25);
         assertEquals(tmp.getPositionX(),25);
@@ -39,26 +37,25 @@ class BlueEnemyTest {
 
     @Test
     void tookDamage() {
-        BlueEnemy tmp = new BlueEnemy(100,10,10,10,10,10);
+        BlueEnemy tmp = new BlueEnemy(100,10,10,10,10,10,path);
         tmp.tookDamage(50);
         assertEquals(tmp.getHealth(),50);
     }
     @Test
     void turn(){
         path.add(BaseEnemy.Direction.SOUTH);
-        BlueEnemy tmp = new BlueEnemy(100,1,10,10,10,10);
-        tmp.setPath(path);
+        BlueEnemy tmp = new BlueEnemy(100,1,10,10,10,10,path);
 
-        tmp.turn(BaseEnemy.Direction.SOUTH);
+        tmp.turnSOUTH();
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.SOUTH);
 
-        tmp.turn(BaseEnemy.Direction.EAST);
+        tmp.turnEAST();
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.EAST);
 
-        tmp.turn(BaseEnemy.Direction.NORTH);
+        tmp.turnNORTH();
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.NORTH);
 
-        tmp.turn(BaseEnemy.Direction.WEST);
+        tmp.turnWEST();
         assertEquals(tmp.getDirection(), BaseEnemy.Direction.WEST);
     }
 }

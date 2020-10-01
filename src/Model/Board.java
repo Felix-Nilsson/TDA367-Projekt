@@ -53,16 +53,16 @@ public class Board {
         for (int i = 0; i < BOARD_WIDTH; i++){
             for(int j = 0; j < BOARD_HEIGHT; j++){
                 if(map[j][i] == 0){
-                    tempBoard.add(new GroundCell(i,j, false));
+                    tempBoard.add(new GroundCell(i,j, false, 50, 50));
                 }
                 else if(map[j][i] == 1){
-                    tempBoard.add(new PathCell(i, j, true));
+                    tempBoard.add(new PathCell(i, j, false, 50, 50));
                 }
                 else if(map[j][i] == 2){
-                    tempBoard.add(new WaterCell(i, j, false));
+                    tempBoard.add(new WaterCell(i, j, false, 50, 50));
                 }
                 else if(map[j][i] == 3){
-                    tempBoard.add(new ObstacleCell(i, j, true));
+                    tempBoard.add(new ObstacleCell(i, j, true, 50, 50));
                 }
                 else if(map[j][i] == 4){
                     //temp, example of adding a tower to a cell
@@ -73,7 +73,7 @@ public class Board {
                 }
                 //skapar en path
                 else if(map[j][i] == 8){
-                    tempBoard.add(new PathCell(i, j, false));
+                    tempBoard.add(new PathCell(i, j, false, 50, 50));
 
                     fillPath(j,i,map);
                 }
@@ -86,9 +86,6 @@ public class Board {
 
     public ArrayList<Cell> getBoard(){
         return this.board;
-    }
-    public Board getTmpBoard(){
-        return this;
     }
 
     private void setBoard(ArrayList<Cell> board) {
@@ -103,47 +100,32 @@ public class Board {
 
         //sätter start direction till EAST för att enemies antagligen aldrig börjar åka åt vänster så while-loopen fungerar
         BaseEnemy.Direction prevDir = BaseEnemy.Direction.EAST;
-        while(i<BOARD_WIDTH-1){
+        while(i+1<BOARD_WIDTH){
                 //checks to the right
                 if((map[j][i+1]==1) && prevDir!= BaseEnemy.Direction.WEST){
                     path.add(BaseEnemy.Direction.EAST);
                     prevDir=BaseEnemy.Direction.EAST;
-                    i++;
+                    i=i+1;
                 }
                 //checks below
                 else if((map[j+1][i]==1) && prevDir!= BaseEnemy.Direction.NORTH){
                     path.add(BaseEnemy.Direction.SOUTH);
                     prevDir=BaseEnemy.Direction.SOUTH;
-                    j++;
+                    j=j+1;
                 }
                 //checks above
                 else if((map[j-1][i]==1) && prevDir!= BaseEnemy.Direction.SOUTH){
                     path.add(BaseEnemy.Direction.NORTH);
                     prevDir=BaseEnemy.Direction.NORTH;
-                    j--;
+                    j=j-1;
                 }
                 //checks left
                 else if((map[j][i-1]==1) && prevDir!= BaseEnemy.Direction.EAST){
                     path.add(BaseEnemy.Direction.WEST);
                     prevDir=BaseEnemy.Direction.WEST;
-                    i--;
+                    i=i-1;
                 }
             }
-        }
-
-        public int getBOARD_WIDTH(){
-            return this.BOARD_WIDTH;
-        }
-        public int getBOARD_HEIGHT(){
-            return this.BOARD_HEIGHT;
-        }
-
-        public boolean isCellOccupied(int index){
-            return board.get(index).isOccupied();
-        }
-
-        public void setCellOccupied(int index){
-            board.get(index).setOccupiedTrue();
         }
     }
 

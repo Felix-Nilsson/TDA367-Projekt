@@ -8,7 +8,7 @@ public final class UpdateModel  {
     public void add(Updatable updatableObject){
         updatableList.add(updatableObject);
     }
-    public void update(){
+    public void notifyAllUpdatables(){
         for(Updatable a : updatableList){
             a.update();
         }
