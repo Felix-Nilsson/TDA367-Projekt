@@ -4,57 +4,36 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlueEnemy implements Enemy{
 
     private final BaseEnemy parent;
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
-    private ImageView imageView;
+    private Image image;
 
-    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY){
-        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY);
-        init();
-    }
-    @Override
-    public void setPath(ArrayList<BaseEnemy.Direction> path){
-        parent.setPath(path);
+    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, List<BaseEnemy.Direction> path){
+        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY,path);
+        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/bluemonster1.png")));
+
+
     }
 
     @Override
     public void update(){
         //TODO ska eventuellt vara individuell för varje enemy
         parent.update();
-        imageToPos();
+
     }
-//skapar bilden som tillhör enemyn. Ska också flyttas till View senare
-    private void init() {
 
-        Image image = new Image((getClass().getClassLoader().getResourceAsStream("img/bluemonster1.png")));
-        imageView = new ImageView(image);
 
-        //Setting the position of the image
-        imageToPos();
-
-        //setting the fit height and width of the image view
-        imageView.setFitHeight(40);
-        imageView.setFitWidth(40);
-
-        //Setting the preserve ratio of the image view
-        //imageView.setPreserveRatio(true);
-        imageView.toFront();
+    //ska kanske också bort senare
+    @Override
+    public Image getImage(){
+        return image;
     }
-    //får image att följa enemy-objektet. Ska också flyttas till View senare
-    private void imageToPos(){
-        imageView.setX(parent.getPositionX());
-        imageView.setY(parent.getPositionY());
 
-        System.out.println("x = "+parent.getPositionX());
-        System.out.println(" y = "+parent.getPositionY());
-    }
-    //ska också bort senare
-    public ImageView getImageView(){
-        return imageView;
-    }
+
     @Override
     public void followPath(){
         parent.followPath();
@@ -73,6 +52,12 @@ public class BlueEnemy implements Enemy{
     public int getPositionY(){
         return parent.getPositionY();
     }
+
+    @Override
+    public void move() {
+        parent.move();
+    }
+
     public BaseEnemy.Direction getDirection(){
         return parent.direction;
     }

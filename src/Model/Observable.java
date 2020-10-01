@@ -21,11 +21,11 @@ public class Observable implements Observer{
     }
 
     public boolean removeObserver(final Observer observer) {
-        final boolean wasObserving = this.observers.contains(observer);
-        if (wasObserving) {
+        final boolean alreadyObserving = this.observers.contains(observer);
+        if (!alreadyObserving) {
             this.observers.remove(observer);
         }
-        return wasObserving;
+        return !alreadyObserving;
     }
 
     public void update(){

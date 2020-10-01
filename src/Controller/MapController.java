@@ -1,5 +1,6 @@
 package Controller;
 import Model.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -16,7 +18,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class MapController extends AnchorPane implements Observer {
@@ -43,7 +48,8 @@ public class MapController extends AnchorPane implements Observer {
     private int y_placement;
     private final List<Cell> map;
     private BlueEnemy tmpEnemy;
-
+    private List<ImageView> enemyImages;
+    private List<Enemy> enemies;
 
     public MapController(Game game, List<Cell> map) {
 
@@ -60,8 +66,14 @@ public class MapController extends AnchorPane implements Observer {
         game.addObserver(this);
         createMap();
         addToolbar();
+        eventHandlers();
 
 
+    }
+    @FXML private void pauseGame(){
+        game.pauseGame();
+    }
+    private void eventHandlers(){
         //EventHandlers
 
         //When dragged over GridPane
@@ -127,27 +139,6 @@ public class MapController extends AnchorPane implements Observer {
                 dragEvent.consume();
             }
         });
-
-        //Finns endast här för att genomföra tester. OBS! tmpEnemy.update() kallas 40 gånger innan man tryckt på start just nu och därför startar enemy på 65
-        tmpEnemy = new BlueEnemy(10,1,1,1,25,105);
-        tmpEnemy.setPath(game.getTmpBoard().getPath());
-        mapAnchorPane.getChildren().add(tmpEnemy.getImageView());
-        //fungerar som ett test: tryck på knapp så rör sig tmpEnemy.
-        Button updateButton = new Button();
-        mapAnchorPane.getChildren().add(updateButton);
-        updateButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                System.out.println("just clicked");
-
-                for (int i=0; i<40;i++){
-                    tmpEnemy.update();
-                }
-            }
-        });
-
-
     }
     private void addToolbar(){
         ToolbarController toolbarController = new ToolbarController(game,this);
@@ -169,10 +160,50 @@ public class MapController extends AnchorPane implements Observer {
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }
-    //kallas i game loopen (bara 1 gång/sekund just nu)
+    public void createWave(){
+        game.createWave();
+        if(game.getEnemiesInWave()!=null) {
+            enemies = game.getEnemiesInWave();
+            enemyImages = new ArrayList<>();
+            for (Enemy e : enemies) {
+                ImageView img = new ImageView(e.getImage());
+                enemyImages.add(img);
+                fixImage(img,e);
+                mapAnchorPane.getChildren().add(img);
+
+
+            }
+        }
+        game.putEnemyInUpdateModel();
+    }
     public void update(){
-        for (int i=0; i<40;i++){
-            tmpEnemy.update();
+
+          if (game.getEnemiesInWave() != null && enemyImages != null) {
+              List<Enemy> enemies = game.getEnemiesInWave();
+              int count = 0;
+              for (ImageView img : enemyImages) {
+                  img.setX(enemies.get(count).getPositionX());
+                  img.setY(enemies.get(count).getPositionY());
+                  count++;
+
+              }
+          }
+
+
+    }
+    private void fixImage(ImageView img,Enemy e){
+        img.setX(e.getPositionX());
+        img.setY(e.getPositionY());
+        img.setFitHeight(40);
+        img.setFitWidth(40);
+        img.setPreserveRatio(true);
+        img.toFront();
+    }
+    private void delay(double seconds) {
+        try {
+            Thread.sleep((int) (1000*seconds));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

@@ -6,6 +6,7 @@ import Model.Observable;
 import Model.Towers.MageTower;
 //import View.Observer;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 
 
@@ -39,8 +40,6 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private Button nextRound;
     @FXML private GridPane gridPane;
     @FXML private Label money;
-
-    @FXML private Button toolbarTestButton; //remove later, just for testing
     @FXML private AnchorPane toolbar;
 
 
@@ -81,14 +80,17 @@ public class SidebarController extends AnchorPane implements Observer {
     }
     @FXML private void nextRound(){
         if(!gameStarted){ // start waves
-            game.startGame();
+
+                        game.startGame();
+                        parentController.createWave();
+                        
             gameStarted = true;
             if(!gameRunning){ //next round
                 gameRunning = true;
                 game.nextRound();
             }
             else{
-                game.startGame();
+                //game.startGame();
             }
         }
 
@@ -97,8 +99,7 @@ public class SidebarController extends AnchorPane implements Observer {
         parentController.openSettings();
     }
 
-    @FXML
-    public void toolbarButtonOnclick(){
+    @FXML public void toolbarButtonOnclick(){
         toolbar.toFront();
     }
 

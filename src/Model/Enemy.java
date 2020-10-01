@@ -1,10 +1,16 @@
 package Model;
 
-import java.util.ArrayList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+
 
 public interface Enemy extends Updatable{
     void update();
     void followPath();
     void tookDamage(int damage);
-    void setPath(ArrayList<BaseEnemy.Direction> path);
+    Image getImage();
+    int getPositionX();
+    int getPositionY();
+    void move();
 }

@@ -2,7 +2,7 @@ package Model;
 
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class Board {
@@ -10,7 +10,8 @@ public class Board {
     private int BOARD_HEIGHT = 18;
     private  ArrayList<Cell> board;
     private int mapNumber;
-    private final ArrayList<BaseEnemy.Direction> path = new ArrayList<>();
+    private final List<BaseEnemy.Direction> enemyPath = new ArrayList<>();
+    private int[][] currentMap;
 
 
     private int[][] map_1= {
@@ -44,7 +45,9 @@ public class Board {
 
     private void createBoard(){
         switch (mapNumber){
-            case 1: createMapGrid(map_1);
+            case 1:
+                createMapGrid(map_1);
+                currentMap = map_1;
             case 2: /*create another map */;
         }
     }
@@ -84,7 +87,7 @@ public class Board {
 
     }
 
-    public ArrayList<Cell> getBoard(){
+    public List<Cell> getBoard(){
         return this.board;
     }
     public Board getTmpBoard(){
@@ -94,8 +97,8 @@ public class Board {
     private void setBoard(ArrayList<Cell> board) {
         this.board = board;
     }
-    public ArrayList<BaseEnemy.Direction> getPath(){
-        return path;
+    public List<BaseEnemy.Direction> getPath(){
+        return enemyPath;
     }
 
     // j och i är index för spawnet i första iterationen.
@@ -106,25 +109,25 @@ public class Board {
         while(i<BOARD_WIDTH-1){
                 //checks to the right
                 if((map[j][i+1]==1) && prevDir!= BaseEnemy.Direction.WEST){
-                    path.add(BaseEnemy.Direction.EAST);
+                    enemyPath.add(BaseEnemy.Direction.EAST);
                     prevDir=BaseEnemy.Direction.EAST;
                     i++;
                 }
                 //checks below
                 else if((map[j+1][i]==1) && prevDir!= BaseEnemy.Direction.NORTH){
-                    path.add(BaseEnemy.Direction.SOUTH);
+                    enemyPath.add(BaseEnemy.Direction.SOUTH);
                     prevDir=BaseEnemy.Direction.SOUTH;
                     j++;
                 }
                 //checks above
                 else if((map[j-1][i]==1) && prevDir!= BaseEnemy.Direction.SOUTH){
-                    path.add(BaseEnemy.Direction.NORTH);
+                    enemyPath.add(BaseEnemy.Direction.NORTH);
                     prevDir=BaseEnemy.Direction.NORTH;
                     j--;
                 }
                 //checks left
                 else if((map[j][i-1]==1) && prevDir!= BaseEnemy.Direction.EAST){
-                    path.add(BaseEnemy.Direction.WEST);
+                    enemyPath.add(BaseEnemy.Direction.WEST);
                     prevDir=BaseEnemy.Direction.WEST;
                     i--;
                 }

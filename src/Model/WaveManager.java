@@ -2,15 +2,23 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
-public class WaveManager {
+public class WaveManager  {
     private Difficulty difficulty;
     private List<Enemy> enemies;
-    private ArrayList<BaseEnemy.Direction> path;
+
+    private List<BaseEnemy.Direction> enemyPath;
+    private long delayTime;
+    private long startTime;
 
 
-    public WaveManager(Difficulty difficulty) {
+
+    public WaveManager(Difficulty difficulty,List<BaseEnemy.Direction> enemyPath) {
         this.difficulty = difficulty;
+        this.enemyPath = enemyPath;
+        this.delayTime = 1;
 
     }
 
@@ -20,16 +28,29 @@ public class WaveManager {
         //wave.addAll(enemyCreator(((round - 3) * 2),"GreenEnemy"));
         return wave;
     }
+    private List<Enemy> enemyCreator(int amount, String enemy){
+        List<Enemy> enemies = new ArrayList<>();
+
+        for (int i = 0; i < amount; i++){
+            Enemy tmpEnemy=getEnemyFactory(enemy).createEnemyEasy();
+            enemies.add(tmpEnemy);
+
+        }
+        System.out.println("list of enemies: "+ enemies.toString());
+        return enemies;
+    }
 
 
-    private EnemyFactory getEnemyFactory(String enemy) {
-        switch (enemy) {
-            case "BlueEnemy":
-                return new EnemyFactoryBlue();
+
+    private EnemyFactory getEnemyFactory(String enemy){
+        switch(enemy){
+            case "BlueEnemy": return new EnemyFactoryBlue(enemyPath);
+
             //case "RedEnemy " : return  new EnemyFactoryRed();
         }
         return null;
     }
+
 
     private List<Enemy> enemyCreator(int amount, String enemy) {
         List<Enemy> enemies = new ArrayList<>();
@@ -56,5 +77,6 @@ public class WaveManager {
         }
         return enemies;
     }
+
 }
 

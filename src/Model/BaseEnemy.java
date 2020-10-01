@@ -1,7 +1,11 @@
 package Model;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BaseEnemy implements Enemy{
     private int health;
@@ -16,33 +20,30 @@ public class BaseEnemy implements Enemy{
     //TODO path ska finnas med som parameter i BaseEnemy. Då vet varje enemy hur de ska gå m.h.a. path, t.ex. EAST,EAST,SOUTH,SOUTH med 50 pixlar mellan varje.
     //TODO update ska t.ex. kolla: if(positionX % 50 == 25), turn(path.get(stepNr)), stepNr=stepNr+1
     //TODO OBS! för att modulo-beräkningen ska fungera måste movementSpeed vara väldigt låg. Hitta bättre sätt.
-    private ArrayList <Direction> path;
+    private List <Direction> path;
 
     protected Direction direction;
+    private ImageView imageView;
+    private List<Point> positionList; //Lista med alla pathens nodpositioner
 
     //används för att gå igenom path
     private int stepNr = 0;
 
-    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY){
+    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY,List<Direction> path){
         this.health=health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
         this.armor=armor;
         this.positionX=positionX;
         this.positionY=positionY;
-        //this.path=path;
+        this.path = path;
+
         //så länge enemy spawnas på 25,75... ska denna inte behövas
-        //this.direction=path.get(0);
-
-
-    }
-    //Istället för att ha path i konstruktorn så flyttades det hit
-    @Override
-    public void setPath(ArrayList<BaseEnemy.Direction> path) {
-        this.path=path;
         this.direction=path.get(0);
         convertPathToCoordinates();
+
     }
+
     //Dessa metoder ska kallas varje gång model ska uppdateras
     @Override
     public void update(){
@@ -50,7 +51,7 @@ public class BaseEnemy implements Enemy{
         move();
     }
 
-    private void move(){
+    public void move(){
         switch (direction) {
             case NORTH : positionY = positionY - movementSpeed; break;
             case EAST : positionX = positionX + movementSpeed; break;
@@ -60,11 +61,11 @@ public class BaseEnemy implements Enemy{
     }
 
     protected void turn(Direction dir){
-        this.direction=dir;
+        this.direction = dir;
     }
 
-//Lista med alla pathens nodpositioner
-    private ArrayList<Point> positionList;
+
+
     //Fyller positionList
     private void convertPathToCoordinates(){
 
@@ -103,10 +104,12 @@ public class BaseEnemy implements Enemy{
 
 
 //Ser till så att enemy är vänd åt rätt håll.
-    @Override
+
     public void followPath(){
         if (stepNr<path.size()){
+
             switch (direction){
+
                 case EAST:
                     if (positionList.get(stepNr).x-positionX<=0){
                         turn(path.get(stepNr));
@@ -140,7 +143,7 @@ public class BaseEnemy implements Enemy{
     }
 
 
-    @Override
+
     // ska antagligen ta in damage type (ad/ap)
     public void tookDamage(int damage){
         //TODO lägga in beräkningar beroende på damage type och armor/mr
@@ -151,6 +154,15 @@ public class BaseEnemy implements Enemy{
         }
     }
 
+
+    public Image getImage() {
+        return null;
+    }
+
+
+    public ImageView getImageView() {
+        return imageView;
+    }
 
 
     public int getPositionX(){

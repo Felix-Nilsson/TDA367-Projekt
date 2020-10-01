@@ -4,9 +4,11 @@ package Model;
 import Controller.Observer;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
-public class Game implements Updatable{
+public class Game implements Updatable {
 
     private final Difficulty difficulty;
     private final int mapNumber;
@@ -18,73 +20,95 @@ public class Game implements Updatable{
     private final WaveManager waveManager;
     private boolean running = false;
     public Thread gameLoopThread;
-    private List<Enemy> enemies;
-    private int round = 0;
+
+    private Updatable updatable;
+    private final WaveManager waveManager;
+    private final List<BaseEnemy.Direction> enemyPath;
+    private List<Enemy> enemiesInWave;
+    int round = 1;
+
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         observable = new Observable();
         updateModel = new UpdateModel();
-        waveManager = new WaveManager(difficulty);
+
+
         b= new Board(mapNumber);
+        this.enemyPath = b.getPath();
+        waveManager = new WaveManager(difficulty,enemyPath);
+
         setValues();
 
+
     }
+
+    public List<Enemy> getEnemiesInWave() {
+        return enemiesInWave;
+    }
+
     public void startGame(){
         running = true;
         run();
     }
-    private void run(){
-
-        gameLoopThread = new Thread(()-> {
-            int seconds = 0;
-           while(running){
-
-               update();
-               try {
-                   Thread.sleep(1000);
-               } catch (InterruptedException e) {
-                   e.printStackTrace();
-               }
-
-               System.out.println("running for: "+ seconds + " seconds");
-               seconds++;
-           }
-        });
-        gameLoopThread.setDaemon(true);
-        gameLoopThread.start();
-
+    public void createWave(){
+        enemiesInWave  = waveManager.createWave(round);
 
     }
-    public void nextRound(){
-        enemies = waveManager.createWave(round);
-        round++;
+    public void putEnemyInUpdateModel(){
+        for(Enemy e : enemiesInWave){
+            updateModel.add(e);
+            int i = 0;
+            while(i < 10){
+                delay();
+                update();
+                i++;
+            }
+        }
     }
-    private void delay(int seconds){
+    private void delay(){
         try {
-            TimeUnit.SECONDS.sleep(seconds);
+            TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+    public void pauseGame(){
+
+    }
+    public void nextRound(){
+        //waveManager.createWave(round);
+        round++;
+    }
+
+    private void run() {
+        gameLoopThread = new Thread(() -> {
+            while (running) {
+                update();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        gameLoopThread.setDaemon(true);
+        gameLoopThread.start();
+
+    }
+
+
 
 
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
     }
-    public boolean removeObserver(final Observer observer){
-        return this.observable.removeObserver(observer);
-    }
-
-
-
 
     public void update(){
-
         observable.update();
         updateModel.update();
-
     }
 
 
@@ -110,20 +134,9 @@ public class Game implements Updatable{
     public List<Cell> getBoard(){
         return b.getBoard();
     }
-
-    public Board getTmpBoard(){
-        return b.getTmpBoard();
-    }
     public int getMapNumber(){return mapNumber;}
-
-    public int getHealth() {
-        return health;
-    }
-    public int getMoney() {
-        return money;
-    }
-
-
+    public int getHealth() { return health; }
+    public int getMoney() { return money; }
     public int getArrayIndex(int x_placement, int y_placement){
         int placeInArray = 0;
         for(int i =0; i < b.getBOARD_WIDTH(); i++){
