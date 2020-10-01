@@ -5,17 +5,13 @@ public class BaseCell implements Cell{
     private int y;
     private TerrainType terrain;
     private boolean occupied;
-    private int width;
-    private int height;
     private String color;
 
-    public BaseCell(int x, int y, TerrainType terrain, boolean occupied, int width, int height, String color){
+    public BaseCell(int x, int y, TerrainType terrain, boolean occupied, String color){
         this.x = x;
         this.y = y;
         this.terrain = terrain;
         this.occupied = occupied;
-        this.width = width;
-        this.height = height;
         this.color = color;
     }
 
@@ -40,5 +36,12 @@ public class BaseCell implements Cell{
     public int getY(){
         return this.y;
     }
+
+    public void setOccupiedTrue(){
+        this.occupied = true;
+    }
+
+    public void setOccupiedFalse(){this.occupied = false;}
+
 
 }

@@ -1,32 +1,21 @@
 package Controller;
-
 import Model.*;
-<<<<<<< Updated upstream
-=======
-import Model.Towers.MageTower;
-import Model.Towers.Tower;
-import Model.Towers.TowerFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
->>>>>>> Stashed changes
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-<<<<<<< Updated upstream
-=======
-import javafx.scene.input.*;
->>>>>>> Stashed changes
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,12 +34,19 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane settings;
     @FXML private AnchorPane settingsPane;
     @FXML private AnchorPane mapAnchorPane;
+    @FXML private AnchorPane toolbarAnchorPane;
 
-    private final List<Cell> map;
+
     private final Game game;
-    private final Observable observable;
+    private SidebarController sidebarController;
+    private int x_placement;
+    private int y_placement;
+    private final List<Cell> map;
+    private BlueEnemy tmpEnemy;
+
 
     public MapController(Game game, List<Cell> map) {
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -61,9 +57,6 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
-<<<<<<< Updated upstream
-        this.observable = new Observable();
-=======
         game.addObserver(this);
         createMap();
         addToolbar();
@@ -122,8 +115,7 @@ public class MapController extends AnchorPane implements Observer {
                         ImageView image = new ImageView(db.getImage());
                         gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
 
-                        //setTowerOnCell(index,); //TODO futher down
-                        game.setCellOccupied(index);
+                        setTowerOnCell(index); //TODO futher down
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
@@ -155,9 +147,11 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
->>>>>>> Stashed changes
 
-        createMap();
+    }
+    private void addToolbar(){
+        ToolbarController toolbarController = new ToolbarController(game,this);
+        toolbarAnchorPane.getChildren().add(toolbarController);
     }
 
     public void createMap(){
@@ -167,15 +161,22 @@ public class MapController extends AnchorPane implements Observer {
 
         //add all cells to GUI
         for (Cell p: map) {
-            Rectangle tile = new Rectangle(50,50);
+            Rectangle tile = new Rectangle(40,40);
+            tile.setX(p.getX());
+            tile.setY(p.getY());
             tile.setFill(Color.web(p.getColor()));
             tile.setStroke(Color.BLACK);
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }
+    //kallas i game loopen (bara 1 gång/sekund just nu)
     public void update(){
-
+        for (int i=0; i<40;i++){
+            tmpEnemy.update();
+        }
     }
+
+
     public void openSettings(){
         settingsPane.toFront();
     }
@@ -185,20 +186,13 @@ public class MapController extends AnchorPane implements Observer {
     }
 
 
-<<<<<<< Updated upstream
-=======
 
-    private <T extends Tower,TF extends TowerFactory> void setTowerOnCell(int index, T tower, TF towerFactory){
-        /*
-        Want to send a type to game, such that the game understands which tower to place
-         */
-
-        game.updateArrayWithTower(index,tower, towerFactory);
+    private void setTowerOnCell(int index/*Tower tower */){
+        //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
         //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
         //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
     }
 
 
->>>>>>> Stashed changes
 }
 

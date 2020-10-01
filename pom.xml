@@ -22,7 +22,11 @@
                 <configuration>
                     <archive>
                         <manifest>
+<<<<<<< HEAD
                             <mainClass>Main</mainClass>
+=======
+                            <mainClass>com.src.Main</mainClass>
+>>>>>>> master
                         </manifest>
                     </archive>
                 </configuration>

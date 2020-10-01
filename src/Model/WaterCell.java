@@ -7,8 +7,8 @@ public class WaterCell implements Cell{
     BaseCell base;
     private Color color;
 
-    public WaterCell(int x, int y, boolean occupied, int width, int height){
-        base = new BaseCell(x, y, TerrainType.WATER, occupied, width, height, "2d6ecf");
+    public WaterCell(int x, int y, boolean occupied){
+        base = new BaseCell(x, y, TerrainType.WATER, occupied, "2d6ecf");
 
     }
 
@@ -35,5 +35,15 @@ public class WaterCell implements Cell{
     @Override
     public int getY() {
         return base.getY();
+    }
+
+    @Override
+    public void setOccupiedTrue() {
+        base.setOccupiedTrue();
+    }
+
+    @Override
+    public void setOccupiedFalse() {
+        base.setOccupiedFalse();
     }
 }

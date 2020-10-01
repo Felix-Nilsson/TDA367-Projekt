@@ -2,26 +2,27 @@ package Controller;
 
 import Model.Game;
 import Model.Observable;
-<<<<<<< Updated upstream
-=======
 
 import Model.Towers.MageTower;
 //import View.Observer;
-import Model.Towers.MageTowerFactory;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.event.EventHandler;
 
 
 
->>>>>>> Stashed changes
 import Model.WaveManager;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.IOException;
 
 
@@ -45,7 +46,9 @@ public class SidebarController extends AnchorPane implements Observer {
 
     private final Game game;
     private final MapController parentController;
-    private final Observable observable;
+    private boolean gameRunning = false;
+    private boolean gameStarted = false;
+
 
     public SidebarController(Game game,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
@@ -58,11 +61,6 @@ public class SidebarController extends AnchorPane implements Observer {
         }
         this.game = game;
         this.parentController = parentController;
-<<<<<<< Updated upstream
-        this.observable = new Observable();
-
-
-=======
         game.addObserver(this);
 
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -72,19 +70,29 @@ public class SidebarController extends AnchorPane implements Observer {
                 ClipboardContent content = new ClipboardContent();
                 Image tempIMG = new Image("/img/mageTower.png", 40, 40, false, false, false);
                 content.putImage(tempIMG);
-
-                content.put(DataFormat.PLAIN_TEXT,mageTower);
                 db.setContent(content);
                 mouseEvent.consume();
             }
         });
->>>>>>> Stashed changes
     }
     public void update(){
         money.setText(""+ game.getMoney());
         health.setText(""+ game.getHealth());
     }
-    @FXML public void nextRound(){ }
+    @FXML private void nextRound(){
+        if(!gameStarted){ // start waves
+            game.startGame();
+            gameStarted = true;
+            if(!gameRunning){ //next round
+                gameRunning = true;
+                game.nextRound();
+            }
+            else{
+                game.startGame();
+            }
+        }
+
+    }
     @FXML private void settings(){
         parentController.openSettings();
     }
@@ -93,6 +101,7 @@ public class SidebarController extends AnchorPane implements Observer {
     public void toolbarButtonOnclick(){
         toolbar.toFront();
     }
+
 
 
 

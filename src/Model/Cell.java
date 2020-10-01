@@ -11,4 +11,8 @@ public interface Cell {
     int getX();
 
     int getY();
+
+    void setOccupiedTrue();
+
+    void setOccupiedFalse();
 }
