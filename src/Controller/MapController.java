@@ -222,6 +222,9 @@ public class MapController extends AnchorPane implements Observer {
         //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
         //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
         //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
+
+        
+
     }
 
 
