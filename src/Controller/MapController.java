@@ -1,33 +1,27 @@
 package Controller;
-
 import Model.*;
-<<<<<<< Updated upstream
-=======
-import Model.Towers.MageTower;
-import Model.Towers.Tower;
-import Model.Towers.TowerFactory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
->>>>>>> Stashed changes
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-<<<<<<< Updated upstream
-=======
-import javafx.scene.input.*;
->>>>>>> Stashed changes
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class MapController extends AnchorPane implements Observer {
@@ -45,12 +39,20 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane settings;
     @FXML private AnchorPane settingsPane;
     @FXML private AnchorPane mapAnchorPane;
+    @FXML private AnchorPane toolbarAnchorPane;
 
-    private final List<Cell> map;
+
     private final Game game;
-    private final Observable observable;
+    private SidebarController sidebarController;
+    private int x_placement;
+    private int y_placement;
+    private final List<Cell> map;
+    private BlueEnemy tmpEnemy;
+    private List<ImageView> enemyImages;
+    private List<Enemy> enemies;
 
     public MapController(Game game, List<Cell> map) {
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -61,14 +63,17 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
-<<<<<<< Updated upstream
-        this.observable = new Observable();
-=======
         game.addObserver(this);
         createMap();
         addToolbar();
+        eventHandlers();
 
 
+    }
+    @FXML private void pauseGame(){
+        game.pauseGame();
+    }
+    private void eventHandlers(){
         //EventHandlers
 
         //When dragged over GridPane
@@ -122,8 +127,7 @@ public class MapController extends AnchorPane implements Observer {
                         ImageView image = new ImageView(db.getImage());
                         gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
 
-                        //setTowerOnCell(index,); //TODO futher down
-                        game.setCellOccupied(index);
+                        setTowerOnCell(index); //TODO futher down
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
@@ -135,29 +139,10 @@ public class MapController extends AnchorPane implements Observer {
                 dragEvent.consume();
             }
         });
-
-        //Finns endast här för att genomföra tester. OBS! tmpEnemy.update() kallas 40 gånger innan man tryckt på start just nu och därför startar enemy på 65
-        tmpEnemy = new BlueEnemy(10,1,1,1,25,105);
-        tmpEnemy.setPath(game.getTmpBoard().getPath());
-        mapAnchorPane.getChildren().add(tmpEnemy.getImageView());
-        //fungerar som ett test: tryck på knapp så rör sig tmpEnemy.
-        Button updateButton = new Button();
-        mapAnchorPane.getChildren().add(updateButton);
-        updateButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                System.out.println("just clicked");
-
-                for (int i=0; i<40;i++){
-                    tmpEnemy.update();
-                }
-            }
-        });
-
->>>>>>> Stashed changes
-
-        createMap();
+    }
+    private void addToolbar(){
+        ToolbarController toolbarController = new ToolbarController(game,this);
+        toolbarAnchorPane.getChildren().add(toolbarController);
     }
 
     public void createMap(){
@@ -167,15 +152,62 @@ public class MapController extends AnchorPane implements Observer {
 
         //add all cells to GUI
         for (Cell p: map) {
-            Rectangle tile = new Rectangle(50,50);
+            Rectangle tile = new Rectangle(40,40);
+            tile.setX(p.getX());
+            tile.setY(p.getY());
             tile.setFill(Color.web(p.getColor()));
             tile.setStroke(Color.BLACK);
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }
+    public void createWave(){
+        game.createWave();
+        if(game.getEnemiesInWave()!=null) {
+            enemies = game.getEnemiesInWave();
+            enemyImages = new ArrayList<>();
+            for (Enemy e : enemies) {
+                ImageView img = new ImageView(e.getImage());
+                enemyImages.add(img);
+                fixImage(img,e);
+                mapAnchorPane.getChildren().add(img);
+
+
+            }
+        }
+        game.putEnemyInUpdateModel();
+    }
     public void update(){
 
+          if (game.getEnemiesInWave() != null && enemyImages != null) {
+              List<Enemy> enemies = game.getEnemiesInWave();
+              int count = 0;
+              for (ImageView img : enemyImages) {
+                  img.setX(enemies.get(count).getPositionX());
+                  img.setY(enemies.get(count).getPositionY());
+                  count++;
+
+              }
+          }
+
+
     }
+    private void fixImage(ImageView img,Enemy e){
+        img.setX(e.getPositionX());
+        img.setY(e.getPositionY());
+        img.setFitHeight(40);
+        img.setFitWidth(40);
+        img.setPreserveRatio(true);
+        img.toFront();
+    }
+    private void delay(double seconds) {
+        try {
+            Thread.sleep((int) (1000*seconds));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void openSettings(){
         settingsPane.toFront();
     }
@@ -185,20 +217,13 @@ public class MapController extends AnchorPane implements Observer {
     }
 
 
-<<<<<<< Updated upstream
-=======
 
-    private <T extends Tower,TF extends TowerFactory> void setTowerOnCell(int index, T tower, TF towerFactory){
-        /*
-        Want to send a type to game, such that the game understands which tower to place
-         */
-
-        game.updateArrayWithTower(index,tower, towerFactory);
+    private void setTowerOnCell(int index/*Tower tower */){
+        //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
         //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
         //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
     }
 
 
->>>>>>> Stashed changes
 }
 

@@ -1,19 +1,14 @@
 package Model;
 
 
-<<<<<<< Updated upstream
-=======
 import Controller.Observer;
-import Model.Towers.MageTower;
-import Model.Towers.MageTowerFactory;
-import Model.Towers.Tower;
-import Model.Towers.TowerFactory;
 
-import java.util.ArrayList;
->>>>>>> Stashed changes
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
-public class Game implements Updatable{
+public class Game implements Updatable {
 
     private final Difficulty difficulty;
     private final int mapNumber;
@@ -22,46 +17,97 @@ public class Game implements Updatable{
     private final Observable observable;
     private final UpdateModel updateModel;
     private final Board b;
-<<<<<<< Updated upstream
-
-=======
     private final WaveManager waveManager;
     private boolean running = false;
     public Thread gameLoopThread;
-    private List<Enemy> enemies;
 
-    private List<Tower> towers;
+    private Updatable updatable;
+    private final List<BaseEnemy.Direction> enemyPath;
+    private List<Enemy> enemiesInWave;
+    int round = 1;
 
-    private int round = 0;
->>>>>>> Stashed changes
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         observable = new Observable();
         updateModel = new UpdateModel();
-        b= new Board(mapNumber);
-        startGame();
 
-<<<<<<< Updated upstream
-=======
-        towers = new ArrayList();
+
+        b= new Board(mapNumber);
+        this.enemyPath = b.getPath();
+        waveManager = new WaveManager(difficulty,enemyPath);
+
+        setValues();
+
 
     }
+
+    public List<Enemy> getEnemiesInWave() {
+        return enemiesInWave;
+    }
+
     public void startGame(){
         running = true;
->>>>>>> Stashed changes
         run();
     }
-    private void run(){
-        updateModel.notifyAllUpdatables();
+    public void createWave(){
+        enemiesInWave  = waveManager.createWave(round);
+
+    }
+    public void putEnemyInUpdateModel(){
+        for(Enemy e : enemiesInWave){
+            updateModel.add(e);
+            int i = 0;
+            while(i < 10){
+                delay();
+                update();
+                i++;
+            }
+        }
+    }
+    private void delay(){
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void pauseGame(){
+
+    }
+    public void nextRound(){
+        //waveManager.createWave(round);
+        round++;
+    }
+
+    private void run() {
+        gameLoopThread = new Thread(() -> {
+            while (running) {
+                update();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        gameLoopThread.setDaemon(true);
+        gameLoopThread.start();
+
     }
 
 
 
-    private void startGame(){
-        setValues();
-        update();
+
+    public boolean addObserver(final Observer observer){
+        return this.observable.addObserver(observer);
+    }
+
+    public void update(){
+        observable.update();
+        updateModel.update();
     }
 
 
@@ -83,24 +129,13 @@ public class Game implements Updatable{
         }
     }
 
-    public void update(){
 
-            observable.update();
-
-    }
     public List<Cell> getBoard(){
         return b.getBoard();
     }
-    public int getHealth() {
-        return health;
-    }
-    public int getMoney() {
-        return money;
-    }
-
-<<<<<<< Updated upstream
-=======
-
+    public int getMapNumber(){return mapNumber;}
+    public int getHealth() { return health; }
+    public int getMoney() { return money; }
     public int getArrayIndex(int x_placement, int y_placement){
         int placeInArray = 0;
         for(int i =0; i < b.getBOARD_WIDTH(); i++){
@@ -124,26 +159,9 @@ public class Game implements Updatable{
         b.setCellOccupied(index);
     }
 
-    public <T extends Tower, TF extends TowerFactory> void updateArrayWithTower(int index, T tower, TF towerFactory){
-
+    public void updateArrayWithTower(int index){
         //TODO update cell to occupied
-        MageTowerFactory mageTowerFactory = new MageTowerFactory();
-        TowerFactory t = towerFactory;
-        //check type of cell:
-
-        MageTower mageTower =  mageTowerFactory.createTower((GroundCell)(getBoard().get(index)),updateModel);
-        Tower tow = t.createTower((GroundCell)(getBoard().get(index)),updateModel);
-
-        towers.add(tow);
-
-        System.out.println("" + tow.getClass());
-    }
-
-    public List<Tower> getTowers(){
-        //Maybe should give out a copy for immutability
-        return towers;
     }
 
 
->>>>>>> Stashed changes
 }

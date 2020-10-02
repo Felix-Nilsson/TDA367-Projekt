@@ -3,6 +3,7 @@ package Model;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +14,7 @@ class BoardTest {
         //båda dessa ska inte behöva finnas med egentligen
         Board b= new Board(1);
 
-        ArrayList<BaseEnemy.Direction> path = b.getPath();
+        List<BaseEnemy.Direction> path = b.getPath();
         assertEquals(BaseEnemy.Direction.EAST, path.get(0));
         assertEquals(BaseEnemy.Direction.EAST, path.get(7));
         assertEquals(BaseEnemy.Direction.SOUTH, path.get(24));
