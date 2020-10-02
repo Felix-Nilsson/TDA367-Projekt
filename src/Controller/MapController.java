@@ -131,7 +131,7 @@ public class MapController extends AnchorPane implements Observer {
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
-                    
+
 
 
                 }

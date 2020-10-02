@@ -167,6 +167,8 @@ public class Game implements Updatable {
 
     public void updateArrayWithTower(int index){
         //TODO update cell to occupied
+        getBoard().get(index).setOccupiedTrue();
+
         MageTowerFactory mf = new MageTowerFactory();
         MageTower m = mf.createTower((GroundCell)(getBoard().get(index)),updateModel);
 
