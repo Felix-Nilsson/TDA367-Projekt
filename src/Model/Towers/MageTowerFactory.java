@@ -8,7 +8,7 @@ import Model.UpdateModel;
 public class MageTowerFactory implements TowerFactory{
 
     @Override
-    public Tower createTower(GroundCell cell, UpdateModel updateModel) {
+    public MageTower createTower(GroundCell cell, UpdateModel updateModel) {
         return new MageTower(cell,0,10,150,50,0.5,updateModel);
     }
 }

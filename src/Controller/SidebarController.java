@@ -3,7 +3,7 @@ package Controller;
 import Model.Game;
 import Model.Observable;
 
-import Model.Towers.MageTower;
+import Model.Towers.*;
 //import View.Observer;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.application.Platform;
@@ -42,7 +42,6 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
 
-
     private final Game game;
     private final MapController parentController;
     private boolean gameRunning = false;
@@ -71,9 +70,32 @@ public class SidebarController extends AnchorPane implements Observer {
                 content.putImage(tempIMG);
                 db.setContent(content);
                 mouseEvent.consume();
+
+                MageTowerFactory mf = new MageTowerFactory();
+                sendTowerToMap(mf);
+
             }
         });
+        archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Dragboard db = startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                Image tempIMG = new Image("/img/archerTower.png", 40, 40, false, false, false);
+                content.putImage(tempIMG);
+                db.setContent(content);
+                mouseEvent.consume();
+
+                ArcherTowerFactory af = new ArcherTowerFactory();
+                sendTowerToMap(af);
+            }
+        });
+
     }
+    private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
+        parentController.receiveTowerFactory(towerFactory);
+    }
+
     public void update(){
         money.setText(""+ game.getMoney());
         health.setText(""+ game.getHealth());

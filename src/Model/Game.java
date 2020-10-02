@@ -2,8 +2,15 @@ package Model;
 
 
 import Controller.Observer;
+import Model.Towers.MageTower;
+import Model.Towers.MageTowerFactory;
+import Model.Towers.Tower;
+import Model.Towers.TowerFactory;
 
 import java.util.Collections;
+
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Delayed;
@@ -27,6 +34,7 @@ public class Game implements Updatable {
     private List<Enemy> enemiesInWave;
     int round = 1;
 
+    private List<Tower> towers;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -41,6 +49,7 @@ public class Game implements Updatable {
 
         setValues();
 
+        towers = new ArrayList();
 
     }
 
@@ -185,8 +194,14 @@ public class Game implements Updatable {
         b.setCellOccupied(index);
     }
 
-    public void updateArrayWithTower(int index){
+    public void updateArrayWithTower(int index, TowerFactory towerFactory){
         //TODO update cell to occupied
+        getBoard().get(index).setOccupiedTrue();
+
+        Tower t = towerFactory.createTower((GroundCell)(getBoard().get(index)),updateModel);
+
+        towers.add(t);
+        System.out.println(t.getClass());
     }
 
 
