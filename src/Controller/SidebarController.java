@@ -5,6 +5,9 @@ import Model.Observable;
 
 import Model.Towers.MageTower;
 //import View.Observer;
+import Model.Towers.MageTowerFactory;
+import Model.Towers.Tower;
+import Model.Towers.TowerFactory;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -42,7 +45,6 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
 
-
     private final Game game;
     private final MapController parentController;
     private boolean gameRunning = false;
@@ -71,9 +73,17 @@ public class SidebarController extends AnchorPane implements Observer {
                 content.putImage(tempIMG);
                 db.setContent(content);
                 mouseEvent.consume();
+
+                MageTowerFactory mf = new MageTowerFactory();
+                sendTowerToMap(mf);
+
             }
         });
     }
+    private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
+        parentController.receiveTowerFactory(towerFactory);
+    }
+
     public void update(){
         money.setText(""+ game.getMoney());
         health.setText(""+ game.getHealth());

@@ -5,6 +5,7 @@ import Controller.Observer;
 import Model.Towers.MageTower;
 import Model.Towers.MageTowerFactory;
 import Model.Towers.Tower;
+import Model.Towers.TowerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,15 +166,14 @@ public class Game implements Updatable {
         b.setCellOccupied(index);
     }
 
-    public void updateArrayWithTower(int index){
+    public void updateArrayWithTower(int index, TowerFactory towerFactory){
         //TODO update cell to occupied
         getBoard().get(index).setOccupiedTrue();
 
-        MageTowerFactory mf = new MageTowerFactory();
-        MageTower m = mf.createTower((GroundCell)(getBoard().get(index)),updateModel);
+        Tower t = towerFactory.createTower((GroundCell)(getBoard().get(index)),updateModel);
 
-        towers.add(m);
-        System.out.println("B-)");
+        towers.add(t);
+        System.out.println("B-)" + t.getClass());
     }
 
 

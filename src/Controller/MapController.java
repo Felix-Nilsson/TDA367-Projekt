@@ -1,5 +1,6 @@
 package Controller;
 import Model.*;
+import Model.Towers.TowerFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -51,6 +52,7 @@ public class MapController extends AnchorPane implements Observer {
     private List<ImageView> enemyImages;
     private List<Enemy> enemies;
 
+    private TowerFactory towerFactory;
     public MapController(Game game, List<Cell> map) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
@@ -126,8 +128,10 @@ public class MapController extends AnchorPane implements Observer {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
                         gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
+                        
 
-                        setTowerOnCell(index); //TODO futher down
+                         //TODO futher down
+                        setTowerOnCell(index);
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
@@ -219,13 +223,16 @@ public class MapController extends AnchorPane implements Observer {
 
 
 
-    private void setTowerOnCell(int index/*Tower tower */){
+    public void setTowerOnCell(int index/*Tower tower */){
         //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
         //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
         //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
-        game.updateArrayWithTower(index);
+        game.updateArrayWithTower(index,this.towerFactory);
     }
 
+    public void receiveTowerFactory(TowerFactory towerFactory){
+        this.towerFactory = towerFactory;
+    }
 
 }
 
