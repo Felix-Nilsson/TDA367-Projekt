@@ -173,7 +173,7 @@ public class Game implements Updatable {
         Tower t = towerFactory.createTower((GroundCell)(getBoard().get(index)),updateModel);
 
         towers.add(t);
-        System.out.println("B-)" + t.getClass());
+        System.out.println(t.getClass());
     }
 
 

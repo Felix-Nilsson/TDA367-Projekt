@@ -128,7 +128,7 @@ public class MapController extends AnchorPane implements Observer {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
                         gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
-                        
+
 
                          //TODO futher down
                         setTowerOnCell(index);
