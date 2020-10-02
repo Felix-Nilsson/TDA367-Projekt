@@ -3,6 +3,7 @@ package Model;
 
 import Controller.Observer;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Delayed;
@@ -55,17 +56,42 @@ public class Game implements Updatable {
         enemiesInWave  = waveManager.createWave(round);
 
     }
-    public void putEnemyInUpdateModel(){
-        for(Enemy e : enemiesInWave){
-            updateModel.add(e);
-            int i = 0;
-            while(i < 10){
-                delay();
-                update();
-                i++;
-            }
-        }
+
+    public interface Cancelable extends Runnable {
+        public void cancel();
     }
+
+    public Cancelable putEnemyInUpdateModel(){
+        Cancelable enemyAdder = new Cancelable() {
+            private boolean canceled;
+
+            public void cancel() {
+                canceled = true;
+            }
+            @Override
+            public void run() {
+              List<Enemy> localEnemies = Collections.unmodifiableList(enemiesInWave);
+              System.out.println("Number of enemies: " + localEnemies.size());
+              for(Enemy e : localEnemies){
+                  if(canceled) {
+                      break;
+                  }
+                  updateModel.add(e);
+                    int i = 0;
+                    while(i < 10){
+                        delay();
+                        update();
+                        i++;
+                    }
+                }
+            }
+        };
+        Thread enemyThread = new Thread(enemyAdder);
+        enemyThread.start();
+        return enemyAdder;
+        // return enemyThread; // Fördel: kan avbrytas direkt via v.interrupt();
+    }
+
     private void delay(){
         try {
             TimeUnit.MILLISECONDS.sleep(100);

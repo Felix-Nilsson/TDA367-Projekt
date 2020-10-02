@@ -49,17 +49,23 @@ public class WaveManager  {
                 for (int i = 0; i < amount; i++) {
                     Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyEasy();
                     enemies.add(tmpEnemy);
+
                 }
+                return enemies;
             case MEDIUM:
                 for (int i = 0; i < amount; i++) {
                     Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyMedium();
                     enemies.add(tmpEnemy);
+
                 }
+                return enemies;
             case HARD:
                 for (int i = 0; i < amount; i++) {
                     Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyHard();
                     enemies.add(tmpEnemy);
+
                 }
+                return enemies;
 
         }
         return enemies;
