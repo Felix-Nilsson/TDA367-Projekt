@@ -3,6 +3,8 @@ package Model;
 import Model.Towers.Tower;
 import javafx.scene.image.Image;
 
+import static java.lang.StrictMath.PI;
+
 public class Projectile implements Updatable{
     private double vx;
     private double vy;
@@ -10,7 +12,8 @@ public class Projectile implements Updatable{
     private double posY;
     private double enemyPosX;
     private double enemyPosY;
-    private int angle;
+    //angle is in radians
+    private double angle;
     private int vMultiplier=10;
     Image image;
 
@@ -45,18 +48,30 @@ public class Projectile implements Updatable{
 
     }
     private void calculateVelocity(){
+        /*
         //Om det finns en angle i Tower:
+        setAngle(PI); //temporär metod för testning
         vx = vMultiplier*Math.cos(angle);
         vy = vMultiplier*Math.sin(angle);
+        System.out.println("angle in degrees=" + Math.toDegrees(angle) + ", vx= " + vx +", vy =" +vy);
+
+         */
 
         //Om det inte finns:
         double distX = enemyPosX-posX;
-        double distY = enemyPosY-posY;
+        //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt
+        double distY = -(enemyPosY-posY);
         double theAngle = Math.atan2(distY,distX);
+
         vx = vMultiplier*Math.cos(theAngle);
-        vy = vMultiplier*Math.sin(theAngle);
+        //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. vy blir nu korrekt
+        vy = -(vMultiplier*Math.sin(theAngle));
+        System.out.println("calculated angle in degrees: " +Math.toDegrees(theAngle) + ", vx= "+vx + ", vy= "+vy);
+        System.out.println("vx= "+vx);
+        System.out.println("vy= "+vy);
+
     }
-    private void move(){
+    public void move(){
         posX=posX+vx;
         posY=posY+vy;
     }
@@ -69,6 +84,22 @@ public class Projectile implements Updatable{
     public void update(){
         move();
         disappearIfHit();
+    }
+    public double getVx(){
+        return vx;
+    }
+    public double getVy(){
+        return vy;
+    }
+    public double getPosX(){
+        return posX;
+    }
+    public double getPosY(){
+        return posY;
+    }
+    //temporär. Används för testning
+    private void setAngle(double angle){
+        this.angle=angle;
     }
 
 }
