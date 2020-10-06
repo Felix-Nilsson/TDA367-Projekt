@@ -1,6 +1,6 @@
 package Model.Towers;
 
-import Model.BaseCell;
+import Model.Cell;
 
 import Model.GroundCell;
 
@@ -14,7 +14,7 @@ public class ArcherTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public ArcherTower(UpdateModel updateModel,GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public ArcherTower(UpdateModel updateModel,Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
 
         this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/archerTower.png");

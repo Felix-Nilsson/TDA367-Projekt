@@ -1,6 +1,6 @@
 package Model.Towers;
 
-import Model.BaseCell;
+import Model.Cell;
 
 import Model.GroundCell;
 
@@ -11,7 +11,7 @@ public class MageTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public MageTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
+    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
         this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/mageTower.png");
         updateModel.add(this);

@@ -8,6 +8,8 @@ public interface Cell {
 
     String getColor();
 
+    void setColor(String s);
+
     int getX();
 
     int getY();

@@ -2,6 +2,7 @@ package Model.Towers;
 
 import Model.BaseCell;
 
+import Model.Cell;
 import Model.GroundCell;
 
 import Model.UpdateModel;
@@ -10,7 +11,7 @@ import javafx.scene.image.Image;
 
 
 public class BaseTower implements Tower {
-    private GroundCell position;
+    private Cell position;
     private int physicalDmg;
     private int magicDmg;
     private int price;
@@ -20,7 +21,7 @@ public class BaseTower implements Tower {
 
     private UpdateModel updateModel;
 
-    public BaseTower(UpdateModel updateModel, GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public BaseTower(UpdateModel updateModel, Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
         this.position = position;
         this.physicalDmg = physicalDmg;
         this.magicDmg = magicDmg;
