@@ -184,7 +184,7 @@ public class Game implements Updatable {
         }
 
         //TODO Replace with exception
-        return 0;
+        return -1;
     }
 
     public boolean isCellOccupied(int index){
@@ -198,12 +198,17 @@ public class Game implements Updatable {
     public void updateArrayWithTower(int index, TowerFactory towerFactory){
         //TODO update cell to occupied
         setCellOccupied(index);
-
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
-
         towers.add(t);
-        System.out.println(t.getClass());
+        System.out.println(towers);
     }
 
-
+    public Tower getTowerInCell(int x, int y){
+        for(Tower t: towers){
+            if(t.getX() == x && t.getY() == y){
+                return t;
+            }
+        }
+        return null;
+    }
 }

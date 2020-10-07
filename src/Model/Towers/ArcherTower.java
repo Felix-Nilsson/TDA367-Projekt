@@ -51,4 +51,14 @@ public class ArcherTower implements Tower {
         return baseTower.getPrice();
     }
 
+    @Override
+    public int getX() {
+        return baseTower.getX();
+    }
+
+    @Override
+    public int getY() {
+        return baseTower.getY();
+    }
+
 }

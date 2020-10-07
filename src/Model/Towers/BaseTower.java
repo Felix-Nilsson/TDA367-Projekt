@@ -64,6 +64,19 @@ public class BaseTower implements Tower {
         return price;
     }
 
+    @Override
+    public int getX() {
+        return position.getX();
+    }
+
+    @Override
+    public int getY() {
+        return position.getY();
+    }
+
+
+
+
     public void setTowerImage(String img){
         towerImage = new Image(getClass().getClassLoader().getResourceAsStream(img));
     }

@@ -42,4 +42,14 @@ public class MageTower implements Tower {
     public int getPrice() {
         return baseTower.getPrice();
     }
+
+    @Override
+    public int getX() {
+        return baseTower.getX();
+    }
+
+    @Override
+    public int getY() {
+        return baseTower.getY();
+    }
 }
