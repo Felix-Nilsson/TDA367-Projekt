@@ -107,16 +107,15 @@ public class ToolbarController extends AnchorPane implements Observer {
         attackSpeedLabel.setText("Speed: " + selectedTower.getAttackSpeed());
         rangeLabel.setText("Range: " + selectedTower.getRange());
 
-        updateTargeting();
-
         switch(selectedTower.getTarget()){
             case FIRST: firstRadioButton.setSelected(true); break;
             case STRONGEST: strongestRadioButton.setSelected(true); break;
             case CLOSEST: closestRadioButton.setSelected(true); break;
         }
-        //TODO Update tower with information that needs to be stoooooored
+
     }
 
+    @FXML
     private void updateTargeting(){
         RadioButton r = (RadioButton)(targetingToggleGroup.getSelectedToggle());
 

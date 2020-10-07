@@ -88,7 +88,7 @@ public class ArcherTower implements Tower {
 
     @Override
     public void setTarget(Targeting target) {
-        setTarget(target);
+        baseTower.setTarget(target);
     }
 
     @Override
