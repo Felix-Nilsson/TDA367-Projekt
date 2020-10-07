@@ -109,6 +109,8 @@ public class Game implements Updatable {
         }
     }
     public void pauseGame(){
+        updateModel.pause();
+        observable.pause();
 
     }
     public void nextRound(){

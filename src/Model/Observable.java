@@ -7,6 +7,11 @@ import java.util.List;
 public class Observable implements Observer{
     private final List<Observer> observers;
 
+    public boolean isPaused() {
+        return paused;
+    }
+
+    private boolean paused = false;
     public Observable(){
         observers = new ArrayList<>();
     }
@@ -19,7 +24,6 @@ public class Observable implements Observer{
         }
         return !alreadyObserving;
     }
-
     public boolean removeObserver(final Observer observer) {
         final boolean alreadyObserving = this.observers.contains(observer);
         if (!alreadyObserving) {
@@ -27,13 +31,19 @@ public class Observable implements Observer{
         }
         return !alreadyObserving;
     }
-
     public void update(){
         for(Observer observer : observers){
-            observer.update();
+            if (!paused) {
+                observer.update();
+            }
         }
-
-
     }
-
+    public boolean pause(){
+        if (!paused){
+            paused = true;
+            return true;
+        }
+        paused = false;
+        return false;
+    }
 }

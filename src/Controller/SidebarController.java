@@ -118,6 +118,7 @@ public class SidebarController extends AnchorPane implements Observer {
 
     }
     @FXML private void settings(){
+        game.pauseGame();
         parentController.openSettings();
     }
 
