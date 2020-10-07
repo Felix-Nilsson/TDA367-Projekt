@@ -21,6 +21,8 @@ public class BaseTower implements Tower {
 
     private UpdateModel updateModel;
 
+    private Targeting target;
+
     public BaseTower(UpdateModel updateModel, Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
         this.position = position;
         this.physicalDmg = physicalDmg;
@@ -33,6 +35,9 @@ public class BaseTower implements Tower {
 
         //Temp, example of tower setting the color to the cell
         position.setColor("000000");
+
+        //Default is closest
+        target = Targeting.FIRST;
 
     }
 
@@ -74,7 +79,35 @@ public class BaseTower implements Tower {
         return position.getY();
     }
 
+    @Override
+    public int getMagicDmg() {
+        return magicDmg;
+    }
 
+    @Override
+    public int getPhysicalDmg() {
+        return physicalDmg;
+    }
+
+    @Override
+    public double getAttackSpeed() {
+        return attackSpeed;
+    }
+
+    @Override
+    public int getRange() {
+        return range;
+    }
+
+    @Override
+    public Targeting getTarget() {
+        return target;
+    }
+
+    @Override
+    public void setTarget(Targeting target) {
+        this.target = target;
+    }
 
 
     public void setTowerImage(String img){
