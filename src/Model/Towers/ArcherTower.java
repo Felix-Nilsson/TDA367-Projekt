@@ -61,4 +61,39 @@ public class ArcherTower implements Tower {
         return baseTower.getY();
     }
 
+    @Override
+    public int getMagicDmg() {
+        return baseTower.getMagicDmg();
+    }
+
+    @Override
+    public int getPhysicalDmg() {
+        return baseTower.getPhysicalDmg();
+    }
+
+    @Override
+    public double getAttackSpeed() {
+        return baseTower.getAttackSpeed();
+    }
+
+    @Override
+    public int getRange() {
+        return baseTower.getRange();
+    }
+
+    @Override
+    public Targeting getTarget() {
+        return baseTower.getTarget();
+    }
+
+    @Override
+    public void setTarget(Targeting target) {
+        setTarget(target);
+    }
+
+    @Override
+    public String toString(){
+        return "Archer Tower";
+    }
+
 }

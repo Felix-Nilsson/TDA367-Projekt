@@ -3,6 +3,7 @@ package Controller;
 import Model.Game;
 import Model.Observable;
 import Model.Towers.ArcherTower;
+import Model.Towers.Targeting;
 import Model.Towers.Tower;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -97,10 +98,37 @@ public class ToolbarController extends AnchorPane implements Observer {
     }
 
     private void updateToolbar(){
-        towerLabel.setText(selectedTower.toString()); //TODO make getName in tower
+        towerLabel.setText(selectedTower.toString());
         tImageView.setImage(selectedTower.getImage());
-        sellButton.setText("Sell: "+ selectedTower.getPrice() * 0.5);
+        sellButton.setText("Sell: "+ (int)(selectedTower.getPrice() * 0.5));
+
+        magicLabel.setText("Magic: " + selectedTower.getMagicDmg());
+        attackLabel.setText("Physical: " + selectedTower.getPhysicalDmg());
+        attackSpeedLabel.setText("Speed: " + selectedTower.getAttackSpeed());
+        rangeLabel.setText("Range: " + selectedTower.getRange());
+
+        updateTargeting();
+
+        switch(selectedTower.getTarget()){
+            case FIRST: firstRadioButton.setSelected(true); break;
+            case STRONGEST: strongestRadioButton.setSelected(true); break;
+            case CLOSEST: closestRadioButton.setSelected(true); break;
+        }
         //TODO Update tower with information that needs to be stoooooored
+    }
+
+    private void updateTargeting(){
+        RadioButton r = (RadioButton)(targetingToggleGroup.getSelectedToggle());
+
+        if(r.equals(firstRadioButton)){
+            selectedTower.setTarget(Targeting.FIRST);
+        }
+        if(r.equals(strongestRadioButton)){
+            selectedTower.setTarget(Targeting.STRONGEST);
+        }
+        if(r.equals(closestRadioButton)){
+            selectedTower.setTarget(Targeting.CLOSEST);
+        }
     }
 
 }
