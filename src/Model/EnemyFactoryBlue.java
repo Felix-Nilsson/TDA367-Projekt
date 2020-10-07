@@ -12,7 +12,8 @@ public class EnemyFactoryBlue implements EnemyFactory{
     @Override
     public BlueEnemy createEnemyEasy() {
         System.out.println("creating BlueEnemyEasy...");
-        return new BlueEnemy(100, 5,10,10,25,25,enemyPath);
+        //x=15,y=25 is the upper left corner of the mapgrid
+        return new BlueEnemy(100, 5,10,10,15,25,enemyPath);
     }
     @Override
     public BlueEnemy createEnemyMedium() {

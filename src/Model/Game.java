@@ -31,9 +31,9 @@ public class Game implements Updatable {
 
     private Updatable updatable;
     private final List<BaseEnemy.Direction> enemyPath;
-    private List<Enemy> enemiesInWave;
-    int round = 1;
 
+    int round = 1;
+    private List<Enemy> enemiesInWave;
     private List<Tower> towers;
 
     public Game (Difficulty difficulty, int mapNumber){
@@ -62,6 +62,7 @@ public class Game implements Updatable {
         run();
     }
     public void createWave(){
+        System.out.println("wave is created");
         enemiesInWave  = waveManager.createWave(round);
 
     }
@@ -139,10 +140,37 @@ public class Game implements Updatable {
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
     }
+    private void checksRadius(){
+        if (towers.size()>0 && enemiesInWave.size()>0){
+            for (Tower t : towers){
+                //TODO if (t.cooldown == false)
+                for (Enemy e : enemiesInWave){
+                    //Om det inte finns:
+                    double distX = e.getPositionX()-t.getPosX();
+                    //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt.
+                    //i Projectile skapa finns det minus framför vy för att återställa detta igen
+                    double distY = -(e.getPositionY()-t.getPosY());
+                    double distHyp = Math.sqrt(distX*distX + distY*distY);
+                    System.out.println(distHyp);
+                    if (distHyp<t.getRange()){
+                        double angle = Math.atan2(distY,distX);
+                        t.setAngle(angle);
+                        t.attack();
+                    }
+
+
+                }
+            }
+        }
+
+
+    }
 
     public void update(){
         observable.update();
         updateModel.update();
+        checksRadius();
+
     }
 
 
@@ -201,6 +229,7 @@ public class Game implements Updatable {
         Tower t = towerFactory.createTower((GroundCell)(getBoard().get(index)),updateModel);
 
         towers.add(t);
+        System.out.println("tower was added");
         System.out.println(t.getClass());
     }
 

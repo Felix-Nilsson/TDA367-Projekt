@@ -51,4 +51,24 @@ public class ArcherTower implements Tower {
         return baseTower.getPrice();
     }
 
+    @Override
+    public int getPosX() {
+        return baseTower.getPosX();
+    }
+
+    @Override
+    public int getPosY() {
+        return baseTower.getPosY();
+    }
+
+    @Override
+    public int getRange() {
+        return baseTower.getRange();
+    }
+
+    @Override
+    public void setAngle(double angle) {
+        baseTower.setAngle(angle);
+    }
+
 }

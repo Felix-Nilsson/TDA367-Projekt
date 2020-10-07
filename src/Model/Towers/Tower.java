@@ -9,6 +9,10 @@ public interface Tower extends Updatable {
     void attack();
     Image getImage();
     int getPrice();
+    int getPosX();
+    int getPosY();
+    int getRange();
+    void setAngle(double angle);
 
 
 }

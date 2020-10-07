@@ -19,14 +19,18 @@ public class Projectile implements Updatable{
 
     //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
     //Om projectile inte är hitscan och tower har en Angle blir det lätt att implementera en riktig projektil (collision måste dock skapas då)
-    public Projectile(double towerPosX, double towerPosY, int enemyPosX, int enemyPosY){
+    public Projectile(double towerPosX, double towerPosY, double angle){
 
         this.posX=towerPosX;
         this.posY=towerPosY;
+        /*
         this.enemyPosX=enemyPosX;
         this.enemyPosY=enemyPosY;
 
+         */
+
         //this.angle=tower.getAngle();
+        this.angle=angle;
         calculateVelocity();
 
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/bluemonster1.png")));
@@ -56,12 +60,14 @@ public class Projectile implements Updatable{
         System.out.println("angle in degrees=" + Math.toDegrees(angle) + ", vx= " + vx +", vy =" +vy);
 
          */
-
+/*
         //Om det inte finns:
         double distX = enemyPosX-posX;
         //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt
         double distY = -(enemyPosY-posY);
         double theAngle = Math.atan2(distY,distX);
+
+
 
         vx = vMultiplier*Math.cos(theAngle);
         //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. vy blir nu korrekt
@@ -69,6 +75,11 @@ public class Projectile implements Updatable{
         System.out.println("calculated angle in degrees: " +Math.toDegrees(theAngle) + ", vx= "+vx + ", vy= "+vy);
         System.out.println("vx= "+vx);
         System.out.println("vy= "+vy);
+
+ */
+        vx = vMultiplier*Math.cos(angle);
+        //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. vy blir nu korrekt
+        vy = -(vMultiplier*Math.sin(angle));
 
     }
     public void move(){
@@ -80,7 +91,7 @@ public class Projectile implements Updatable{
         //temporärt
         return false;
     }
-
+    @Override
     public void update(){
         move();
         disappearIfHit();
