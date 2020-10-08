@@ -92,6 +92,11 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+    public Cell getPosition() {
+        return baseTower.getPosition();
+    }
+
+    @Override
     public String toString(){
         return "Archer Tower";
     }

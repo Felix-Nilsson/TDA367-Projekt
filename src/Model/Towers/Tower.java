@@ -21,6 +21,6 @@ public interface Tower extends Updatable {
     Targeting getTarget();
     void setTarget(Targeting target);
 
-
+    Cell getPosition();
 
 }

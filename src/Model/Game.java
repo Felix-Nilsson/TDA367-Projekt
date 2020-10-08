@@ -211,4 +211,22 @@ public class Game implements Updatable {
         }
         return null;
     }
+
+    public void removeTower(Tower t){
+
+        try{
+            towers.remove(t);
+        }
+        catch (NullPointerException e){
+            System.out.println("not found tower");
+        }
+
+    }
+
+    public void addMoney(int toAdd){
+        System.out.println("before: " + money);
+        money += toAdd;
+        System.out.println("after: " + money);
+    }
+
 }

@@ -109,6 +109,11 @@ public class BaseTower implements Tower {
         this.target = target;
     }
 
+    @Override
+    public Cell getPosition() {
+        return position;
+    }
+
 
     public void setTowerImage(String img){
         towerImage = new Image(getClass().getClassLoader().getResourceAsStream(img));

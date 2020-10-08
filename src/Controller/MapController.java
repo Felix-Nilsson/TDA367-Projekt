@@ -283,5 +283,15 @@ public class MapController extends AnchorPane implements Observer {
         toolbarCover.toBack();
     }
 
+    public void removeImageFromGrid(Tower t){
+        int x = t.getX();
+        int y = t.getY();
+
+        //TODO remove the image from
+        Node image = gameBoardGrid.getChildren().get(game.getArrayIndex(x,y));
+
+
+    }
+
 }
 

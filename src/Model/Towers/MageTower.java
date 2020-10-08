@@ -84,6 +84,11 @@ public class MageTower implements Tower {
     }
 
     @Override
+    public Cell getPosition() {
+        return baseTower.getPosition();
+    }
+
+    @Override
     public String toString(){
         return "Mage Tower";
     }
