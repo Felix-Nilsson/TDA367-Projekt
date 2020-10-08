@@ -164,43 +164,8 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
-        toolbarAnchorPane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                offset_x = mouseEvent.getX();
-                offset_y = mouseEvent.getY();
-                System.out.println(offset_x);
-                System.out.println(offset_y);
+        
 
-            }
-        });
-
-        toolbarAnchorPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                toolbarAnchorPane.setLayoutX(mouseEvent.getSceneX()-offset_x);
-                toolbarAnchorPane.setLayoutY(mouseEvent.getSceneY()-offset_y);
-            }
-        });
-
-
-        toolbarAnchorPane.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                /*
-                offset_x = mouseEvent.getSceneX() - offset_x;
-                offset_y = mouseEvent.getSceneY() - offset_y;
-                newOffset_x = mouseEvent.getSceneX();
-
-                System.out.println(offset_x);
-                System.out.println(offset_y);
-
-                 */
-
-                System.out.println(toolbarAnchorPane.getLayoutX());
-                mouseEvent.consume();
-            }
-        });
 
     }
 
