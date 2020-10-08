@@ -11,6 +11,7 @@ public class Main extends Application{
     public void start(Stage stage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/Menu.fxml"));
         Scene scene = new Scene(root,1366,768);
+        stage.setResizable(false);
         stage.setTitle("Tower Defense");
         stage.setScene(scene);
         stage.show();
