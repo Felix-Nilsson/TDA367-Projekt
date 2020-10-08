@@ -1,22 +1,25 @@
 .root{
-    -standard_red: #e60000;
-    -standard_blue:#1dccc5;
+    -standard_red: #ab0f01;
+    -standard_blue: #1dccc5;
+    -blue_highlight: #00fffc;
+    -standard_green: #003e00;
+    -standard_grey: #708090;
 }
 .titleMainMenu{
 
     -fx-font-size: 64px;
     -fx-font-family: "Berlin Sans FB";
     -fx-background-radius: 0px;
-    -fx-text-fill: white;
+    -fx-text-fill: -standard_blue;
     -fx-padding: 0;
 }
 .buttonMainMenu{
 
-    -fx-background-color: -standard_red;
+    -fx-background-color: -standard_blue;
     -fx-opacity: 0.85;
     -fx-font-family: "Berlin Sans FB";
     -fx-background-radius: 120px;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-padding: 0;
     -fx-cursor: hand;
 }
@@ -27,7 +30,7 @@
     -fx-font-size: 36px;
 }
 .buttonMainMenu:hover{
-    -fx-background-color: -standard_blue;
+    -fx-background-color: -blue_highlight;
 }
 
 

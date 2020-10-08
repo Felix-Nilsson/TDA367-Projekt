@@ -1,24 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.effect.Light.Point?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="sidebarAnchorPane" prefHeight="768.0" prefWidth="266.0" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="sidebarAnchorPane" prefHeight="768.0" prefWidth="246.0" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
    <children>
       <ImageView fx:id="sidebarBackground" fitHeight="768.0" fitWidth="266.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../img/sidebarBackground.jpg" />
+            <Image url="@../img/sidebarbackgroundnew.jpg" />
          </image>
       </ImageView>
-      <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="21.0" layoutY="209.0" prefHeight="406.0" prefWidth="225.0" style="-fx-background-color: brown;">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="53.0" layoutX="77.0" layoutY="641.0" stroke="#ab0f01" strokeType="INSIDE" width="170.0">
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="53.0" layoutX="9.0" layoutY="713.0" stroke="#ab0f01" strokeType="INSIDE" width="248.0">
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="94.0" layoutX="152.0" layoutY="536.0" stroke="#ab0f01" strokeType="INSIDE" width="104.0">
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="94.0" layoutY="536.0" stroke="#ab0f01" strokeType="INSIDE" width="104.0">
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </Rectangle>
+      <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="25.0" layoutY="116.0" prefHeight="406.0" prefWidth="225.0" style="-fx-background-color: brown;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -41,40 +67,86 @@
             </ImageView>
          </children>
       </GridPane>
-      <Label fx:id="money" layoutX="91.0" layoutY="118.0" prefHeight="59.0" prefWidth="158.0" text="[balance]">
+      <Label fx:id="money" layoutX="69.0" layoutY="56.0" prefHeight="45.0" prefWidth="155.0" text="[balance]">
          <font>
             <Font size="30.0" />
          </font></Label>
-      <ImageView fx:id="moneyIcon" fitHeight="59.0" fitWidth="71.0" layoutX="14.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="moneyIcon" fitHeight="36.0" fitWidth="36.0" layoutX="14.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/money.png" />
          </image>
       </ImageView>
-      <Label fx:id="health" layoutX="91.0" layoutY="32.0" prefHeight="67.0" prefWidth="137.0" text="[health]">
+      <Label fx:id="health" layoutX="69.0" prefHeight="53.0" prefWidth="112.0" text="[health]">
          <font>
             <Font size="30.0" />
          </font></Label>
-      <Button fx:id="nextRound" layoutX="80.0" layoutY="647.0" mnemonicParsing="false" onMouseClicked="#nextRound" prefHeight="90.0" prefWidth="104.0" style="-fx-background-color: #4dd2ff; -fx-border-color: black; -fx-cursor: hand;" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-         <graphic>
-            <ImageView fx:id="playButton" fitHeight="72.0" fitWidth="111.0" onMouseClicked="#nextRound" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/play_button.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
-      <ImageView fx:id="healthIcon" fitHeight="67.0" fitWidth="74.0" layoutX="10.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="healthIcon" fitHeight="53.0" fitWidth="43.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/health.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="59.0" fitWidth="53.0" layoutX="202.0" layoutY="666.0" onMouseClicked="#settings" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="182.0" layoutY="562.0" onMouseClicked="#settings" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@../img/settings.png" />
+            <Image url="@../img/PlayPause.png" />
          </image>
+         <effect>
+            <DropShadow height="59.55" radius="30.7575" spread="0.55" width="65.48" />
+         </effect>
       </ImageView>
       <AnchorPane fx:id="toolbar" layoutX="-610.0" layoutY="616.0" prefHeight="152.0" prefWidth="600.0" />
+      <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="16.0" layoutY="723.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/music.png" />
+         </image>
+      </ImageView>
+      <Slider fx:id="musicSlider" layoutX="120.0" layoutY="732.0" prefHeight="14.0" prefWidth="123.0">
+         <effect>
+            <Lighting specularConstant="2.0" surfaceScale="0.0">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Point />
+               </light>
+            </Lighting>
+         </effect>
+      </Slider>
+      <ImageView fitHeight="36.0" fitWidth="39.0" layoutX="69.0" layoutY="721.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/volume.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="playButton" fitHeight="58.0" fitWidth="88.0" layoutX="24.0" layoutY="554.0" onMouseClicked="#nextRound" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Nextround.png" />
+         </image>
+         <effect>
+            <DropShadow height="44.474999999999994" radius="24.701249999999998" spread="0.44" width="56.33" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="43.0" fitWidth="39.0" layoutX="85.0" layoutY="647.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/restart1.png" />
+         </image>
+         <effect>
+            <DropShadow height="41.76" radius="18.155" spread="0.55" width="32.86" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="43.0" fitWidth="50.0" layoutX="190.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/exit.png" />
+         </image>
+         <effect>
+            <DropShadow radius="18.155" spread="0.19" width="53.62" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="37.0" layoutX="140.0" layoutY="649.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/home.png" />
+         </image>
+         <effect>
+            <DropShadow height="29.9" radius="15.19" spread="0.48" width="32.86" />
+         </effect>
+      </ImageView>
    </children>
 </fx:root>
