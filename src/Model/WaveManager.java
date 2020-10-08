@@ -6,43 +6,32 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 public class WaveManager  {
-    private Difficulty difficulty;
-    private List<Enemy> enemies;
+    private final Difficulty difficulty;
+    private final List<BaseEnemy.Direction> enemyPath;
+    private final int startPos;
+    private enum enemies{
+        ENEMY_BLUE,
+        ENEMY_RED
+    }
 
-    private List<BaseEnemy.Direction> enemyPath;
-    private long delayTime;
-    private long startTime;
 
 
 
-    public WaveManager(Difficulty difficulty,List<BaseEnemy.Direction> enemyPath) {
+    public WaveManager(Difficulty difficulty,List<BaseEnemy.Direction> enemyPath,int startPos) {
         this.difficulty = difficulty;
         this.enemyPath = enemyPath;
-        this.delayTime = 1;
-
+        this.startPos = startPos;
     }
 
     public List<Enemy> createWave(int round) {
-        List<Enemy> wave = new ArrayList<>(enemyCreator(5 + (round * 2), "BlueEnemy"));
-        //wave.addAll(enemyCreator(((round - 1) * 2),"RedEnemy"));
+        List<Enemy> wave = new ArrayList<>(enemyCreator(5 + (round * 2), enemies.ENEMY_BLUE));
+        wave.addAll(enemyCreator((round * 2),enemies.ENEMY_RED));
         //wave.addAll(enemyCreator(((round - 3) * 2),"GreenEnemy"));
+        System.out.println(wave.toString());
         return wave;
     }
 
-
-
-
-    private EnemyFactory getEnemyFactory(String enemy){
-        switch(enemy){
-            case "BlueEnemy": return new EnemyFactoryBlue(enemyPath);
-
-            //case "RedEnemy " : return  new EnemyFactoryRed();
-        }
-        return null;
-    }
-
-
-    private List<Enemy> enemyCreator(int amount, String enemy) {
+    private List<Enemy> enemyCreator(int amount, enemies enemy) {
         List<Enemy> enemies = new ArrayList<>();
         switch (difficulty) {
             case EASY:
@@ -69,6 +58,14 @@ public class WaveManager  {
 
         }
         return enemies;
+    }
+    private EnemyFactory getEnemyFactory(enemies enemy){
+
+        switch(enemy){
+            case ENEMY_BLUE : return new EnemyFactoryBlue(enemyPath,startPos);
+            case ENEMY_RED : return  new EnemyFactoryRed(enemyPath,startPos);
+        }
+        return null;
     }
 
 }

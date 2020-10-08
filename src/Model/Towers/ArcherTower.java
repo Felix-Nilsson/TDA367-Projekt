@@ -1,6 +1,6 @@
 package Model.Towers;
 
-import Model.BaseCell;
+import Model.Cell;
 
 import Model.GroundCell;
 
@@ -14,7 +14,7 @@ public class ArcherTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public ArcherTower(UpdateModel updateModel,GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public ArcherTower(UpdateModel updateModel,Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
 
         this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/archerTower.png");
@@ -59,6 +59,30 @@ public class ArcherTower implements Tower {
     @Override
     public int getPosY() {
         return baseTower.getPosY();
+
+    public int getX() {
+        return baseTower.getX();
+    }
+
+    @Override
+    public int getY() {
+        return baseTower.getY();
+    }
+
+    @Override
+    public int getMagicDmg() {
+        return baseTower.getMagicDmg();
+    }
+
+    @Override
+    public int getPhysicalDmg() {
+        return baseTower.getPhysicalDmg();
+    }
+
+    @Override
+    public double getAttackSpeed() {
+        return baseTower.getAttackSpeed();
+
     }
 
     @Override
@@ -67,8 +91,28 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+
     public void setAngle(double angle) {
         baseTower.setAngle(angle);
+
+    public Targeting getTarget() {
+        return baseTower.getTarget();
+    }
+
+    @Override
+    public void setTarget(Targeting target) {
+        baseTower.setTarget(target);
+    }
+
+    @Override
+    public Cell getPosition() {
+        return baseTower.getPosition();
+    }
+
+    @Override
+    public String toString(){
+        return "Archer Tower";
+
     }
 
 }

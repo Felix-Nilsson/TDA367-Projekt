@@ -2,6 +2,7 @@ package Model.Towers;
 
 import Model.BaseCell;
 
+import Model.Cell;
 import Model.GroundCell;
 
 import Model.Projectile;
@@ -11,7 +12,7 @@ import javafx.scene.image.Image;
 
 
 public class BaseTower implements Tower {
-    private GroundCell position;
+    private Cell position;
     private int physicalDmg;
     private int magicDmg;
     private int price;
@@ -25,7 +26,9 @@ public class BaseTower implements Tower {
 
     private UpdateModel updateModel;
 
-    public BaseTower(UpdateModel updateModel, GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    private Targeting target;
+
+    public BaseTower(UpdateModel updateModel, Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
         this.position = position;
         //längst upp till vänster är (25,15). Varje cell är 40 pixlar
         posX = position.getX()*40 +25;
@@ -42,6 +45,9 @@ public class BaseTower implements Tower {
 
         //Temp, example of tower setting the color to the cell
         position.setColor("000000");
+
+        //Default is closest
+        target = Targeting.FIRST;
 
     }
     @Override
@@ -88,6 +94,52 @@ public class BaseTower implements Tower {
     public int getPrice() {
         return price;
     }
+
+    @Override
+    public int getX() {
+        return position.getX();
+    }
+
+    @Override
+    public int getY() {
+        return position.getY();
+    }
+
+    @Override
+    public int getMagicDmg() {
+        return magicDmg;
+    }
+
+    @Override
+    public int getPhysicalDmg() {
+        return physicalDmg;
+    }
+
+    @Override
+    public double getAttackSpeed() {
+        return attackSpeed;
+    }
+
+    @Override
+    public int getRange() {
+        return range;
+    }
+
+    @Override
+    public Targeting getTarget() {
+        return target;
+    }
+
+    @Override
+    public void setTarget(Targeting target) {
+        this.target = target;
+    }
+
+    @Override
+    public Cell getPosition() {
+        return position;
+    }
+
 
     public void setTowerImage(String img){
         towerImage = new Image(getClass().getClassLoader().getResourceAsStream(img));

@@ -28,6 +28,9 @@ public class WaterCell implements Cell{
     }
 
     @Override
+    public void setColor(String s) {base.setColor(s); }
+
+    @Override
     public int getX() {
         return base.getX();
     }

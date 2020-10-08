@@ -6,6 +6,7 @@ import Model.Towers.MageTower;
 import Model.Towers.MageTowerFactory;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
+import Model.Cell;
 
 import java.util.Collections;
 
@@ -45,12 +46,16 @@ public class Game implements Updatable {
 
         b= new Board(mapNumber);
         this.enemyPath = b.getPath();
-        waveManager = new WaveManager(difficulty,enemyPath);
+        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos(b.getMap()));
 
         setValues();
 
-        towers = new ArrayList();
+        towers = new ArrayList<>();
 
+    }
+
+    public void loseHP(){
+        health--;
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -64,7 +69,6 @@ public class Game implements Updatable {
     public void createWave(){
         System.out.println("wave is created");
         enemiesInWave  = waveManager.createWave(round);
-
     }
 
     public interface Cancelable extends Runnable {
@@ -122,7 +126,7 @@ public class Game implements Updatable {
             while (running) {
                 update();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -172,8 +176,6 @@ public class Game implements Updatable {
         checksRadius();
 
     }
-
-
     //sets values of health and money
     private void setValues(){
         switch (difficulty) {
@@ -191,14 +193,36 @@ public class Game implements Updatable {
                 break;
         }
     }
-
-
     public List<Cell> getBoard(){
         return b.getBoard();
     }
-    public int getMapNumber(){return mapNumber;}
     public int getHealth() { return health; }
     public int getMoney() { return money; }
+
+    public boolean isCellOccupied(int index){
+        return b.isCellOccupied(index);
+    }
+
+    public void setCellOccupied(int index){
+        b.setCellOccupied(index);
+    }
+
+    public void updateArrayWithTower(int index, TowerFactory towerFactory){
+        //TODO update cell to occupied
+        setCellOccupied(index);
+        Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
+        towers.add(t);
+        System.out.println(towers);
+    }
+
+    public Tower getTowerInCell(int x, int y){
+        for(Tower t: towers){
+            if(t.getX() == x && t.getY() == y){
+                return t;
+            }
+        }
+        return null;
+    }
     public int getArrayIndex(int x_placement, int y_placement){
         int placeInArray = 0;
         for(int i =0; i < b.getBOARD_WIDTH(); i++){
@@ -211,26 +235,26 @@ public class Game implements Updatable {
         }
 
         //TODO Replace with exception
-        return 0;
+        return -1;
     }
 
-    public boolean isCellOccupied(int index){
-        return b.isCellOccupied(index);
+
+    public void removeTower(Tower t){
+
+        try{
+            towers.remove(t);
+        }
+        catch (NullPointerException e){
+            System.out.println("not found tower");
+        }
+
     }
 
-    public void setCellOccupied(int index){
-        b.setCellOccupied(index);
-    }
+    public void addMoney(int toAdd){
+        System.out.println("before: " + money);
+        money += toAdd;
+        System.out.println("after: " + money);
 
-    public void updateArrayWithTower(int index, TowerFactory towerFactory){
-        //TODO update cell to occupied
-        getBoard().get(index).setOccupiedTrue();
-
-        Tower t = towerFactory.createTower((GroundCell)(getBoard().get(index)),updateModel);
-
-        towers.add(t);
-        System.out.println("tower was added");
-        System.out.println(t.getClass());
     }
 
 

@@ -1,18 +1,17 @@
 package Model;
 
 import javafx.scene.image.Image;
+
 import java.util.List;
 
-public class BlueEnemy implements Enemy{
-
+public class RedEnemy implements Enemy{
     private final BaseEnemy parent;
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private Image image;
 
-    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path,int startPos){
-        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, path, startPos);
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/blue_Monster.png")));
-
+    public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
+        parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
+        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/red_Monster.png")));
     }
 
     @Override
@@ -69,5 +68,4 @@ public class BlueEnemy implements Enemy{
     protected int getArmor(){
         return parent.getArmor();
     }
-
 }
