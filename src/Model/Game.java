@@ -6,6 +6,7 @@ import Model.Towers.MageTower;
 import Model.Towers.MageTowerFactory;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
+import Model.Cell;
 
 import java.util.Collections;
 
@@ -185,7 +186,7 @@ public class Game implements Updatable {
         }
 
         //TODO Replace with exception
-        return 0;
+        return -1;
     }
 
     public boolean isCellOccupied(int index){
@@ -198,13 +199,18 @@ public class Game implements Updatable {
 
     public void updateArrayWithTower(int index, TowerFactory towerFactory){
         //TODO update cell to occupied
-        getBoard().get(index).setOccupiedTrue();
-
-        Tower t = towerFactory.createTower((GroundCell)(getBoard().get(index)),updateModel);
-
+        setCellOccupied(index);
+        Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
         towers.add(t);
-        System.out.println(t.getClass());
+        System.out.println(towers);
     }
 
-
+    public Tower getTowerInCell(int x, int y){
+        for(Tower t: towers){
+            if(t.getX() == x && t.getY() == y){
+                return t;
+            }
+        }
+        return null;
+    }
 }

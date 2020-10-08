@@ -1,5 +1,6 @@
 package Controller;
 import Model.*;
+import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -41,16 +43,20 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane settingsPane;
     @FXML private AnchorPane mapAnchorPane;
     @FXML private AnchorPane toolbarAnchorPane;
+    @FXML private AnchorPane toolbarCover;
 
 
     private final Game game;
     private SidebarController sidebarController;
-    private int x_placement;
-    private int y_placement;
+    private ToolbarController toolbarController;
     private final List<Cell> map;
     private BlueEnemy tmpEnemy;
     private List<ImageView> enemyImages;
     private List<Enemy> enemies;
+    private double offset_x;
+    private double offset_y;
+    private double newOffset_x;
+    private double newOffset_y;
 
     private TowerFactory towerFactory;
     public MapController(Game game, List<Cell> map) {
@@ -116,10 +122,8 @@ public class MapController extends AnchorPane implements Observer {
                 if (node != gameBoardGrid && db.hasImage()) {
 
                     //Find Cell to place the tower
-                    Integer cIndex = GridPane.getColumnIndex(node);
-                    Integer rIndex = GridPane.getRowIndex(node);
-                    x_placement = cIndex == null ? 0 : cIndex;
-                    y_placement = rIndex == null ? 0 : rIndex;
+                    int x_placement = getGridX(node);
+                    int y_placement = getGridY(node);
 
                     //Check if the cell is available
                     int index = game.getArrayIndex(x_placement, y_placement);
@@ -144,10 +148,44 @@ public class MapController extends AnchorPane implements Observer {
                 dragEvent.consume();
             }
         });
+
+        gameBoardGrid.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Node node = mouseEvent.getPickResult().getIntersectedNode();
+
+                int x_placement = getGridX(node);
+                int y_placement = getGridY(node);
+
+                Tower t = game.getTowerInCell(x_placement, y_placement);
+                if(t != null){
+                    moveToolbarFront(t);
+                }
+            }
+        });
+
+        
+
+
     }
+
+    private int getGridX(Node node){
+        Integer cIndex = GridPane.getColumnIndex(node);
+        int x = cIndex == null ? 0 :cIndex;
+        return x;
+    }
+
+    private int getGridY(Node node){
+        Integer rIndex = GridPane.getRowIndex(node);
+        int y = rIndex == null ? 0 :rIndex;
+        return y;
+    }
+
     private void addToolbar(){
-        ToolbarController toolbarController = new ToolbarController(game,this);
+        toolbarController = new ToolbarController(game,this);
         toolbarAnchorPane.getChildren().add(toolbarController);
+        toolbarCover.toBack();
+        toolbarAnchorPane.toBack();
     }
 
     public void createMap(){
@@ -232,6 +270,17 @@ public class MapController extends AnchorPane implements Observer {
 
     public void receiveTowerFactory(TowerFactory towerFactory){
         this.towerFactory = towerFactory;
+    }
+
+    public void moveToolbarBack(){
+        toolbarAnchorPane.toBack();
+        toolbarCover.toFront();
+    }
+
+    public void moveToolbarFront(Tower t){
+        toolbarController.recieveTower(t);
+        toolbarAnchorPane.toFront();
+        toolbarCover.toBack();
     }
 
 }

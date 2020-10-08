@@ -15,7 +15,7 @@ public class BlueEnemy implements Enemy{
     public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY, List<BaseEnemy.Direction> path){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor, positionX, positionY,path);
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/bluemonster1.png")));
-
+        //this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
 
     }
 

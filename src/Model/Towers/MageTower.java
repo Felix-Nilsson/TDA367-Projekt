@@ -1,6 +1,6 @@
 package Model.Towers;
 
-import Model.BaseCell;
+import Model.Cell;
 
 import Model.GroundCell;
 
@@ -11,7 +11,7 @@ public class MageTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public MageTower(GroundCell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
+    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
         this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/mageTower.png");
         updateModel.add(this);
@@ -41,5 +41,50 @@ public class MageTower implements Tower {
     @Override
     public int getPrice() {
         return baseTower.getPrice();
+    }
+
+    @Override
+    public int getX() {
+        return baseTower.getX();
+    }
+
+    @Override
+    public int getY() {
+        return baseTower.getY();
+    }
+
+    @Override
+    public int getMagicDmg() {
+        return baseTower.getMagicDmg();
+    }
+
+    @Override
+    public int getPhysicalDmg() {
+        return baseTower.getPhysicalDmg();
+    }
+
+    @Override
+    public double getAttackSpeed() {
+        return baseTower.getAttackSpeed();
+    }
+
+    @Override
+    public int getRange() {
+        return baseTower.getRange();
+    }
+
+    @Override
+    public Targeting getTarget() {
+        return baseTower.getTarget();
+    }
+
+    @Override
+    public void setTarget(Targeting target) {
+        baseTower.setTarget(target);
+    }
+
+    @Override
+    public String toString(){
+        return "Mage Tower";
     }
 }
