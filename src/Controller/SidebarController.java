@@ -103,8 +103,8 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private void nextRound(){
         if(!gameStarted){ // start waves
 
-                        game.startGame();
-                        parentController.createWave();
+            parentController.createWave();
+            game.startGame();
                         
             gameStarted = true;
             if(!gameRunning){ //next round

@@ -9,11 +9,12 @@ import java.util.List;
 
 public class BaseEnemy implements Enemy{
     private int health;
-    private int movementSpeed;
-    private int magicResist;
-    private int armor;
     private int positionX;
     private int positionY;
+    private final int movementSpeed;
+    private final int magicResist;
+    private final int armor;
+
 
     public enum Direction {NORTH,EAST,SOUTH,WEST}
 
@@ -23,25 +24,21 @@ public class BaseEnemy implements Enemy{
     private List <Direction> path;
 
     protected Direction direction;
-    private ImageView imageView;
     private List<Point> positionList; //Lista med alla pathens nodpositioner
+    private int stepNr = 0;//används för att gå igenom path
 
-    //används för att gå igenom path
-    private int stepNr = 0;
 
-    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, int positionX, int positionY,List<Direction> path){
+    public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         this.health=health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
         this.armor=armor;
-        this.positionX=positionX;
-        this.positionY=positionY;
+        this.positionX=0;
+        this.positionY=(startPos-1) * 40 + 10;
         this.path = path;
-
         //så länge enemy spawnas på 25,75... ska denna inte behövas
         this.direction=path.get(0);
         convertPathToCoordinates();
-
     }
 
     //Dessa metoder ska kallas varje gång model ska uppdateras
@@ -50,6 +47,7 @@ public class BaseEnemy implements Enemy{
         followPath();
         move();
     }
+
 
     public void move(){
         switch (direction) {
@@ -77,22 +75,18 @@ public class BaseEnemy implements Enemy{
                 case NORTH : {
                     nextY = nextY - 40;
                     positionList.add(new Point(nextX, nextY));
-                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case EAST : {
                     nextX = nextX + 40;
                     positionList.add(new Point(nextX, nextY));
-                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case SOUTH : {
                     nextY = nextY + 40;
                     positionList.add(new Point(nextX, nextY));
-                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
                 case WEST : {
                     nextX = nextX - 40;
                     positionList.add(new Point(nextX, nextY));
-                    //System.out.println("position för path.get(" + counter + "): ger x=" + positionList.get(counter).x + ", y=" + positionList.get(counter).y);
                 } break;
             }
 
@@ -137,6 +131,7 @@ public class BaseEnemy implements Enemy{
         }
         else {
             System.out.println("out of bounds. should be removed from the world");
+
         }
 
 
@@ -154,14 +149,8 @@ public class BaseEnemy implements Enemy{
         }
     }
 
-
     public Image getImage() {
         return null;
-    }
-
-
-    public ImageView getImageView() {
-        return imageView;
     }
 
 

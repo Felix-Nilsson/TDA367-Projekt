@@ -46,12 +46,16 @@ public class Game implements Updatable {
 
         b= new Board(mapNumber);
         this.enemyPath = b.getPath();
-        waveManager = new WaveManager(difficulty,enemyPath);
+        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos(b.getMap()));
 
         setValues();
 
-        towers = new ArrayList();
+        towers = new ArrayList<>();
 
+    }
+
+    public void loseHP(){
+        health--;
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -64,7 +68,6 @@ public class Game implements Updatable {
     }
     public void createWave(){
         enemiesInWave  = waveManager.createWave(round);
-
     }
 
     public interface Cancelable extends Runnable {
@@ -122,7 +125,7 @@ public class Game implements Updatable {
             while (running) {
                 update();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -145,8 +148,6 @@ public class Game implements Updatable {
         observable.update();
         updateModel.update();
     }
-
-
     //sets values of health and money
     private void setValues(){
         switch (difficulty) {
@@ -164,28 +165,11 @@ public class Game implements Updatable {
                 break;
         }
     }
-
-
     public List<Cell> getBoard(){
         return b.getBoard();
     }
-    public int getMapNumber(){return mapNumber;}
     public int getHealth() { return health; }
     public int getMoney() { return money; }
-    public int getArrayIndex(int x_placement, int y_placement){
-        int placeInArray = 0;
-        for(int i =0; i < b.getBOARD_WIDTH(); i++){
-            for(int j = 0; j < b.getBOARD_HEIGHT(); j++){
-                if(i == x_placement && j == y_placement){
-                    return placeInArray;
-                }
-                placeInArray++;
-            }
-        }
-
-        //TODO Replace with exception
-        return -1;
-    }
 
     public boolean isCellOccupied(int index){
         return b.isCellOccupied(index);
@@ -212,6 +196,7 @@ public class Game implements Updatable {
         return null;
     }
 
+
     public void removeTower(Tower t){
 
         try{
@@ -228,5 +213,6 @@ public class Game implements Updatable {
         money += toAdd;
         System.out.println("after: " + money);
     }
+
 
 }

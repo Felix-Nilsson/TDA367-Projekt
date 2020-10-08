@@ -44,6 +44,7 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane mapAnchorPane;
     @FXML private AnchorPane toolbarAnchorPane;
     @FXML private AnchorPane toolbarCover;
+    @FXML private AnchorPane gameBoardAnchorPane;
 
 
     private final Game game;
@@ -212,7 +213,7 @@ public class MapController extends AnchorPane implements Observer {
                 ImageView img = new ImageView(e.getImage());
                 enemyImages.add(img);
                 fixImage(img,e);
-                mapAnchorPane.getChildren().add(img);
+                gameBoardAnchorPane.getChildren().add(img);
 
 
             }
@@ -222,7 +223,6 @@ public class MapController extends AnchorPane implements Observer {
     public void update(){
 
           if (game.getEnemiesInWave() != null && enemyImages != null) {
-              List<Enemy> enemies = game.getEnemiesInWave();
               int count = 0;
               for (ImageView img : enemyImages) {
                   img.setX(enemies.get(count).getPositionX());
@@ -237,8 +237,8 @@ public class MapController extends AnchorPane implements Observer {
     private void fixImage(ImageView img,Enemy e){
         img.setX(e.getPositionX());
         img.setY(e.getPositionY());
-        img.setFitHeight(40);
-        img.setFitWidth(40);
+        img.setFitHeight(25);
+        img.setFitWidth(25);
         img.setPreserveRatio(true);
         img.toFront();
     }
