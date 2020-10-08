@@ -58,10 +58,6 @@ public class BaseTower implements Tower {
     public int getPosY(){
         return posY;
     }
-    @Override
-    public int getRange(){
-        return range;
-    }
 
     @Override
     public void setAngle(double angle) {

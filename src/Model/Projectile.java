@@ -33,7 +33,7 @@ public class Projectile implements Updatable{
         this.angle=angle;
         calculateVelocity();
 
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/bluemonster1.png")));
+        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
 
     }
     private void damageEnemy(Enemy enemy){

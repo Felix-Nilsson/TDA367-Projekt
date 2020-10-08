@@ -51,7 +51,7 @@ public class MageTower implements Tower {
     @Override
     public int getPosY() {
         return baseTower.getPosY();
-
+    }
 
     @Override
     public int getX() {
@@ -85,10 +85,9 @@ public class MageTower implements Tower {
     }
 
     @Override
-
-    public void setAngle(double angle) {
-        baseTower.setAngle(angle);
-
+    public void setAngle(double angle){
+            baseTower.setAngle(angle);
+        }
     public Targeting getTarget() {
         return baseTower.getTarget();
     }

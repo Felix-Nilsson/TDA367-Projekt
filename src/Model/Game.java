@@ -144,6 +144,7 @@ public class Game implements Updatable {
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
     }
+
     private void checksRadius(){
         if (towers.size()>0 && enemiesInWave.size()>0){
             for (Tower t : towers){
@@ -155,14 +156,13 @@ public class Game implements Updatable {
                     //i Projectile skapa finns det minus framför vy för att återställa detta igen
                     double distY = -(e.getPositionY()-t.getPosY());
                     double distHyp = Math.sqrt(distX*distX + distY*distY);
-                    System.out.println(distHyp);
+                    //System.out.println(distHyp);
                     if (distHyp<t.getRange()){
                         double angle = Math.atan2(distY,distX);
                         t.setAngle(angle);
                         t.attack();
+                        // Om torn är hitscan blir det: e.tookDamage()
                     }
-
-
                 }
             }
         }

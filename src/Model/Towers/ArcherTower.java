@@ -60,6 +60,7 @@ public class ArcherTower implements Tower {
     public int getPosY() {
         return baseTower.getPosY();
 
+    }
     public int getX() {
         return baseTower.getX();
     }
@@ -94,7 +95,7 @@ public class ArcherTower implements Tower {
 
     public void setAngle(double angle) {
         baseTower.setAngle(angle);
-
+    }
     public Targeting getTarget() {
         return baseTower.getTarget();
     }

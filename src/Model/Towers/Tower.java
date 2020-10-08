@@ -23,7 +23,7 @@ public interface Tower extends Updatable {
     int getMagicDmg();
     int getPhysicalDmg();
     double getAttackSpeed();
-    int getRange();
+
 
     Targeting getTarget();
     void setTarget(Targeting target);
