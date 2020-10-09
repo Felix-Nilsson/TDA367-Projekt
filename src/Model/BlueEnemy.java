@@ -54,6 +54,11 @@ public class BlueEnemy implements Enemy{
         parent.move();
     }
 
+    @Override
+    public boolean isDead() {
+        return parent.isDead();
+    }
+
     public BaseEnemy.Direction getDirection(){
         return parent.direction;
     }

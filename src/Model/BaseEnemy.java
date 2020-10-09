@@ -26,6 +26,7 @@ public class BaseEnemy implements Enemy{
     protected Direction direction;
     private List<Point> positionList; //Lista med alla pathens nodpositioner
     private int stepNr = 0;//används för att gå igenom path
+    private boolean isDead;
 
 
     public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
@@ -36,6 +37,7 @@ public class BaseEnemy implements Enemy{
         this.positionX=0;
         this.positionY=(startPos-1) * 40 + 10;
         this.path = path;
+        isDead = false;
         //så länge enemy spawnas på 25,75... ska denna inte behövas
         this.direction=path.get(0);
         convertPathToCoordinates();
@@ -56,6 +58,11 @@ public class BaseEnemy implements Enemy{
             case SOUTH : positionY = positionY + movementSpeed; break;
             case WEST : positionX = positionX - movementSpeed; break;
         }
+    }
+
+    @Override
+    public boolean isDead() {
+        return isDead;
     }
 
     protected void turn(Direction dir){
@@ -130,12 +137,13 @@ public class BaseEnemy implements Enemy{
             }
         }
         else {
-            System.out.println("out of bounds. should be removed from the world");
+        isDead = true;
 
         }
 
 
     }
+
 
 
 

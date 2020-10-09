@@ -27,52 +27,46 @@ public class Game implements Updatable {
     private final UpdateModel updateModel;
     private final Board b;
     private final WaveManager waveManager;
-    private boolean running = false;
+    private boolean waveRunning = false;
     public Thread gameLoopThread;
-
     private Updatable updatable;
     private final List<BaseEnemy.Direction> enemyPath;
-
-    int round = 1;
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
+    int round = 1;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         observable = new Observable();
         updateModel = new UpdateModel();
-
-
         b= new Board(mapNumber);
         this.enemyPath = b.getPath();
-        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos(b.getMap()));
-
+        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
-
         towers = new ArrayList<>();
-
-    }
-
-    public void loseHP(){
-        health--;
     }
 
     public List<Enemy> getEnemiesInWave() {
         return enemiesInWave;
     }
 
-    public void startGame(){
-        running = true;
-        run();
-    }
-    public void createWave(){
-        System.out.println("wave is created");
-        enemiesInWave  = waveManager.createWave(round);
-    }
+    public void nextRound(){
+        waveManager.createWave(round);
+        enemiesInWave = waveManager.getWave();
+        waveRunning = true;
+        round++;
 
+
+    }
     public interface Cancelable extends Runnable {
         public void cancel();
+    }
+    public int getStartPos(){
+        return b.getStartPos();
+    }
+    public int getEndPos(){
+        return b.getEndPos();
     }
 
     public Cancelable putEnemyInUpdateModel(){
@@ -116,14 +110,10 @@ public class Game implements Updatable {
     public void pauseGame(){
 
     }
-    public void nextRound(){
-        //waveManager.createWave(round);
-        round++;
-    }
+    public void run() {
 
-    private void run() {
         gameLoopThread = new Thread(() -> {
-            while (running) {
+            while (waveRunning) {
                 update();
                 try {
                     Thread.sleep(50);
@@ -137,7 +127,32 @@ public class Game implements Updatable {
         gameLoopThread.start();
 
     }
+    public void update(){
 
+        updateModel.update();
+        observable.update();
+        checksRadius();
+        //checkIfWaveOver();
+
+    }
+    /*
+    private void checkIfWaveOver(){
+        if(enemiesInWave!= null){
+            if(enemiesInWave.size() ==0){
+                update();
+                gameLoopThread.stop();
+            }
+        }
+    }
+
+     */
+
+    public Thread getGameLoopThread(){
+        return gameLoopThread;
+    }
+    public boolean isWaveRunning(){
+        return waveRunning;
+    }
 
 
 
@@ -170,13 +185,12 @@ public class Game implements Updatable {
 
     }
 
-    public void update(){
-        observable.update();
-        updateModel.update();
-        checksRadius();
 
+    public void enemyIsOut(){
+        health--;
     }
-    //sets values of health and money
+
+    //sets initial values of health and money
     private void setValues(){
         switch (difficulty) {
             case EASY:

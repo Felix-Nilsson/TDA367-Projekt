@@ -70,7 +70,7 @@ public class MenuController implements Initializable {
         MapController mapController = new MapController(game,game.getBoard());
         map.toFront();
         map.getChildren().add(mapController);
-        game.update();
+
 
 
     }

@@ -33,19 +33,19 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private ImageView healthIcon;
     @FXML private ImageView mageTower;
     @FXML private ImageView archerTower;
-    @FXML private ImageView playButton;
+    @FXML private ImageView playButtonImg;
 
     @FXML private AnchorPane sidebarAnchorPane;
     @FXML private Label health;
-    @FXML private Button nextRound;
+    @FXML private Button play;
     @FXML private GridPane gridPane;
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
 
+
     private final Game game;
     private final MapController parentController;
-    private boolean gameRunning = false;
-    private boolean gameStarted = false;
+
 
 
     public SidebarController(Game game,MapController parentController) {
@@ -97,26 +97,31 @@ public class SidebarController extends AnchorPane implements Observer {
     }
 
     public void update(){
-        money.setText(""+ game.getMoney());
-        health.setText(""+ game.getHealth());
+        Platform.runLater(()->money.setText(""+ game.getMoney()));
+        Platform.runLater(()->health.setText(""+ game.getHealth()));
+        /*
+        if(!parentController.isWaveRunning()){
+
+            roundOver();
+        }
+        */
+
     }
     @FXML private void nextRound(){
-        if(!gameStarted){ // start waves
-
-            parentController.createWave();
-            game.startGame();
-                        
-            gameStarted = true;
-            if(!gameRunning){ //next round
-                gameRunning = true;
-                game.nextRound();
-            }
-            else{
-                //game.startGame();
-            }
+        //pressed play
+        if(!parentController.isWaveRunning()){
+            parentController.nextRound();
+            playButtonImg.setImage(new Image("/img/pause.png"));
         }
-
+        //pressed pause
+        else{
+            System.out.println("pressed pause");
+        }
     }
+    public void roundOver(){
+        playButtonImg.setImage(new Image("/img/play_button.png"));
+    }
+
     @FXML private void settings(){
         parentController.openSettings();
     }

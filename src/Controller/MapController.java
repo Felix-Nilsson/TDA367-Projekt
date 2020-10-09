@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -48,16 +49,20 @@ public class MapController extends AnchorPane implements Observer {
 
 
     private final Game game;
-    private SidebarController sidebarController;
     private ToolbarController toolbarController;
     private final List<Cell> map;
     private BlueEnemy tmpEnemy;
-    private List<ImageView> enemyImages;
+    //private List<ImageView> enemyImages;
     private List<Enemy> enemies;
     private double offset_x;
     private double offset_y;
     private double newOffset_x;
     private double newOffset_y;
+    private HashMap<Enemy,ImageView> enemyHashMap;
+    private boolean waveRunning;
+    private ImageView cave;
+    private ImageView base;
+    private int BOARD_WIDTH = 1040;
 
     private TowerFactory towerFactory;
     public MapController(Game game, List<Cell> map) {
@@ -72,12 +77,11 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
+        this.waveRunning = game.isWaveRunning();
         game.addObserver(this);
         createMap();
         addToolbar();
         eventHandlers();
-
-
     }
     @FXML private void pauseGame(){
         game.pauseGame();
@@ -194,6 +198,31 @@ public class MapController extends AnchorPane implements Observer {
         SidebarController sidebarController = new SidebarController(game,this);
         sidebar.getChildren().add(sidebarController);
 
+        //add startcave
+        int startPos = game.getStartPos();
+        cave = new ImageView("/img/cave.png");
+        cave.setX(0);
+        cave.setY((startPos - 1) *40);
+        cave.setFitHeight(40);
+        cave.setFitWidth(40);
+        cave.setPreserveRatio(true);
+        cave.toFront();
+        gameBoardAnchorPane.getChildren().add(cave);
+
+        //add endcave
+        int endPos = game.getEndPos();
+        base = new ImageView("/img/base.png");
+
+        base.setFitHeight(40);
+        base.setFitWidth(40);
+        base.setPreserveRatio(true);
+        base.toFront();
+        base.setX(BOARD_WIDTH-cave.getFitWidth());
+        base.setY((endPos - 1) *40);
+        System.out.println(endPos);
+        gameBoardAnchorPane.getChildren().add(base);
+
+
         //add all cells to GUI
         for (Cell p: map) {
             Rectangle tile = new Rectangle(40,40);
@@ -204,53 +233,64 @@ public class MapController extends AnchorPane implements Observer {
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }
-    public void createWave(){
-        game.createWave();
+    public void nextRound(){
+        waveRunning = true;
+        enemyHashMap = new HashMap<>();
+        game.nextRound();
         if(game.getEnemiesInWave()!=null) {
             enemies = game.getEnemiesInWave();
-            enemyImages = new ArrayList<>();
             for (Enemy e : enemies) {
                 ImageView img = new ImageView(e.getImage());
-                enemyImages.add(img);
                 fixImage(img,e);
+                enemyHashMap.put(e,img);
                 gameBoardAnchorPane.getChildren().add(img);
-
-
             }
         }
         game.putEnemyInUpdateModel();
+        cave.toFront(); //sets the cave to be in front of the enemies
+        base.toFront();
+        game.run();
     }
     public void update(){
 
-          if (game.getEnemiesInWave() != null && enemyImages != null) {
-              int count = 0;
-              for (ImageView img : enemyImages) {
-                  img.setX(enemies.get(count).getPositionX());
-                  img.setY(enemies.get(count).getPositionY());
-                  count++;
-
-              }
-          }
-
-
+        if (enemies!= null ) {
+            if(enemies.size() > 0){
+                for(Enemy e : enemies){
+                    if(e.isDead()){
+                        Platform.runLater(()->gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
+                        enemies.remove(e);
+                        game.enemyIsOut();
+                        System.out.println("is dead");
+                        break;
+                    }
+                    else{
+                        ImageView img = enemyHashMap.get(e);
+                        img.setX(e.getPositionX());
+                        img.setY(e.getPositionY());
+                    }
+                }
+            }
+            else{
+                waveRunning = false;
+                System.out.println("Round over");
+                game.gameLoopThread.stop();
+            }
+        }
     }
+    protected boolean isWaveRunning(){
+        return waveRunning;
+    }
+
     private void fixImage(ImageView img,Enemy e){
         img.setX(e.getPositionX());
         img.setY(e.getPositionY());
         img.setFitHeight(25);
         img.setFitWidth(25);
         img.setPreserveRatio(true);
-        img.toFront();
-    }
-    private void delay(double seconds) {
-        try {
-            Thread.sleep((int) (1000*seconds));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+        img.toBack();
 
 
+    }
     public void openSettings(){
         settingsPane.toFront();
     }

@@ -13,8 +13,11 @@ public class Board {
     private final List<BaseEnemy.Direction> enemyPath = new ArrayList<>();
     private int[][] currentMap;
     private int startPos;
+    private int endPos;
 
-
+        //restrictions:
+        // 8 is always the start position,
+        // on the last column there can only be one "1" which is the end position
     private final int[][] map_1= {
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,3,0},
@@ -44,14 +47,16 @@ public class Board {
         createBoard();
 
     }
-    public int getStartPos(int[][] map){
-        for (int i = 0; i < BOARD_HEIGHT; i++){
-            if(map[i][0]==8){
-                startPos = i+1;
+    public int getStartPos(){
+        return startPos;
+    }
+    public int getEndPos(){
+        for (int i = 0; i <BOARD_HEIGHT ; i++) {
+            if(currentMap[i][BOARD_WIDTH-1]==1){
+                endPos = i+1;
             }
         }
-        System.out.println(startPos);
-        return startPos;
+        return endPos;
     }
     public int[][] getMap(){
         return currentMap;
@@ -91,9 +96,10 @@ public class Board {
                 //skapar en path
                 else if(map[j][i] == 8){
                     tempBoard.add(new PathCell(i, j, false));
-
                     fillPath(j,i,map);
+                    startPos = j +1;
                 }
+
             }
 
         }
