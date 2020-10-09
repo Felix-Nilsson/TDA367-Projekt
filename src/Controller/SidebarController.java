@@ -118,10 +118,9 @@ public class SidebarController extends AnchorPane implements Observer {
 
     }
     @FXML private void settings(){
-        game.pauseGame();
+        game.pauseUnpauseGame();
 
     }
-
     @FXML public void toolbarButtonOnclick(){
         toolbar.toFront();
     }

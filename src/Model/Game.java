@@ -29,6 +29,7 @@ public class Game implements Updatable {
     private final WaveManager waveManager;
     private boolean running = false;
     public Thread gameLoopThread;
+    private boolean paused = false;
 
     private Updatable updatable;
     private final List<BaseEnemy.Direction> enemyPath;
@@ -82,19 +83,26 @@ public class Game implements Updatable {
             public void run() {
               List<Enemy> localEnemies = Collections.unmodifiableList(enemiesInWave);
               System.out.println("Number of enemies: " + localEnemies.size());
-              for(Enemy e : localEnemies){
-                  if(canceled) {
+              for(Enemy e : localEnemies) {
+                  if (canceled) {
                       break;
                   }
-                  updateModel.add(e);
-                    int i = 0;
-                    while(i < 10){
-                        delay();
-                        update();
-                        i++;
-                    }
+                  else if (!paused){
+                      updateModel.add(e);
+                      int i = 0;
+                      while (i < 10) {
+                          delay();
+                          update();
+                          i++;
+                      }
+                  }
+                  else {
+                      while (paused){
+
+                      }
+                  }
+                  }
                 }
-            }
         };
         Thread enemyThread = new Thread(enemyAdder);
         enemyThread.start();
@@ -109,26 +117,27 @@ public class Game implements Updatable {
             e.printStackTrace();
         }
     }
-    public void pauseGame(){
-        updateModel.pause();
-        observable.pause();
-
+    public void pauseUnpauseGame(){
+        paused = !paused;
     }
     public void nextRound(){
         //waveManager.createWave(round);
         round++;
     }
-
     private void run() {
         gameLoopThread = new Thread(() -> {
             while (running) {
-                update();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (paused){
+                    delay();
                 }
-
+                else {
+                    update();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
         gameLoopThread.setDaemon(true);

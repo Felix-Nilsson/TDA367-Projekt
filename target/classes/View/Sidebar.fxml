@@ -39,7 +39,7 @@
             <GaussianBlur />
          </effect>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="94.0" layoutY="536.0" stroke="#ab0f01" strokeType="INSIDE" width="104.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="94.0" layoutX="1.0" layoutY="537.0" stroke="#ab0f01" strokeType="INSIDE" width="104.0">
          <effect>
             <GaussianBlur />
          </effect>
@@ -124,14 +124,6 @@
             <DropShadow height="44.474999999999994" radius="24.701249999999998" spread="0.44" width="56.33" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="39.0" layoutX="85.0" layoutY="647.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../img/restart1.png" />
-         </image>
-         <effect>
-            <DropShadow height="41.76" radius="18.155" spread="0.55" width="32.86" />
-         </effect>
-      </ImageView>
       <ImageView fitHeight="43.0" fitWidth="50.0" layoutX="190.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/exit.png" />
@@ -147,6 +139,11 @@
          <effect>
             <DropShadow height="29.9" radius="15.19" spread="0.48" width="32.86" />
          </effect>
+      </ImageView>
+      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="84.0" layoutY="646.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/save.png" />
+         </image>
       </ImageView>
    </children>
 </fx:root>

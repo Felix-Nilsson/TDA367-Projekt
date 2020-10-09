@@ -79,7 +79,7 @@ public class MapController extends AnchorPane implements Observer {
 
     }
     @FXML private void pauseGame(){
-        game.pauseGame();
+        game.pauseUnpauseGame();
     }
     private void eventHandlers(){
         //EventHandlers

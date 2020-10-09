@@ -7,11 +7,9 @@ import java.util.List;
 public class Observable implements Observer{
     private final List<Observer> observers;
 
-    public boolean isPaused() {
-        return paused;
-    }
 
-    private boolean paused = false;
+
+
     public Observable(){
         observers = new ArrayList<>();
     }
@@ -33,17 +31,8 @@ public class Observable implements Observer{
     }
     public void update(){
         for(Observer observer : observers){
-            if (!paused) {
-                observer.update();
-            }
+            observer.update();
         }
     }
-    public boolean pause(){
-        if (!paused){
-            paused = true;
-            return true;
-        }
-        paused = false;
-        return false;
-    }
+
 }
