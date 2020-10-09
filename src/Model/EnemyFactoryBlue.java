@@ -3,25 +3,25 @@ package Model;
 import java.util.List;
 
 public class EnemyFactoryBlue implements EnemyFactory{
-    List<BaseEnemy.Direction> enemyPath;
+    private final List<BaseEnemy.Direction> enemyPath;
+    private final int startPos;
 
-    public EnemyFactoryBlue(List<BaseEnemy.Direction> enemyPath){
+    public EnemyFactoryBlue(List<BaseEnemy.Direction> enemyPath,int startPos){
         this.enemyPath = enemyPath;
+        this.startPos = startPos;
     }
 
     @Override
     public BlueEnemy createEnemyEasy() {
-        System.out.println("creating BlueEnemyEasy...");
-        return new BlueEnemy(100, 5,10,10,25,25,enemyPath);
+        return new BlueEnemy(100, 1,10,10,enemyPath,startPos);
+
     }
     @Override
     public BlueEnemy createEnemyMedium() {
-        System.out.println("creating BlueEnemyMedium...");
-        return new BlueEnemy(150,6,15,15,25,25,enemyPath);
+        return new BlueEnemy(150,2,15,15,enemyPath,startPos);
     }
     @Override
     public BlueEnemy createEnemyHard() {
-        System.out.println("creating BlueEnemyHard...");
-        return new BlueEnemy(200,7,20,20,25,25,enemyPath);
+        return new BlueEnemy(200,3,20,20,enemyPath,startPos);
     }
 }

@@ -52,6 +52,15 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+    public int getPosX() {
+        return baseTower.getPosX();
+    }
+
+    @Override
+    public int getPosY() {
+        return baseTower.getPosY();
+
+    }
     public int getX() {
         return baseTower.getX();
     }
@@ -74,6 +83,7 @@ public class ArcherTower implements Tower {
     @Override
     public double getAttackSpeed() {
         return baseTower.getAttackSpeed();
+
     }
 
     @Override
@@ -82,6 +92,10 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+
+    public void setAngle(double angle) {
+        baseTower.setAngle(angle);
+    }
     public Targeting getTarget() {
         return baseTower.getTarget();
     }
@@ -92,8 +106,14 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+    public Cell getPosition() {
+        return baseTower.getPosition();
+    }
+
+    @Override
     public String toString(){
         return "Archer Tower";
+
     }
 
 }

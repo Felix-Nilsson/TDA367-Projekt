@@ -8,6 +8,7 @@ import Model.Towers.Tower;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -18,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 
 import javax.swing.*;
 import java.io.IOException;
+
+//TODO fix toolbarcover
 
 public class ToolbarController extends AnchorPane implements Observer {
     @FXML private AnchorPane toolbarPane;
@@ -128,6 +131,22 @@ public class ToolbarController extends AnchorPane implements Observer {
         if(r.equals(closestRadioButton)){
             selectedTower.setTarget(Targeting.CLOSEST);
         }
+    }
+
+    @FXML
+    private void sellTowerClicked(){
+
+        game.removeTower(selectedTower);
+        parentController.moveToolbarBack();
+        //(might) TODO remove cell from tower
+        selectedTower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
+
+        //TODO remove pic from grid
+
+        //parentController.removeImageFromGrid(selectedTower);
+
+        game.addMoney((int)(-selectedTower.getPrice()*0.5));
+        //TODO update money label
     }
 
 }

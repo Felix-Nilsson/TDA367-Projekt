@@ -33,9 +33,9 @@ public class Game implements Updatable {
 
     private Updatable updatable;
     private final List<BaseEnemy.Direction> enemyPath;
-    private List<Enemy> enemiesInWave;
-    int round = 1;
 
+    int round = 1;
+    private List<Enemy> enemiesInWave;
     private List<Tower> towers;
 
     public Game (Difficulty difficulty, int mapNumber){
@@ -47,12 +47,16 @@ public class Game implements Updatable {
 
         b= new Board(mapNumber);
         this.enemyPath = b.getPath();
-        waveManager = new WaveManager(difficulty,enemyPath);
+        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos(b.getMap()));
 
         setValues();
 
-        towers = new ArrayList();
+        towers = new ArrayList<>();
 
+    }
+
+    public void loseHP(){
+        health--;
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -64,8 +68,8 @@ public class Game implements Updatable {
         run();
     }
     public void createWave(){
+        System.out.println("wave is created");
         enemiesInWave  = waveManager.createWave(round);
-
     }
 
     public interface Cancelable extends Runnable {
@@ -127,22 +131,29 @@ public class Game implements Updatable {
     private void run() {
         gameLoopThread = new Thread(() -> {
             while (running) {
-                if (paused){
+
+                if (paused) {
                     delay();
-                }
-                else {
+                } else {
                     update();
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
+                    update();
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+
+                    }
                 }
             }
+            gameLoopThread.setDaemon(true);
+            gameLoopThread.start();
         });
-        gameLoopThread.setDaemon(true);
-        gameLoopThread.start();
-
     }
 
 
@@ -152,12 +163,37 @@ public class Game implements Updatable {
         return this.observable.addObserver(observer);
     }
 
+    private void checksRadius(){
+        if (towers.size()>0 && enemiesInWave.size()>0){
+            for (Tower t : towers){
+                //TODO if (t.cooldown == false)
+                for (Enemy e : enemiesInWave){
+                    //Om det inte finns:
+                    double distX = e.getPositionX()-t.getPosX();
+                    //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt.
+                    //i Projectile skapa finns det minus framför vy för att återställa detta igen
+                    double distY = -(e.getPositionY()-t.getPosY());
+                    double distHyp = Math.sqrt(distX*distX + distY*distY);
+                    //System.out.println(distHyp);
+                    if (distHyp<t.getRange()){
+                        double angle = Math.atan2(distY,distX);
+                        t.setAngle(angle);
+                        t.attack();
+                        // Om torn är hitscan blir det: e.tookDamage()
+                    }
+                }
+            }
+        }
+
+
+    }
+
     public void update(){
         observable.update();
         updateModel.update();
+        checksRadius();
+
     }
-
-
     //sets values of health and money
     private void setValues(){
         switch (difficulty) {
@@ -175,28 +211,11 @@ public class Game implements Updatable {
                 break;
         }
     }
-
-
     public List<Cell> getBoard(){
         return b.getBoard();
     }
-    public int getMapNumber(){return mapNumber;}
     public int getHealth() { return health; }
     public int getMoney() { return money; }
-    public int getArrayIndex(int x_placement, int y_placement){
-        int placeInArray = 0;
-        for(int i =0; i < b.getBOARD_WIDTH(); i++){
-            for(int j = 0; j < b.getBOARD_HEIGHT(); j++){
-                if(i == x_placement && j == y_placement){
-                    return placeInArray;
-                }
-                placeInArray++;
-            }
-        }
-
-        //TODO Replace with exception
-        return -1;
-    }
 
     public boolean isCellOccupied(int index){
         return b.isCellOccupied(index);
@@ -222,4 +241,39 @@ public class Game implements Updatable {
         }
         return null;
     }
+    public int getArrayIndex(int x_placement, int y_placement){
+        int placeInArray = 0;
+        for(int i =0; i < b.getBOARD_WIDTH(); i++){
+            for(int j = 0; j < b.getBOARD_HEIGHT(); j++){
+                if(i == x_placement && j == y_placement){
+                    return placeInArray;
+                }
+                placeInArray++;
+            }
+        }
+
+        //TODO Replace with exception
+        return -1;
+    }
+
+
+    public void removeTower(Tower t){
+
+        try{
+            towers.remove(t);
+        }
+        catch (NullPointerException e){
+            System.out.println("not found tower");
+        }
+
+    }
+
+    public void addMoney(int toAdd){
+        System.out.println("before: " + money);
+        money += toAdd;
+        System.out.println("after: " + money);
+
+    }
+
+
 }

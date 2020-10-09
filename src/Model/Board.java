@@ -6,15 +6,16 @@ import java.util.List;
 
 
 public class Board {
-    private int BOARD_WIDTH = 26;
-    private int BOARD_HEIGHT = 18;
+    private final int BOARD_WIDTH = 26;
+    private final int BOARD_HEIGHT = 18;
     private  ArrayList<Cell> board;
     private int mapNumber;
     private final List<BaseEnemy.Direction> enemyPath = new ArrayList<>();
     private int[][] currentMap;
+    private int startPos;
 
 
-    private int[][] map_1= {
+    private final int[][] map_1= {
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,3,0},
             {8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
@@ -37,10 +38,23 @@ public class Board {
     };
 
 
+
     public Board(int mapNumber){
         this.mapNumber = mapNumber;
         createBoard();
 
+    }
+    public int getStartPos(int[][] map){
+        for (int i = 0; i < BOARD_HEIGHT; i++){
+            if(map[i][0]==8){
+                startPos = i+1;
+            }
+        }
+        System.out.println(startPos);
+        return startPos;
+    }
+    public int[][] getMap(){
+        return currentMap;
     }
 
     private void createBoard(){
@@ -90,10 +104,6 @@ public class Board {
     public List<Cell> getBoard(){
         return this.board;
     }
-    public Board getTmpBoard(){
-        return this;
-    }
-
     private void setBoard(ArrayList<Cell> board) {
         this.board = board;
     }
@@ -133,7 +143,6 @@ public class Board {
                 }
             }
         }
-
         public int getBOARD_WIDTH(){
             return this.BOARD_WIDTH;
         }
