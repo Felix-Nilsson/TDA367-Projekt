@@ -121,6 +121,7 @@ public class Game implements Updatable {
             e.printStackTrace();
         }
     }
+
     public void pauseUnpauseGame(){
         paused = !paused;
     }
@@ -155,7 +156,10 @@ public class Game implements Updatable {
             gameLoopThread.start();
         });
     }
+    public void quitGame(){
+        running = false;
 
+    }
 
 
 

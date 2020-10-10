@@ -5,6 +5,7 @@ import Model.Observable;
 
 import Model.Towers.*;
 //import View.Observer;
+
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -115,6 +116,11 @@ public class SidebarController extends AnchorPane implements Observer {
                 //game.startGame();
             }
         }
+
+    }
+    @FXML private void returnMainMenu(){
+        game.quitGame();
+        
 
     }
     @FXML private void settings(){

@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.effect.Light.Point?>
 <?import javafx.scene.effect.Lighting?>
@@ -21,25 +20,10 @@
    <children>
       <ImageView fx:id="sidebarBackground" fitHeight="768.0" fitWidth="266.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../img/sidebarbackgroundnew.jpg" />
+            <Image url="@../img/sidebarbackgroundnew2.jpg" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="53.0" layoutX="77.0" layoutY="641.0" stroke="#ab0f01" strokeType="INSIDE" width="170.0">
-         <effect>
-            <GaussianBlur />
-         </effect>
-      </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="53.0" layoutX="9.0" layoutY="713.0" stroke="#ab0f01" strokeType="INSIDE" width="248.0">
-         <effect>
-            <GaussianBlur />
-         </effect>
-      </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="94.0" layoutX="152.0" layoutY="536.0" stroke="#ab0f01" strokeType="INSIDE" width="104.0">
-         <effect>
-            <GaussianBlur />
-         </effect>
-      </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="94.0" layoutX="1.0" layoutY="537.0" stroke="#ab0f01" strokeType="INSIDE" width="104.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0f01" height="223.0" layoutX="2.0" layoutY="542.0" stroke="#ab0f01" strokeType="INSIDE" width="258.0">
          <effect>
             <GaussianBlur />
          </effect>
@@ -85,14 +69,6 @@
             <Image url="@../img/health.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="182.0" layoutY="562.0" onMouseClicked="#settings" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-         <image>
-            <Image url="@../img/PlayPause.png" />
-         </image>
-         <effect>
-            <DropShadow height="59.55" radius="30.7575" spread="0.55" width="65.48" />
-         </effect>
-      </ImageView>
       <AnchorPane fx:id="toolbar" layoutX="-610.0" layoutY="616.0" prefHeight="152.0" prefWidth="600.0" />
       <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="16.0" layoutY="723.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -111,36 +87,34 @@
             </Lighting>
          </effect>
       </Slider>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="72.0" layoutX="12.0" layoutY="562.0" stroke="BLACK" strokeType="INSIDE" width="72.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="72.0" layoutX="139.0" layoutY="562.0" opacity="0.48" stroke="BLACK" strokeType="INSIDE" width="123.0" />
+      <ImageView fitHeight="66.0" fitWidth="58.0" layoutX="168.0" layoutY="569.0" onMouseClicked="#settings" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../img/PlayPause.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="36.0" fitWidth="39.0" layoutX="69.0" layoutY="721.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/volume.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="playButton" fitHeight="58.0" fitWidth="88.0" layoutX="24.0" layoutY="554.0" onMouseClicked="#nextRound" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playButton" fitHeight="58.0" fitWidth="88.0" layoutX="24.0" layoutY="569.0" onMouseClicked="#nextRound" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/Nextround.png" />
          </image>
-         <effect>
-            <DropShadow height="44.474999999999994" radius="24.701249999999998" spread="0.44" width="56.33" />
-         </effect>
       </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="50.0" layoutX="190.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="43.0" fitWidth="50.0" layoutX="205.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/exit.png" />
          </image>
-         <effect>
-            <DropShadow radius="18.155" spread="0.19" width="53.62" />
-         </effect>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="37.0" layoutX="140.0" layoutY="649.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="50.0" fitWidth="37.0" layoutX="113.0" layoutY="668.0" onMouseClicked="#returnMainMenu" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/home.png" />
          </image>
-         <effect>
-            <DropShadow height="29.9" radius="15.19" spread="0.48" width="32.86" />
-         </effect>
       </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="84.0" layoutY="646.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="27.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/save.png" />
          </image>
