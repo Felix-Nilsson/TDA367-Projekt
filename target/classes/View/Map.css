@@ -1,6 +1,7 @@
 .root{
     -standard_red: #e60000;
-    -standard_blue:#1dccc5;
+    -standard_blue: #1dccc5;
+    -blue_highlight: #00fffc;
 }
 .settingsBackground{
     -fx-background-color:white;
@@ -9,15 +10,31 @@
     -fx-border-width:1px;
     -fx-border-color:white;
 }
+.buttonMap:hover{
+    -fx-background-color: #00fffc;
+}
 .continueButton{
-    -fx-background-color:green;
+    -fx-background-color: -standard_blue;
+    -fx-opacity: 1;
+    -fx-background-radius: 14px;
+    -fx-padding: 0;
+    -fx-cursor: hand;
 }
-.restartButton{
-    -fx-background-color:blue;
+
+.smallButtons{
+    -fx-background-color: -standard_blue;
+    -fx-opacity: 1;
+    -fx-background-radius: 14px;
+    -fx-padding: 0;
+    -fx-cursor: hand;
 }
-.homeButton{
-    -fx-background-color:blue;
+.textSmall{
+    -fx-font-size: 30;
 }
-.exitButton{
-    -fx-background-color:red;
+.health{
+    -fx-text-fill: -standard_red;
+
+}
+.money{
+    -fx-text-fill: gold;
 }

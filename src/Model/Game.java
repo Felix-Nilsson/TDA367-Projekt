@@ -158,7 +158,6 @@ public class Game implements Updatable {
     }
     public void quitGame(){
         running = false;
-
     }
 
 
