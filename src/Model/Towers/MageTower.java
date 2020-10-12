@@ -24,8 +24,8 @@ public class MageTower implements Tower {
     }
 
     @Override
-    public void checkRadius() {
-        baseTower.checkRadius();
+    public void checkRadius(double x, double y) {
+        baseTower.checkRadius(x,y);
     }
 
     @Override

@@ -71,13 +71,26 @@ public class BaseTower implements Tower {
     }
 
     @Override
-    public void checkRadius() {
+    public void checkRadius(double x, double y) {
+
+        double distX = x-posX;
+        //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. angle reflekterar nu verkligheten.
+        //i Projectile skapa finns det minus framför vy för att återställa detta igen
+        double distY = -(y-posY);
+        double distHyp = Math.sqrt(distX*distX + distY*distY);
+        //System.out.println(distHyp);
+        if (distHyp<this.range) {
+            this.angle = Math.atan2(distY, distX);
+            attack();
+        }
+
 
     }
 
     @Override
     public void attack() {
         System.out.println("attaaaaack");
+        System.out.println("angle: " +Math.toDegrees(angle));
         new Projectile(posX,posY,angle);
     }
 
