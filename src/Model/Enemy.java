@@ -14,4 +14,5 @@ public interface Enemy extends Updatable{
     int getPositionY();
     void move();
     boolean isDead();
+    int spawnTime();
 }

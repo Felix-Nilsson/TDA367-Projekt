@@ -2,19 +2,11 @@ package Model;
 
 
 import Controller.Observer;
-import Model.Towers.MageTower;
-import Model.Towers.MageTowerFactory;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
-import Model.Cell;
-
 import java.util.Collections;
-
 import java.util.ArrayList;
-
 import java.util.List;
-import java.util.Timer;
-import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 public class Game implements Updatable {
@@ -34,6 +26,7 @@ public class Game implements Updatable {
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
     int round = 1;
+    private int gameSpeed;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -45,6 +38,9 @@ public class Game implements Updatable {
         waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
+
+
+
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -86,7 +82,7 @@ public class Game implements Updatable {
                   }
                   updateModel.add(e);
                     int i = 0;
-                    while(i < 10){
+                    while(i < e.spawnTime()){
                         delay();
                         update();
                         i++;
@@ -116,7 +112,8 @@ public class Game implements Updatable {
             while (waveRunning) {
                 update();
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep( gameSpeed);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -196,14 +193,17 @@ public class Game implements Updatable {
             case EASY:
                 this.health = 100;
                 this.money = 200;
+                this.gameSpeed = 50;
                 break;
             case MEDIUM:
                 this.health = 50;
                 this.money = 150;
+                this.gameSpeed = 80;
                 break;
             case HARD:
                 this.health = 10;
                 this.money = 80;
+                this.gameSpeed = 50;
                 break;
         }
     }

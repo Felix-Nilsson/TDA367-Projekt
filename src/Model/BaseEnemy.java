@@ -50,7 +50,7 @@ public class BaseEnemy implements Enemy{
         move();
     }
 
-
+    //movementspeed = pixels per millisecond
     public void move(){
         switch (direction) {
             case NORTH : positionY = positionY - movementSpeed; break;
@@ -60,9 +60,15 @@ public class BaseEnemy implements Enemy{
         }
     }
 
+
     @Override
     public boolean isDead() {
         return isDead;
+    }
+
+
+    public int spawnTime() {
+        return -1;
     }
 
     protected void turn(Direction dir){

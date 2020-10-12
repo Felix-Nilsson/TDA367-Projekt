@@ -11,6 +11,7 @@ public class RedEnemy implements Enemy{
 
     public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
+
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/red_Monster.png")));
     }
 
@@ -56,6 +57,11 @@ public class RedEnemy implements Enemy{
     @Override
     public boolean isDead() {
         return parent.isDead();
+    }
+
+    @Override
+    public int spawnTime() {
+        return 10 - getMovementSpeed();
     }
 
     public BaseEnemy.Direction getDirection(){

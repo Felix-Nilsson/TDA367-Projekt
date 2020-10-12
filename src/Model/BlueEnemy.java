@@ -9,6 +9,7 @@ public class BlueEnemy implements Enemy{
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private Image image;
 
+
     public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path,int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor, path, startPos);
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/blue_Monster.png")));
@@ -57,6 +58,15 @@ public class BlueEnemy implements Enemy{
     @Override
     public boolean isDead() {
         return parent.isDead();
+    }
+
+    @Override
+    public int spawnTime() {
+        if(10 - getMovementSpeed() > 0){
+            return 10 - getMovementSpeed();
+        }
+        return -1;
+
     }
 
     public BaseEnemy.Direction getDirection(){

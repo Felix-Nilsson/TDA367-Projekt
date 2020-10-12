@@ -63,7 +63,7 @@ public class MapController extends AnchorPane implements Observer {
     private boolean waveRunning;
     private ImageView cave;
     private ImageView base;
-    private int BOARD_WIDTH = 1040;
+
 
     private TowerFactory towerFactory;
     public MapController(Game game, List<Cell> map) {
@@ -221,7 +221,7 @@ public class MapController extends AnchorPane implements Observer {
         base.setFitWidth(40);
         base.setPreserveRatio(true);
         base.toFront();
-        base.setX(BOARD_WIDTH-cave.getFitWidth());
+        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth());
         base.setY((endPos - 1) *40);
         System.out.println(endPos);
         gameBoardAnchorPane.getChildren().add(base);
