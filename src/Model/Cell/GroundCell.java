@@ -1,14 +1,13 @@
-package Model;
+package Model.Cell;
 
 import javafx.scene.paint.Color;
 
-public class WaterCell implements Cell{
-
+public class GroundCell implements Cell {
     BaseCell base;
     private Color color;
 
-    public WaterCell(int x, int y, boolean occupied){
-        base = new BaseCell(x, y, TerrainType.WATER, occupied, "2d6ecf");
+    public GroundCell(int x, int y, boolean occupied){
+        base = new BaseCell(x, y, TerrainType.GROUND, occupied,  "2aa84c");
 
     }
 
@@ -26,9 +25,6 @@ public class WaterCell implements Cell{
     public String getColor() {
         return base.getColor();
     }
-
-    @Override
-    public void setColor(String s) {base.setColor(s); }
 
     @Override
     public int getX() {
@@ -49,4 +45,6 @@ public class WaterCell implements Cell{
     public void setOccupiedFalse() {
         base.setOccupiedFalse();
     }
+
+    public void setColor(String s){base.setColor(s);}
 }

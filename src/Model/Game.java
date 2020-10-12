@@ -1,7 +1,10 @@
 package Model;
 
 
-import Controller.Observer;
+import Model.Cell.Cell;
+import Model.Enemy.BaseEnemy;
+import Model.Enemy.Enemy;
+import View.Observer;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import java.util.Collections;

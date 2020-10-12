@@ -1,8 +1,7 @@
 package Model.Towers;
 
-import Model.BaseCell;
-import Model.Cell;
-import Model.TerrainType;
+import Model.Cell.BaseCell;
+import Model.Cell.Cell;
 import Model.UpdateModel;
 
 

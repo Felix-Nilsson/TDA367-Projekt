@@ -1,6 +1,6 @@
-package Model;
+package Model.Enemy;
 
-import java.util.ArrayList;
+import Model.Enemy.Enemy;
 
 public interface EnemyFactory {
     Enemy createEnemyEasy();

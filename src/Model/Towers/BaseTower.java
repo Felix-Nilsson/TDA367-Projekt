@@ -1,23 +1,21 @@
 package Model.Towers;
 
-import Model.BaseCell;
+import Model.Cell.BaseCell;
 
-import Model.Cell;
-import Model.GroundCell;
+import Model.Cell.Cell;
 
-import Model.Projectile;
 import Model.UpdateModel;
 import javafx.scene.image.Image;
 
 
 
 public class BaseTower implements Tower {
-    private Cell position;
-    private int physicalDmg;
-    private int magicDmg;
-    private int price;
-    private int range;
-    private double attackSpeed;
+    private final Cell position;
+    private final int physicalDmg;
+    private final int magicDmg;
+    private final int price;
+    private final int range;
+    private final double attackSpeed;
     private Image towerImage;
     private double angle;
     private int posX;

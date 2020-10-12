@@ -1,13 +1,12 @@
-package Model;
+package Model.Enemy;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseEnemy implements Enemy{
+public class BaseEnemy implements Enemy {
     private int health;
     private int positionX;
     private int positionY;

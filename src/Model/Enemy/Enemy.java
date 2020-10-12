@@ -1,11 +1,12 @@
-package Model;
+package Model.Enemy;
 
+import Model.Updatable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
 
-public interface Enemy extends Updatable{
+public interface Enemy extends Updatable {
     void update();
     void followPath();
     void tookDamage(int damage);

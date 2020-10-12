@@ -1,9 +1,9 @@
 package Model;
 
+import Model.Enemy.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.TimeUnit;
 
 public class WaveManager  {
     private final Difficulty difficulty;
@@ -16,7 +16,7 @@ public class WaveManager  {
         ENEMY_RED
     }
 
-    public WaveManager(Difficulty difficulty,List<BaseEnemy.Direction> enemyPath,int startPos) {
+    public WaveManager(Difficulty difficulty, List<BaseEnemy.Direction> enemyPath, int startPos) {
         this.difficulty = difficulty;
         this.enemyPath = enemyPath;
         this.startPos = startPos;

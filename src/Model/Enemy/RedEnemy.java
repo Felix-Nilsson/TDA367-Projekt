@@ -1,10 +1,11 @@
-package Model;
+package Model.Enemy;
 
+import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 
 import java.util.List;
 
-public class RedEnemy implements Enemy{
+public class RedEnemy implements Enemy {
     private final BaseEnemy parent;
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private Image image;

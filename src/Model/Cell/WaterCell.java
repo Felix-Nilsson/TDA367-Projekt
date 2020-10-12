@@ -1,14 +1,14 @@
-package Model;
+package Model.Cell;
 
 import javafx.scene.paint.Color;
 
-public class PathCell implements Cell{
+public class WaterCell implements Cell {
 
     BaseCell base;
     private Color color;
 
-    public PathCell(int x, int y, boolean occupied){
-        base = new BaseCell(x, y, TerrainType.PATH, occupied, "#7C4E4E");
+    public WaterCell(int x, int y, boolean occupied){
+        base = new BaseCell(x, y, TerrainType.WATER, occupied, "2d6ecf");
 
     }
 

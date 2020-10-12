@@ -1,4 +1,4 @@
-package Controller;
+package View;
 
 import Model.Difficulty;
 import Model.Game;
@@ -10,7 +10,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.media.Media;
