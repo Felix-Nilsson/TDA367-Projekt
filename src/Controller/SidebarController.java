@@ -1,9 +1,9 @@
-package View;
+package Controller;
 
 import Model.Game;
 
 import Model.Towers.*;
-//import View.Observer;
+//import Controller.Observer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 

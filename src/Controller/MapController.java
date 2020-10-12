@@ -1,11 +1,11 @@
-package View;
-import Controller.MouseController;
+package Controller;
 import Model.*;
 import Model.Cell.Cell;
 import Model.Enemy.BlueEnemy;
 import Model.Enemy.Enemy;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
+import View.MapHandler;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,15 +53,12 @@ public class MapController extends AnchorPane implements Observer {
     private BlueEnemy tmpEnemy;
     //private List<ImageView> enemyImages;
     private List<Enemy> enemies;
-    private double offset_x;
-    private double offset_y;
-    private double newOffset_x;
-    private double newOffset_y;
     private HashMap<Enemy,ImageView> enemyHashMap;
     private HashMap<Tower,ImageView> towerHashMap;
     private boolean waveRunning;
     private ImageView cave;
     private ImageView base;
+    private MapHandler mapHandler;
 
 
     private TowerFactory towerFactory;
@@ -78,6 +75,7 @@ public class MapController extends AnchorPane implements Observer {
         this.map = map;
         this.game = game;
         this.waveRunning = game.isWaveRunning();
+        this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, map);
         towerHashMap = new HashMap<>(); //Might need to move
         game.addObserver(this);
         createMap();
@@ -193,68 +191,30 @@ public class MapController extends AnchorPane implements Observer {
     private void addToolbar(){
         toolbarController = new ToolbarController(game,this);
         toolbarAnchorPane.getChildren().add(toolbarController);
-        toolbarCover.toBack();
-        toolbarAnchorPane.toBack();
+
     }
 
     public void createMap(){
         //add sidebar fxml
         SidebarController sidebarController = new SidebarController(game,this);
         sidebar.getChildren().add(sidebarController);
-
-        //add startcave
         int startPos = game.getStartPos();
-        cave = new ImageView("/img/cave.png");
-        cave.setX(0);
-        cave.setY((startPos - 1) *40);
-        cave.setFitHeight(40);
-        cave.setFitWidth(40);
-        cave.setPreserveRatio(true);
-        cave.toFront();
-        gameBoardAnchorPane.getChildren().add(cave);
-
-        //add endcave
         int endPos = game.getEndPos();
-        base = new ImageView("/img/base.png");
-
-        base.setFitHeight(40);
-        base.setFitWidth(40);
-        base.setPreserveRatio(true);
-        base.toFront();
-        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth());
-        base.setY((endPos - 1) *40);
-        System.out.println(endPos);
-        gameBoardAnchorPane.getChildren().add(base);
-
-
-        //add all cells to GUI
-        for (Cell p: map) {
-            Rectangle tile = new Rectangle(40,40);
-            tile.setX(p.getX());
-            tile.setY(p.getY());
-            tile.setFill(Color.web(p.getColor()));
-            tile.setStroke(Color.BLACK);
-            gameBoardGrid.add(tile, p.getX(), p.getY());
-        }
+        mapHandler.createMap(startPos,endPos, cave, base);
     }
+
     public void nextRound(){
         waveRunning = true;
         enemyHashMap = new HashMap<>();
         game.nextRound();
         if(game.getEnemiesInWave()!=null) {
             enemies = game.getEnemiesInWave();
-            for (Enemy e : enemies) {
-                ImageView img = new ImageView(e.getImage());
-                fixImage(img,e);
-                enemyHashMap.put(e,img);
-                gameBoardAnchorPane.getChildren().add(img);
-            }
+            mapHandler.drawEnemies(enemies, enemyHashMap);
         }
         game.putEnemyInUpdateModel();
-        cave.toFront(); //sets the cave to be in front of the enemies
-        base.toFront();
         game.run();
     }
+
     public void update(){
         if (enemies!= null ) {
             if(enemies.size() > 0){
@@ -267,9 +227,7 @@ public class MapController extends AnchorPane implements Observer {
                         break;
                     }
                     else{
-                        ImageView img = enemyHashMap.get(e);
-                        img.setX(e.getPositionX());
-                        img.setY(e.getPositionY());
+                        mapHandler.updateEnemy(enemyHashMap, e);
                     }
                 }
             }
@@ -280,32 +238,22 @@ public class MapController extends AnchorPane implements Observer {
             }
         }
     }
+
     protected boolean isWaveRunning(){
         return waveRunning;
     }
 
-    private void fixImage(ImageView img,Enemy e){
-        img.setX(e.getPositionX());
-        img.setY(e.getPositionY());
-        img.setFitHeight(25);
-        img.setFitWidth(25);
-        img.setPreserveRatio(true);
-        img.toBack();
-
-
-    }
     public void openSettings(){
-        settingsPane.toFront();
-    }
-    @FXML
-    public void openMap(){
-        mapAnchorPane.toFront();
+        mapHandler.openSettings(settingsPane);
     }
 
+    @FXML //TODO Not currently implementet
+    public void openMap(){
+        mapHandler.closeSettings(mapAnchorPane);
+    }
 
 
     public void setTowerOnCell(int index){
-
         game.updateArrayWithTower(index,this.towerFactory);
     }
 
@@ -314,19 +262,17 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void moveToolbarBack(){
-        toolbarAnchorPane.toBack();
-        toolbarCover.toFront();
+        mapHandler.moveToolbarBack(toolbarAnchorPane, toolbarCover);
     }
 
     public void moveToolbarFront(Tower t){
         toolbarController.recieveTower(t);
-        toolbarAnchorPane.toFront();
-        toolbarCover.toBack();
+        mapHandler.moveToolbarFront(toolbarAnchorPane, toolbarCover);
     }
 
     public void removeImageFromGrid(Tower t){
         ImageView image = towerHashMap.get(t);
-        gameBoardGrid.getChildren().remove(image);
+        mapHandler.removeImageFromGrid(image);
         towerHashMap.remove(t);
 
 

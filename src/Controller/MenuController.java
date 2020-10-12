@@ -1,5 +1,6 @@
-package View;
+package Controller;
 
+import Controller.MapController;
 import Model.Difficulty;
 import Model.Game;
 import javafx.fxml.FXML;
