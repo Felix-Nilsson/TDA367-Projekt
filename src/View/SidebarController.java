@@ -1,17 +1,12 @@
-package Controller;
+package View;
 
 import Model.Game;
-import Model.Observable;
 
 import Model.Towers.*;
 //import View.Observer;
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 
-
-
-import Model.WaveManager;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 

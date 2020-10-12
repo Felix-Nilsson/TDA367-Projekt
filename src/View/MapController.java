@@ -1,16 +1,18 @@
-package Controller;
+package View;
+import Controller.MouseController;
 import Model.*;
+import Model.Cell.Cell;
+import Model.Enemy.BlueEnemy;
+import Model.Enemy.Enemy;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -21,11 +23,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class MapController extends AnchorPane implements Observer {
@@ -63,7 +62,7 @@ public class MapController extends AnchorPane implements Observer {
     private boolean waveRunning;
     private ImageView cave;
     private ImageView base;
-    private int BOARD_WIDTH = 1040;
+
 
     private TowerFactory towerFactory;
     public MapController(Game game, List<Cell> map) {
@@ -84,6 +83,7 @@ public class MapController extends AnchorPane implements Observer {
         createMap();
         addToolbar();
         eventHandlers();
+        
     }
     @FXML private void pauseGame(){
         game.pauseGame();
@@ -221,7 +221,7 @@ public class MapController extends AnchorPane implements Observer {
         base.setFitWidth(40);
         base.setPreserveRatio(true);
         base.toFront();
-        base.setX(BOARD_WIDTH-cave.getFitWidth());
+        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth());
         base.setY((endPos - 1) *40);
         System.out.println(endPos);
         gameBoardAnchorPane.getChildren().add(base);
@@ -256,7 +256,6 @@ public class MapController extends AnchorPane implements Observer {
         game.run();
     }
     public void update(){
-
         if (enemies!= null ) {
             if(enemies.size() > 0){
                 for(Enemy e : enemies){

@@ -1,6 +1,9 @@
 package Model;
 
 
+import Model.Cell.*;
+import Model.Enemy.BaseEnemy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,25 +129,25 @@ public class Board {
                 //checks to the right
                 if((map[j][i+1]==1) && prevDir!= BaseEnemy.Direction.WEST){
                     enemyPath.add(BaseEnemy.Direction.EAST);
-                    prevDir=BaseEnemy.Direction.EAST;
+                    prevDir= BaseEnemy.Direction.EAST;
                     i++;
                 }
                 //checks below
                 else if((map[j+1][i]==1) && prevDir!= BaseEnemy.Direction.NORTH){
                     enemyPath.add(BaseEnemy.Direction.SOUTH);
-                    prevDir=BaseEnemy.Direction.SOUTH;
+                    prevDir= BaseEnemy.Direction.SOUTH;
                     j++;
                 }
                 //checks above
                 else if((map[j-1][i]==1) && prevDir!= BaseEnemy.Direction.SOUTH){
                     enemyPath.add(BaseEnemy.Direction.NORTH);
-                    prevDir=BaseEnemy.Direction.NORTH;
+                    prevDir= BaseEnemy.Direction.NORTH;
                     j--;
                 }
                 //checks left
                 else if((map[j][i-1]==1) && prevDir!= BaseEnemy.Direction.EAST){
                     enemyPath.add(BaseEnemy.Direction.WEST);
-                    prevDir=BaseEnemy.Direction.WEST;
+                    prevDir= BaseEnemy.Direction.WEST;
                     i--;
                 }
             }

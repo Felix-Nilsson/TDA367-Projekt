@@ -1,13 +1,12 @@
-package Model;
+package Model.Enemy;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseEnemy implements Enemy{
+public class BaseEnemy implements Enemy {
     private int health;
     private int positionX;
     private int positionY;
@@ -50,7 +49,7 @@ public class BaseEnemy implements Enemy{
         move();
     }
 
-
+    //movementspeed = pixels per millisecond
     public void move(){
         switch (direction) {
             case NORTH : positionY = positionY - movementSpeed; break;
@@ -60,9 +59,15 @@ public class BaseEnemy implements Enemy{
         }
     }
 
+
     @Override
     public boolean isDead() {
         return isDead;
+    }
+
+
+    public int spawnTime() {
+        return -1;
     }
 
     protected void turn(Direction dir){

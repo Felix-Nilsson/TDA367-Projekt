@@ -1,6 +1,6 @@
 package Model;
 
-import Controller.Observer;
+import View.Observer;
 import java.util.ArrayList;
 import java.util.List;
 

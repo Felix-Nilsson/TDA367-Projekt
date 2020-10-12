@@ -1,8 +1,8 @@
-package Model;
+package Model.Cell;
 
 import javafx.scene.paint.Color;
 
-public class ObstacleCell implements Cell{
+public class ObstacleCell implements Cell {
 
     BaseCell base;
     private Color color;
