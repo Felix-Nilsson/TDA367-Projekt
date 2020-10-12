@@ -226,7 +226,6 @@ public class Game implements Updatable {
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
         towers.add(t);
-        System.out.println(towers);
     }
 
     public Tower getTowerInCell(int x, int y){

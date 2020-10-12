@@ -59,6 +59,7 @@ public class MapController extends AnchorPane implements Observer {
     private double newOffset_x;
     private double newOffset_y;
     private HashMap<Enemy,ImageView> enemyHashMap;
+    private HashMap<Tower,ImageView> towerHashMap;
     private boolean waveRunning;
     private ImageView cave;
     private ImageView base;
@@ -78,6 +79,7 @@ public class MapController extends AnchorPane implements Observer {
         this.map = map;
         this.game = game;
         this.waveRunning = game.isWaveRunning();
+        towerHashMap = new HashMap<>(); //Might need to move
         game.addObserver(this);
         createMap();
         addToolbar();
@@ -136,11 +138,13 @@ public class MapController extends AnchorPane implements Observer {
                     if (occupied == false) {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
+
                         gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
-
-
-                         //TODO futher down
                         setTowerOnCell(index);
+
+                        //After the tower has been added, add to hashmap
+                        towerHashMap.put(game.getTowerInCell(x_placement, y_placement), image);
+
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
@@ -301,10 +305,8 @@ public class MapController extends AnchorPane implements Observer {
 
 
 
-    public void setTowerOnCell(int index/*Tower tower */){
-        //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
-        //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
-        //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
+    public void setTowerOnCell(int index){
+
         game.updateArrayWithTower(index,this.towerFactory);
     }
 
@@ -324,14 +326,12 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void removeImageFromGrid(Tower t){
-        int x = t.getX();
-        int y = t.getY();
-
-        //TODO remove the image from
-        Node image = gameBoardGrid.getChildren().get(game.getArrayIndex(x,y));
-
-
+        ImageView image = towerHashMap.get(t);
+        gameBoardGrid.getChildren().remove(image);
+        towerHashMap.remove(t);
     }
+
+
 
 }
 
