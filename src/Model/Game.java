@@ -220,12 +220,16 @@ public class Game implements Updatable {
     public void setCellOccupied(int index){
         b.setCellOccupied(index);
     }
+    public void setCellUnoccupied(int index) { b.setCellUnoccupied(index); }
 
     public void updateArrayWithTower(int index, TowerFactory towerFactory){
         //TODO update cell to occupied
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
-        towers.add(t);
+        if(money>=t.getPrice()){
+            towers.add(t);
+        }
+        System.out.println("balance: " + money);
     }
 
     public Tower getTowerInCell(int x, int y){

@@ -329,6 +329,8 @@ public class MapController extends AnchorPane implements Observer {
         ImageView image = towerHashMap.get(t);
         gameBoardGrid.getChildren().remove(image);
         towerHashMap.remove(t);
+
+
     }
 
 

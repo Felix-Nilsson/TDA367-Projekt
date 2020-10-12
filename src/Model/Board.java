@@ -163,6 +163,10 @@ public class Board {
         public void setCellOccupied(int index){
             board.get(index).setOccupiedTrue();
         }
+
+        public void setCellUnoccupied(int index){
+        board.get(index).setOccupiedFalse();
+    }
     }
 
 
