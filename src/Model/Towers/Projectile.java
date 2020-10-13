@@ -1,11 +1,10 @@
-package Model;
+package Model.Towers;
 
-import Model.Towers.Tower;
+import Model.Enemy.Enemy;
+import Model.Updatable;
 import javafx.scene.image.Image;
 
-import static java.lang.StrictMath.PI;
-
-public class Projectile implements Updatable{
+public class Projectile implements Updatable {
     private double vx;
     private double vy;
     private double posX;
@@ -15,7 +14,7 @@ public class Projectile implements Updatable{
     //angle is in radians
     private double angle;
     private int vMultiplier=10;
-    Image image;
+    private final Image image;
 
     //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
     //Om projectile inte är hitscan och tower har en Angle blir det lätt att implementera en riktig projektil (collision måste dock skapas då)

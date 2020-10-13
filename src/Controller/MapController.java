@@ -1,11 +1,14 @@
 package Controller;
 
-import Model.BlueEnemy;
-import Model.Cell;
-import Model.Enemy;
-import Model.Game;
+import Model.*;
+import Model.Cell.Cell;
+import Model.Enemy.BlueEnemy;
+import Model.Enemy.Enemy;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
+import View.MapHandler;
+import javafx.application.Platform;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +26,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
+import java.util.HashMap;
+
 import java.util.List;
 
 
@@ -48,16 +53,18 @@ public class MapController extends AnchorPane implements Observer {
 
 
     private final Game game;
-    private SidebarController sidebarController;
     private ToolbarController toolbarController;
     private final List<Cell> map;
     private BlueEnemy tmpEnemy;
-    private List<ImageView> enemyImages;
+    //private List<ImageView> enemyImages;
     private List<Enemy> enemies;
-    private double offset_x;
-    private double offset_y;
-    private double newOffset_x;
-    private double newOffset_y;
+    private HashMap<Enemy,ImageView> enemyHashMap;
+    private HashMap<Tower,ImageView> towerHashMap;
+    private boolean waveRunning;
+    private ImageView cave;
+    private ImageView base;
+    private MapHandler mapHandler;
+
 
     private TowerFactory towerFactory;
     public MapController(Game game, List<Cell> map) {
@@ -72,12 +79,14 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
+        this.waveRunning = game.isWaveRunning();
+        this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, map);
+        towerHashMap = new HashMap<>(); //Might need to move
         game.addObserver(this);
         createMap();
         addToolbar();
         eventHandlers();
-
-
+        
     }
     @FXML private void pauseGame(){
         game.pauseGame();
@@ -132,11 +141,13 @@ public class MapController extends AnchorPane implements Observer {
                     if (occupied == false) {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
+
                         gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
-
-
-                         //TODO futher down
                         setTowerOnCell(index);
+
+                        //After the tower has been added, add to hashmap
+                        towerHashMap.put(game.getTowerInCell(x_placement, y_placement), image);
+
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
@@ -185,86 +196,69 @@ public class MapController extends AnchorPane implements Observer {
     private void addToolbar(){
         toolbarController = new ToolbarController(game,this);
         toolbarAnchorPane.getChildren().add(toolbarController);
-        toolbarCover.toBack();
-        toolbarAnchorPane.toBack();
+
     }
 
     public void createMap(){
         //add sidebar fxml
         SidebarController sidebarController = new SidebarController(game,this);
         sidebar.getChildren().add(sidebarController);
-
-        //add all cells to GUI
-        for (Cell p: map) {
-            Rectangle tile = new Rectangle(40,40);
-            tile.setX(p.getX());
-            tile.setY(p.getY());
-            tile.setFill(Color.web(p.getColor()));
-            tile.setStroke(Color.BLACK);
-            gameBoardGrid.add(tile, p.getX(), p.getY());
-        }
+        int startPos = game.getStartPos();
+        int endPos = game.getEndPos();
+        mapHandler.createMap(startPos,endPos, cave, base);
     }
-    public void createWave(){
-        game.createWave();
+
+    public void nextRound(){
+        waveRunning = true;
+        enemyHashMap = new HashMap<>();
+        game.nextRound();
         if(game.getEnemiesInWave()!=null) {
             enemies = game.getEnemiesInWave();
-            enemyImages = new ArrayList<>();
-            for (Enemy e : enemies) {
-                ImageView img = new ImageView(e.getImage());
-                enemyImages.add(img);
-                fixImage(img,e);
-                gameBoardAnchorPane.getChildren().add(img);
-
-
-            }
+            mapHandler.drawEnemies(enemies, enemyHashMap);
         }
         game.putEnemyInUpdateModel();
+        game.run();
     }
+
     public void update(){
-
-          if (game.getEnemiesInWave() != null && enemyImages != null) {
-              int count = 0;
-              for (ImageView img : enemyImages) {
-                  img.setX(enemies.get(count).getPositionX());
-                  img.setY(enemies.get(count).getPositionY());
-                  count++;
-
-              }
-          }
-
-
-    }
-    private void fixImage(ImageView img,Enemy e){
-        img.setX(e.getPositionX());
-        img.setY(e.getPositionY());
-        img.setFitHeight(25);
-        img.setFitWidth(25);
-        img.setPreserveRatio(true);
-        img.toFront();
-    }
-    private void delay(double seconds) {
-        try {
-            Thread.sleep((int) (1000*seconds));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (enemies!= null ) {
+            if(enemies.size() > 0){
+                for(Enemy e : enemies){
+                    if(e.isDead()){
+                        Platform.runLater(()->gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
+                        enemies.remove(e);
+                        game.enemyIsOut();
+                        System.out.println("is dead");
+                        break;
+                    }
+                    else{
+                        mapHandler.updateEnemy(enemyHashMap, e);
+                    }
+                }
+            }
+            else{
+                waveRunning = false;
+                System.out.println("Round over");
+                game.gameLoopThread.stop();
+            }
         }
     }
 
+    protected boolean isWaveRunning(){
+        return waveRunning;
+    }
 
     public void openSettings(){
-        settingsPane.toFront();
+        mapHandler.openSettings(settingsPane);
     }
-    @FXML
+
+    @FXML //TODO Not currently implementet
     public void openMap(){
-        mapAnchorPane.toFront();
+        mapHandler.closeSettings(mapAnchorPane);
     }
 
 
-
-    public void setTowerOnCell(int index/*Tower tower */){
-        //TODO Set Tower on the specified cell, should be done in Game, Send with index of array and the tower placed
-        //TODO Call game.updateArrayWithTower to update what you want. Index is the place in the array that represents the cell that has the tower placed on it.
-        //TODO REMEMBER to send some sort of identification for what sort of tower is placed e.g. String or int
+    public void setTowerOnCell(int index){
         game.updateArrayWithTower(index,this.towerFactory);
     }
 
@@ -273,25 +267,23 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void moveToolbarBack(){
-        toolbarAnchorPane.toBack();
-        toolbarCover.toFront();
+        mapHandler.moveToolbarBack(toolbarAnchorPane, toolbarCover);
     }
 
     public void moveToolbarFront(Tower t){
         toolbarController.recieveTower(t);
-        toolbarAnchorPane.toFront();
-        toolbarCover.toBack();
+        mapHandler.moveToolbarFront(toolbarAnchorPane, toolbarCover);
     }
 
     public void removeImageFromGrid(Tower t){
-        int x = t.getX();
-        int y = t.getY();
-
-        //TODO remove the image from
-        Node image = gameBoardGrid.getChildren().get(game.getArrayIndex(x,y));
+        ImageView image = towerHashMap.get(t);
+        mapHandler.removeImageFromGrid(image);
+        towerHashMap.remove(t);
 
 
     }
+
+
 
 }
 

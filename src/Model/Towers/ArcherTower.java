@@ -1,10 +1,7 @@
 package Model.Towers;
 
-import Model.Cell;
+import Model.Cell.Cell;
 
-import Model.GroundCell;
-
-import Model.Updatable;
 import Model.UpdateModel;
 import javafx.scene.image.Image;
 
@@ -27,7 +24,6 @@ public class ArcherTower implements Tower {
 
     @Override
     public void update() {
-        System.out.println("archertowerUpdated");
         baseTower.update();
     }
 

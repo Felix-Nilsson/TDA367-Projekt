@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.MapController;
 import Model.Difficulty;
 import Model.Game;
 import javafx.fxml.FXML;
@@ -10,7 +11,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.media.Media;
@@ -70,7 +70,7 @@ public class MenuController implements Initializable {
         MapController mapController = new MapController(game,game.getBoard());
         map.toFront();
         map.getChildren().add(mapController);
-        game.update();
+
 
 
     }

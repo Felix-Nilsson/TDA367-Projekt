@@ -1,6 +1,6 @@
 package Model.Towers;
 
-import Model.Cell;
+import Model.Cell.Cell;
 import Model.UpdateModel;
 
 public interface TowerFactory {

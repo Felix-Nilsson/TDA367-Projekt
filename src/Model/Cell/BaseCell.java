@@ -1,6 +1,6 @@
-package Model;
+package Model.Cell;
 
-public class BaseCell implements Cell{
+public class BaseCell implements Cell {
     private int x;
     private int y;
     private TerrainType terrain;

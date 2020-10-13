@@ -1,20 +1,15 @@
 package Model;
 
 
+import Model.Cell.Cell;
+import Model.Enemy.BaseEnemy;
+import Model.Enemy.Enemy;
 import Controller.Observer;
-import Model.Towers.MageTower;
-import Model.Towers.MageTowerFactory;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
-import Model.Cell;
-
 import java.util.Collections;
-
 import java.util.ArrayList;
-
 import java.util.List;
-import java.util.Timer;
-import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 public class Game implements Updatable {
@@ -27,52 +22,50 @@ public class Game implements Updatable {
     private final UpdateModel updateModel;
     private final Board b;
     private final WaveManager waveManager;
-    private boolean running = false;
+    private boolean waveRunning = false;
     public Thread gameLoopThread;
-
     private Updatable updatable;
     private final List<BaseEnemy.Direction> enemyPath;
-
-    int round = 1;
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
+    int round = 1;
+    private int gameSpeed;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         observable = new Observable();
         updateModel = new UpdateModel();
-
-
         b= new Board(mapNumber);
         this.enemyPath = b.getPath();
-        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos(b.getMap()));
-
+        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
-
         towers = new ArrayList<>();
 
-    }
 
-    public void loseHP(){
-        health--;
+
     }
 
     public List<Enemy> getEnemiesInWave() {
         return enemiesInWave;
     }
 
-    public void startGame(){
-        running = true;
-        run();
-    }
-    public void createWave(){
-        System.out.println("wave is created");
-        enemiesInWave  = waveManager.createWave(round);
-    }
+    public void nextRound(){
+        waveManager.createWave(round);
+        enemiesInWave = waveManager.getWave();
+        waveRunning = true;
+        round++;
 
+
+    }
     public interface Cancelable extends Runnable {
         public void cancel();
+    }
+    public int getStartPos(){
+        return b.getStartPos();
+    }
+    public int getEndPos(){
+        return b.getEndPos();
     }
 
     public Cancelable putEnemyInUpdateModel(){
@@ -92,7 +85,7 @@ public class Game implements Updatable {
                   }
                   updateModel.add(e);
                     int i = 0;
-                    while(i < 10){
+                    while(i < e.spawnTime()){
                         delay();
                         update();
                         i++;
@@ -116,17 +109,14 @@ public class Game implements Updatable {
     public void pauseGame(){
 
     }
-    public void nextRound(){
-        //waveManager.createWave(round);
-        round++;
-    }
+    public void run() {
 
-    private void run() {
         gameLoopThread = new Thread(() -> {
-            while (running) {
+            while (waveRunning) {
                 update();
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep( gameSpeed);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -137,7 +127,32 @@ public class Game implements Updatable {
         gameLoopThread.start();
 
     }
+    public void update(){
 
+        updateModel.update();
+        observable.update();
+        checksRadius();
+        //checkIfWaveOver();
+
+    }
+    /*
+    private void checkIfWaveOver(){
+        if(enemiesInWave!= null){
+            if(enemiesInWave.size() ==0){
+                update();
+                gameLoopThread.stop();
+            }
+        }
+    }
+
+     */
+
+    public Thread getGameLoopThread(){
+        return gameLoopThread;
+    }
+    public boolean isWaveRunning(){
+        return waveRunning;
+    }
 
 
 
@@ -176,26 +191,28 @@ public class Game implements Updatable {
 
     }
 
-    public void update(){
-        observable.update();
-        updateModel.update();
-        checksRadius();
 
+    public void enemyIsOut(){
+        health--;
     }
-    //sets values of health and money
+
+    //sets initial values of health and money
     private void setValues(){
         switch (difficulty) {
             case EASY:
                 this.health = 100;
                 this.money = 200;
+                this.gameSpeed = 50;
                 break;
             case MEDIUM:
                 this.health = 50;
                 this.money = 150;
+                this.gameSpeed = 80;
                 break;
             case HARD:
                 this.health = 10;
                 this.money = 80;
+                this.gameSpeed = 50;
                 break;
         }
     }
@@ -212,13 +229,16 @@ public class Game implements Updatable {
     public void setCellOccupied(int index){
         b.setCellOccupied(index);
     }
+    public void setCellUnoccupied(int index) { b.setCellUnoccupied(index); }
 
     public void updateArrayWithTower(int index, TowerFactory towerFactory){
         //TODO update cell to occupied
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
-        towers.add(t);
-        System.out.println(towers);
+        if(money>=t.getPrice()){
+            towers.add(t);
+        }
+        System.out.println("balance: " + money);
     }
 
     public Tower getTowerInCell(int x, int y){

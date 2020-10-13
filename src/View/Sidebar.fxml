@@ -54,17 +54,6 @@
          <font>
             <Font size="30.0" />
          </font></Label>
-      <Button fx:id="nextRound" layoutX="80.0" layoutY="647.0" mnemonicParsing="false" onMouseClicked="#nextRound" prefHeight="90.0" prefWidth="104.0" style="-fx-background-color: #4dd2ff; -fx-border-color: black; -fx-cursor: hand;" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-         <graphic>
-            <ImageView fx:id="playButton" fitHeight="72.0" fitWidth="111.0" onMouseClicked="#nextRound" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/play_button.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
       <ImageView fx:id="healthIcon" fitHeight="67.0" fitWidth="74.0" layoutX="10.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/health.png" />
@@ -76,5 +65,16 @@
          </image>
       </ImageView>
       <AnchorPane fx:id="toolbar" layoutX="-610.0" layoutY="616.0" prefHeight="152.0" prefWidth="600.0" />
+      <Button fx:id="play" layoutX="80.0" layoutY="647.0" mnemonicParsing="false" onMouseClicked="#nextRound" prefHeight="90.0" prefWidth="104.0" style="-fx-background-color: #4dd2ff; -fx-border-color: black; -fx-cursor: hand;" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <graphic>
+            <ImageView fx:id="playButtonImg" fitHeight="72.0" fitWidth="111.0" onMouseClicked="#nextRound" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/play_button.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </fx:root>

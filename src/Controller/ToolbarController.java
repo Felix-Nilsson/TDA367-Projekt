@@ -1,14 +1,11 @@
 package Controller;
 
 import Model.Game;
-import Model.Observable;
-import Model.Towers.ArcherTower;
 import Model.Towers.Targeting;
 import Model.Towers.Tower;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -17,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import javax.swing.*;
 import java.io.IOException;
 
 //TODO fix toolbarcover
@@ -142,10 +138,12 @@ public class ToolbarController extends AnchorPane implements Observer {
         selectedTower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
 
         //TODO remove pic from grid
-
-        //parentController.removeImageFromGrid(selectedTower);
-
+        
+        parentController.removeImageFromGrid(selectedTower);
         game.addMoney((int)(-selectedTower.getPrice()*0.5));
+        //game.setCellUnoccupied(); an index here
+
+
         //TODO update money label
     }
 

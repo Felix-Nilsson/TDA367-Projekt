@@ -1,17 +1,20 @@
-package Model;
+package Model.Enemy;
 
+import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
-
 import java.util.List;
 
-public class RedEnemy implements Enemy{
+public class BlueEnemy implements Enemy {
+
     private final BaseEnemy parent;
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private Image image;
 
-    public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
-        parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/red_Monster.png")));
+
+    public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
+        parent=new BaseEnemy(health, movementSpeed, magicResist, armor, path, startPos);
+        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/blue_Monster.png")));
+
     }
 
     @Override
@@ -53,6 +56,20 @@ public class RedEnemy implements Enemy{
         parent.move();
     }
 
+    @Override
+    public boolean isDead() {
+        return parent.isDead();
+    }
+
+    @Override
+    public int spawnTime() {
+        if(10 - getMovementSpeed() > 0){
+            return 10 - getMovementSpeed();
+        }
+        return -1;
+
+    }
+
     public BaseEnemy.Direction getDirection(){
         return parent.direction;
     }
@@ -68,4 +85,5 @@ public class RedEnemy implements Enemy{
     protected int getArmor(){
         return parent.getArmor();
     }
+
 }

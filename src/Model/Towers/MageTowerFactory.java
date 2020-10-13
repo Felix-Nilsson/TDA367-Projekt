@@ -1,8 +1,6 @@
 package Model.Towers;
 
-import Model.Cell;
-import Model.GroundCell;
-import Model.TerrainType;
+import Model.Cell.Cell;
 import Model.UpdateModel;
 
 public class MageTowerFactory implements TowerFactory{
