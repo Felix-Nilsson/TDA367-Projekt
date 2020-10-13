@@ -16,9 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-//TODO fix toolbarcover
-
-public class ToolbarController extends AnchorPane implements Observer {
+public class ToolbarController <T extends Tower> extends AnchorPane implements Observer {
     @FXML private AnchorPane toolbarPane;
 
     @FXML private Label towerLabel;
@@ -41,12 +39,11 @@ public class ToolbarController extends AnchorPane implements Observer {
     @FXML private RadioButton closestRadioButton;
 
     private ToggleGroup targetingToggleGroup;
-
+    private T tower;
     private final Game game;
     private final MapController parentController;
-    private Tower selectedTower; // temp should be more general
 
-    public ToolbarController(Game game, MapController parentController){
+    public ToolbarController(Game game, MapController parentController, T t){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Toolbar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -57,11 +54,12 @@ public class ToolbarController extends AnchorPane implements Observer {
         }
         this.game = game;
         this.parentController = parentController;
+        this.tower = t;
         game.addObserver(this);
         targetingToggleGroup = new ToggleGroup();
         init();
         eventHandlers();
-
+        updateToolbar();
     }
 
     @Override
@@ -91,22 +89,17 @@ public class ToolbarController extends AnchorPane implements Observer {
 
     }
 
-    public void recieveTower(Tower t){
-        selectedTower = t;
-        updateToolbar();
-    }
-
     private void updateToolbar(){
-        towerLabel.setText(selectedTower.toString());
-        tImageView.setImage(selectedTower.getImage());
-        sellButton.setText("Sell: "+ (int)(selectedTower.getPrice() * 0.5));
+        towerLabel.setText(tower.toString());
+        tImageView.setImage(tower.getImage());
+        sellButton.setText("Sell: "+ (int)(tower.getPrice() * 0.5));
 
-        magicLabel.setText("Magic: " + selectedTower.getMagicDmg());
-        attackLabel.setText("Physical: " + selectedTower.getPhysicalDmg());
-        attackSpeedLabel.setText("Speed: " + selectedTower.getAttackSpeed());
-        rangeLabel.setText("Range: " + selectedTower.getRange());
+        magicLabel.setText("Magic: " + tower.getMagicDmg());
+        attackLabel.setText("Physical: " + tower.getPhysicalDmg());
+        attackSpeedLabel.setText("Speed: " + tower.getAttackSpeed());
+        rangeLabel.setText("Range: " + tower.getRange());
 
-        switch(selectedTower.getTarget()){
+        switch(tower.getTarget()){
             case FIRST: firstRadioButton.setSelected(true); break;
             case STRONGEST: strongestRadioButton.setSelected(true); break;
             case CLOSEST: closestRadioButton.setSelected(true); break;
@@ -119,33 +112,33 @@ public class ToolbarController extends AnchorPane implements Observer {
         RadioButton r = (RadioButton)(targetingToggleGroup.getSelectedToggle());
 
         if(r.equals(firstRadioButton)){
-            selectedTower.setTarget(Targeting.FIRST);
+            tower.setTarget(Targeting.FIRST);
         }
         if(r.equals(strongestRadioButton)){
-            selectedTower.setTarget(Targeting.STRONGEST);
+            tower.setTarget(Targeting.STRONGEST);
         }
         if(r.equals(closestRadioButton)){
-            selectedTower.setTarget(Targeting.CLOSEST);
+            tower.setTarget(Targeting.CLOSEST);
         }
     }
 
     @FXML
     private void sellTowerClicked(){
 
-
         parentController.moveToolbarBack();
         //(might) TODO remove cell from tower
-        selectedTower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
+        tower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
 
         //TODO remove pic from grid
         
-        parentController.removeImageFromGrid(selectedTower);
+        parentController.removeImageFromGrid(tower);
 
-        game.addMoney((int)(selectedTower.getPrice()*0.5));
+        game.addMoney((int)(tower.getPrice()*0.5));
         parentController.updateMoney();
 
+        parentController.removeToolFromHash(tower);
 
-        game.removeTower(selectedTower);
+        game.removeTower(tower);
 
         //TODO update money label
 

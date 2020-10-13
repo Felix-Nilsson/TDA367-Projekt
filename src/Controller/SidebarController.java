@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -30,17 +31,15 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private ImageView playButtonImg;
 
     @FXML private AnchorPane sidebarAnchorPane;
+    @FXML private AnchorPane mageTowerAvailable;
     @FXML private Label health;
     @FXML private Button play;
     @FXML private GridPane gridPane;
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
 
-
     private final Game game;
     private final MapController parentController;
-
-
 
     public SidebarController(Game game,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
@@ -102,6 +101,7 @@ public class SidebarController extends AnchorPane implements Observer {
     public void update(){
         Platform.runLater(()->money.setText(""+ game.getMoney()));
         Platform.runLater(()->health.setText(""+ game.getHealth()));
+        updateAvailable();
         /*
         if(!parentController.isWaveRunning()){
 
@@ -129,8 +129,13 @@ public class SidebarController extends AnchorPane implements Observer {
         parentController.openSettings();
     }
 
-    @FXML public void toolbarButtonOnclick(){
-        toolbar.toFront();
+
+    @FXML public void updateAvailable(){
+        /*
+        if(game.getMoney() >= )
+        mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
+
+         */
     }
 
 
