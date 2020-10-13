@@ -14,4 +14,9 @@ public class ArcherTowerFactory implements TowerFactory{
         return archerTower;
     }
 
+    @Override
+    public int getPrice() {
+        return 100;
+    }
+
 }

@@ -54,6 +54,8 @@ public class MapController extends AnchorPane implements Observer {
 
     private final Game game;
     private ToolbarController toolbarController;
+    private SidebarController sidebarController;
+
     private final List<Cell> map;
     private BlueEnemy tmpEnemy;
     //private List<ImageView> enemyImages;
@@ -67,6 +69,8 @@ public class MapController extends AnchorPane implements Observer {
 
 
     private TowerFactory towerFactory;
+
+
     public MapController(Game game, List<Cell> map) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
@@ -138,7 +142,7 @@ public class MapController extends AnchorPane implements Observer {
                     //Check if the cell is available
                     int index = game.getArrayIndex(x_placement, y_placement);
                     boolean occupied = game.isCellOccupied(index);
-                    if (occupied == false) {
+                    if (!occupied && towerFactory.getPrice()<=game.getMoney()) {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
 
@@ -147,6 +151,10 @@ public class MapController extends AnchorPane implements Observer {
 
                         //After the tower has been added, add to hashmap
                         towerHashMap.put(game.getTowerInCell(x_placement, y_placement), image);
+
+                        //Change money
+                        game.addMoney(- towerFactory.getPrice());
+                        sidebarController.updateMoney();
 
                     } else {
                         //TODO Some sort of error or could just leave it empty
@@ -201,7 +209,7 @@ public class MapController extends AnchorPane implements Observer {
 
     public void createMap(){
         //add sidebar fxml
-        SidebarController sidebarController = new SidebarController(game,this);
+        sidebarController = new SidebarController(game,this);
         sidebar.getChildren().add(sidebarController);
         int startPos = game.getStartPos();
         int endPos = game.getEndPos();
@@ -281,8 +289,8 @@ public class MapController extends AnchorPane implements Observer {
         mapHandler.removeImageFromGrid(image);
         towerHashMap.remove(t);
 
-
     }
+
 
 
 

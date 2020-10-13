@@ -235,9 +235,9 @@ public class Game implements Updatable {
         //TODO update cell to occupied
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
-        if(money>=t.getPrice()){
-            towers.add(t);
-        }
+        towers.add(t);
+
+
         System.out.println("balance: " + money);
     }
 
@@ -280,8 +280,9 @@ public class Game implements Updatable {
         System.out.println("before: " + money);
         money += toAdd;
         System.out.println("after: " + money);
-
     }
+
+
 
 
 }

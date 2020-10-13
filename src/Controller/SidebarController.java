@@ -58,6 +58,7 @@ public class SidebarController extends AnchorPane implements Observer {
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
                 Dragboard db = startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 Image tempIMG = new Image("/img/mageTower.png", 40, 40, false, false, false);
@@ -82,6 +83,7 @@ public class SidebarController extends AnchorPane implements Observer {
 
                 ArcherTowerFactory af = new ArcherTowerFactory();
                 sendTowerToMap(af);
+
             }
         });
 
@@ -91,6 +93,10 @@ public class SidebarController extends AnchorPane implements Observer {
     }
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
         parentController.receiveTowerFactory(towerFactory);
+    }
+
+    public void updateMoney(){
+        money.setText(game.getMoney()+"");
     }
 
     public void update(){

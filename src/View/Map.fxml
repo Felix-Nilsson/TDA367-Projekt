@@ -137,7 +137,7 @@
          <children>
             <AnchorPane fx:id="sidebar" layoutX="1100.0" prefHeight="768.0" prefWidth="266.0" />
             <AnchorPane fx:id="toolbarAnchorPane" layoutX="287.0" layoutY="625.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: white;" />
-            <AnchorPane fx:id="toolbarCover" layoutX="138.0" layoutY="748.0" prefHeight="27.5" prefWidth="864.0" style="-fx-background-color: green;" />
+            <AnchorPane fx:id="toolbarCover" layoutX="138.0" layoutY="749.4" prefHeight="26.0" prefWidth="864.0" style="-fx-background-color: green;" />
             <AnchorPane fx:id="gameBoardAnchorPane" layoutX="20.0" layoutY="28.0" prefHeight="720.0" prefWidth="1040.0">
                <children>
                   <GridPane fx:id="gameBoardGrid" prefHeight="720.0" prefWidth="1040.0">
