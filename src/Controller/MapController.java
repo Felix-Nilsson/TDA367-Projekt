@@ -154,7 +154,7 @@ public class MapController extends AnchorPane implements Observer {
 
                         //Change money
                         game.addMoney(- towerFactory.getPrice());
-                        sidebarController.updateMoney();
+                        updateMoney();
 
                     } else {
                         //TODO Some sort of error or could just leave it empty
@@ -289,6 +289,10 @@ public class MapController extends AnchorPane implements Observer {
         mapHandler.removeImageFromGrid(image);
         towerHashMap.remove(t);
 
+    }
+
+    public void updateMoney(){
+        sidebarController.updateMoney();
     }
 
 

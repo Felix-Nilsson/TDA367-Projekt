@@ -141,12 +141,14 @@ public class ToolbarController extends AnchorPane implements Observer {
         
         parentController.removeImageFromGrid(selectedTower);
 
-        game.addMoney((int)(-selectedTower.getPrice()*0.5));
+        game.addMoney((int)(selectedTower.getPrice()*0.5));
+        parentController.updateMoney();
+
 
         game.removeTower(selectedTower);
 
         //TODO update money label
-        
+
     }
 
 }
