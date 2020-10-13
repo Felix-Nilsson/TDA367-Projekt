@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 public interface Tower extends Updatable {
     void update();
-    void checkRadius();
+    void checkRadius(double x, double y);
     void attack();
     Image getImage();
     int getPrice();

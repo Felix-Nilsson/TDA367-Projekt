@@ -165,6 +165,8 @@ public class Game implements Updatable {
             for (Tower t : towers){
                 //TODO if (t.cooldown == false)
                 for (Enemy e : enemiesInWave){
+                    t.checkRadius(e.getPositionX(),e.getPositionY());
+                    /*
                     //Om det inte finns:
                     double distX = e.getPositionX()-t.getPosX();
                     //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt.
@@ -178,6 +180,10 @@ public class Game implements Updatable {
                         t.attack();
                         // Om torn är hitscan blir det: e.tookDamage()
                     }
+
+                     */
+
+
                 }
             }
         }

@@ -1,4 +1,5 @@
 package Controller;
+
 import Model.*;
 import Model.Cell.Cell;
 import Model.Enemy.BlueEnemy;
@@ -7,6 +8,7 @@ import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
 import javafx.application.Platform;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +24,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 import java.io.IOException;
+
 import java.util.HashMap;
+
 import java.util.List;
 
 
