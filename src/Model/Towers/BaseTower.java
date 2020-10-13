@@ -20,6 +20,7 @@ public class BaseTower implements Tower {
     private double angle;
     private int posX;
     private int posY;
+    private Projectile currentProjectile;
 
 
     private UpdateModel updateModel;
@@ -81,15 +82,17 @@ public class BaseTower implements Tower {
             this.angle = Math.atan2(distY, distX);
             attack();
         }
-
-
     }
 
     @Override
     public void attack() {
         System.out.println("attaaaaack");
         System.out.println("angle: " +Math.toDegrees(angle));
-        new Projectile(posX,posY,angle);
+        currentProjectile = new Projectile(this.posX,this.posY,angle, updateModel);
+    }
+    @Override
+    public Projectile getProjectile(){
+        return currentProjectile;
     }
 
     @Override

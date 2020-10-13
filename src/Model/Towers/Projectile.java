@@ -2,7 +2,11 @@ package Model.Towers;
 
 import Model.Enemy.Enemy;
 import Model.Updatable;
+import Model.UpdateModel;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.util.HashMap;
 
 public class Projectile implements Updatable {
     private double vx;
@@ -14,26 +18,40 @@ public class Projectile implements Updatable {
     //angle is in radians
     private double angle;
     private int vMultiplier=10;
-    private final Image image;
+    private final ImageView imageView;
 
     //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
     //Om projectile inte är hitscan och tower har en Angle blir det lätt att implementera en riktig projektil (collision måste dock skapas då)
-    public Projectile(double towerPosX, double towerPosY, double angle){
+    public Projectile(double towerPosX, double towerPosY, double angle, UpdateModel updateModel){
 
         this.posX=towerPosX;
         this.posY=towerPosY;
         /*
         this.enemyPosX=enemyPosX;
         this.enemyPosY=enemyPosY;
-
          */
-
         //this.angle=tower.getAngle();
         this.angle=angle;
         calculateVelocity();
 
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
+        Image image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
+        imageView = new ImageView(image);
+        fixImage(imageView);
+        //gameBoardAnchorPane.getChildren().add(imageView);
 
+        updateModel.add(this);
+
+    }
+    public ImageView getImageView(){
+        return imageView;
+    }
+    private void fixImage(ImageView img){
+        img.setX(posX);
+        img.setY(posY);
+        img.setFitHeight(25);
+        img.setFitWidth(25);
+        img.setPreserveRatio(true);
+        img.toFront();
     }
     private void damageEnemy(Enemy enemy){
         //temporärt
@@ -84,6 +102,7 @@ public class Projectile implements Updatable {
     public void move(){
         posX=posX+vx;
         posY=posY+vy;
+        System.out.println("posX= " + posX + ", posY= "+posY);
     }
 
     private boolean isColission(){
@@ -94,6 +113,9 @@ public class Projectile implements Updatable {
     public void update(){
         move();
         disappearIfHit();
+        //image delarna ska flyttas
+        imageView.setX(posX);
+        imageView.setY(posY);
     }
     public double getVx(){
         return vx;

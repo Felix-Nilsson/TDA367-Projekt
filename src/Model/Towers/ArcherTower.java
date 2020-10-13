@@ -107,6 +107,11 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+    public Projectile getProjectile() {
+        return baseTower.getProjectile();
+    }
+
+    @Override
     public String toString(){
         return "Archer Tower";
 

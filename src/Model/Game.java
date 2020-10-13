@@ -5,6 +5,7 @@ import Model.Cell.Cell;
 import Model.Enemy.BaseEnemy;
 import Model.Enemy.Enemy;
 import Controller.Observer;
+import Model.Towers.Projectile;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import java.util.Collections;
@@ -28,6 +29,8 @@ public class Game implements Updatable {
     private final List<BaseEnemy.Direction> enemyPath;
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
+    private List <Projectile> projectileList;
+
     int round = 1;
     private int gameSpeed;
 
@@ -41,7 +44,7 @@ public class Game implements Updatable {
         waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
-
+        projectileList = new ArrayList<>();
 
 
     }
@@ -135,6 +138,7 @@ public class Game implements Updatable {
         //checkIfWaveOver();
 
     }
+
     /*
     private void checkIfWaveOver(){
         if(enemiesInWave!= null){
@@ -155,7 +159,6 @@ public class Game implements Updatable {
     }
 
 
-
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
     }
@@ -166,6 +169,7 @@ public class Game implements Updatable {
                 //TODO if (t.cooldown == false)
                 for (Enemy e : enemiesInWave){
                     t.checkRadius(e.getPositionX(),e.getPositionY());
+                    projectileList.add(t.getProjectile());
                     /*
                     //Om det inte finns:
                     double distX = e.getPositionX()-t.getPosX();
@@ -178,7 +182,7 @@ public class Game implements Updatable {
                         double angle = Math.atan2(distY,distX);
                         t.setAngle(angle);
                         t.attack();
-                        // Om torn är hitscan blir det: e.tookDamage()
+                        // Om towers är hitscan blir det: e.tookDamage()
                     }
 
                      */
@@ -187,8 +191,9 @@ public class Game implements Updatable {
                 }
             }
         }
-
-
+    }
+    public List<Projectile> getProjectileList(){
+        return this.projectileList;
     }
 
 

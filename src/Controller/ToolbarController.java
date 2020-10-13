@@ -111,7 +111,6 @@ public class ToolbarController extends AnchorPane implements Observer {
             case STRONGEST: strongestRadioButton.setSelected(true); break;
             case CLOSEST: closestRadioButton.setSelected(true); break;
         }
-
     }
 
     @FXML

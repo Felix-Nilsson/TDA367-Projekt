@@ -101,6 +101,11 @@ public class MageTower implements Tower {
     }
 
     @Override
+    public Projectile getProjectile() {
+        return baseTower.getProjectile();
+    }
+
+    @Override
     public String toString(){
         return "Mage Tower";
 
