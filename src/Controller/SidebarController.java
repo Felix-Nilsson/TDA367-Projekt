@@ -85,6 +85,9 @@ public class SidebarController extends AnchorPane implements Observer {
             }
         });
 
+        Platform.runLater(()->money.setText(""+ game.getMoney()));
+        Platform.runLater(()->health.setText(""+ game.getHealth()));
+
     }
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
         parentController.receiveTowerFactory(towerFactory);

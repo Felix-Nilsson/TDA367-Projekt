@@ -201,6 +201,7 @@ public class MapController extends AnchorPane implements Observer {
         int startPos = game.getStartPos();
         int endPos = game.getEndPos();
         mapHandler.createMap(startPos,endPos, cave, base);
+
     }
 
     public void nextRound(){
