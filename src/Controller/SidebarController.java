@@ -54,6 +54,7 @@ public class SidebarController extends AnchorPane implements Observer {
         this.game = game;
         this.parentController = parentController;
         game.addObserver(this);
+        setValues();
 
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -87,43 +88,62 @@ public class SidebarController extends AnchorPane implements Observer {
             }
         });
 
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
+
 
     }
+
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
         parentController.receiveTowerFactory(towerFactory);
     }
 
-    public void updateMoney(){
-        money.setText(game.getMoney()+"");
+    private void setValues(){
+
+        Platform.runLater(()->money.setText(""+ game.getMoney()));
+        Platform.runLater(()->health.setText(""+ game.getHealth()));
     }
 
     public void update(){
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
-        /*
-        if(!parentController.isWaveRunning()){
+        setValues();
 
+        if(!parentController.isWaveRunning()){
             roundOver();
-        }
-        */
-
-    }
-    @FXML private void nextRound(){
-        //pressed play
-        if(!parentController.isWaveRunning()){
-            parentController.nextRound();
-            playButtonImg.setImage(new Image("/img/pause.png"));
-        }
-        //pressed pause
-        else{
-            System.out.println("pressed pause");
         }
     }
     public void roundOver(){
         playButtonImg.setImage(new Image("/img/play_button.png"));
+        parentController.roundOver();
     }
+    @FXML private void nextRound(){
+        //pressed play
+        if(!parentController.isWaveRunning()){
+            //if there exists enemies on map
+            if(parentController.getEnemies() != null){
+                if(parentController.getEnemies().size() > 0 ){
+                    playButtonImg.setImage(new Image("/img/pause.png"));
+                    parentController.play();
+                }
+                else{
+                    parentController.nextRound();
+                    playButtonImg.setImage(new Image("/img/pause.png"));
+                }
+
+            }
+            //first round when enemy list is null
+            else{
+                parentController.nextRound();
+                playButtonImg.setImage(new Image("/img/pause.png"));
+            }
+
+
+        }
+        //pressed pause
+        else{
+            playButtonImg.setImage(new Image("/img/play_button.png"));
+            System.out.println("pressed pause");
+            parentController.pause();
+        }
+    }
+
 
     @FXML private void settings(){
         parentController.openSettings();

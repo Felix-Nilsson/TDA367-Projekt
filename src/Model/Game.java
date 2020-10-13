@@ -55,8 +55,9 @@ public class Game implements Updatable {
         enemiesInWave = waveManager.getWave();
         waveRunning = true;
         round++;
-
-
+    }
+    public int getRound(){
+        return round;
     }
     public interface Cancelable extends Runnable {
         public void cancel();
@@ -106,9 +107,6 @@ public class Game implements Updatable {
             e.printStackTrace();
         }
     }
-    public void pauseGame(){
-
-    }
     public void run() {
 
         gameLoopThread = new Thread(() -> {
@@ -130,28 +128,32 @@ public class Game implements Updatable {
     public void update(){
 
         updateModel.update();
-        observable.update();
         checksRadius();
-        //checkIfWaveOver();
+        observable.update();
 
     }
-    /*
-    private void checkIfWaveOver(){
-        if(enemiesInWave!= null){
-            if(enemiesInWave.size() ==0){
-                update();
-                gameLoopThread.stop();
-            }
-        }
+    public void pause(){
+        waveRunning = false;
+        gameLoopThread.stop();
+
+    }
+    public void play(){
+        waveRunning = true;
+        run();
     }
 
-     */
+
+
+
 
     public Thread getGameLoopThread(){
         return gameLoopThread;
     }
     public boolean isWaveRunning(){
         return waveRunning;
+    }
+    public void setWaveRunning(boolean wave){
+        waveRunning = wave;
     }
 
 

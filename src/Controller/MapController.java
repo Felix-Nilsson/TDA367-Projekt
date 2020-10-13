@@ -37,6 +37,7 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private Rectangle tile;
     @FXML private ImageView toolbarBackgroundImage;
     @FXML private Label money;
+    @FXML private Label waveNumber;
 
     @FXML private Button continueButton;
     @FXML private Button home;
@@ -57,19 +58,12 @@ public class MapController extends AnchorPane implements Observer {
     private SidebarController sidebarController;
 
     private final List<Cell> map;
-    private BlueEnemy tmpEnemy;
-    //private List<ImageView> enemyImages;
     private List<Enemy> enemies;
     private HashMap<Enemy,ImageView> enemyHashMap;
+
     private HashMap<Tower,ImageView> towerHashMap;
-    private boolean waveRunning;
-    private ImageView cave;
-    private ImageView base;
-    private MapHandler mapHandler;
-
-
+    private final MapHandler mapHandler;
     private TowerFactory towerFactory;
-
 
     public MapController(Game game, List<Cell> map) {
 
@@ -83,7 +77,6 @@ public class MapController extends AnchorPane implements Observer {
         }
         this.map = map;
         this.game = game;
-        this.waveRunning = game.isWaveRunning();
         this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, map);
         towerHashMap = new HashMap<>(); //Might need to move
         game.addObserver(this);
@@ -91,9 +84,6 @@ public class MapController extends AnchorPane implements Observer {
         addToolbar();
         eventHandlers();
         
-    }
-    @FXML private void pauseGame(){
-        game.pauseGame();
     }
     private void eventHandlers(){
         //EventHandlers
@@ -213,12 +203,13 @@ public class MapController extends AnchorPane implements Observer {
         sidebar.getChildren().add(sidebarController);
         int startPos = game.getStartPos();
         int endPos = game.getEndPos();
-        mapHandler.createMap(startPos,endPos, cave, base);
+        mapHandler.createMap(startPos,endPos);
 
     }
 
     public void nextRound(){
-        waveRunning = true;
+        waveNumber.setText("Wave: " + game.getRound());
+        game.setWaveRunning(true);
         enemyHashMap = new HashMap<>();
         game.nextRound();
         if(game.getEnemiesInWave()!=null) {
@@ -227,6 +218,9 @@ public class MapController extends AnchorPane implements Observer {
         }
         game.putEnemyInUpdateModel();
         game.run();
+    }
+    protected List<Enemy> getEnemies(){
+        return game.getEnemiesInWave();
     }
 
     public void update(){
@@ -246,15 +240,26 @@ public class MapController extends AnchorPane implements Observer {
                 }
             }
             else{
-                waveRunning = false;
+                game.setWaveRunning(false);
                 System.out.println("Round over");
-                game.gameLoopThread.stop();
+
             }
         }
     }
+    protected void roundOver(){
+        game.getGameLoopThread().stop();
+    }
+    protected void pause(){
+        game.setWaveRunning(false);
+        game.pause();
+    }
+    protected void play(){
+        game.setWaveRunning(true);
+        game.play();
+    }
 
     protected boolean isWaveRunning(){
-        return waveRunning;
+        return game.isWaveRunning();
     }
 
     public void openSettings(){
@@ -292,7 +297,7 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void updateMoney(){
-        sidebarController.updateMoney();
+        //sidebarController.updateMoney();
     }
 
 

@@ -13,14 +13,14 @@ public class EnemyFactoryRed implements EnemyFactory {
 
     @Override
     public RedEnemy createEnemyEasy() {
-        return new RedEnemy(100, 1,10,10,enemyPath,startPos);
+        return new RedEnemy(100, 4,10,10,enemyPath,startPos);
     }
     @Override
     public RedEnemy createEnemyMedium() {
-        return new RedEnemy(150,2,15,15,enemyPath,startPos);
+        return new RedEnemy(150,5,15,15,enemyPath,startPos);
     }
     @Override
     public RedEnemy createEnemyHard() {
-        return new RedEnemy(200,3,20,20,enemyPath,startPos);
+        return new RedEnemy(200,6,20,20,enemyPath,startPos);
     }
 }
