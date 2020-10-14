@@ -149,6 +149,7 @@ public class SidebarController extends AnchorPane implements Observer {
         parentController.openSettings();
     }
 
+
     @FXML public void toolbarButtonOnclick(){
         toolbar.toFront();
     }

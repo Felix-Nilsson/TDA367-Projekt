@@ -36,6 +36,7 @@ public class MenuController implements Initializable {
     @FXML private AnchorPane map;
     @FXML private AnchorPane options;
     @FXML private AnchorPane mapSelectionAnchorPane;
+    private ParentController parentController;
 
     private Difficulty difficulty;
     private int mapNumber;

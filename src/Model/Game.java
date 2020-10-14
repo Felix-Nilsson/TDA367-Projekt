@@ -145,7 +145,12 @@ public class Game implements Updatable {
     public boolean isWaveRunning(){
         return waveRunning;
     }
-
+    public void closeGame(){
+        System.exit(0);
+    }
+    public void mainMenu(){
+        System.out.println("Return to main menu");
+    }
 
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
