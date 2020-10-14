@@ -23,13 +23,15 @@ public class Game implements Updatable {
     private final Board b;
     private final WaveManager waveManager;
     private boolean waveRunning = false;
-    public Thread gameLoopThread;
+    private Thread gameLoopThread;
+    private Thread enemyCreatorThread;
     private Updatable updatable;
     private final List<BaseEnemy.Direction> enemyPath;
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
     int round = 1;
-    private int gameSpeed;
+    private int gameSpeed = 20;
+    private int enemyCounter;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -49,15 +51,17 @@ public class Game implements Updatable {
 
     public void nextRound(){
         waveManager.createWave(round);
-        enemiesInWave = waveManager.getWave();
+        List<Enemy> sizeCounter = waveManager.getWave();
+        enemyCounter = sizeCounter.size()-1;
+        enemiesInWave = new ArrayList<>();
         waveRunning = true;
         round++;
-
-
+        run();
     }
-    public interface Cancelable extends Runnable {
-        public void cancel();
+    public int getRound(){
+        return round;
     }
+
     public int getStartPos(){
         return b.getStartPos();
     }
@@ -65,92 +69,79 @@ public class Game implements Updatable {
         return b.getEndPos();
     }
 
-    public Cancelable putEnemyInUpdateModel(){
-        Cancelable enemyAdder = new Cancelable() {
-            private boolean canceled;
 
-            public void cancel() {
-                canceled = true;
-            }
-            @Override
-            public void run() {
-              List<Enemy> localEnemies = Collections.unmodifiableList(enemiesInWave);
-              System.out.println("Number of enemies: " + localEnemies.size());
-              for(Enemy e : localEnemies){
-                  if(canceled) {
-                      break;
-                  }
-                  updateModel.add(e);
-                    int i = 0;
-                    while(i < e.spawnTime()){
-                        delay();
-                        update();
-                        i++;
-                    }
-                }
-            }
-        };
-        Thread enemyThread = new Thread(enemyAdder);
-        enemyThread.start();
-        return enemyAdder;
-        // return enemyThread; // Fördel: kan avbrytas direkt via v.interrupt();
-    }
-
-    private void delay(){
-        try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    public void pauseGame(){
-
-    }
     public void run() {
+        startEnemyCreatorThread();
+        startGameLoopThread();
 
+    }
+    private void startEnemyCreatorThread(){
+        enemyCreatorThread = new Thread(()->{
+            while (waveRunning && enemyCounter>=0) {
+                Enemy enemy = waveManager.createEnemy(round);
+                updateModel.add(enemy);
+                enemiesInWave.add(enemy);
+                threadSleep(enemy.spawnTime() * 100);
+                enemyCounter--;
+            }
+        });
+        enemyCreatorThread.setDaemon(true);
+        enemyCreatorThread.start();
+    }
+    private void startGameLoopThread(){
         gameLoopThread = new Thread(() -> {
             while (waveRunning) {
                 update();
-                try {
-                    Thread.sleep( gameSpeed);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+                threadSleep(gameSpeed);
             }
         });
         gameLoopThread.setDaemon(true);
         gameLoopThread.start();
-
+    }
+    private void threadSleep(int time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            gameLoopThread.interrupt();
+            if(enemyCreatorThread.isAlive()){
+                enemyCreatorThread.interrupt();
+            }
+        }
     }
     public void update(){
 
         updateModel.update();
-        observable.update();
         checksRadius();
-        //checkIfWaveOver();
+        observable.update();
 
     }
-    /*
-    private void checkIfWaveOver(){
-        if(enemiesInWave!= null){
-            if(enemiesInWave.size() ==0){
-                update();
-                gameLoopThread.stop();
-            }
+    public void pause(){
+        if(enemyCreatorThread.isAlive()){
+            enemyCreatorThread.interrupt();
         }
+        gameLoopThread.interrupt();
+        waveRunning = false;
+
+    }
+    public void play(){
+        waveRunning = true;
+        if(enemyCreatorThread.isInterrupted()){
+            startEnemyCreatorThread();
+        }
+        startGameLoopThread();
+    }
+    public void endRound(){
+        waveRunning = false;
     }
 
-     */
 
-    public Thread getGameLoopThread(){
-        return gameLoopThread;
-    }
+
+
+
+
     public boolean isWaveRunning(){
         return waveRunning;
     }
-
 
 
     public boolean addObserver(final Observer observer){
@@ -198,18 +189,16 @@ public class Game implements Updatable {
         switch (difficulty) {
             case EASY:
                 this.health = 100;
-                this.money = 2000;
+                this.money = 2000; //TODO CHANGE BEFORE FINAL PUSH
                 this.gameSpeed = 50;
                 break;
             case MEDIUM:
                 this.health = 50;
                 this.money = 150;
-                this.gameSpeed = 80;
                 break;
             case HARD:
                 this.health = 10;
                 this.money = 80;
-                this.gameSpeed = 50;
                 break;
         }
     }

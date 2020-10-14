@@ -56,6 +56,7 @@ public class SidebarController extends AnchorPane implements Observer {
         this.game = game;
         this.parentController = parentController;
         game.addObserver(this);
+        setValues();
 
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -71,7 +72,7 @@ public class SidebarController extends AnchorPane implements Observer {
                 MageTowerFactory mf = new MageTowerFactory();
                 sendTowerToMap(mf);
                 updateAvailable();
-                updateMoney();
+                updatePlayerStats();
             }
         });
         archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -87,51 +88,80 @@ public class SidebarController extends AnchorPane implements Observer {
                 ArcherTowerFactory af = new ArcherTowerFactory();
                 sendTowerToMap(af);
                 updateAvailable();
-                updateMoney();
+                updatePlayerStats();
             }
         });
 
         Platform.runLater(()->money.setText(""+ game.getMoney()));
         Platform.runLater(()->health.setText(""+ game.getHealth()));
         updateAvailable();
-        updateMoney();
+        updatePlayerStats();
+
 
     }
+
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
         parentController.receiveTowerFactory(towerFactory);
     }
 
-    public void updateMoney(){
+    private void setValues(){
+
+        Platform.runLater(()->money.setText(""+ game.getMoney()));
+        Platform.runLater(()->health.setText(""+ game.getHealth()));
+    }
+
+    public void updatePlayerStats(){
+        health.setText(game.getHealth()+"");
         money.setText(game.getMoney()+"");
     }
 
     public void update(){
+
         Platform.runLater(()->money.setText(""+ game.getMoney()));
         Platform.runLater(()->health.setText(""+ game.getHealth()));
         updateAvailable();
-        updateMoney();
-        /*
-        if(!parentController.isWaveRunning()){
+        updatePlayerStats();
 
+        if(!parentController.isWaveRunning()){
             roundOver();
-        }
-        */
-
-    }
-    @FXML private void nextRound(){
-        //pressed play
-        if(!parentController.isWaveRunning()){
-            parentController.nextRound();
-            playButtonImg.setImage(new Image("/img/pause.png"));
-        }
-        //pressed pause
-        else{
-            System.out.println("pressed pause");
         }
     }
     public void roundOver(){
         playButtonImg.setImage(new Image("/img/play_button.png"));
+        parentController.roundOver();
     }
+    @FXML private void nextRound(){
+        //pressed play
+        if(!parentController.isWaveRunning()){
+            //if there exists enemies on map
+            if(parentController.getEnemies() != null){
+                if(parentController.getEnemies().size() > 0 ){
+                    playButtonImg.setImage(new Image("/img/pause.png"));
+                    parentController.play();
+                }
+                else{
+                    parentController.nextRound();
+                    playButtonImg.setImage(new Image("/img/pause.png"));
+                }
+
+            }
+            //first round when enemy list is null
+            else{
+                parentController.nextRound();
+                playButtonImg.setImage(new Image("/img/pause.png"));
+            }
+
+
+        }
+        //pressed pause
+        else{
+            playButtonImg.setImage(new Image("/img/play_button.png"));
+            System.out.println("pressed pause");
+            parentController.pause();
+
+        }
+    }
+
 
     @FXML private void settings(){
         parentController.openSettings();
