@@ -2,7 +2,9 @@ package View;
 
 import Model.Cell.Cell;
 import Model.Enemy.Enemy;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -21,15 +23,16 @@ public class MapHandler {
     private ImageView cave;
     private ImageView base;
 
+
     public MapHandler(AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, List<Cell> map){
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.gameBoardGrid = gameBoardGrid;
         this.map = map;
     }
 
-    public void createMap(int startPos, int endPos, ImageView caveView, ImageView baseView){
-        this.cave = caveView;
-        this.base = baseView;
+    public void createMap(int startPos, int endPos){
+
+
 
         //add startcave
         cave = new ImageView("/img/cave.png");
@@ -50,7 +53,7 @@ public class MapHandler {
         base.toFront();
         base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth());
         base.setY((endPos - 1) *40);
-        System.out.println(endPos);
+        System.out.println(gameBoardAnchorPane.getWidth());
         gameBoardAnchorPane.getChildren().add(base);
 
         //add all cells to GUI
@@ -64,19 +67,13 @@ public class MapHandler {
         }
     }
 
-    public void drawEnemies(List<Enemy> enemies, HashMap<Enemy, ImageView> enemyHashMap){
-        for (Enemy e : enemies) {
-            ImageView img = new ImageView(e.getImage());
-            fixImage(img,e);
-            enemyHashMap.put(e,img);
-            gameBoardAnchorPane.getChildren().add(img);
-        }
-
-        cave.toFront(); //sets the cave to be in front of the enemies
-        base.toFront();
-
-
-
+    public void drawEnemy(Enemy enemy, HashMap<Enemy, ImageView> enemyHashMap){
+        ImageView img = new ImageView(enemy.getImage());
+        fixImage(img,enemy);
+        enemyHashMap.put(enemy,img);
+        Platform.runLater(()->gameBoardAnchorPane.getChildren().add(img));
+        Platform.runLater(()->cave.toFront()); //sets the cave to be in front of the enemies
+        Platform.runLater(()->base.toFront());
     }
 
     private void fixImage(ImageView img,Enemy e){

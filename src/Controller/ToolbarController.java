@@ -91,7 +91,7 @@ public class ToolbarController extends AnchorPane implements Observer {
 
     }
 
-    public void recieveTower(Tower t){
+    public void receiveTower(Tower t){
         selectedTower = t;
         updateToolbar();
     }
@@ -131,7 +131,7 @@ public class ToolbarController extends AnchorPane implements Observer {
     @FXML
     private void sellTowerClicked(){
 
-        game.removeTower(selectedTower);
+
         parentController.moveToolbarBack();
         //(might) TODO remove cell from tower
         selectedTower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
@@ -139,11 +139,15 @@ public class ToolbarController extends AnchorPane implements Observer {
         //TODO remove pic from grid
         
         parentController.removeImageFromGrid(selectedTower);
-        game.addMoney((int)(-selectedTower.getPrice()*0.5));
-        //game.setCellUnoccupied(); an index here
 
+        game.addMoney((int)(selectedTower.getPrice()*0.5));
+        parentController.updateMoney();
+
+
+        game.removeTower(selectedTower);
 
         //TODO update money label
+
     }
 
 }
