@@ -18,16 +18,15 @@ public interface Tower extends Updatable {
     int getX();
     int getY();
 
-
     int getMagicDmg();
     int getPhysicalDmg();
     double getAttackSpeed();
 
     String getImage();
-
     Targeting getTarget();
     void setTarget(Targeting target);
-
     Cell getPosition();
+
+    void leftUpgrade();
 
 }

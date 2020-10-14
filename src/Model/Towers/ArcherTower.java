@@ -107,6 +107,11 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+    public void leftUpgrade() {
+
+    }
+
+    @Override
     public String toString(){
         return "Archer Tower";
 
