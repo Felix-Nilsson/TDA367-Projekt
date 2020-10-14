@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
+import javax.tools.Tool;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -54,15 +55,17 @@ public class MapController extends AnchorPane implements Observer {
 
     private boolean paused = false;
     private final Game game;
-    private ToolbarController toolbarController;
-    private SidebarController sidebarController;
 
+    private SidebarController sidebarController;
     private final List<Cell> map;
     private List<Enemy> enemies;
     private HashMap<Enemy,ImageView> enemyHashMap;
-
     private HashMap<Tower,ImageView> towerHashMap;
-    private final MapHandler mapHandler;
+    private HashMap<Tower, ToolbarController> toolbarTowerHashMap;
+    private boolean waveRunning;
+    private ImageView cave;
+    private ImageView base;
+    private MapHandler mapHandler;
     private TowerFactory towerFactory;
 
     public MapController(Game game, List<Cell> map,AnchorPane home) {
@@ -80,9 +83,10 @@ public class MapController extends AnchorPane implements Observer {
         this.game = game;
         this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, toplayerGrid,map);
         towerHashMap = new HashMap<>(); //Might need to move
+        toolbarTowerHashMap = new HashMap<>();//Same
         game.addObserver(this);
-        createMap();
-        addToolbar();
+        createSidebar();
+
         eventHandlers();
         
     }
@@ -100,21 +104,6 @@ public class MapController extends AnchorPane implements Observer {
             }
         });
 
-        //When entering a node in GridPane
-        gameBoardGrid.setOnDragEntered(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                //TODO add a image to the cell that is hovered over
-            }
-        });
-
-        //When exiting a node in GridPane
-        gameBoardGrid.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                //TODO Remove the image from the cell when the hover leaves
-            }
-        });
 
         //Upon releasing the mouse over a specific node
         gameBoardGrid.setOnDragDropped(new EventHandler<DragEvent>() {
@@ -145,7 +134,11 @@ public class MapController extends AnchorPane implements Observer {
 
                         //Change money
                         game.addMoney(- towerFactory.getPrice());
-                        updateMoney();
+                        updateSidebar();
+
+                        //Creates a new toolbar with the tower
+                        createToolbar(game.getTowerInCell(x_placement, y_placement));
+
 
                     } else {
                         //TODO Some sort of error or could just leave it empty
@@ -170,7 +163,8 @@ public class MapController extends AnchorPane implements Observer {
 
                 Tower t = game.getTowerInCell(x_placement, y_placement);
                 if(t != null){
-                    moveToolbarFront(t);
+                    moveToolbarFront();
+                    setToolCont(t);
                 }
             }
         });
@@ -195,20 +189,29 @@ public class MapController extends AnchorPane implements Observer {
         return y;
     }
 
-    private void addToolbar(){
-        toolbarController = new ToolbarController(game,this);
-        toolbarAnchorPane.getChildren().add(toolbarController);
-
+    private <T extends Tower> void createToolbar(T t){
+        ToolbarController<T> toolbarController = new ToolbarController(game, this, t);
+        toolbarTowerHashMap.put(t, toolbarController);
     }
 
-    public void createMap(){
+    private void setToolCont(Tower t){
+        toolbarAnchorPane.getChildren().clear();
+        toolbarAnchorPane.getChildren().add(toolbarTowerHashMap.get(t));
+    }
+
+    public void removeToolFromHash(Tower t){
+        toolbarTowerHashMap.remove(t);
+    }
+
+    public void createSidebar(){
         //add sidebar fxml
         sidebarController = new SidebarController(game,this);
         sidebar.getChildren().add(sidebarController);
         int startPos = game.getStartPos();
         int endPos = game.getEndPos();
-        mapHandler.createMap(startPos,endPos);
 
+        //Creating map
+        mapHandler.createMap(startPos,endPos, cave, base);
     }
     @FXML private void closeGame(){
         System.exit(0);}
@@ -304,8 +307,7 @@ public class MapController extends AnchorPane implements Observer {
         mapHandler.moveToolbarBack(toolbarAnchorPane, toolbarCover);
     }
 
-    public void moveToolbarFront(Tower t){
-        toolbarController.receiveTower(t);
+    public void moveToolbarFront(){
         mapHandler.moveToolbarFront(toolbarAnchorPane, toolbarCover);
     }
 
@@ -316,9 +318,13 @@ public class MapController extends AnchorPane implements Observer {
 
     }
 
-    public void updateMoney(){
-        //sidebarController.updateMoney();
+
+    public void updateSidebar(){
+        sidebarController.updatePlayerStats();
+        sidebarController.updateAvailable();
     }
+
+
 
 
 

@@ -43,9 +43,6 @@ public class Game implements Updatable {
         waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
-
-
-
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -192,7 +189,8 @@ public class Game implements Updatable {
         switch (difficulty) {
             case EASY:
                 this.health = 100;
-                this.money = 2000; //set to 200 before deployment
+                this.money = 2000; //TODO CHANGE BEFORE FINAL PUSH
+                this.gameSpeed = 50;
                 break;
             case MEDIUM:
                 this.health = 50;

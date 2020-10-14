@@ -32,9 +32,10 @@ public class MapHandler {
         this.map = map;
     }
 
-    public void createMap(int startPos, int endPos){
 
-
+    public void createMap(int startPos, int endPos, ImageView caveView, ImageView baseView){
+        this.cave = caveView;
+        this.base = baseView;
 
         //add startcave
         cave = new ImageView("/img/cave.png");
