@@ -2,8 +2,11 @@ package Model.Towers;
 
 import Model.Cell.Cell;
 
+import Model.Enemy.Enemy;
 import Model.UpdateModel;
 import javafx.scene.image.Image;
+
+import java.util.List;
 
 public class MageTower implements Tower {
     private BaseTower baseTower ;
@@ -22,8 +25,8 @@ public class MageTower implements Tower {
     }
 
     @Override
-    public void checkRadius(double x, double y) {
-        baseTower.checkRadius(x,y);
+    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+        baseTower.attackIfEnemyInRange(enemyList);
     }
 
     @Override

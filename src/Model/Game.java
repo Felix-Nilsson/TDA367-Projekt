@@ -8,12 +8,11 @@ import Controller.Observer;
 import Model.Towers.Projectile;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
-import java.util.Collections;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class Game implements Updatable {
+public class Game extends Observable1 implements Updatable {
 
     private final Difficulty difficulty;
     private final int mapNumber;
@@ -21,6 +20,8 @@ public class Game implements Updatable {
     private int money;
     private final Observable observable;
     private final UpdateModel updateModel;
+    private final UpdateModel viewUpdate;
+    private final Observable1 observable1;
     private final Board b;
     private final WaveManager waveManager;
     private boolean waveRunning = false;
@@ -41,14 +42,14 @@ public class Game implements Updatable {
         this.mapNumber = mapNumber;
         observable = new Observable();
         updateModel = new UpdateModel();
+        viewUpdate = new UpdateModel();
+        observable1 = new Observable1();
         b= new Board(mapNumber);
         this.enemyPath = b.getPath();
         waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
         projectileList = new ArrayList<>();
-
-
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -114,6 +115,8 @@ public class Game implements Updatable {
             }
         }
     }
+
+
     public void update(){
 
         updateModel.update();
@@ -155,33 +158,58 @@ public class Game implements Updatable {
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
     }
+    public void addUpdatable(final Updatable updatable){
+        updateModel.add(updatable);
+    }
+
+    @Override
+    public void addObserver1(Observer1 observer) {
+        super.addObserver1(observer);
+    }
+
+    @Override
+    public void notifyObservers1(Projectile p) {
+        super.notifyObservers1(p);
+    }
 
     private void checksRadius(){
         if (towers.size()>0 && enemiesInWave.size()>0){
             for (Tower t : towers){
                 //TODO if (t.cooldown == false)
-                for (Enemy e : enemiesInWave){
-                    t.checkRadius(e.getPositionX(),e.getPositionY());
-                    projectileList.add(t.getProjectile());
-                    /*
-                    //Om det inte finns:
-                    double distX = e.getPositionX()-t.getPosX();
-                    //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt.
-                    //i Projectile skapa finns det minus framför vy för att återställa detta igen
-                    double distY = -(e.getPositionY()-t.getPosY());
-                    double distHyp = Math.sqrt(distX*distX + distY*distY);
-                    //System.out.println(distHyp);
-                    if (distHyp<t.getRange()){
-                        double angle = Math.atan2(distY,distX);
-                        t.setAngle(angle);
-                        t.attack();
+                t.attackIfEnemyInRange(enemiesInWave);
+                //TODO p har inte alltid en projectile
+                Projectile p = t.getProjectile();
+                if (p!=null){
+                    System.out.println("p är inte null");
+                    projectileList.add(p);
+                    System.out.println(projectileList.size());
+                    this.notifyObservers1(p);
+
+                }
+                /*
+                 Projectile p = t.getProjectile();
+
+                projectileList.add(p);
+                viewUpdate.update();
+                observable1.notifyObservers1(p);
+                */
+                /*
+                //Om det inte finns:
+                double distX = e.getPositionX()-t.getPosX();
+                //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt.
+                //i Projectile skapa finns det minus framför vy för att återställa detta igen
+                double distY = -(e.getPositionY()-t.getPosY());
+                double distHyp = Math.sqrt(distX*distX + distY*distY);
+                //System.out.println(distHyp);
+                if (distHyp<t.getRange()){
+                    double angle = Math.atan2(distY,distX);
+                    t.setAngle(angle);
+                    t.attack();
                         // Om towers är hitscan blir det: e.tookDamage()
-                    }
+                }
 
                      */
 
-
-                }
             }
         }
     }

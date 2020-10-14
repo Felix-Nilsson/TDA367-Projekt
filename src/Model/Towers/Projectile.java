@@ -23,7 +23,7 @@ public class Projectile implements Updatable {
     //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
     //Om projectile inte är hitscan och tower har en Angle blir det lätt att implementera en riktig projektil (collision måste dock skapas då)
     public Projectile(double towerPosX, double towerPosY, double angle, UpdateModel updateModel){
-
+        System.out.println("Projectile was created");
         this.posX=towerPosX;
         this.posY=towerPosY;
         /*

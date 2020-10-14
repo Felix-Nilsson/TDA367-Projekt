@@ -6,6 +6,7 @@ import Model.Enemy.Enemy;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
+import View.ViewManager1;
 import javafx.application.Platform;
 
 import javafx.event.EventHandler;
@@ -81,7 +82,7 @@ public class MapController extends AnchorPane implements Observer {
         createMap();
         addToolbar();
         eventHandlers();
-        
+        new ViewManager1(this.game);
     }
     private void eventHandlers(){
         //EventHandlers
@@ -202,7 +203,6 @@ public class MapController extends AnchorPane implements Observer {
         int startPos = game.getStartPos();
         int endPos = game.getEndPos();
         mapHandler.createMap(startPos,endPos);
-
     }
 
     public void nextRound(){

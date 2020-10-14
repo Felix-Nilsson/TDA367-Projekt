@@ -1,12 +1,15 @@
 package Model.Towers;
 
 import Model.Cell.Cell;
+import Model.Enemy.Enemy;
 import Model.Updatable;
 import javafx.scene.image.Image;
 
+import java.util.List;
+
 public interface Tower extends Updatable {
     void update();
-    void checkRadius(double x, double y);
+    void attackIfEnemyInRange(List<Enemy> enemyList);
     void attack();
     Image getImage();
     int getPrice();
