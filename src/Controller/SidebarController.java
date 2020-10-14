@@ -102,8 +102,14 @@ public class SidebarController extends AnchorPane implements Observer {
         Platform.runLater(()->health.setText(""+ game.getHealth()));
     }
 
+    public void updatePlayerStats(){
+        health.setText(game.getHealth()+"");
+        money.setText(game.getMoney()+"");
+    }
+
     public void update(){
         setValues();
+
         if(!parentController.isWaveRunning()){
             roundOver();
         }

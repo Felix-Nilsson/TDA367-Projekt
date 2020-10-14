@@ -132,22 +132,17 @@ public class ToolbarController extends AnchorPane implements Observer {
     @FXML
     private void sellTowerClicked(){
 
-
         parentController.moveToolbarBack();
-        //(might) TODO remove cell from tower
-        selectedTower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
 
-        //TODO remove pic from grid
+        selectedTower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
         
         parentController.removeImageFromGrid(selectedTower);
 
         game.addMoney((int)(selectedTower.getPrice()*0.5));
-        parentController.updateMoney();
+        parentController.updatePlayerStats();
 
 
         game.removeTower(selectedTower);
-
-        //TODO update money label
 
     }
 
