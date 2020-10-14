@@ -7,13 +7,11 @@ import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
 import javafx.application.Platform;
-
+import javafx.scene.control.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -42,6 +40,8 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private Button exit;
     @FXML private Button restart;
 
+    @FXML private RadioButton gridLayoutRadioButton;
+
     @FXML private AnchorPane sidebar;
     @FXML private AnchorPane settings;
     @FXML private AnchorPane settingsPane;
@@ -49,8 +49,10 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane toolbarAnchorPane;
     @FXML private AnchorPane toolbarCover;
     @FXML private AnchorPane gameBoardAnchorPane;
+    @FXML private GridPane toplayerGrid;
+    @FXML private AnchorPane mainMenu;
 
-
+    private boolean paused = false;
     private final Game game;
     private ToolbarController toolbarController;
     private SidebarController sidebarController;
@@ -63,7 +65,7 @@ public class MapController extends AnchorPane implements Observer {
     private final MapHandler mapHandler;
     private TowerFactory towerFactory;
 
-    public MapController(Game game, List<Cell> map) {
+    public MapController(Game game, List<Cell> map,AnchorPane home) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
@@ -73,9 +75,10 @@ public class MapController extends AnchorPane implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.mainMenu = home;
         this.map = map;
         this.game = game;
-        this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, map);
+        this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, toplayerGrid,map);
         towerHashMap = new HashMap<>(); //Might need to move
         game.addObserver(this);
         createMap();
@@ -177,6 +180,9 @@ public class MapController extends AnchorPane implements Observer {
 
     }
 
+    @FXML private void changeGridVisibilty(){
+        mapHandler.changeToplayerGridVisible(gridLayoutRadioButton.isSelected());
+    }
     private int getGridX(Node node){
         Integer cIndex = GridPane.getColumnIndex(node);
         int x = cIndex == null ? 0 :cIndex;
@@ -203,6 +209,11 @@ public class MapController extends AnchorPane implements Observer {
         int endPos = game.getEndPos();
         mapHandler.createMap(startPos,endPos);
 
+    }
+    @FXML private void closeGame(){
+        System.exit(0);}
+    @FXML private void mainMenu(){
+        mainMenu.toFront();
     }
 
     public void nextRound(){
@@ -254,9 +265,11 @@ public class MapController extends AnchorPane implements Observer {
     }
     protected void pause(){
         game.pause();
+        paused = true;
     }
     protected void play(){
         game.play();
+        paused = false;
     }
 
     protected boolean isWaveRunning(){
@@ -264,11 +277,17 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void openSettings(){
+        if(isWaveRunning()){
+            pause();
+        }
         mapHandler.openSettings(settingsPane);
     }
 
-    @FXML //TODO Not currently implementet
-    public void openMap(){
+
+    @FXML private void openMap(){
+        if (paused){
+            play();
+        }
         mapHandler.closeSettings(mapAnchorPane);
     }
 
