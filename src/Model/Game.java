@@ -192,7 +192,7 @@ public class Game implements Updatable {
         switch (difficulty) {
             case EASY:
                 this.health = 100;
-                this.money = 200;
+                this.money = 2000; //set to 200 before deployment
                 break;
             case MEDIUM:
                 this.health = 50;
