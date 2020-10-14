@@ -32,6 +32,7 @@ public class SidebarController extends AnchorPane implements Observer {
 
     @FXML private AnchorPane sidebarAnchorPane;
     @FXML private AnchorPane mageTowerAvailable;
+    @FXML private AnchorPane archerTowerAvailable;
     @FXML private Label health;
     @FXML private Button play;
     @FXML private GridPane gridPane;
@@ -40,6 +41,8 @@ public class SidebarController extends AnchorPane implements Observer {
 
     private final Game game;
     private final MapController parentController;
+    private MageTowerFactory mF;
+    private ArcherTowerFactory aF;
 
     public SidebarController(Game game,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
@@ -67,7 +70,7 @@ public class SidebarController extends AnchorPane implements Observer {
 
                 MageTowerFactory mf = new MageTowerFactory();
                 sendTowerToMap(mf);
-
+                updateAvailable();
             }
         });
         archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -82,12 +85,14 @@ public class SidebarController extends AnchorPane implements Observer {
 
                 ArcherTowerFactory af = new ArcherTowerFactory();
                 sendTowerToMap(af);
-
+                updateAvailable();
             }
         });
 
         Platform.runLater(()->money.setText(""+ game.getMoney()));
         Platform.runLater(()->health.setText(""+ game.getHealth()));
+        updateAvailable();
+
 
     }
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
@@ -131,11 +136,24 @@ public class SidebarController extends AnchorPane implements Observer {
 
 
     @FXML public void updateAvailable(){
-        /*
-        if(game.getMoney() >= )
-        mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
 
-         */
+        //TODO View beteende
+
+        if(game.getMoney() >= 150){ //Price of mageTower might need to get
+            mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
+        }
+        else {
+            mageTowerAvailable.setStyle("-fx-background-color:red");
+        }
+        if(game.getMoney() >= 100){ //Price of archerTower might need to get
+            archerTowerAvailable.setStyle("-fx-background-color:Lightgreen");
+        }
+        else {
+            archerTowerAvailable.setStyle("-fx-background-color:red");
+        }
+
+
+
     }
 
 

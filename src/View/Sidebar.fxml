@@ -24,15 +24,16 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="archerTower" fitHeight="112.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../img/archerTower.png" />
-               </image>
-            </ImageView>
             <AnchorPane fx:id="mageTowerAvailable" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" />
+            <AnchorPane fx:id="archerTowerAvailable" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" GridPane.columnIndex="1" />
             <ImageView fx:id="mageTower" fitHeight="112.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/mageTower.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="archerTower" fitHeight="112.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../img/archerTower.png" />
                </image>
             </ImageView>
          </children>

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -91,7 +92,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
 
     private void updateToolbar(){
         towerLabel.setText(tower.toString());
-        tImageView.setImage(tower.getImage());
+        tImageView.setImage(new Image(tower.getImage()));
         sellButton.setText("Sell: "+ (int)(tower.getPrice() * 0.5));
 
         magicLabel.setText("Magic: " + tower.getMagicDmg());
@@ -124,23 +125,23 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
 
     @FXML
     private void sellTowerClicked(){
-
+        //Move toolbarback
         parentController.moveToolbarBack();
-        //(might) TODO remove cell from tower
+
+        //Set tower cell to available
         tower.getPosition().setOccupiedFalse(); // should be replaced to avoid method chaining
 
-        //TODO remove pic from grid
-        
+        //Removes image of tower from grid
         parentController.removeImageFromGrid(tower);
 
+        //Changes the money amount when selling
         game.addMoney((int)(tower.getPrice()*0.5));
         parentController.updateMoney();
 
+        //Removes the tower and controller from the hashmap
         parentController.removeToolFromHash(tower);
-
         game.removeTower(tower);
 
-        //TODO update money label
 
     }
 
