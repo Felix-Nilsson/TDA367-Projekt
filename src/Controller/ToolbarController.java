@@ -136,7 +136,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
 
         //Changes the money amount when selling
         game.addMoney((int)(tower.getPrice()*0.5));
-        parentController.updateMoney();
+        parentController.updateSidebar(); //MIght cause cycle dependency
 
         //Removes the tower and controller from the hashmap
         parentController.removeToolFromHash(tower);

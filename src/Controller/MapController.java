@@ -57,7 +57,6 @@ public class MapController extends AnchorPane implements Observer {
 
     private SidebarController sidebarController;
     private final List<Cell> map;
-    private BlueEnemy tmpEnemy;
     private List<Enemy> enemies;
     private HashMap<Enemy,ImageView> enemyHashMap;
     private HashMap<Tower,ImageView> towerHashMap;
@@ -88,7 +87,7 @@ public class MapController extends AnchorPane implements Observer {
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
         game.addObserver(this);
-        createMap();
+        createSidebar();
 
         eventHandlers();
         
@@ -140,8 +139,9 @@ public class MapController extends AnchorPane implements Observer {
 
                         //Change money
                         game.addMoney(- towerFactory.getPrice());
-                        updateMoney();
+                        updateSidebar();
 
+                        //Creates a new toolbar with the tower
                         createToolbar(game.getTowerInCell(x_placement, y_placement));
 
                     } else {
@@ -204,13 +204,13 @@ public class MapController extends AnchorPane implements Observer {
         toolbarTowerHashMap.remove(t);
     }
 
-    public void createMap(){
+    public void createSidebar(){
         //add sidebar fxml
         sidebarController = new SidebarController(game,this);
         sidebar.getChildren().add(sidebarController);
         int startPos = game.getStartPos();
         int endPos = game.getEndPos();
-        mapHandler.createMap(startPos,endPos, cave, base);
+        mapHandler.createSidebar(startPos,endPos, cave, base);
 
     }
 
@@ -287,10 +287,10 @@ public class MapController extends AnchorPane implements Observer {
 
     }
 
-    public void updateMoney(){
-
+    public void updateSidebar(){
         sidebarController.updateMoney();
-    }
+        sidebarController.updateAvailable();    }
+
 
 
 

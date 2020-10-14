@@ -71,6 +71,7 @@ public class SidebarController extends AnchorPane implements Observer {
                 MageTowerFactory mf = new MageTowerFactory();
                 sendTowerToMap(mf);
                 updateAvailable();
+                updateMoney();
             }
         });
         archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -86,13 +87,14 @@ public class SidebarController extends AnchorPane implements Observer {
                 ArcherTowerFactory af = new ArcherTowerFactory();
                 sendTowerToMap(af);
                 updateAvailable();
+                updateMoney();
             }
         });
 
         Platform.runLater(()->money.setText(""+ game.getMoney()));
         Platform.runLater(()->health.setText(""+ game.getHealth()));
         updateAvailable();
-
+        updateMoney();
 
     }
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
@@ -107,6 +109,7 @@ public class SidebarController extends AnchorPane implements Observer {
         Platform.runLater(()->money.setText(""+ game.getMoney()));
         Platform.runLater(()->health.setText(""+ game.getHealth()));
         updateAvailable();
+        updateMoney();
         /*
         if(!parentController.isWaveRunning()){
 
