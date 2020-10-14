@@ -104,7 +104,6 @@ public class SidebarController extends AnchorPane implements Observer {
 
     public void update(){
         setValues();
-
         if(!parentController.isWaveRunning()){
             roundOver();
         }
@@ -141,6 +140,7 @@ public class SidebarController extends AnchorPane implements Observer {
             playButtonImg.setImage(new Image("/img/play_button.png"));
             System.out.println("pressed pause");
             parentController.pause();
+
         }
     }
 

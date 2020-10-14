@@ -91,7 +91,7 @@ public class ToolbarController extends AnchorPane implements Observer {
 
     }
 
-    public void recieveTower(Tower t){
+    public void receiveTower(Tower t){
         selectedTower = t;
         updateToolbar();
     }

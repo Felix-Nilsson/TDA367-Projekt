@@ -2,7 +2,6 @@ package Controller;
 
 import Model.*;
 import Model.Cell.Cell;
-import Model.Enemy.BlueEnemy;
 import Model.Enemy.Enemy;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
@@ -22,7 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
@@ -209,52 +207,55 @@ public class MapController extends AnchorPane implements Observer {
 
     public void nextRound(){
         waveNumber.setText("Wave: " + game.getRound());
-        game.setWaveRunning(true);
         enemyHashMap = new HashMap<>();
         game.nextRound();
-        if(game.getEnemiesInWave()!=null) {
-            enemies = game.getEnemiesInWave();
-            mapHandler.drawEnemies(enemies, enemyHashMap);
-        }
-        game.putEnemyInUpdateModel();
-        game.run();
+
     }
     protected List<Enemy> getEnemies(){
         return game.getEnemiesInWave();
     }
 
     public void update(){
-        if (enemies!= null ) {
-            if(enemies.size() > 0){
-                for(Enemy e : enemies){
+
+
+        if (game.getEnemiesInWave()!= null ) {
+            if(game.getEnemiesInWave().size() > 0){
+                for(Enemy e : game.getEnemiesInWave()){
                     if(e.isDead()){
                         Platform.runLater(()->gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
-                        enemies.remove(e);
+                        game.getEnemiesInWave().remove(e);
                         game.enemyIsOut();
                         System.out.println("is dead");
                         break;
                     }
                     else{
-                        mapHandler.updateEnemy(enemyHashMap, e);
+                        if (!enemyHashMap.containsKey(e)) {
+                            mapHandler.drawEnemy(e, enemyHashMap);
+                        }
+                        mapHandler.updateEnemy(enemyHashMap,e);
+
                     }
                 }
             }
+            /*
             else{
-                game.setWaveRunning(false);
+                game.endRound();
                 System.out.println("Round over");
 
             }
+
+             */
+
+
         }
     }
     protected void roundOver(){
-        game.getGameLoopThread().stop();
+        game.pause();
     }
     protected void pause(){
-        game.setWaveRunning(false);
         game.pause();
     }
     protected void play(){
-        game.setWaveRunning(true);
         game.play();
     }
 
@@ -285,7 +286,7 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void moveToolbarFront(Tower t){
-        toolbarController.recieveTower(t);
+        toolbarController.receiveTower(t);
         mapHandler.moveToolbarFront(toolbarAnchorPane, toolbarCover);
     }
 

@@ -13,7 +13,7 @@ public class EnemyFactoryBlue implements EnemyFactory {
 
     @Override
     public BlueEnemy createEnemyEasy() {
-        return new BlueEnemy(100, 8,10,10,enemyPath,startPos);
+        return new BlueEnemy(100, 1,10,10,enemyPath,startPos);
 
     }
     @Override
