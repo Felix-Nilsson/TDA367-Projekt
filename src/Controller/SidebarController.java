@@ -125,7 +125,6 @@ public class SidebarController extends AnchorPane implements Observer {
     }
     public void roundOver(){
         playButtonImg.setImage(new Image("/img/play_button.png"));
-        parentController.roundOver();
     }
     @FXML private void nextRound(){
         //pressed play

@@ -98,7 +98,7 @@ public class Game implements Updatable {
                 if(enemiesInWave.size() > 0) {
                     update();
                 }
-                else if(!enemyCreatorThread.isAlive()){ //waits until all enemies have been created
+                else if(enemiesInWave.size() == 0 &&!enemyCreatorThread.isAlive()){ //waits until all enemies have been created
                     endRound();
                     System.out.println("round ended");
                 }
