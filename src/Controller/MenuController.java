@@ -111,7 +111,9 @@ public class MenuController implements Initializable {
         }
     }
 
-    //These methods change the radio buttons css. Not very important
+    /**
+     * These methods change the css/style of buttons, not very important
+     */
     @FXML private void selectEasyDifficulty(){
         radioButtonEasy.getStyleClass().clear();
         radioButtonEasy.getStyleClass().add("RadioButtonSelected");
