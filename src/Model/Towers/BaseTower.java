@@ -11,15 +11,15 @@ import javafx.scene.image.Image;
 
 public class BaseTower implements Tower {
     private final Cell position;
-    private final int physicalDmg;
-    private final int magicDmg;
+    private int physicalDmg;
+    private int magicDmg;
     private final int price;
     private final int range;
-    private final double attackSpeed;
-    private Image towerImage;
+    private double attackSpeed;
     private double angle;
     private int posX;
     private int posY;
+    private String towerImage;
 
 
     private UpdateModel updateModel;
@@ -60,6 +60,10 @@ public class BaseTower implements Tower {
     @Override
     public void setAngle(double angle) {
         this.angle=angle;
+    }
+
+    public void setTowerImage(String img){
+        this.towerImage = img;
     }
 
 
@@ -123,6 +127,21 @@ public class BaseTower implements Tower {
     }
 
     @Override
+    public void setMagicDmg(int amount) {
+        this.magicDmg = amount;
+    }
+
+    @Override
+    public void setPhysicalDmg(int amount) {
+        this.physicalDmg = amount;
+    }
+
+    @Override
+    public void setAttackSpeed(double amount) {
+        this.attackSpeed = amount;
+    }
+
+    @Override
     public String getImage() {
         return this.getImage();  //TODO might be wierd
     }
@@ -147,10 +166,14 @@ public class BaseTower implements Tower {
         return position;
     }
 
-
-    public void setTowerImage(String img){
-        towerImage = new Image(getClass().getClassLoader().getResourceAsStream(img));
+    public Tower leftUpgrade(Tower t) {
+        return null; //Error
     }
+
+    public Tower rightUpgrade(Tower t) {
+        return null; //Error
+    }
+
 
     public void setColor(String s){
         this.position.setColor(s);

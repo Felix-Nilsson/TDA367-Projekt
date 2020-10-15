@@ -147,4 +147,18 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
 
     }
 
+    @FXML
+    private void towerUpgradeLeft(){
+        parentController.leftUpgradeTower(tower);
+        updateToolbar();
+    }
+
+    @FXML
+    private void towerUpgradeRight(){
+        parentController.rightUpgradeTower(tower);
+        updateToolbar();
+    }
+
+
+
 }

@@ -5,12 +5,13 @@ import Model.Cell.Cell;
 import Model.Enemy.BaseEnemy;
 import Model.Enemy.Enemy;
 import Controller.Observer;
+import Model.Towers.MageTower;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
-import java.util.Collections;
+import Model.Towers.MageTowerUpgrade;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Game implements Updatable {
 
@@ -218,13 +219,9 @@ public class Game implements Updatable {
     public void setCellUnoccupied(int index) { b.setCellUnoccupied(index); }
 
     public void updateArrayWithTower(int index, TowerFactory towerFactory){
-        //TODO update cell to occupied
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
         towers.add(t);
-
-
-        System.out.println("balance: " + money);
     }
 
     public Tower getTowerInCell(int x, int y){
@@ -266,6 +263,14 @@ public class Game implements Updatable {
         System.out.println("before: " + money);
         money += toAdd;
         System.out.println("after: " + money);
+    }
+
+    public void leftUpgradeMageTower(Tower t){
+        t.leftUpgrade(t);
+    }
+
+    public void rightUpgradeTower(Tower t){
+        t.rightUpgrade(t);
     }
 
 

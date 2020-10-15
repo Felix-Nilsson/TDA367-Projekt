@@ -3,7 +3,6 @@ package Model.Towers;
 import Model.Cell.Cell;
 
 import Model.UpdateModel;
-import javafx.scene.image.Image;
 
 public class MageTower implements Tower {
     private BaseTower baseTower ;
@@ -74,6 +73,21 @@ public class MageTower implements Tower {
     }
 
     @Override
+    public void setMagicDmg(int amount) {
+        baseTower.setMagicDmg(amount);
+    }
+
+    @Override
+    public void setPhysicalDmg(int amount) {
+        baseTower.setPhysicalDmg(amount);
+    }
+
+    @Override
+    public void setAttackSpeed(double amount) {
+        baseTower.setAttackSpeed(amount);
+    }
+
+    @Override
     public String getImage() {
         return "/img/mageTower.png";
     }
@@ -99,6 +113,20 @@ public class MageTower implements Tower {
     @Override
     public Cell getPosition() {
         return baseTower.getPosition();
+    }
+
+    @Override
+    public Tower leftUpgrade(Tower t) {
+        MageTowerUpgrade mtu = new MageTowerUpgrade(t);
+        mtu.leftUpgrade();
+        return this;
+    }
+
+    @Override
+    public Tower rightUpgrade(Tower t) {
+        MageTowerUpgrade mtu = new MageTowerUpgrade(t);
+        mtu.rightUpgrade();
+        return this;
     }
 
     @Override

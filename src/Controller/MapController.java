@@ -3,6 +3,7 @@ package Controller;
 import Model.*;
 import Model.Cell.Cell;
 import Model.Enemy.Enemy;
+import Model.Towers.MageTower;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
@@ -305,9 +306,13 @@ public class MapController extends AnchorPane implements Observer {
         sidebarController.updateAvailable();
     }
 
+    public void leftUpgradeTower(Tower t){
+        game.leftUpgradeMageTower(t);
+    }
 
-
-
+    public void rightUpgradeTower(Tower t){
+        game.rightUpgradeTower(t);
+    }
 
 
 }

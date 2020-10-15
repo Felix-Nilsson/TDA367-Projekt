@@ -78,6 +78,22 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+    public void setMagicDmg(int amount) {
+        baseTower.setMagicDmg(amount);
+    }
+
+    @Override
+    public void setPhysicalDmg(int amount) {
+        baseTower.setPhysicalDmg(amount);
+    }
+
+    @Override
+    public void setAttackSpeed(double amount) {
+        baseTower.setAttackSpeed(amount);
+    }
+
+
+    @Override
     public String getImage() {
         return "/img/archerTower.png";
     }
@@ -107,8 +123,17 @@ public class ArcherTower implements Tower {
     }
 
     @Override
-    public void leftUpgrade() {
+    public Tower leftUpgrade(Tower t) {
+        ArcherTowerUpgrade atu = new ArcherTowerUpgrade(t);
+        atu.leftUpgrade();
+        return this;
+    }
 
+    @Override
+    public Tower rightUpgrade(Tower t) {
+        ArcherTowerUpgrade atu = new ArcherTowerUpgrade(t);
+        atu.rightUpgrade();
+        return this;
     }
 
     @Override
