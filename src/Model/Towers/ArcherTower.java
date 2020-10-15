@@ -41,11 +41,6 @@ public class ArcherTower implements Tower {
     }
 
     @Override
-    public Image getImage() {
-        return baseTower.getImage();
-    }
-
-    @Override
     public int getPrice() {
         return baseTower.getPrice();
     }
@@ -83,6 +78,11 @@ public class ArcherTower implements Tower {
     public double getAttackSpeed() {
         return baseTower.getAttackSpeed();
 
+    }
+
+    @Override
+    public String getImage() {
+        return "/img/archerTower.png";
     }
 
     @Override

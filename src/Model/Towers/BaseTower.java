@@ -34,8 +34,8 @@ public class BaseTower implements Tower {
         //längst upp till vänster är (25,15). Varje cell är 40 pixlar
         posX = position.getX()*40 +25;
         posY = position.getY()*40 +15;
-        System.out.println("x: "+ posX);
-        System.out.println("y: "+ posY);
+        //System.out.println("x: "+ posX);
+        //System.out.println("y: "+ posY);
         this.physicalDmg = physicalDmg;
         this.magicDmg = magicDmg;
         this.price = price;
@@ -104,11 +104,6 @@ public class BaseTower implements Tower {
     }
 
     @Override
-    public Image getImage() {
-        return towerImage;
-    }
-
-    @Override
     public int getPrice() {
         return price;
     }
@@ -136,6 +131,11 @@ public class BaseTower implements Tower {
     @Override
     public double getAttackSpeed() {
         return attackSpeed;
+    }
+
+    @Override
+    public String getImage() {
+        return this.getImage();  //TODO might be wierd
     }
 
     @Override

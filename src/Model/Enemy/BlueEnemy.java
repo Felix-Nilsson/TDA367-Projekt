@@ -1,5 +1,6 @@
 package Model.Enemy;
 
+import Model.DamageType;
 import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 import java.util.List;
@@ -37,8 +38,8 @@ public class BlueEnemy implements Enemy {
         parent.followPath();
     }
     @Override
-    public void tookDamage(int damage){
-        parent.tookDamage(damage);
+    public void tookDamage(int damage, DamageType damageType){
+        parent.tookDamage(damage, damageType);
     }
     protected void turn(BaseEnemy.Direction dir){
         parent.direction=dir;
@@ -66,7 +67,7 @@ public class BlueEnemy implements Enemy {
         if(10 - getMovementSpeed() > 0){
             return 10 - getMovementSpeed();
         }
-        return -1;
+        return 10;
 
     }
 

@@ -22,10 +22,10 @@ public class Observable implements Observer{
 
     public boolean removeObserver(final Observer observer) {
         final boolean alreadyObserving = this.observers.contains(observer);
-        if (!alreadyObserving) {
+        if (alreadyObserving) {
             this.observers.remove(observer);
         }
-        return !alreadyObserving;
+        return alreadyObserving;
     }
 
     public void update(){

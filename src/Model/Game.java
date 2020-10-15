@@ -49,7 +49,11 @@ public class Game extends Observable1 implements Updatable {
         waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
+
         projectileList = new ArrayList<>();
+
+        this.gameSpeed = 20;
+
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -62,8 +66,8 @@ public class Game extends Observable1 implements Updatable {
         enemyCounter = sizeCounter.size()-1;
         enemiesInWave = new ArrayList<>();
         waveRunning = true;
-        round++;
         run();
+
     }
     public int getRound(){
         return round;
@@ -84,22 +88,34 @@ public class Game extends Observable1 implements Updatable {
     }
     private void startEnemyCreatorThread(){
         enemyCreatorThread = new Thread(()->{
+            waveManager.createWave(round);
             while (waveRunning && enemyCounter>=0) {
-                Enemy enemy = waveManager.createEnemy(round);
+                Enemy enemy = waveManager.getEnemy(enemyCounter);
                 updateModel.add(enemy);
                 enemiesInWave.add(enemy);
                 threadSleep(enemy.spawnTime() * 100);
                 enemyCounter--;
             }
+
         });
         enemyCreatorThread.setDaemon(true);
         enemyCreatorThread.start();
     }
     private void startGameLoopThread(){
+
         gameLoopThread = new Thread(() -> {
+
             while (waveRunning) {
-                update();
+                if(enemiesInWave.size() > 0) {
+                    update();
+                }
+                else if(!enemyCreatorThread.isAlive()){ //waits until all enemies have been created
+                    endRound();
+                    System.out.println("round ended");
+                }
                 threadSleep(gameSpeed);
+
+
             }
         });
         gameLoopThread.setDaemon(true);
@@ -142,7 +158,23 @@ public class Game extends Observable1 implements Updatable {
         startGameLoopThread();
     }
     public void endRound(){
+        if(enemyCreatorThread.isAlive()){
+            enemyCreatorThread.interrupt();
+        }
+        gameLoopThread.interrupt();
         waveRunning = false;
+        update();
+        round++;
+    }
+    public void removeEnemy(Enemy enemy){
+        if(!updateModel.removeObserver(enemy)){
+            System.out.println("error in removing observer");
+        }
+        if(enemiesInWave.remove(enemy)){
+            System.out.println("error in removing enemy");
+        }
+
+
     }
 
 
@@ -172,7 +204,7 @@ public class Game extends Observable1 implements Updatable {
         super.notifyObservers1(p);
     }
 
-    private void checksRadius(){
+    synchronized void checksRadius(){
         if (towers.size()>0 && enemiesInWave.size()>0){
             for (Tower t : towers){
                 //TODO if (t.cooldown == false)
@@ -219,8 +251,10 @@ public class Game extends Observable1 implements Updatable {
     }
 
 
-    public void enemyIsOut(){
+    public void enemyIsOut(Enemy e){
         health--;
+        removeEnemy(e);
+
     }
 
     //sets initial values of health and money
@@ -228,7 +262,7 @@ public class Game extends Observable1 implements Updatable {
         switch (difficulty) {
             case EASY:
                 this.health = 100;
-                this.money = 200;
+                this.money = 2000; //TODO CHANGE BEFORE FINAL PUSH
                 break;
             case MEDIUM:
                 this.health = 50;
@@ -236,7 +270,7 @@ public class Game extends Observable1 implements Updatable {
                 break;
             case HARD:
                 this.health = 10;
-                this.money = 80;
+                this.money = 80;;
                 break;
         }
     }
@@ -260,9 +294,6 @@ public class Game extends Observable1 implements Updatable {
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
         towers.add(t);
-
-
-        System.out.println("balance: " + money);
     }
 
     public Tower getTowerInCell(int x, int y){

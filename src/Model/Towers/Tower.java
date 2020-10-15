@@ -3,7 +3,6 @@ package Model.Towers;
 import Model.Cell.Cell;
 import Model.Enemy.Enemy;
 import Model.Updatable;
-import javafx.scene.image.Image;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface Tower extends Updatable {
     void update();
     void attackIfEnemyInRange(List<Enemy> enemyList);
     void attack();
-    Image getImage();
+
     int getPrice();
 
     int getPosX();
@@ -27,6 +26,7 @@ public interface Tower extends Updatable {
     int getPhysicalDmg();
     double getAttackSpeed();
 
+    String getImage();
 
     Targeting getTarget();
     void setTarget(Targeting target);

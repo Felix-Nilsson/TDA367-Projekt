@@ -1,5 +1,6 @@
 package Model.Enemy;
 
+import Model.DamageType;
 import javafx.scene.image.Image;
 
 import java.awt.*;
@@ -153,10 +154,16 @@ public class BaseEnemy implements Enemy {
 
 
     // ska antagligen ta in damage type (ad/ap)
-    public void tookDamage(int damage){
+    public void tookDamage(int damage, DamageType damageType){
         //TODO lägga in beräkningar beroende på damage type och armor/mr
-        health=health-damage;
 
+        if (damageType == DamageType.MAGICAL){
+            health = health-damage*((100-magicResist)/100);
+        }
+        else if (damageType == DamageType.PHYSICAL){
+            health = health-damage*((100-armor)/100);
+        }
+        System.out.println(this + "Health: ");
         if (health<=0){
             //TODO delete this object
         }

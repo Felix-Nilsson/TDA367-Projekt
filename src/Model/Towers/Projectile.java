@@ -1,5 +1,6 @@
 package Model.Towers;
 
+import Model.DamageType;
 import Model.Enemy.Enemy;
 import Model.Updatable;
 import Model.UpdateModel;
@@ -41,6 +42,7 @@ public class Projectile implements Updatable {
         updateModel.add(this);
 
     }
+
     public ImageView getImageView(){
         return imageView;
     }
@@ -52,9 +54,11 @@ public class Projectile implements Updatable {
         img.setPreserveRatio(true);
         img.toFront();
     }
-    private void damageEnemy(Enemy enemy){
+
+    private void damageEnemy(Enemy enemy, DamageType damageType){
+
         //temporärt
-        enemy.tookDamage(5);
+        enemy.tookDamage(5,damageType);
     }
     private void disappearIfHit(){
         if (isColission()){
