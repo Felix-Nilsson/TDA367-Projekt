@@ -214,8 +214,7 @@ public class MapController extends AnchorPane implements Observer {
         mapHandler.createMap(startPos,endPos, cave, base);
     }
     @FXML private void closeGame(){
-        System.exit(0);
-    }
+        System.exit(0);}
     @FXML private void mainMenu(){
         mainMenu.toFront();
     }
