@@ -67,7 +67,6 @@ public class MenuController extends AnchorPane implements Initializable {
         playClickUIButtonSound();
 
         Game game = new Game(difficulty,mapNumber);
-
         MapController mapController = new MapController(game,game.getBoard(),mainMenuAnchorPane);
         map.toFront();
         map.getChildren().add(mapController);
