@@ -233,24 +233,29 @@ public class MapController extends AnchorPane implements Observer {
                     }
                     else{
                         if (!enemyHashMap.containsKey(e)) {
-                            mapHandler.drawEnemy(e, enemyHashMap);
+                            ImageView img = new ImageView(e.getImage()); //TODO change later if keeping maphandler
+                            fixImage(img,e);
+                            enemyHashMap.put(e,img);
+                            mapHandler.drawEnemy(img);
                         }
                         mapHandler.updateEnemy(enemyHashMap,e);
 
                     }
                 }
             }
-            /*
+
             else{
-                game.endRound();
-                System.out.println("Round over");
-
+                //round over
             }
-
-             */
-
-
         }
+    }
+    private void fixImage(ImageView img,Enemy e){
+        img.setX(e.getPositionX());
+        img.setY(e.getPositionY());
+        img.setFitHeight(25);
+        img.setFitWidth(25);
+        img.setPreserveRatio(true);
+        img.toBack();
     }
     protected void roundOver(){
         game.pause();

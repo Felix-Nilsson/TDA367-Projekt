@@ -111,14 +111,11 @@ public class SidebarController extends AnchorPane implements Observer {
     }
 
     public void updatePlayerStats(){
-        health.setText(game.getHealth()+"");
-        money.setText(game.getMoney()+"");
+        Platform.runLater(()->health.setText(game.getHealth()+""));
+        Platform.runLater(()->money.setText(game.getMoney()+""));
     }
 
     public void update(){
-
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
         updateAvailable();
         updatePlayerStats();
 
@@ -156,7 +153,6 @@ public class SidebarController extends AnchorPane implements Observer {
         //pressed pause
         else{
             playButtonImg.setImage(new Image("/img/play_button.png"));
-            System.out.println("pressed pause");
             parentController.pause();
 
         }

@@ -68,23 +68,14 @@ public class MapHandler {
         }
     }
 
-    public void drawEnemy(Enemy enemy, HashMap<Enemy, ImageView> enemyHashMap){
-        ImageView img = new ImageView(enemy.getImage());
-        fixImage(img,enemy);
-        enemyHashMap.put(enemy,img);
+    public void drawEnemy(ImageView img){
+
         Platform.runLater(()->gameBoardAnchorPane.getChildren().add(img));
         Platform.runLater(()->cave.toFront()); //sets the cave to be in front of the enemies
         Platform.runLater(()->base.toFront());
     }
 
-    private void fixImage(ImageView img,Enemy e){
-        img.setX(e.getPositionX());
-        img.setY(e.getPositionY());
-        img.setFitHeight(25);
-        img.setFitWidth(25);
-        img.setPreserveRatio(true);
-        img.toBack();
-    }
+
 
     public void updateEnemy(HashMap<Enemy, ImageView> enemyHashMap, Enemy e){
         ImageView img = enemyHashMap.get(e);

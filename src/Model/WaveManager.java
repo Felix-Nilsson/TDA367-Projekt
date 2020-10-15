@@ -15,7 +15,6 @@ public class WaveManager  {
         ENEMY_BLUE,
         ENEMY_RED
     }
-    int counter = 0;
 
     public WaveManager(Difficulty difficulty, List<BaseEnemy.Direction> enemyPath, int startPos) {
         this.difficulty = difficulty;
@@ -60,11 +59,9 @@ public class WaveManager  {
                 //enemyCreator(5,enemies.ENEMY_RED); break;
         }
     }
-    public Enemy createEnemy(int round){
-        createWave(round);
-        Enemy enemy = wave.get(counter);
-        counter++;
-        return enemy;
+    public Enemy getEnemy(int counter){
+        return wave.get(counter);
+
     }
 
 

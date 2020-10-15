@@ -55,8 +55,8 @@ public class Game implements Updatable {
         enemyCounter = sizeCounter.size()-1;
         enemiesInWave = new ArrayList<>();
         waveRunning = true;
-        round++;
         run();
+
     }
     public int getRound(){
         return round;
@@ -77,22 +77,34 @@ public class Game implements Updatable {
     }
     private void startEnemyCreatorThread(){
         enemyCreatorThread = new Thread(()->{
+            waveManager.createWave(round);
             while (waveRunning && enemyCounter>=0) {
-                Enemy enemy = waveManager.createEnemy(round);
+                Enemy enemy = waveManager.getEnemy(enemyCounter);
                 updateModel.add(enemy);
                 enemiesInWave.add(enemy);
                 threadSleep(enemy.spawnTime() * 100);
                 enemyCounter--;
             }
+
         });
         enemyCreatorThread.setDaemon(true);
         enemyCreatorThread.start();
     }
     private void startGameLoopThread(){
+
         gameLoopThread = new Thread(() -> {
+
             while (waveRunning) {
-                update();
+                if(enemiesInWave.size() > 0) {
+                    update();
+                }
+                else if(!enemyCreatorThread.isAlive()){ //waits until all enemies have been created
+                    endRound();
+                    System.out.println("round ended");
+                }
                 threadSleep(gameSpeed);
+
+
             }
         });
         gameLoopThread.setDaemon(true);
@@ -131,8 +143,15 @@ public class Game implements Updatable {
         startGameLoopThread();
     }
     public void endRound(){
+        if(enemyCreatorThread.isAlive()){
+            enemyCreatorThread.interrupt();
+        }
+        gameLoopThread.interrupt();
         waveRunning = false;
+        update();
+        round++;
     }
+
 
 
 
