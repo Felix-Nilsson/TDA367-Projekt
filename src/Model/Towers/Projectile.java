@@ -1,5 +1,6 @@
 package Model.Towers;
 
+import Model.DamageType;
 import Model.Enemy.Enemy;
 import Model.Updatable;
 import javafx.scene.image.Image;
@@ -35,9 +36,9 @@ public class Projectile implements Updatable {
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
 
     }
-    private void damageEnemy(Enemy enemy){
+    private void damageEnemy(Enemy enemy, DamageType damageType){
         //temporärt
-        enemy.tookDamage(5);
+        enemy.tookDamage(5,damageType);
     }
     private void disappearIfHit(){
         if (isColission()){
