@@ -18,15 +18,17 @@ public class MapHandler {
 
     @FXML private AnchorPane gameBoardAnchorPane;
     @FXML private GridPane gameBoardGrid;
+    @FXML private GridPane toplayerGrid;
 
     private final List<Cell> map;
     private ImageView cave;
     private ImageView base;
 
 
-    public MapHandler(AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, List<Cell> map){
+    public MapHandler(AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid,GridPane toplayerGrid, List<Cell> map){
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.gameBoardGrid = gameBoardGrid;
+        this.toplayerGrid = toplayerGrid;
         this.map = map;
     }
 
@@ -63,7 +65,6 @@ public class MapHandler {
             tile.setX(p.getX());
             tile.setY(p.getY());
             tile.setFill(Color.web(p.getColor()));
-            tile.setStroke(Color.BLACK);
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }
@@ -75,8 +76,17 @@ public class MapHandler {
         Platform.runLater(()->base.toFront());
     }
 
-
-
+    public void changeToplayerGridVisible(boolean visible){
+        toplayerGrid.setGridLinesVisible(visible);
+    }
+    private void fixImage(ImageView img,Enemy e){
+        img.setX(e.getPositionX());
+        img.setY(e.getPositionY());
+        img.setFitHeight(25);
+        img.setFitWidth(25);
+        img.setPreserveRatio(true);
+        img.toBack();
+    }
     public void updateEnemy(HashMap<Enemy, ImageView> enemyHashMap, Enemy e){
         ImageView img = enemyHashMap.get(e);
         img.setX(e.getPositionX());
