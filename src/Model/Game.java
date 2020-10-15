@@ -243,7 +243,7 @@ public class Game implements Updatable {
         towers.add(t);
 
 
-        System.out.println("balance: " + money);
+
     }
 
     public Tower getTowerInCell(int x, int y){
