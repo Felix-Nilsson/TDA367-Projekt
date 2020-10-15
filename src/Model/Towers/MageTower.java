@@ -31,10 +31,6 @@ public class MageTower implements Tower {
         baseTower.attack();
     }
 
-    @Override
-    public Image getImage() {
-        return baseTower.getImage();
-    }
 
     @Override
     public int getPrice() {
@@ -75,6 +71,11 @@ public class MageTower implements Tower {
     public double getAttackSpeed() {
         return baseTower.getAttackSpeed();
 
+    }
+
+    @Override
+    public String getImage() {
+        return "/img/mageTower.png";
     }
 
     @Override

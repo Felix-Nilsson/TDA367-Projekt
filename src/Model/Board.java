@@ -49,6 +49,7 @@ public class Board {
         this.mapNumber = mapNumber;
         createBoard();
 
+
     }
     public int getStartPos(){
         return startPos;
@@ -89,13 +90,7 @@ public class Board {
                 else if(map[j][i] == 3){
                     tempBoard.add(new ObstacleCell(i, j, true));
                 }
-                else if(map[j][i] == 4){
-                    //temp, example of adding a tower to a cell
-                    //GroundCell cell = new GroundCell(i,j,false,50,50);
-                    //ArcherTower archerTower = new ArcherTowerFactory().createTower(cell,);
 
-                    //tempBoard.add(cell);
-                }
                 //skapar en path
                 else if(map[j][i] == 8){
                     tempBoard.add(new PathCell(i, j, false));

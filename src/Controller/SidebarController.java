@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -30,17 +31,18 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private ImageView playButtonImg;
 
     @FXML private AnchorPane sidebarAnchorPane;
+    @FXML private AnchorPane mageTowerAvailable;
+    @FXML private AnchorPane archerTowerAvailable;
     @FXML private Label health;
     @FXML private Button play;
     @FXML private GridPane gridPane;
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
 
-
     private final Game game;
     private final MapController parentController;
-
-
+    private MageTowerFactory mF;
+    private ArcherTowerFactory aF;
 
     public SidebarController(Game game,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
@@ -69,7 +71,8 @@ public class SidebarController extends AnchorPane implements Observer {
 
                 MageTowerFactory mf = new MageTowerFactory();
                 sendTowerToMap(mf);
-
+                updateAvailable();
+                updatePlayerStats();
             }
         });
         archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -84,10 +87,15 @@ public class SidebarController extends AnchorPane implements Observer {
 
                 ArcherTowerFactory af = new ArcherTowerFactory();
                 sendTowerToMap(af);
-
+                updateAvailable();
+                updatePlayerStats();
             }
         });
 
+        Platform.runLater(()->money.setText(""+ game.getMoney()));
+        Platform.runLater(()->health.setText(""+ game.getHealth()));
+        updateAvailable();
+        updatePlayerStats();
 
 
     }
@@ -103,12 +111,13 @@ public class SidebarController extends AnchorPane implements Observer {
     }
 
     public void updatePlayerStats(){
-        health.setText(game.getHealth()+"");
-        money.setText(game.getMoney()+"");
+        Platform.runLater(()->health.setText(game.getHealth()+""));
+        Platform.runLater(()->money.setText(game.getMoney()+""));
     }
 
     public void update(){
-        setValues();
+        updateAvailable();
+        updatePlayerStats();
 
         if(!parentController.isWaveRunning()){
             roundOver();
@@ -144,7 +153,6 @@ public class SidebarController extends AnchorPane implements Observer {
         //pressed pause
         else{
             playButtonImg.setImage(new Image("/img/play_button.png"));
-            System.out.println("pressed pause");
             parentController.pause();
 
         }
@@ -155,8 +163,26 @@ public class SidebarController extends AnchorPane implements Observer {
         parentController.openSettings();
     }
 
-    @FXML public void toolbarButtonOnclick(){
-        toolbar.toFront();
+
+    @FXML public void updateAvailable(){
+
+        //TODO View beteende
+
+        if(game.getMoney() >= 150){ //Price of mageTower might need to get
+            mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
+        }
+        else {
+            mageTowerAvailable.setStyle("-fx-background-color:red");
+        }
+        if(game.getMoney() >= 100){ //Price of archerTower might need to get
+            archerTowerAvailable.setStyle("-fx-background-color:Lightgreen");
+        }
+        else {
+            archerTowerAvailable.setStyle("-fx-background-color:red");
+        }
+
+
+
     }
 
 

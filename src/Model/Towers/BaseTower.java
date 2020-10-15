@@ -93,11 +93,6 @@ public class BaseTower implements Tower {
     }
 
     @Override
-    public Image getImage() {
-        return towerImage;
-    }
-
-    @Override
     public int getPrice() {
         return price;
     }
@@ -125,6 +120,11 @@ public class BaseTower implements Tower {
     @Override
     public double getAttackSpeed() {
         return attackSpeed;
+    }
+
+    @Override
+    public String getImage() {
+        return this.getImage();  //TODO might be wierd
     }
 
     @Override
