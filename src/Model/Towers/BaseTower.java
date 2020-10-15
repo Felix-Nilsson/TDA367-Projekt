@@ -23,6 +23,8 @@ public class BaseTower implements Tower {
     private int posX;
     private int posY;
     private Projectile currentProjectile;
+    private int enemyPosX;
+    private int enemyPosY;
 
 
     private UpdateModel updateModel;
@@ -74,16 +76,18 @@ public class BaseTower implements Tower {
     @Override
     public void attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
-            double distX = e.getPositionX()-posX;
+            enemyPosX = e.getPositionX();
+            enemyPosY = e.getPositionY();
+            double distX = enemyPosX-posX;
             //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. angle reflekterar nu verkligheten.
             //i Projectile skapa finns det minus framför vy för att återställa detta igen
-            double distY = -(e.getPositionY()-posY);
+            double distY = -(enemyPosY-posY);
             double distHyp = Math.sqrt(distX*distX + distY*distY);
             //System.out.println(distHyp);
             if (distHyp<this.range) {
                 this.angle = Math.atan2(distY, distX);
                 attack();
-                e.tookDamage(5);
+                //e.tookDamage(5);
             }
         }
 
@@ -94,8 +98,10 @@ public class BaseTower implements Tower {
     public void attack() {
         System.out.println("attaaaaack");
         System.out.println("angle: " +Math.toDegrees(angle));
-        currentProjectile = new Projectile(this.posX,this.posY,angle, updateModel);
+        //currentProjectile = new Projectile(this.posX,this.posY,angle, updateModel);
+        currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY, updateModel);
     }
+
     @Override
     public Projectile getProjectile(){
         Projectile tmp = currentProjectile;

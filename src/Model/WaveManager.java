@@ -35,7 +35,7 @@ public class WaveManager  {
         wave = new ArrayList<>();
         switch (round){
             case 1:
-                enemyCreator(5, enemies.ENEMY_BLUE);break;
+                enemyCreator(1, enemies.ENEMY_BLUE);break;
             case 2:
                 enemyCreator(5,enemies.ENEMY_RED); break;
 

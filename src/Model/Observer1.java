@@ -3,5 +3,6 @@ package Model;
 import Model.Towers.Projectile;
 
 public interface Observer1 {
-    public void addProjectileView(Projectile p);
+    void addProjectileView(Projectile p);
+    void removeProjectileView(Projectile p);
 }

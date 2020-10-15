@@ -10,6 +10,7 @@ import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Game extends Observable1 implements Updatable {
@@ -34,7 +35,7 @@ public class Game extends Observable1 implements Updatable {
     private List <Projectile> projectileList;
 
     int round = 1;
-    private int gameSpeed = 20;
+    private int gameSpeed;
     private int enemyCounter;
 
     public Game (Difficulty difficulty, int mapNumber){
@@ -52,7 +53,7 @@ public class Game extends Observable1 implements Updatable {
 
         projectileList = new ArrayList<>();
 
-        this.gameSpeed = 20;
+        this.gameSpeed = 100;
 
     }
 
@@ -132,12 +133,12 @@ public class Game extends Observable1 implements Updatable {
         }
     }
 
-
     public void update(){
 
         updateModel.update();
         checksRadius();
         observable.update();
+        checkIfProjectilesHit();
 
     }
 
@@ -173,14 +174,12 @@ public class Game extends Observable1 implements Updatable {
         if(enemiesInWave.remove(enemy)){
             System.out.println("error in removing enemy");
         }
-
-
     }
-
-
-
-
-
+    public void removeProjectile(Projectile p){
+        if (projectileList.remove(p)){
+            System.out.println("proj was removed");
+        }
+    }
 
     public boolean isWaveRunning(){
         return waveRunning;
@@ -200,8 +199,43 @@ public class Game extends Observable1 implements Updatable {
     }
 
     @Override
-    public void notifyObservers1(Projectile p) {
-        super.notifyObservers1(p);
+    public void notifyObservers1ThatProjWasAdded(Projectile p) {
+        super.notifyObservers1ThatProjWasAdded(p);
+    }
+
+    private synchronized void checkIfProjectilesHit(){
+        if(projectileList.size()>0){
+            System.out.println("projList.size(): " + projectileList.size());
+            Iterator<Projectile>iterator = projectileList.listIterator();
+
+            while (iterator.hasNext()){
+                Projectile p = iterator.next();
+                if (!p.isExisting()){
+
+                    super.notifyObservers1ThatProjWasRemoved(p);
+                    //projectileList.remove(p);
+                    System.out.println("size before iterator.remove(): " + projectileList.size());
+                    iterator.remove();
+                    System.out.println("size after iterator.remove(): " + projectileList.size());
+                }
+            }
+            /*
+            for (Projectile p : projectileList){
+                if (!p.isExisting()){
+                    //TODO Ordningen på metodkallningarna kanske påverkar
+
+                    super.notifyObservers1ThatProjWasRemoved(p);
+                    projectileList.remove(p);
+                    System.out.println("SER JAG NÅNSIN DETTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                }
+            }
+
+            System.out.println("projectile was remooooooooooooooooved");
+            System.out.println("projList.size(): " + projectileList.size());
+
+             */
+        }
+
     }
 
     synchronized void checksRadius(){
@@ -215,9 +249,7 @@ public class Game extends Observable1 implements Updatable {
                     System.out.println("p är inte null");
                     projectileList.add(p);
                     System.out.println(projectileList.size());
-                    System.out.println(p==null);
-                    this.notifyObservers1(p);
-
+                    this.notifyObservers1ThatProjWasAdded(p);
                 }
                 /*
                  Projectile p = t.getProjectile();
@@ -254,8 +286,8 @@ public class Game extends Observable1 implements Updatable {
     public void enemyIsOut(Enemy e){
         health--;
         removeEnemy(e);
-
     }
+
 
     //sets initial values of health and money
     private void setValues(){
