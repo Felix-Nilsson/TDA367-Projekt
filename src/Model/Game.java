@@ -7,10 +7,8 @@ import Model.Enemy.Enemy;
 import Controller.Observer;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Game implements Updatable {
 
@@ -43,6 +41,7 @@ public class Game implements Updatable {
         waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
+        this.gameSpeed = 20;
     }
 
     public List<Enemy> getEnemiesInWave() {
@@ -98,7 +97,7 @@ public class Game implements Updatable {
                 if(enemiesInWave.size() > 0) {
                     update();
                 }
-                else if(enemiesInWave.size() == 0 &&!enemyCreatorThread.isAlive()){ //waits until all enemies have been created
+                else if(!enemyCreatorThread.isAlive()){ //waits until all enemies have been created
                     endRound();
                     System.out.println("round ended");
                 }
@@ -151,7 +150,16 @@ public class Game implements Updatable {
         update();
         round++;
     }
+    public void removeEnemy(Enemy enemy){
+        if(!updateModel.removeObserver(enemy)){
+            System.out.println("error in removing observer");
+        }
+        if(enemiesInWave.remove(enemy)){
+            System.out.println("error in removing enemy");
+        }
 
+
+    }
 
 
 
@@ -167,7 +175,7 @@ public class Game implements Updatable {
         return this.observable.addObserver(observer);
     }
 
-    private void checksRadius(){
+    synchronized void checksRadius(){
         if (towers.size()>0 && enemiesInWave.size()>0){
             for (Tower t : towers){
                 //TODO if (t.cooldown == false)
@@ -199,8 +207,10 @@ public class Game implements Updatable {
     }
 
 
-    public void enemyIsOut(){
+    public void enemyIsOut(Enemy e){
         health--;
+        removeEnemy(e);
+
     }
 
     //sets initial values of health and money
@@ -209,7 +219,6 @@ public class Game implements Updatable {
             case EASY:
                 this.health = 100;
                 this.money = 2000; //TODO CHANGE BEFORE FINAL PUSH
-                this.gameSpeed = 50;
                 break;
             case MEDIUM:
                 this.health = 50;
@@ -217,7 +226,7 @@ public class Game implements Updatable {
                 break;
             case HARD:
                 this.health = 10;
-                this.money = 80;
+                this.money = 80;;
                 break;
         }
     }
@@ -241,9 +250,6 @@ public class Game implements Updatable {
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
         towers.add(t);
-
-
-
     }
 
     public Tower getTowerInCell(int x, int y){
