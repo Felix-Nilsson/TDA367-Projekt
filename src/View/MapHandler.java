@@ -87,11 +87,6 @@ public class MapHandler {
         img.setPreserveRatio(true);
         img.toBack();
     }
-
-
-
-
-
     public void updateEnemy(HashMap<Enemy, ImageView> enemyHashMap, Enemy e){
         ImageView img = enemyHashMap.get(e);
         img.setX(e.getPositionX());
