@@ -66,7 +66,7 @@ public class BlueEnemy implements Enemy {
         if(10 - getMovementSpeed() > 0){
             return 10 - getMovementSpeed();
         }
-        return -1;
+        return 10;
 
     }
 
