@@ -238,7 +238,7 @@ public class MapController extends AnchorPane implements Observer {
                     if(e.isDead()){
                         Platform.runLater(()->gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
                         game.getEnemiesInWave().remove(e);
-                        game.enemyIsOut();
+                        game.enemyIsOut(e);
                         System.out.println("is dead");
                         break;
                     }
