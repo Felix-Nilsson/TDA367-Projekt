@@ -19,8 +19,10 @@ public class ProjectileView {
         //temportärt. Bör kanske finnas ett interface med getImage och alla projectiles under det interfacet har sina egna images.
         image = new Image(getClass().getClassLoader().getResourceAsStream("img/blue_Monster.png"));
         imageView = new ImageView(image);
-        fixImage(imageView);
+        System.out.println("innan fixImage");
         this.projectile=projectile;
+        fixImage(imageView);
+
     }
 
 
@@ -34,10 +36,13 @@ public class ProjectileView {
 
 
     private void fixImage(ImageView img){
+        System.out.print("is image null i fixImage: "); System.out.println(img==null);
+        System.out.print("is projectile null i fixImage: "); System.out.println( projectile==null);
+        assert img != null;
         img.setX(projectile.getPosX());
         img.setY(projectile.getPosY());
-        img.setFitHeight(25);
-        img.setFitWidth(25);
+        img.setFitHeight(5);
+        img.setFitWidth(5);
         img.setPreserveRatio(true);
         img.toFront();
     }

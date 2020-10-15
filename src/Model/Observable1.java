@@ -16,6 +16,7 @@ public class Observable1 {
         System.out.println("for loop i notifyObservers");
         System.out.println("observers.size()= " + observers.size());
         for(Observer1 observer : observers){
+            System.out.println(p==null);
             observer.addProjectileView(p);
             System.out.println("for loop i notifyObservers");
         }

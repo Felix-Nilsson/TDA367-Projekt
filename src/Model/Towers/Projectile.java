@@ -17,7 +17,7 @@ public class Projectile implements Updatable {
     private double enemyPosY;
     //angle is in radians
     private double angle;
-    private int vMultiplier=10;
+    private int vMultiplier=30;
     private final ImageView imageView;
 
     //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
@@ -38,7 +38,6 @@ public class Projectile implements Updatable {
         imageView = new ImageView(image);
         fixImage(imageView);
         //gameBoardAnchorPane.getChildren().add(imageView);
-
         updateModel.add(this);
 
     }
@@ -62,38 +61,8 @@ public class Projectile implements Updatable {
 
         }
     }
-    private void createImage(){
 
-    }
-    private void imageToPos(){
-
-    }
     private void calculateVelocity(){
-        /*
-        //Om det finns en angle i Tower:
-        setAngle(PI); //temporär metod för testning
-        vx = vMultiplier*Math.cos(angle);
-        vy = vMultiplier*Math.sin(angle);
-        System.out.println("angle in degrees=" + Math.toDegrees(angle) + ", vx= " + vx +", vy =" +vy);
-
-         */
-/*
-        //Om det inte finns:
-        double distX = enemyPosX-posX;
-        //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt
-        double distY = -(enemyPosY-posY);
-        double theAngle = Math.atan2(distY,distX);
-
-
-
-        vx = vMultiplier*Math.cos(theAngle);
-        //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. vy blir nu korrekt
-        vy = -(vMultiplier*Math.sin(theAngle));
-        System.out.println("calculated angle in degrees: " +Math.toDegrees(theAngle) + ", vx= "+vx + ", vy= "+vy);
-        System.out.println("vx= "+vx);
-        System.out.println("vy= "+vy);
-
- */
         vx = vMultiplier*Math.cos(angle);
         //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. vy blir nu korrekt
         vy = -(vMultiplier*Math.sin(angle));
@@ -113,9 +82,6 @@ public class Projectile implements Updatable {
     public void update(){
         move();
         disappearIfHit();
-        //image delarna ska flyttas
-        imageView.setX(posX);
-        imageView.setY(posY);
     }
     public double getVx(){
         return vx;

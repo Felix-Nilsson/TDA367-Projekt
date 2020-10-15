@@ -183,6 +183,7 @@ public class Game extends Observable1 implements Updatable {
                     System.out.println("p är inte null");
                     projectileList.add(p);
                     System.out.println(projectileList.size());
+                    System.out.println(p==null);
                     this.notifyObservers1(p);
 
                 }

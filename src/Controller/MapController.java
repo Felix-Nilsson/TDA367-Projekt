@@ -82,7 +82,7 @@ public class MapController extends AnchorPane implements Observer {
         createMap();
         addToolbar();
         eventHandlers();
-        new ViewManager1(this.game);
+        new ViewManager1(this.game, gameBoardAnchorPane);
     }
     private void eventHandlers(){
         //EventHandlers
@@ -216,8 +216,7 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void update(){
-
-
+        
         if (game.getEnemiesInWave()!= null ) {
             if(game.getEnemiesInWave().size() > 0){
                 for(Enemy e : game.getEnemiesInWave()){
