@@ -154,14 +154,14 @@ public class BaseEnemy implements Enemy {
 
 
     // ska antagligen ta in damage type (ad/ap)
-    public void tookDamage(int damage, DamageType damageType){
+    public void tookDamage(double damage, DamageType damageType){
         //TODO lägga in beräkningar beroende på damage type och armor/mr
 
         if (damageType == DamageType.MAGICAL){
-            health = health-damage*((100-magicResist)/100);
+            health = (int) (health-(damage*((100.0-magicResist)/100)));
         }
         else if (damageType == DamageType.PHYSICAL){
-            health = health-damage*((100-armor)/100);
+            health = (int) (health-damage*((100.0-armor)/100));
         }
         System.out.println(this + "Health: ");
         if (health<=0){
@@ -183,7 +183,7 @@ public class BaseEnemy implements Enemy {
     protected Direction getDirection(){
         return direction;
     }
-    protected int getHealth(){
+    public int getHealth(){
         return health;
     }
     protected int getMovementSpeed(){

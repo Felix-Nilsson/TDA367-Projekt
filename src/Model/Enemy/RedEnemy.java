@@ -37,7 +37,7 @@ public class RedEnemy implements Enemy {
         parent.followPath();
     }
     @Override
-    public void tookDamage(int damage, DamageType damageType){
+    public void tookDamage(double damage, DamageType damageType){
         parent.tookDamage(damage,damageType);
     }
     protected void turn(BaseEnemy.Direction dir){
@@ -69,7 +69,7 @@ public class RedEnemy implements Enemy {
     public BaseEnemy.Direction getDirection(){
         return parent.direction;
     }
-    protected int getHealth(){
+    public int getHealth(){
         return parent.getHealth();
     }
     protected int getMovementSpeed(){
