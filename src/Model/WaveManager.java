@@ -7,6 +7,7 @@ import java.util.List;
 
 public class WaveManager  {
     private final Difficulty difficulty;
+    private  int difficultyModifier;
     private final List<BaseEnemy.Direction> enemyPath;
     private final int startPos;
     private EnemyFactory enemyFactory;
@@ -20,6 +21,14 @@ public class WaveManager  {
         this.difficulty = difficulty;
         this.enemyPath = enemyPath;
         this.startPos = startPos;
+        switch (difficulty){
+            case EASY:
+                difficultyModifier = 1;break;
+            case MEDIUM:
+                difficultyModifier = 2;break;
+            case HARD:
+                difficultyModifier = 3;break;
+        }
 
     }
 
@@ -29,10 +38,12 @@ public class WaveManager  {
      * These enemies are  created here and added to the list "wave".
      * After every wave the list resets.
      * @param round
-     * @return
+     * the round of the wave
      */
     public void createWave(int round) {
         wave = new ArrayList<>();
+
+                /*
         switch (round){
             case 1:
                 enemyCreator(1, enemies.ENEMY_BLUE);break;
@@ -58,15 +69,23 @@ public class WaveManager  {
             case 10:
                 //enemyCreator(5,enemies.ENEMY_RED); break;
         }
+
+                 */
+
+        enemyCreator((2+round)*difficultyModifier, enemies.ENEMY_BLUE);
+        enemyCreator((2+round)*difficultyModifier,enemies.ENEMY_RED);
+
     }
+
     public Enemy getEnemy(int counter){
         return wave.get(counter);
 
     }
 
-
-
-
+    public int getWaveSize(int round){
+        createWave(round);
+        return wave.size()-1;
+    }
 
     private void enemyCreator(int amount, enemies enemy) {
 
@@ -98,10 +117,6 @@ public class WaveManager  {
             case ENEMY_RED : return  new EnemyFactoryRed(enemyPath,startPos);
         }
         return null;
-    }
-
-    public List<Enemy> getWave(){
-        return wave;
     }
 
 }

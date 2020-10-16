@@ -4,6 +4,7 @@ import Controller.MapController;
 import Model.Difficulty;
 import Model.Game;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -11,12 +12,13 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class MenuController implements Initializable {
+public class MenuController extends AnchorPane implements Initializable {
 
     @FXML private Button newGameButton;
     @FXML private Button loadGameButton;
@@ -43,7 +45,6 @@ public class MenuController implements Initializable {
     private final ToggleGroup radioButtonGroupDifficulty = new ToggleGroup();
     private final ToggleGroup radioButtonGroupMapNumber = new ToggleGroup();
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         activateRadioButtons();
@@ -62,17 +63,12 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    private void newGame(){
+    protected void newGame(){
         playClickUIButtonSound();
-
         Game game = new Game(difficulty,mapNumber);
-
-        MapController mapController = new MapController(game,game.getBoard());
+        MapController mapController = new MapController(game,game.getBoard(),this);
         map.toFront();
         map.getChildren().add(mapController);
-
-
-
     }
     @FXML private void loadGame(){
         playClickUIButtonSound();
@@ -85,7 +81,7 @@ public class MenuController implements Initializable {
         playClickUIButtonSound();
         mapSelectionAnchorPane.toFront();
     }
-    @FXML private void backToMenu(){
+    @FXML protected void openMenu(){
         mainMenuAnchorPane.toFront();
     }
     @FXML private void exitGame(){ System.exit(0); }

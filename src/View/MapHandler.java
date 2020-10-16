@@ -16,24 +16,25 @@ import java.util.List;
 
 public class MapHandler {
 
-    @FXML private AnchorPane gameBoardAnchorPane;
-    @FXML private GridPane gameBoardGrid;
+    @FXML private final AnchorPane gameBoardAnchorPane;
+    @FXML private final GridPane gameBoardGrid;
+    @FXML private final GridPane toplayerGrid;
 
     private final List<Cell> map;
     private ImageView cave;
     private ImageView base;
 
 
-    public MapHandler(AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, List<Cell> map){
+    public MapHandler(AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid,GridPane toplayerGrid, List<Cell> map){
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.gameBoardGrid = gameBoardGrid;
+        this.toplayerGrid = toplayerGrid;
         this.map = map;
     }
 
 
-    public void createMap(int startPos, int endPos, ImageView caveView, ImageView baseView){
-        this.cave = caveView;
-        this.base = baseView;
+    public void createMap(int startPos, int endPos){
+
 
         //add startcave
         cave = new ImageView("/img/cave.png");
@@ -52,9 +53,8 @@ public class MapHandler {
         base.setFitWidth(40);
         base.setPreserveRatio(true);
         base.toFront();
-        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth());
+        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth()); //TODO gameboardanchorpane width does not work in map handler for some reason
         base.setY((endPos - 1) *40);
-        System.out.println(gameBoardAnchorPane.getWidth());
         gameBoardAnchorPane.getChildren().add(base);
 
         //add all cells to GUI
@@ -63,7 +63,6 @@ public class MapHandler {
             tile.setX(p.getX());
             tile.setY(p.getY());
             tile.setFill(Color.web(p.getColor()));
-            tile.setStroke(Color.BLACK);
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }
@@ -75,8 +74,17 @@ public class MapHandler {
         Platform.runLater(()->base.toFront());
     }
 
-
-
+    public void changeToplayerGridVisible(boolean visible){
+        toplayerGrid.setGridLinesVisible(visible);
+    }
+    private void fixImage(ImageView img,Enemy e){
+        img.setX(e.getPositionX());
+        img.setY(e.getPositionY());
+        img.setFitHeight(25);
+        img.setFitWidth(25);
+        img.setPreserveRatio(true);
+        img.toBack();
+    }
     public void updateEnemy(HashMap<Enemy, ImageView> enemyHashMap, Enemy e){
         ImageView img = enemyHashMap.get(e);
         img.setX(e.getPositionX());

@@ -28,15 +28,17 @@ public class Game extends Observable1 implements Updatable {
     private boolean waveRunning = false;
     private Thread gameLoopThread;
     private Thread enemyCreatorThread;
-    private Updatable updatable;
-    private final List<BaseEnemy.Direction> enemyPath;
+    //private Updatable updatable;
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
     private List <Projectile> projectileList;
 
     int round = 1;
-    private int gameSpeed;
+
+    private final int gameSpeed;
+
     private int enemyCounter;
+    private int totalNumberOfRounds;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -46,8 +48,8 @@ public class Game extends Observable1 implements Updatable {
         viewUpdate = new UpdateModel();
         observable1 = new Observable1();
         b= new Board(mapNumber);
-        this.enemyPath = b.getPath();
-        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
+        List<BaseEnemy.Direction> enemyPath = b.getPath();
+        waveManager = new WaveManager(difficulty, enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
 
@@ -55,20 +57,26 @@ public class Game extends Observable1 implements Updatable {
 
         this.gameSpeed = 30;
 
+
     }
 
     public List<Enemy> getEnemiesInWave() {
         return enemiesInWave;
     }
 
+    /**
+     * Enemy counter keeps track of amount of enemies in current wave
+     * resets list (enemiesInWave)
+     */
     public void nextRound(){
-        waveManager.createWave(round);
-        List<Enemy> sizeCounter = waveManager.getWave();
-        enemyCounter = sizeCounter.size()-1;
+        enemyCounter = waveManager.getWaveSize(round);
         enemiesInWave = new ArrayList<>();
         waveRunning = true;
         run();
 
+    }
+    public void notifyAllObservers(){
+        observable.update();
     }
     public int getRound(){
         return round;
@@ -123,6 +131,7 @@ public class Game extends Observable1 implements Updatable {
         gameLoopThread.start();
     }
     private void threadSleep(int time){
+
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
@@ -134,7 +143,7 @@ public class Game extends Observable1 implements Updatable {
     }
 
     public void update(){
-
+        checkIfGameOver();
         updateModel.update();
         checksRadius();
         observable.update();
@@ -142,31 +151,55 @@ public class Game extends Observable1 implements Updatable {
 
     }
 
-    public void pause(){
+    private void checkIfGameOver(){
+        if(health <= 0){
+            gameOver();
+        }
+        //if its the last wave and there are no more enemies
+        else if(round == totalNumberOfRounds && enemiesInWave.size() == 0){
+            gameWon();
+        }
+    }
+    private void gameOver(){
+        observable.notifyGameOver();
+        stopGameLoopThread();
+        stopEnemyCreatorThread();
+
+    }
+    private void gameWon(){
+        observable.notifyGameWon();
+    }
+
+    private void stopEnemyCreatorThread(){
+
         if(enemyCreatorThread.isAlive()){
             enemyCreatorThread.interrupt();
 
         }
-        gameLoopThread.interrupt();
+    }
+    private void stopGameLoopThread(){
+        if(gameLoopThread.isAlive()){
+            gameLoopThread.interrupt();
+        }
+    }
+    public void pause(){
         waveRunning = false;
-
+        stopEnemyCreatorThread();
+        stopGameLoopThread();
     }
     public void play(){
         waveRunning = true;
-        if(enemyCreatorThread.isInterrupted()){
-            startEnemyCreatorThread();
-        }
+        startEnemyCreatorThread();
         startGameLoopThread();
     }
     public void endRound(){
-        if(enemyCreatorThread.isAlive()){
-            enemyCreatorThread.interrupt();
-        }
-        gameLoopThread.interrupt();
+        observable.notifyRoundOver();
+        stopEnemyCreatorThread();
+        stopGameLoopThread();
         waveRunning = false;
-        update();
         round++;
     }
+
     public void removeEnemy(Enemy enemy){
         if(!updateModel.removeObserver(enemy)){
             System.out.println("error in removing observer");
@@ -203,14 +236,14 @@ public class Game extends Observable1 implements Updatable {
         super.notifyObservers1ThatProjWasAdded(p);
     }
 
-    private synchronized void checkIfProjectilesHit(){
-        if(projectileList.size()>0){
+    private synchronized void checkIfProjectilesHit() {
+        if (projectileList.size() > 0) {
             System.out.println("projList.size(): " + projectileList.size());
-            Iterator<Projectile>iterator = projectileList.listIterator();
+            Iterator<Projectile> iterator = projectileList.listIterator();
 
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Projectile p = iterator.next();
-                if (!p.isExisting()){
+                if (!p.isExisting()) {
 
                     super.notifyObservers1ThatProjWasRemoved(p);
                     //projectileList.remove(p);
@@ -235,11 +268,11 @@ public class Game extends Observable1 implements Updatable {
 
              */
         }
-
     }
 
     synchronized void checksRadius(){
         if (towers.size()>0 && enemiesInWave.size()>0){
+
             for (Tower t : towers){
                 //TODO if (t.cooldown == false)
                 t.attackIfEnemyInRange(enemiesInWave);
@@ -251,35 +284,13 @@ public class Game extends Observable1 implements Updatable {
                     System.out.println(projectileList.size());
                     this.notifyObservers1ThatProjWasAdded(p);
                 }
-                /*
-                 Projectile p = t.getProjectile();
-
-                projectileList.add(p);
-                viewUpdate.update();
-                observable1.notifyObservers1(p);
-                */
-                /*
-                //Om det inte finns:
-                double distX = e.getPositionX()-t.getPosX();
-                //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. theAngle blir nu korrekt.
-                //i Projectile skapa finns det minus framför vy för att återställa detta igen
-                double distY = -(e.getPositionY()-t.getPosY());
-                double distHyp = Math.sqrt(distX*distX + distY*distY);
-                //System.out.println(distHyp);
-                if (distHyp<t.getRange()){
-                    double angle = Math.atan2(distY,distX);
-                    t.setAngle(angle);
-                    t.attack();
-                        // Om towers är hitscan blir det: e.tookDamage()
-                }
-
-                     */
-
             }
         }
+
     }
     public List<Projectile> getProjectileList(){
         return this.projectileList;
+
     }
 
 
@@ -293,16 +304,19 @@ public class Game extends Observable1 implements Updatable {
     private void setValues(){
         switch (difficulty) {
             case EASY:
-                this.health = 100;
-                this.money = 2000; //TODO CHANGE BEFORE FINAL PUSH
+                this.health = 20;
+                this.money = 2000;
+                this.totalNumberOfRounds = 5;
                 break;
             case MEDIUM:
-                this.health = 50;
-                this.money = 150;
+                this.health = 10;
+                this.money = 1500;
+                this.totalNumberOfRounds = 10;
                 break;
             case HARD:
-                this.health = 10;
-                this.money = 80;;
+                this.health = 1;
+                this.money = 800;
+                this.totalNumberOfRounds = 15;
                 break;
         }
     }
@@ -353,14 +367,9 @@ public class Game extends Observable1 implements Updatable {
 
 
     public void removeTower(Tower t){
-
-        try{
-            towers.remove(t);
+        if(!towers.remove(t)){
+            System.out.println("tower not found ");
         }
-        catch (NullPointerException e){
-            System.out.println("not found tower");
-        }
-
     }
 
     public void addMoney(int toAdd){
@@ -368,8 +377,5 @@ public class Game extends Observable1 implements Updatable {
         money += toAdd;
         System.out.println("after: " + money);
     }
-
-
-
 
 }

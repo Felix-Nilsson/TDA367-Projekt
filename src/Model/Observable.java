@@ -27,6 +27,21 @@ public class Observable implements Observer{
         }
         return alreadyObserving;
     }
+    public void notifyGameOver(){
+        for(Observer observer : observers){
+            observer.notifyGameOver();
+        }
+    }
+    public void notifyRoundOver(){
+        for(Observer observer : observers){
+            observer.notifyRoundOver();
+        }
+    }
+    public void notifyGameWon(){
+        for(Observer observer : observers){
+            observer.notifyGameWon();
+        }
+    }
 
     public void update(){
         for(Observer observer : observers){
@@ -35,5 +50,7 @@ public class Observable implements Observer{
 
 
     }
+
+
 
 }

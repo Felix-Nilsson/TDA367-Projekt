@@ -35,7 +35,7 @@ public class BaseEnemy implements Enemy {
         this.magicResist=magicResist;
         this.armor=armor;
         this.positionX=0;
-        this.positionY=(startPos-1) * 40 + 10;
+        this.positionY=(startPos-1) * 40;
         this.path = path;
         isDead = false;
         //så länge enemy spawnas på 25,75... ska denna inte behövas
@@ -154,18 +154,18 @@ public class BaseEnemy implements Enemy {
 
 
     // ska antagligen ta in damage type (ad/ap)
-    public void tookDamage(int damage, DamageType damageType){
+    public void tookDamage(double damage, DamageType damageType){
         //TODO lägga in beräkningar beroende på damage type och armor/mr
 
         if (damageType == DamageType.MAGICAL){
-            health = health-damage*((100-magicResist)/100);
+            health = (int) (health-(damage*((100.0-magicResist)/100)));
         }
         else if (damageType == DamageType.PHYSICAL){
-            health = health-damage*((100-armor)/100);
+            health = (int) (health-damage*((100.0-armor)/100));
         }
         System.out.println(this + "Health: ");
         if (health<=0){
-            //TODO delete this object
+            isDead = true;
         }
     }
 
@@ -183,7 +183,7 @@ public class BaseEnemy implements Enemy {
     protected Direction getDirection(){
         return direction;
     }
-    protected int getHealth(){
+    public int getHealth(){
         return health;
     }
     protected int getMovementSpeed(){
