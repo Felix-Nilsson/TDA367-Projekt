@@ -53,7 +53,7 @@ public class Game extends Observable1 implements Updatable {
 
         projectileList = new ArrayList<>();
 
-        this.gameSpeed = 100;
+        this.gameSpeed = 30;
 
     }
 

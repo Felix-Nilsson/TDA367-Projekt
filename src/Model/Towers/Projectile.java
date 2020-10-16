@@ -18,7 +18,7 @@ public class Projectile implements Updatable {
     private double enemyPosY;
     //angle is in radians
     private double angle;
-    private int vMultiplier=10;
+    private int vMultiplier=50;
     private final ImageView imageView;
     private boolean exists;
     private UpdateModel updateModel;
