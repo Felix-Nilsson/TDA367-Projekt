@@ -18,4 +18,6 @@ public interface Enemy extends Updatable {
     boolean isDead();
     int spawnTime();
     int getHealth();
+
+    int getMaxHealth();
 }

@@ -5,6 +5,7 @@ import Model.Enemy.Enemy;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -23,6 +24,10 @@ public class MapHandler {
     private final List<Cell> map;
     private ImageView cave;
     private ImageView base;
+
+    //TODO: Add a reference to game to get info from, rather than map
+
+    //TODO: Add a blurb justifying design choices
 
 
     public MapHandler(AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid,GridPane toplayerGrid, List<Cell> map){
@@ -89,6 +94,12 @@ public class MapHandler {
         ImageView img = enemyHashMap.get(e);
         img.setX(e.getPositionX());
         img.setY(e.getPositionY());
+    }
+
+    public void updateProgressBar(HashMap<Enemy, ProgressBar> pbHashMap, Enemy e){
+        ProgressBar pb = pbHashMap.get(e);
+        pb.setLayoutX(e.getPositionX());
+        pb.setLayoutY(e.getPositionY());
     }
 
     public void openSettings(AnchorPane settingsPane){

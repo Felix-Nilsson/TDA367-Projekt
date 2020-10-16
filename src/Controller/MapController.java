@@ -13,6 +13,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -24,6 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 import javax.tools.Tool;
+import java.awt.*;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -70,6 +73,9 @@ public class MapController extends AnchorPane implements Observer {
     private TowerFactory towerFactory;
     private final MenuController parentController;
 
+    private  ProgressBar pb;
+    private HashMap<Enemy,ProgressBar> progressBarHashMap;
+
     public MapController(Game game, List<Cell> map,MenuController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
@@ -84,6 +90,8 @@ public class MapController extends AnchorPane implements Observer {
         this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, toplayerGrid,map);
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
+        progressBarHashMap = new HashMap<>();
+
         game.addObserver(this);
         createSidebar();
 
@@ -263,15 +271,27 @@ public class MapController extends AnchorPane implements Observer {
                         break;
                     }
                     else{
-                        if (!enemyHashMap.containsKey(e)) {
+                        if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
+
                             ImageView img = new ImageView(e.getImage()); //TODO change later if keeping maphandler
                             fixImage(img,e);
                             enemyHashMap.put(e,img);
                             mapHandler.drawEnemy(img);
+
+                            ProgressBar pb = new ProgressBar((double)(e.getHealth())/e.getMaxHealth());
+                            pb.setLayoutX(e.getPositionX());
+                            pb.setLayoutY(e.getPositionY());
+
+                            Platform.runLater(()->gameBoardAnchorPane.getChildren().add(pb));
+                            progressBarHashMap.put(e,pb);
+
+
                         }
                         mapHandler.updateEnemy(enemyHashMap,e);
+                        mapHandler.updateProgressBar(progressBarHashMap,e);
 
                     }
+
                 }
             }
         }

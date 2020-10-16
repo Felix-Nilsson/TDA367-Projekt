@@ -271,9 +271,9 @@ public class Game extends Observable1 implements Updatable {
     }
 
     synchronized void checksRadius(){
-        if (towers.size()>0 && enemiesInWave.size()>0){
-
-            for (Tower t : towers){
+        // TOCTOU
+        if (towers.size() > 0 && enemiesInWave.size() > 0) { // Time of Check
+            for (Tower t : towers){ // Time of Use
                 //TODO if (t.cooldown == false)
                 t.attackIfEnemyInRange(enemiesInWave);
                 //TODO p har inte alltid en projectile
@@ -342,6 +342,25 @@ public class Game extends Observable1 implements Updatable {
         towers.add(t);
     }
 
+    private void usePelle() { // implicit synchronized(this)
+        // Do stuff
+        // T1: pelle2() -> tar monitorn för towers
+        // T2: pelle2() -> kan inte ta monitorn för att den has av T1
+        // T1: klar med pelle2() -> monitorn för towers släpps
+        // T2: kan nu ta monitorn för towers.
+        synchronized (towers) {
+            // Kritisk sektion.
+            towers.clear();
+        }
+    }
+
+    private void pelle2() { // implicit synchronized(this)
+        synchronized(towers) {
+            // Do stuff
+        }
+    }
+
+
     public Tower getTowerInCell(int x, int y){
         for(Tower t: towers){
             if(t.getX() == x && t.getY() == y){
@@ -350,6 +369,7 @@ public class Game extends Observable1 implements Updatable {
         }
         return null;
     }
+
     public int getArrayIndex(int x_placement, int y_placement){
         int placeInArray = 0;
         for(int i =0; i < b.getBOARD_WIDTH(); i++){

@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public final class UpdateModel  {
+
+    //TODO: rename class
+
     private List<Updatable> updatableList = new ArrayList<Updatable>();
 
     public void add(Updatable updatableObject){
