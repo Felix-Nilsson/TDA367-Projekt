@@ -12,8 +12,8 @@
          <image>
             <Image url="@../img/archerTower.png" />
          </image></ImageView>
-      <Label fx:id="leftUpgradeCostLabel" layoutX="297.0" layoutY="118.0" text="[left upgrade cost]" />
-      <Label fx:id="rightUpgradeCostLabel" layoutX="452.0" layoutY="118.0" text="[right upgrade cost]" />
+      <Label fx:id="leftUpgradeCostLabel" layoutX="263.0" layoutY="117.0" prefHeight="17.0" prefWidth="166.0" text="100" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="rightUpgradeCostLabel" layoutX="435.0" layoutY="117.0" prefHeight="17.0" prefWidth="138.0" text="100" textAlignment="CENTER" />
       <Label fx:id="attackLabel" layoutX="122.0" layoutY="32.0" prefHeight="18.0" prefWidth="74.0" text="Physical: 0" textAlignment="RIGHT" />
       <Label fx:id="magicLabel" layoutX="122.0" layoutY="48.0" prefHeight="18.0" prefWidth="74.0" text="Magic: 0" textAlignment="RIGHT" />
       <Label fx:id="rangeLabel" layoutX="121.0" layoutY="83.0" prefHeight="18.0" prefWidth="74.0" text="Range: 0" textAlignment="RIGHT" />
@@ -25,8 +25,14 @@
       <RadioButton fx:id="strongestRadioButton" layoutX="199.0" layoutY="65.0" mnemonicParsing="false" onAction="#updateTargeting" text="Strongest" toggleGroup="$targetingToggleGroup" />
       <RadioButton fx:id="closestRadioButton" layoutX="199.0" layoutY="84.0" mnemonicParsing="false" onAction="#updateTargeting" text="Closest" toggleGroup="$targetingToggleGroup" />
       <Button fx:id="sellButton" layoutX="115.0" layoutY="112.0" mnemonicParsing="false" onAction="#sellTowerClicked" prefHeight="26.0" prefWidth="144.0" style="-fx-background-color: #e34a4a;" text="Sell for: 0" textFill="WHITE" />
-      <Button fx:id="leftUpgradeButton" layoutX="288.0" layoutY="14.0" mnemonicParsing="false" onAction="#towerUpgradeLeft" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE" />
-      <Button fx:id="rightUpgradeButton" layoutX="447.0" layoutY="16.0" mnemonicParsing="false" onAction="#towerUpgradeRight" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE" />
+      <Button fx:id="leftUpgradeButton" layoutX="288.0" layoutY="16.0" mnemonicParsing="false" onAction="#towerUpgradeLeft" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE">
+         <graphic>
+            <ImageView fx:id="lUImageView" fitHeight="88.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic></Button>
+      <Button fx:id="rightUpgradeButton" layoutX="447.0" layoutY="16.0" mnemonicParsing="false" onAction="#towerUpgradeRight" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE">
+         <graphic>
+            <ImageView fx:id="rUImageView" fitHeight="88.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic></Button>
       <Label fx:id="attackSpeedLabel" layoutX="122.0" layoutY="66.0" prefHeight="18.0" prefWidth="74.0" text="Speed: 0" textAlignment="RIGHT" />
       <Button fx:id="closeButton" layoutX="568.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" style="-fx-background-color: #e34a4a;" text="X" textAlignment="CENTER" textFill="WHITE">
          <font>

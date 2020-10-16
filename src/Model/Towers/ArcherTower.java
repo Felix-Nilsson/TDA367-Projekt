@@ -11,9 +11,9 @@ public class ArcherTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public ArcherTower(UpdateModel updateModel,Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public ArcherTower(UpdateModel updateModel,Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
 
-        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
+        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
         baseTower.setTowerImage("img/archerTower.png");
         baseTower.setColor("000000");
 
@@ -40,6 +40,26 @@ public class ArcherTower implements Tower {
     @Override
     public int getPrice() {
         return baseTower.getPrice();
+    }
+
+    @Override
+    public int getLeftUpgradeCost() {
+        return baseTower.getLeftUpgradeCost();
+    }
+
+    @Override
+    public int getRightUpgradeCost() {
+        return baseTower.getRightUpgradeCost();
+    }
+
+    @Override
+    public String getLeftUpgradeLabel() {
+        return "Add 20 physical damage";
+    }
+
+    @Override
+    public String getRightUpgradeLabel() {
+        return "Add 1 speed";
     }
 
     @Override
@@ -96,6 +116,16 @@ public class ArcherTower implements Tower {
     @Override
     public String getImage() {
         return "/img/archerTower.png";
+    }
+
+    @Override
+    public String getLeftUpgradeImage() {
+        return "/img/archerTowerDmgUpgrade.png";
+    }
+
+    @Override
+    public String getRightUpgradeImage() {
+        return "/img/atkSpdUpgrade.png";
     }
 
     @Override

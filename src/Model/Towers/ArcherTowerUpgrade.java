@@ -9,12 +9,12 @@ public class ArcherTowerUpgrade extends TowerUpgrade{
     }
 
     public Tower leftUpgrade(){
-        t.setPhysicalDmg(t.getPhysicalDmg()+10);
+        t.setPhysicalDmg(t.getPhysicalDmg()+20);
         return super.leftUpgrade(t);
     }
 
     public Tower rightUpgrade(){
-        t.setAttackSpeed(t.getAttackSpeed()+0.5);
+        t.setAttackSpeed(t.getAttackSpeed()+1);
         return super.rightUpgrade(t);
     }
 

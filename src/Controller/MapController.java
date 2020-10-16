@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class MapController extends AnchorPane implements Observer {
@@ -121,10 +122,12 @@ public class MapController extends AnchorPane implements Observer {
                     int index = game.getArrayIndex(x_placement, y_placement);
                     boolean occupied = game.isCellOccupied(index);
                     if (!occupied && towerFactory.getPrice()<=game.getMoney()) {
+
+
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
 
-                        gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
+                        gameBoardGrid.add(image, x_placement, y_placement);
                         setTowerOnCell(index);
 
                         //After the tower has been added, add to hashmap
@@ -137,6 +140,8 @@ public class MapController extends AnchorPane implements Observer {
                         //Creates a new toolbar with the tower
                         createToolbar(game.getTowerInCell(x_placement, y_placement));
 
+                        //Updates the previous toolbarcontroller
+                        updateToolbar();
 
                     } else {
                         //TODO Some sort of error or could just leave it empty
@@ -306,8 +311,14 @@ public class MapController extends AnchorPane implements Observer {
         sidebarController.updateAvailable();
     }
 
+    public void updateToolbar(){
+        for(Map.Entry<Tower, ToolbarController> entry : toolbarTowerHashMap.entrySet()){
+            entry.getValue().updateUpgradeAvaialble();
+        }
+    }
+
     public void leftUpgradeTower(Tower t){
-        game.leftUpgradeMageTower(t);
+        game.leftUpgradeTower(t);
     }
 
     public void rightUpgradeTower(Tower t){

@@ -10,7 +10,7 @@ public class ArcherTowerFactory implements TowerFactory{
     @Override
     public ArcherTower createTower(Cell cell, UpdateModel updateModel) {
         //TODO Basecell
-        ArcherTower archerTower = new ArcherTower(updateModel,cell,10,0,100,50,0.5);
+        ArcherTower archerTower = new ArcherTower(updateModel,cell,10,0,100,50,0.5, 100,100);
         return archerTower;
     }
 

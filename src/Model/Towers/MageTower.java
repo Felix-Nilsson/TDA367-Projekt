@@ -8,8 +8,8 @@ public class MageTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
-        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
+    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel, int leftUpgradeCost, int rightUpgradeCost) {
+        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
         baseTower.setTowerImage("img/mageTower.png");
         updateModel.add(this);
     }
@@ -34,6 +34,26 @@ public class MageTower implements Tower {
     @Override
     public int getPrice() {
         return baseTower.getPrice();
+    }
+
+    @Override
+    public int getLeftUpgradeCost() {
+        return baseTower.getLeftUpgradeCost();
+    }
+
+    @Override
+    public int getRightUpgradeCost() {
+        return baseTower.getRightUpgradeCost();
+    }
+
+    @Override
+    public String getLeftUpgradeLabel() {
+        return "Add 20 magic damage";
+    }
+
+    @Override
+    public String getRightUpgradeLabel() {
+        return "Add 1 speed";
     }
 
     @Override
@@ -90,6 +110,16 @@ public class MageTower implements Tower {
     @Override
     public String getImage() {
         return "/img/mageTower.png";
+    }
+
+    @Override
+    public String getLeftUpgradeImage() {
+        return "/img/mageTowerDmgUpgrade.png";
+    }
+
+    @Override
+    public String getRightUpgradeImage() {
+        return "/img/atkSpdUpgrade.png";
     }
 
     @Override

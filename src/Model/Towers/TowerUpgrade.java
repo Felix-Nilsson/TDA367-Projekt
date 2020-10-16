@@ -122,4 +122,36 @@ public abstract class TowerUpgrade implements Tower {
         return null;
     }
 
+    @Override
+    public int getLeftUpgradeCost() {
+        return 0;
+    }
+
+    @Override
+    public int getRightUpgradeCost() {
+        return 0;
+    }
+
+    @Override
+    public String getLeftUpgradeLabel() {
+        return null;
+    }
+
+    @Override
+    public String getRightUpgradeLabel() {
+        return null;
+    }
+
+    @Override
+    public String getLeftUpgradeImage() {
+        return null;
+    }
+
+    @Override
+    public String getRightUpgradeImage() {
+        return null;
+    }
+
+
+
 }

@@ -6,6 +6,7 @@ import Model.Towers.Tower;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -34,6 +35,8 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
     @FXML private Button closeButton;
 
     @FXML private ImageView tImageView;
+    @FXML private ImageView lUImageView;
+    @FXML private ImageView rUImageView;
 
     @FXML private RadioButton firstRadioButton;
     @FXML private RadioButton strongestRadioButton;
@@ -61,6 +64,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
         init();
         eventHandlers();
         updateToolbar();
+
     }
 
     @Override
@@ -76,13 +80,19 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
             }
         });
     }
+
     
     private void init(){
         strongestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setToggleGroup(targetingToggleGroup);
         closestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setSelected(true);
-
+        lUImageView.setImage(new Image(tower.getLeftUpgradeImage()));
+        leftUpgradeCostLabel.setText(tower.getLeftUpgradeLabel() + ": " +tower.getLeftUpgradeCost()+"$");
+        leftUpgradeCostLabel.setAlignment(Pos.CENTER);
+        rUImageView.setImage(new Image(tower.getRightUpgradeImage()));
+        rightUpgradeCostLabel.setText(tower.getRightUpgradeLabel() + ": " + tower.getRightUpgradeCost()+"$");
+        rightUpgradeCostLabel.setAlignment(Pos.CENTER);
         //towerImageView.setImage(tower.getImage());
         //towerLabel.setText("Archer"); //temp
 
@@ -149,15 +159,46 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
 
     @FXML
     private void towerUpgradeLeft(){
-        parentController.leftUpgradeTower(tower);
-        updateToolbar();
+        if(game.getMoney() >= tower.getLeftUpgradeCost()){
+            parentController.leftUpgradeTower(tower);
+            leftUpgradeButton.setDisable(true);
+            leftUpgradeCostLabel.setText("Unavailable");
+            game.addMoney(-tower.getLeftUpgradeCost());
+            updateToolbar();
+            updateUpgradeAvaialble();
+            parentController.updateSidebar();
+        }
     }
 
     @FXML
     private void towerUpgradeRight(){
-        parentController.rightUpgradeTower(tower);
-        updateToolbar();
+        if(game.getMoney() >= tower.getRightUpgradeCost()){
+            parentController.rightUpgradeTower(tower);
+            rightUpgradeButton.setDisable(true);
+            rightUpgradeCostLabel.setText("Unavailable");
+            game.addMoney(-tower.getRightUpgradeCost());
+            updateToolbar();
+            updateUpgradeAvaialble();
+            parentController.updateSidebar();
+        }
+
     }
+
+    public void updateUpgradeAvaialble(){
+        if(game.getMoney()>=tower.getLeftUpgradeCost()){
+            leftUpgradeButton.setStyle("-fx-background-color:Lightgreen");
+        }
+        else{
+            leftUpgradeButton.setStyle("-fx-background-color:red");
+        }
+        if(game.getMoney()>=tower.getRightUpgradeCost()){
+            rightUpgradeButton.setStyle("-fx-background-color:Lightgreen");
+        }
+        else{
+            rightUpgradeButton.setStyle("-fx-background-color:red");
+        }
+    }
+
 
 
 

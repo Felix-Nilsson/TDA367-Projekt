@@ -19,30 +19,30 @@ public class BaseTower implements Tower {
     private double angle;
     private int posX;
     private int posY;
+    private int leftUpgradeCost;
+    private int rightUpgradeCost;
     private String towerImage;
+    private String leftUpgradeLabel;
+    private String rightUpgradeLabel;
 
 
     private UpdateModel updateModel;
 
     private Targeting target;
 
-    public BaseTower(UpdateModel updateModel, Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public BaseTower(UpdateModel updateModel, Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
         this.position = position;
         //längst upp till vänster är (25,15). Varje cell är 40 pixlar
         posX = position.getX()*40 +25;
         posY = position.getY()*40 +15;
-        System.out.println("x: "+ posX);
-        System.out.println("y: "+ posY);
         this.physicalDmg = physicalDmg;
         this.magicDmg = magicDmg;
         this.price = price;
         this.range = range;
         this.attackSpeed = attackSpeed;
-
         this.updateModel = updateModel;
-
-        //Temp, example of tower setting the color to the cell
-        position.setColor("000000");
+        this.leftUpgradeCost = leftUpgradeCost;
+        this.rightUpgradeCost = rightUpgradeCost;
 
         //Default is closest
         target = Targeting.FIRST;
@@ -102,6 +102,26 @@ public class BaseTower implements Tower {
     }
 
     @Override
+    public int getLeftUpgradeCost() {
+        return this.leftUpgradeCost;
+    }
+
+    @Override
+    public int getRightUpgradeCost() {
+        return this.rightUpgradeCost;
+    }
+
+    @Override
+    public String getLeftUpgradeLabel() {
+        return null;
+    }
+
+    @Override
+    public String getRightUpgradeLabel() {
+        return null;
+    }
+
+    @Override
     public int getX() {
         return position.getX();
     }
@@ -144,6 +164,16 @@ public class BaseTower implements Tower {
     @Override
     public String getImage() {
         return this.getImage();  //TODO might be wierd
+    }
+
+    @Override
+    public String getLeftUpgradeImage() {
+        return null;
+    }
+
+    @Override
+    public String getRightUpgradeImage() {
+        return null;
     }
 
     @Override

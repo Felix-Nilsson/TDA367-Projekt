@@ -9,6 +9,10 @@ public interface Tower extends Updatable {
     void attack();
 
     int getPrice();
+    int getLeftUpgradeCost();
+    int getRightUpgradeCost();
+    String getLeftUpgradeLabel();
+    String getRightUpgradeLabel();
 
     int getPosX();
     int getPosY();
@@ -27,6 +31,10 @@ public interface Tower extends Updatable {
     void setAttackSpeed(double amount);
 
     String getImage();
+    String getLeftUpgradeImage();
+    String getRightUpgradeImage();
+
+
     Targeting getTarget();
     void setTarget(Targeting target);
     Cell getPosition();

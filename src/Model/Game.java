@@ -265,7 +265,7 @@ public class Game implements Updatable {
         System.out.println("after: " + money);
     }
 
-    public void leftUpgradeMageTower(Tower t){
+    public void leftUpgradeTower(Tower t){
         t.leftUpgrade(t);
     }
 
