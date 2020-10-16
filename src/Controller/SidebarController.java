@@ -1,11 +1,13 @@
 package Controller;
 
-import Model.Enemy.Enemy;
 import Model.Game;
+
 import Model.Towers.*;
-import View.SidebarHandler;
+//import Controller.Observer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -14,11 +16,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
+
 import java.io.IOException;
 
 
-public class SidebarController extends AnchorPane  {
+public class SidebarController extends AnchorPane implements Observer {
     @FXML private ImageView sidebarBackground;
     @FXML private ImageView moneyIcon;
     @FXML private ImageView healthIcon;
@@ -35,10 +39,10 @@ public class SidebarController extends AnchorPane  {
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
 
+    private final Game game;
     private final MapController parentController;
     private MageTowerFactory mF;
     private ArcherTowerFactory aF;
-    private final SidebarHandler sidebarHandler;
 
     public SidebarController(Game game,MapController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
@@ -49,10 +53,14 @@ public class SidebarController extends AnchorPane  {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.game = game;
         this.parentController = parentController;
-        sidebarHandler = new SidebarHandler(game, health,money,playButtonImg,mageTowerAvailable,archerTowerAvailable);
+        game.addObserver(this);
         eventHandlers();
         updateAvailable();
+        updatePlayerStats();
+
+
     }
     private void eventHandlers(){
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -69,7 +77,7 @@ public class SidebarController extends AnchorPane  {
                 MageTowerFactory mf = new MageTowerFactory();
                 sendTowerToMap(mf);
                 updateAvailable();
-                sidebarHandler.updatePlayerStats();
+                updatePlayerStats();
             }
         });
         archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -85,7 +93,7 @@ public class SidebarController extends AnchorPane  {
                 ArcherTowerFactory af = new ArcherTowerFactory();
                 sendTowerToMap(af);
                 updateAvailable();
-                sidebarHandler.updatePlayerStats();
+                updatePlayerStats();
             }
         });
     }
@@ -94,31 +102,59 @@ public class SidebarController extends AnchorPane  {
         parentController.receiveTowerFactory(towerFactory);
     }
 
+    private void updatePlayerStats(){
+        Platform.runLater(()->health.setText(game.getHealth()+""));
+        Platform.runLater(()->money.setText(game.getMoney()+""));
+    }
+
+    public void update(){
+        updatePlayerStats();
+        updateAvailable();
+    }
+
+    @Override
+    public void notifyGameOver() {
+
+    }
+
+    @Override
+    public void notifyRoundOver() {
+        playButtonImg.setImage(new Image("/img/play_button.png"));
+    }
+
+    @Override
+    public void notifyGameWon() {
+
+    }
+
     @FXML private void nextRound(){
         //pressed play
         if(!parentController.isWaveRunning()){
             //if there exists enemies on map
             if(parentController.getEnemies() != null){
                 if(parentController.getEnemies().size() > 0 ){
-                    sidebarHandler.setPauseImg();
+                    playButtonImg.setImage(new Image("/img/pause.png"));
                     parentController.play();
                 }
                 else{
-                    sidebarHandler.setPauseImg();
                     parentController.nextRound();
+                    playButtonImg.setImage(new Image("/img/pause.png"));
                 }
+
             }
             //first round when enemy list is null
             else{
                 parentController.nextRound();
-                sidebarHandler.setPauseImg();
+                playButtonImg.setImage(new Image("/img/pause.png"));
             }
+
 
         }
         //pressed pause
         else{
-            sidebarHandler.setPlayImg();
+            playButtonImg.setImage(new Image("/img/play_button.png"));
             parentController.pause();
+
         }
     }
 
@@ -129,7 +165,29 @@ public class SidebarController extends AnchorPane  {
 
 
     @FXML public void updateAvailable(){
-        sidebarHandler.updateAvailable();
+
+        //TODO View beteende
+
+        if(game.getMoney() >= 150){ //Price of mageTower might need to get
+            mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
+        }
+        else {
+            mageTowerAvailable.setStyle("-fx-background-color:red");
+        }
+        if(game.getMoney() >= 100){ //Price of archerTower might need to get
+            archerTowerAvailable.setStyle("-fx-background-color:Lightgreen");
+        }
+        else {
+            archerTowerAvailable.setStyle("-fx-background-color:red");
+        }
+
+
+
     }
+
+
+
+
+
 
 }

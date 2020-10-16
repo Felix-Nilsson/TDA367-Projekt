@@ -1,11 +1,8 @@
-package View;
-
-import Model.Enemy.Enemy;
+package Controller;
 
 public interface Observer {
+    void update();
     void notifyGameOver();
     void notifyRoundOver();
     void notifyGameWon();
-    void notifyEnemyDead(Enemy e);
-    void update();
 }

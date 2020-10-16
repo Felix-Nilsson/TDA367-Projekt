@@ -2,10 +2,11 @@ package Model.Towers;
 
 import Model.Cell.Cell;
 import Model.Enemy.Enemy;
+import Model.Updatable;
 
 import java.util.List;
 
-public interface Tower {
+public interface Tower extends Updatable {
     void update();
     void attackIfEnemyInRange(List<Enemy> enemyList);
     void attack();

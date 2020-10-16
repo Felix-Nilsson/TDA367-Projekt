@@ -1,12 +1,13 @@
 package Model.Towers;
 
 import Model.Cell.Cell;
+import Model.UpdateModel;
 
 public class MageTowerFactory implements TowerFactory{
 
     @Override
-    public MageTower createTower(Cell cell) {
-        return new MageTower(cell,0,10,150,100,0.5);
+    public MageTower createTower(Cell cell, UpdateModel updateModel) {
+        return new MageTower(cell,0,10,150,100,0.5,updateModel);
     }
 
     @Override

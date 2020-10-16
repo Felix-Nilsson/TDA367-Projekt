@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Enemy.Enemy;
 import Model.Game;
 import Model.Towers.Targeting;
 import Model.Towers.Tower;
@@ -18,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class ToolbarController <T extends Tower> extends AnchorPane  {
+public class ToolbarController <T extends Tower> extends AnchorPane implements Observer {
     @FXML private AnchorPane toolbarPane;
 
     @FXML private Label towerLabel;
@@ -57,13 +56,32 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         this.game = game;
         this.parentController = parentController;
         this.tower = t;
+        game.addObserver(this);
         targetingToggleGroup = new ToggleGroup();
         init();
         eventHandlers();
         updateToolbar();
     }
 
+    @Override
+    public void update() {
 
+    }
+
+    @Override
+    public void notifyGameOver() {
+
+    }
+
+    @Override
+    public void notifyRoundOver() {
+
+    }
+
+    @Override
+    public void notifyGameWon() {
+
+    }
 
     private void eventHandlers(){
         closeButton.setOnMousePressed(new EventHandler<MouseEvent>() {

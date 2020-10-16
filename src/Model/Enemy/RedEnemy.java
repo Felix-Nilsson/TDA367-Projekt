@@ -72,12 +72,6 @@ public class RedEnemy implements Enemy {
     public int getHealth(){
         return parent.getHealth();
     }
-
-    @Override
-    public int getMaxHealth() {
-        return parent.getMaxHealth();
-    }
-
     protected int getMovementSpeed(){
         return parent.getMovementSpeed();
     }
