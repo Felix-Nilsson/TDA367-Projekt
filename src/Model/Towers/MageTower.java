@@ -77,6 +77,11 @@ public class MageTower implements Tower {
     }
 
     @Override
+    public boolean getIsReadyToFire() {
+        return baseTower.getIsReadyToFire();
+    }
+
+    @Override
     public String getImage() {
         return "/img/mageTower.png";
     }

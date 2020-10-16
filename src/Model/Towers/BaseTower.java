@@ -1,7 +1,5 @@
 package Model.Towers;
 
-import Model.Cell.BaseCell;
-
 import Model.Cell.Cell;
 
 import Model.Enemy.Enemy;
@@ -9,6 +7,8 @@ import Model.UpdateModel;
 import javafx.scene.image.Image;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class BaseTower implements Tower {
@@ -20,12 +20,14 @@ public class BaseTower implements Tower {
     private final double attackSpeed;
     private Image towerImage;
     private double angle;
-    private int posX;
-    private int posY;
+    private final int posX;
+    private final int posY;
     private Projectile currentProjectile;
     private int enemyPosX;
     private int enemyPosY;
-
+    private double currentCooldown;
+    private boolean isReadyToFire = true;
+    private final int timerDelayInMilliseconds = 100;
 
     private UpdateModel updateModel;
 
@@ -45,14 +47,39 @@ public class BaseTower implements Tower {
         this.attackSpeed = attackSpeed;
 
         this.updateModel = updateModel;
-
+        //tower ska kunna attackera direkt
+        this.currentCooldown=0;
         //Temp, example of tower setting the color to the cell
         position.setColor("000000");
 
         //Default is closest
         target = Targeting.FIRST;
-
+        timer.scheduleAtFixedRate(timerTask,timerDelayInMilliseconds,timerDelayInMilliseconds);
     }
+    Timer timer = new Timer();
+    TimerTask timerTask = new TimerTask(){
+        @Override
+        public void run() {
+            checkCooldown();
+        }
+    };
+    private void checkCooldown(){
+        if (currentCooldown>0){
+            currentCooldown--;
+            System.out.println("IS NOOOOOOOOOOOOOOOOOOOOOT READY TO FIRE");
+            System.out.println("currentCooldown: " + currentCooldown);
+        }
+        else{
+            isReadyToFire = true;
+            System.out.println("IS NOW READY TO FIRE AGAAAIN");
+        }
+    }
+
+    @Override
+    public boolean getIsReadyToFire() {
+        return isReadyToFire;
+    }
+
     @Override
     public int getPosX(){
         return posX;
@@ -90,8 +117,6 @@ public class BaseTower implements Tower {
                 //e.tookDamage(5);
             }
         }
-
-
     }
 
     @Override
@@ -100,6 +125,17 @@ public class BaseTower implements Tower {
         System.out.println("angle: " +Math.toDegrees(angle));
         //currentProjectile = new Projectile(this.posX,this.posY,angle, updateModel);
         currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY, updateModel);
+        resetCurrentCooldown();
+    }
+
+    //sätter cooldown beroende på attackspeed så att Tower inte kan attackera konstant
+    private void resetCurrentCooldown(){
+        //the attackspeed is attacks/second, for example:
+        //attackspeed=0.5, then 1/attackspeed==2 attacks per second. However cooldown is modified more than once a second, in fact every (timerDelayInMilliseconds/1000) seconds
+        // To compensate for this, the numerator is 1000 (milliseconds) and the denominator is attackspeed*timerDelayInMilliseconds
+
+        currentCooldown = (1000/(attackSpeed*timerDelayInMilliseconds));
+        isReadyToFire = false;
     }
 
     @Override

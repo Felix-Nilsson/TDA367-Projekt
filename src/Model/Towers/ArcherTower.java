@@ -7,6 +7,7 @@ import Model.UpdateModel;
 import javafx.scene.image.Image;
 
 import java.util.List;
+import java.util.Timer;
 
 
 public class ArcherTower implements Tower {
@@ -78,6 +79,11 @@ public class ArcherTower implements Tower {
     public double getAttackSpeed() {
         return baseTower.getAttackSpeed();
 
+    }
+
+    @Override
+    public boolean getIsReadyToFire() {
+        return baseTower.getIsReadyToFire();
     }
 
     @Override

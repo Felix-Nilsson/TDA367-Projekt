@@ -32,39 +32,14 @@ public class Projectile implements Updatable {
         this.posY=towerPosY;
         this.enemyPosX=enemyPosX;
         this.enemyPosY=enemyPosY;
-        /*
-        this.enemyPosX=enemyPosX;
-        this.enemyPosY=enemyPosY;
-         */
-        //this.angle=tower.getAngle();
+
         this.angle=angle;
         calculateVelocity();
-/*
-        Image image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
-        imageView = new ImageView(image);
-        fixImage(imageView);
 
- */
-        //gameBoardAnchorPane.getChildren().add(imageView);
         this.updateModel=updateModel;
         updateModel.add(this);
         exists=true;
     }
-/*
-    public ImageView getImageView(){
-        return imageView;
-    }
-
-    private void fixImage(ImageView img){
-        img.setX(posX);
-        img.setY(posY);
-        img.setFitHeight(25);
-        img.setFitWidth(25);
-        img.setPreserveRatio(true);
-        img.toFront();
-    }
-
- */
 
     private void damageEnemy(Enemy enemy, DamageType damageType){
 

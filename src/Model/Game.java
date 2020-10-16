@@ -275,15 +275,18 @@ public class Game extends Observable1 implements Updatable {
 
             for (Tower t : towers){
                 //TODO if (t.cooldown == false)
-                t.attackIfEnemyInRange(enemiesInWave);
-                //TODO p har inte alltid en projectile
-                Projectile p = t.getProjectile();
-                if (p!=null){
-                    System.out.println("p är inte null");
-                    projectileList.add(p);
-                    System.out.println(projectileList.size());
-                    this.notifyObservers1ThatProjWasAdded(p);
+                if(t.getIsReadyToFire()){
+                    t.attackIfEnemyInRange(enemiesInWave);
+                    //TODO p har inte alltid en projectile
+                    Projectile p = t.getProjectile();
+                    if (p!=null){
+                        System.out.println("p är inte null");
+                        projectileList.add(p);
+                        System.out.println(projectileList.size());
+                        this.notifyObservers1ThatProjWasAdded(p);
+                    }
                 }
+
             }
         }
 

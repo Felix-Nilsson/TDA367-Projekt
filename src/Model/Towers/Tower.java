@@ -25,6 +25,7 @@ public interface Tower extends Updatable {
     int getMagicDmg();
     int getPhysicalDmg();
     double getAttackSpeed();
+    boolean getIsReadyToFire();
 
     String getImage();
 
