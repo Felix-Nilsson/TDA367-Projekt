@@ -35,7 +35,7 @@ public class BaseEnemy implements Enemy {
         this.magicResist=magicResist;
         this.armor=armor;
         this.positionX=0;
-        this.positionY=(startPos-1) * 40 + 10;
+        this.positionY=(startPos-1) * 40;
         this.path = path;
         isDead = false;
         //så länge enemy spawnas på 25,75... ska denna inte behövas
@@ -165,7 +165,7 @@ public class BaseEnemy implements Enemy {
         }
         System.out.println(this + "Health: ");
         if (health<=0){
-            //TODO delete this object
+            isDead = true;
         }
     }
 

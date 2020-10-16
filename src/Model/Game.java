@@ -30,6 +30,7 @@ public class Game implements Updatable {
     int round = 1;
     private int gameSpeed = 20;
     private int enemyCounter;
+    private int totalNumberOfRounds;
 
     public Game (Difficulty difficulty, int mapNumber){
         this.difficulty = difficulty;
@@ -42,20 +43,26 @@ public class Game implements Updatable {
         setValues();
         towers = new ArrayList<>();
         this.gameSpeed = 20;
+
     }
 
     public List<Enemy> getEnemiesInWave() {
         return enemiesInWave;
     }
 
+    /**
+     * Enemy counter keeps track of amount of enemies in current wave
+     * resets list (enemiesInWave)
+     */
     public void nextRound(){
-        waveManager.createWave(round);
-        List<Enemy> sizeCounter = waveManager.getWave();
-        enemyCounter = sizeCounter.size()-1;
+        enemyCounter = waveManager.getWaveSize(round);
         enemiesInWave = new ArrayList<>();
         waveRunning = true;
         run();
 
+    }
+    public void notifyAllObservers(){
+        observable.update();
     }
     public int getRound(){
         return round;
@@ -120,36 +127,59 @@ public class Game implements Updatable {
         }
     }
     public void update(){
-
+        checkIfGameOver();
         updateModel.update();
         checksRadius();
         observable.update();
 
     }
-    public void pause(){
+    private void checkIfGameOver(){
+        if(health <= 0){
+            gameOver();
+        }
+        //if its the last wave and there are no more enemies
+        else if(round == totalNumberOfRounds && enemiesInWave.size() == 0){
+            gameWon();
+        }
+    }
+    private void gameOver(){
+        observable.notifyGameOver();
+        stopGameLoopThread();
+        stopEnemyCreatorThread();
+
+    }
+    private void gameWon(){
+        observable.notifyGameWon();
+    }
+
+    private void stopEnemyCreatorThread(){
         if(enemyCreatorThread.isAlive()){
             enemyCreatorThread.interrupt();
         }
-        gameLoopThread.interrupt();
+    }
+    private void stopGameLoopThread(){
+        if(gameLoopThread.isAlive()){
+            gameLoopThread.interrupt();
+        }
+    }
+    public void pause(){
         waveRunning = false;
-
+        stopEnemyCreatorThread();
+        stopGameLoopThread();
     }
     public void play(){
         waveRunning = true;
-        if(enemyCreatorThread.isInterrupted()){
-            startEnemyCreatorThread();
-        }
+        startEnemyCreatorThread();
         startGameLoopThread();
     }
     public void endRound(){
-        if(enemyCreatorThread.isAlive()){
-            enemyCreatorThread.interrupt();
-        }
-        gameLoopThread.interrupt();
+        observable.notifyRoundOver();
+        stopEnemyCreatorThread();
+        stopGameLoopThread();
         waveRunning = false;
-        update();
         round++;
     }
+
     public void removeEnemy(Enemy enemy){
         if(!updateModel.removeObserver(enemy)){
             System.out.println("error in removing observer");
@@ -161,22 +191,18 @@ public class Game implements Updatable {
 
     }
 
-
-
-
-
-
     public boolean isWaveRunning(){
         return waveRunning;
     }
-
 
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
     }
 
     synchronized void checksRadius(){
+
         if (towers.size()>0 && enemiesInWave.size()>0){
+
             for (Tower t : towers){
                 //TODO if (t.cooldown == false)
                 for (Enemy e : enemiesInWave){
@@ -204,6 +230,7 @@ public class Game implements Updatable {
         }
 
 
+
     }
 
 
@@ -217,16 +244,19 @@ public class Game implements Updatable {
     private void setValues(){
         switch (difficulty) {
             case EASY:
-                this.health = 100;
-                this.money = 2000; //TODO CHANGE BEFORE FINAL PUSH
+                this.health = 20;
+                this.money = 2000;
+                this.totalNumberOfRounds = 5;
                 break;
             case MEDIUM:
-                this.health = 50;
-                this.money = 150;
+                this.health = 10;
+                this.money = 1500;
+                this.totalNumberOfRounds = 10;
                 break;
             case HARD:
-                this.health = 10;
-                this.money = 80;;
+                this.health = 1;
+                this.money = 800;
+                this.totalNumberOfRounds = 15;
                 break;
         }
     }
@@ -292,8 +322,11 @@ public class Game implements Updatable {
         money += toAdd;
         System.out.println("after: " + money);
     }
+    public int getMapNumber(){
+        return mapNumber;
+    }
 
-
-
-
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
 }

@@ -63,16 +63,12 @@ public class MenuController extends AnchorPane implements Initializable {
     }
 
     @FXML
-    private void newGame(){
+    protected void newGame(){
         playClickUIButtonSound();
-
         Game game = new Game(difficulty,mapNumber);
-        MapController mapController = new MapController(game,game.getBoard(),mainMenuAnchorPane);
+        MapController mapController = new MapController(game,game.getBoard(),this);
         map.toFront();
         map.getChildren().add(mapController);
-
-
-
     }
     @FXML private void loadGame(){
         playClickUIButtonSound();
@@ -85,7 +81,7 @@ public class MenuController extends AnchorPane implements Initializable {
         playClickUIButtonSound();
         mapSelectionAnchorPane.toFront();
     }
-    @FXML private void backToMenu(){
+    @FXML protected void openMenu(){
         mainMenuAnchorPane.toFront();
     }
     @FXML private void exitGame(){ System.exit(0); }

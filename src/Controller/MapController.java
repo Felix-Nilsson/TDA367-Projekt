@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 import javax.tools.Tool;
@@ -51,7 +52,9 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private AnchorPane toolbarCover;
     @FXML private AnchorPane gameBoardAnchorPane;
     @FXML private GridPane toplayerGrid;
-    @FXML private AnchorPane mainMenu;
+
+    @FXML private Pane gameOverScreen;
+    @FXML private Pane gameWonScreen;
 
     private boolean paused = false;
     private final Game game;
@@ -67,8 +70,9 @@ public class MapController extends AnchorPane implements Observer {
     private ImageView base;
     private MapHandler mapHandler;
     private TowerFactory towerFactory;
+    private MenuController parentController;
 
-    public MapController(Game game, List<Cell> map,AnchorPane home) {
+    public MapController(Game game, List<Cell> map,MenuController parentController) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
@@ -78,7 +82,7 @@ public class MapController extends AnchorPane implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.mainMenu = home;
+        this.parentController = parentController;
         this.map = map;
         this.game = game;
         this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, toplayerGrid,map);
@@ -216,7 +220,10 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private void closeGame(){
         System.exit(0);}
     @FXML private void mainMenu(){
-        mainMenu.toFront();
+        parentController.openMenu();
+    }
+    @FXML private void restart(){
+        parentController.newGame();
     }
 
     public void nextRound(){
@@ -228,10 +235,23 @@ public class MapController extends AnchorPane implements Observer {
     protected List<Enemy> getEnemies(){
         return game.getEnemiesInWave();
     }
+    @Override
+    public void notifyGameOver() {
+        Platform.runLater(()->gameOverScreen.toFront());
+    }
+
+    @Override
+    public void notifyRoundOver() {
+
+    }
+
+    @Override
+    public void notifyGameWon() {
+        Platform.runLater(()->gameWonScreen.toFront());
+    }
+
 
     public void update(){
-
-
         if (game.getEnemiesInWave()!= null ) {
             if(game.getEnemiesInWave().size() > 0){
                 for(Enemy e : game.getEnemiesInWave()){
@@ -239,7 +259,6 @@ public class MapController extends AnchorPane implements Observer {
                         Platform.runLater(()->gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
                         game.getEnemiesInWave().remove(e);
                         game.enemyIsOut(e);
-                        System.out.println("is dead");
                         break;
                     }
                     else{
@@ -254,12 +273,11 @@ public class MapController extends AnchorPane implements Observer {
                     }
                 }
             }
-
-            else{
-                //round over
-            }
         }
     }
+
+
+
     private void fixImage(ImageView img,Enemy e){
         img.setX(e.getPositionX());
         img.setY(e.getPositionY());
@@ -325,8 +343,7 @@ public class MapController extends AnchorPane implements Observer {
 
 
     public void updateSidebar(){
-        sidebarController.updatePlayerStats();
-        sidebarController.updateAvailable();
+        game.notifyAllObservers();
     }
 
 

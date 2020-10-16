@@ -56,8 +56,13 @@ public class SidebarController extends AnchorPane implements Observer {
         this.game = game;
         this.parentController = parentController;
         game.addObserver(this);
-        setValues();
+        eventHandlers();
+        updateAvailable();
+        updatePlayerStats();
 
+
+    }
+    private void eventHandlers(){
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -91,41 +96,37 @@ public class SidebarController extends AnchorPane implements Observer {
                 updatePlayerStats();
             }
         });
-
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
-        updateAvailable();
-        updatePlayerStats();
-
-
     }
 
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
         parentController.receiveTowerFactory(towerFactory);
     }
 
-    private void setValues(){
-
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
-    }
-
-    public void updatePlayerStats(){
+    private void updatePlayerStats(){
         Platform.runLater(()->health.setText(game.getHealth()+""));
         Platform.runLater(()->money.setText(game.getMoney()+""));
     }
 
     public void update(){
-        updateAvailable();
         updatePlayerStats();
-
-        if(!parentController.isWaveRunning()){
-            roundOver();
-        }
+        updateAvailable();
     }
-    public void roundOver(){
+
+    @Override
+    public void notifyGameOver() {
+
+    }
+
+    @Override
+    public void notifyRoundOver() {
         playButtonImg.setImage(new Image("/img/play_button.png"));
     }
+
+    @Override
+    public void notifyGameWon() {
+
+    }
+
     @FXML private void nextRound(){
         //pressed play
         if(!parentController.isWaveRunning()){

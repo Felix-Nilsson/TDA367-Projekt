@@ -54,9 +54,8 @@ public class MapHandler {
         base.setFitWidth(40);
         base.setPreserveRatio(true);
         base.toFront();
-        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth());
+        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth()); //TODO gameboardanchorpane width does not work in map handler for some reason
         base.setY((endPos - 1) *40);
-        System.out.println(gameBoardAnchorPane.getWidth());
         gameBoardAnchorPane.getChildren().add(base);
 
         //add all cells to GUI

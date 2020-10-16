@@ -33,7 +33,7 @@
             <RadioButton fx:id="radioButtonEasy" layoutX="583.0" layoutY="260.0" mnemonicParsing="false" onMouseClicked="#selectEasyDifficulty" prefHeight="90.0" prefWidth="200.0" styleClass="RadioButtonSelected" text="Easy" textFill="WHITE" />
             <RadioButton fx:id="radioButtonMedium" layoutX="583.0" layoutY="366.0" mnemonicParsing="false" onMouseClicked="#selectMediumDifficulty" prefHeight="90.0" prefWidth="200.0" styleClass="RadioButtonNotSelected" text="Medium" textFill="WHITE" />
             <RadioButton fx:id="radioButtonHard" layoutX="583.0" layoutY="477.0" mnemonicParsing="false" onMouseClicked="#selectHardDifficulty" prefHeight="90.0" prefWidth="200.0" styleClass="RadioButtonNotSelected" text="Hard" textFill="WHITE" />
-            <Button layoutX="36.0" layoutY="662.0" mnemonicParsing="false" onMouseClicked="#backToMenu" prefHeight="81.0" prefWidth="110.0" styleClass="buttonMainMenu">
+            <Button layoutX="36.0" layoutY="662.0" mnemonicParsing="false" onMouseClicked="#openMenu" prefHeight="81.0" prefWidth="110.0" styleClass="buttonMainMenu">
                <font>
                   <Font size="36.0" />
                </font>
@@ -76,7 +76,7 @@
             <RadioButton fx:id="radioButtonMap1" layoutX="404.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#selectMap1" prefHeight="76.0" prefWidth="264.0" styleClass="RadioButtonSelected" text="Curvy snake" />
             <RadioButton fx:id="radioButtonMap2" layoutX="404.0" layoutY="386.0" mnemonicParsing="false" onMouseClicked="#selectMap2" prefHeight="76.0" prefWidth="264.0" styleClass="RadioButtonSelected" text="TBD" />
             <RadioButton fx:id="radioButtonMap3" layoutX="404.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#selectMap3" prefHeight="76.0" prefWidth="264.0" styleClass="RadioButtonSelected" text="TBD" />
-            <Button layoutX="21.0" layoutY="664.0" mnemonicParsing="false" onMouseClicked="#backToMenu" prefHeight="81.0" prefWidth="110.0" styleClass="buttonMainMenu">
+            <Button layoutX="21.0" layoutY="664.0" mnemonicParsing="false" onMouseClicked="#openMenu" prefHeight="81.0" prefWidth="110.0" styleClass="buttonMainMenu">
                <font>
                   <Font size="36.0" />
                </font>

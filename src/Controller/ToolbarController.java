@@ -39,8 +39,8 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
     @FXML private RadioButton strongestRadioButton;
     @FXML private RadioButton closestRadioButton;
 
-    private ToggleGroup targetingToggleGroup;
-    private T tower;
+    private final ToggleGroup targetingToggleGroup;
+    private final T tower;
     private final Game game;
     private final MapController parentController;
 
@@ -65,6 +65,21 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
 
     @Override
     public void update() {
+
+    }
+
+    @Override
+    public void notifyGameOver() {
+
+    }
+
+    @Override
+    public void notifyRoundOver() {
+
+    }
+
+    @Override
+    public void notifyGameWon() {
 
     }
 
@@ -95,12 +110,10 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
         towerLabel.setText(tower.toString());
         tImageView.setImage(new Image(tower.getImage()));
         sellButton.setText("Sell: "+ (int)(tower.getPrice() * 0.5));
-
         magicLabel.setText("Magic: " + tower.getMagicDmg());
         attackLabel.setText("Physical: " + tower.getPhysicalDmg());
         attackSpeedLabel.setText("Speed: " + tower.getAttackSpeed());
         rangeLabel.setText("Range: " + tower.getRange());
-
         switch(tower.getTarget()){
             case FIRST: firstRadioButton.setSelected(true); break;
             case STRONGEST: strongestRadioButton.setSelected(true); break;
