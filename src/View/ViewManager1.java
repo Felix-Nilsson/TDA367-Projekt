@@ -2,17 +2,15 @@ package View;
 
 import Model.Game;
 import Model.Towers.Projectile;
-import Model.Updatable;
 import Model.Observer1;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-public class ViewManager1 implements Updatable, Observer1 {
+public class ViewManager1 implements  Observer1 {
 
     private List<Projectile> projectileList;
     private List<ImageView> projectileImages;
@@ -25,7 +23,6 @@ public class ViewManager1 implements Updatable, Observer1 {
         this.gameBoardAnchorPane=gameBoardAnchorPane;
         projectileList = game.getProjectileList();
         //lite skevt att game har en egen addUpdatable istället för att ärva add från Updatemodel då Game extends Updatemodel(fungerar som Observable)
-        game.addUpdatable(this);
         game.addObserver1(this);
         projectileHashMap = new HashMap<Projectile, ImageView>();
         System.out.println("ViewManager was created and has been added as an observer1");
@@ -76,7 +73,7 @@ public class ViewManager1 implements Updatable, Observer1 {
         System.out.println("HashMap.size: " + projectileHashMap.size());
     }
 
-    @Override
+
     public void update() {
 
         projectileList = game.getProjectileList();

@@ -2,14 +2,10 @@ package Model.Towers;
 
 import Model.DamageType;
 import Model.Enemy.Enemy;
-import Model.Updatable;
-import Model.UpdateModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.HashMap;
-
-public class Projectile implements Updatable {
+public class Projectile {
     private double vx;
     private double vy;
     private double posX;
@@ -21,12 +17,11 @@ public class Projectile implements Updatable {
     private int vMultiplier=50;
     private final ImageView imageView;
     private boolean exists;
-    private UpdateModel updateModel;
 
 
     //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
     //Om projectile inte är hitscan och tower har en Angle blir det lätt att implementera en riktig projektil (collision måste dock skapas då)
-    public Projectile(double towerPosX, double towerPosY, double enemyPosX, double enemyPosY, UpdateModel updateModel){
+    public Projectile(double towerPosX, double towerPosY, double enemyPosX, double enemyPosY){
         System.out.println("Projectile was created");
         this.posX=towerPosX;
         this.posY=towerPosY;
@@ -43,9 +38,6 @@ public class Projectile implements Updatable {
         Image image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
         imageView = new ImageView(image);
         fixImage(imageView);
-        //gameBoardAnchorPane.getChildren().add(imageView);
-        this.updateModel=updateModel;
-        updateModel.add(this);
         exists=true;
     }
 
@@ -101,7 +93,7 @@ public class Projectile implements Updatable {
     public boolean isExisting(){
         return exists;
     }
-    @Override
+
     public void update(){
         move();
         if(targetInFirstQuadrantWasHit() || targetInSecondQuadrantWasHit() || targetInThirdQuadrantWasHit() || targetInFourthQuadrantWasHit()){

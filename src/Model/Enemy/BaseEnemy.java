@@ -47,12 +47,12 @@ public class BaseEnemy implements Enemy {
     //Dessa metoder ska kallas varje gång model ska uppdateras
     @Override
     public void update(){
-        followPath();
-        move();
+
     }
 
     //movementspeed = pixels per millisecond
     public void move(){
+        followPath();
         switch (direction) {
             case NORTH : positionY = positionY - movementSpeed; break;
             case EAST : positionX = positionX + movementSpeed; break;
