@@ -53,6 +53,11 @@ public class ViewManager1 implements Updatable, Observer1 {
             public void run() {
                 if(gameBoardAnchorPane.getChildren().remove(projectileHashMap.get(p))){
                     System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.println("HASHMAP SIZE:    -         -            -          " + projectileHashMap.size());
+                    System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+                    projectileHashMap.remove(p);
+                    System.out.println("HASHMAP SIZE:    -         -            -          " + projectileHashMap.size());
+                    System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
                 }
             }
         });
@@ -69,8 +74,6 @@ public class ViewManager1 implements Updatable, Observer1 {
 
     private void addViewToHashMap(Projectile p){
         ProjectileView pV = new ProjectileView(p);
-        //ImageView imageView = new ImageView(pV.getImage());
-        //projectileHashMap.put(p, imageView);pV.getImageView()
         projectileHashMap.put(p, pV.getImageView());
         Platform.runLater(()->gameBoardAnchorPane.getChildren().add(pV.getImageView()));
         System.out.println("HashMap.size: " + projectileHashMap.size());
@@ -87,28 +90,9 @@ public class ViewManager1 implements Updatable, Observer1 {
                 updateProjectile(projectileHashMap, p);
 
             }
-                /*
-                for (Projectile p : projectileList){
-                    if(p.isExisting()){
-                        System.out.println("PROJECTILEUPDATE");
-                        updateProjectile(projectileHashMap,p);
-                    }
-                    else{
-                        System.out.println("a projectile has died");
-                        game.removeProjectile(p);
-
-                    }
-
-                }
-                */
-            }
-
-
+        }
     }
     public void updateProjectile(HashMap<Projectile, ImageView> projectileHashMap, Projectile p){
-        //ImageView img = projectileHashMap.get(p);
-        //System.out.println(p.getPosX());
-
         ImageView img = projectileHashMap.get(p);
         img.setX(p.getPosX());
         img.setY(p.getPosY());

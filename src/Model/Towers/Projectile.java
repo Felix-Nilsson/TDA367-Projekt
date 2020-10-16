@@ -19,7 +19,7 @@ public class Projectile implements Updatable {
     //angle is in radians
     private double angle;
     private int vMultiplier=50;
-    private final ImageView imageView;
+    //private final ImageView imageView;
     private boolean exists;
     private UpdateModel updateModel;
 
@@ -39,19 +39,22 @@ public class Projectile implements Updatable {
         //this.angle=tower.getAngle();
         this.angle=angle;
         calculateVelocity();
-
+/*
         Image image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
         imageView = new ImageView(image);
         fixImage(imageView);
+
+ */
         //gameBoardAnchorPane.getChildren().add(imageView);
         this.updateModel=updateModel;
         updateModel.add(this);
         exists=true;
     }
-
+/*
     public ImageView getImageView(){
         return imageView;
     }
+
     private void fixImage(ImageView img){
         img.setX(posX);
         img.setY(posY);
@@ -60,6 +63,8 @@ public class Projectile implements Updatable {
         img.setPreserveRatio(true);
         img.toFront();
     }
+
+ */
 
     private void damageEnemy(Enemy enemy, DamageType damageType){
 
