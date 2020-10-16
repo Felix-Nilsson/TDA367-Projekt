@@ -279,6 +279,10 @@ public class MapController extends AnchorPane implements Observer {
                             mapHandler.drawEnemy(img);
 
                             ProgressBar pb = new ProgressBar((double)(e.getHealth())/e.getMaxHealth());
+                            pb.setMaxWidth(45);
+                            pb.setMaxHeight(10);
+                            pb.styleProperty().set("-fx-accent: red");
+
                             pb.setLayoutX(e.getPositionX());
                             pb.setLayoutY(e.getPositionY());
 

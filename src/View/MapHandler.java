@@ -98,8 +98,10 @@ public class MapHandler {
 
     public void updateProgressBar(HashMap<Enemy, ProgressBar> pbHashMap, Enemy e){
         ProgressBar pb = pbHashMap.get(e);
-        pb.setLayoutX(e.getPositionX());
-        pb.setLayoutY(e.getPositionY());
+        pb.setProgress((double)(e.getHealth())/(double)e.getMaxHealth());
+
+        pb.setLayoutX(e.getPositionX()-10);
+        pb.setLayoutY(e.getPositionY()-15);
     }
 
     public void openSettings(AnchorPane settingsPane){
