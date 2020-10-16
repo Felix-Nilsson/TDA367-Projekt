@@ -4,24 +4,22 @@ package Model;
 import Model.Cell.Cell;
 import Model.Enemy.BaseEnemy;
 import Model.Enemy.Enemy;
-import Controller.Observer;
 import Model.Towers.Projectile;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
+import View.Observer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Game extends Observable1 implements Updatable {
+public class Game extends Observable1  {
 
     private final Difficulty difficulty;
     private final int mapNumber;
     private int health;
     private int money;
     private final Observable observable;
-    private final UpdateModel updateModel;
-    private final UpdateModel viewUpdate;
     private final Observable1 observable1;
     private final Board b;
     private final WaveManager waveManager;
@@ -44,8 +42,6 @@ public class Game extends Observable1 implements Updatable {
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         observable = new Observable();
-        updateModel = new UpdateModel();
-        viewUpdate = new UpdateModel();
         observable1 = new Observable1();
         b= new Board(mapNumber);
         List<BaseEnemy.Direction> enemyPath = b.getPath();
@@ -100,7 +96,6 @@ public class Game extends Observable1 implements Updatable {
             waveManager.createWave(round);
             while (waveRunning && enemyCounter>=0) {
                 Enemy enemy = waveManager.getEnemy(enemyCounter);
-                updateModel.add(enemy);
                 enemiesInWave.add(enemy);
                 threadSleep(enemy.spawnTime() * 100);
                 enemyCounter--;
@@ -144,11 +139,29 @@ public class Game extends Observable1 implements Updatable {
 
     public void update(){
         checkIfGameOver();
-        updateModel.update();
+        for(Enemy e : enemiesInWave){
+            if(e.isDead()){
+                observable.notifyEnemyDead(e);
+                enemyIsDead(e);
+                enemiesInWave.remove(e);
+            }
+            else{
+                e.move();//moves enemy
+                observable.update(); //notifies view to update graphics
+
+            }
+
+        }
+        for(Tower t : towers){
+            t.update();
+        }
         checksRadius();
-        observable.update();
         checkIfProjectilesHit();
 
+    }
+    private void enemyIsDead(Enemy e){
+        health--;
+        removeEnemy(e);
     }
 
     private void checkIfGameOver(){
@@ -201,9 +214,6 @@ public class Game extends Observable1 implements Updatable {
     }
 
     public void removeEnemy(Enemy enemy){
-        if(!updateModel.removeObserver(enemy)){
-            System.out.println("error in removing observer");
-        }
         if(enemiesInWave.remove(enemy)){
             System.out.println("error in removing enemy");
         }
@@ -222,9 +232,7 @@ public class Game extends Observable1 implements Updatable {
     public boolean addObserver(final Observer observer){
         return this.observable.addObserver(observer);
     }
-    public void addUpdatable(final Updatable updatable){
-        updateModel.add(updatable);
-    }
+
 
     @Override
     public void addObserver1(Observer1 observer) {
@@ -271,9 +279,9 @@ public class Game extends Observable1 implements Updatable {
     }
 
     synchronized void checksRadius(){
-        if (towers.size()>0 && enemiesInWave.size()>0){
-
-            for (Tower t : towers){
+        // TOCTOU
+        if (towers.size() > 0 && enemiesInWave.size() > 0) { // Time of Check
+            for (Tower t : towers){ // Time of Use
                 //TODO if (t.cooldown == false)
                 t.attackIfEnemyInRange(enemiesInWave);
                 //TODO p har inte alltid en projectile
@@ -294,10 +302,7 @@ public class Game extends Observable1 implements Updatable {
     }
 
 
-    public void enemyIsOut(Enemy e){
-        health--;
-        removeEnemy(e);
-    }
+
 
 
     //sets initial values of health and money
@@ -338,9 +343,28 @@ public class Game extends Observable1 implements Updatable {
     public void updateArrayWithTower(int index, TowerFactory towerFactory){
         //TODO update cell to occupied
         setCellOccupied(index);
-        Tower t = towerFactory.createTower(getBoard().get(index),updateModel);
+        Tower t = towerFactory.createTower(getBoard().get(index));
         towers.add(t);
     }
+
+    private void usePelle() { // implicit synchronized(this)
+        // Do stuff
+        // T1: pelle2() -> tar monitorn för towers
+        // T2: pelle2() -> kan inte ta monitorn för att den has av T1
+        // T1: klar med pelle2() -> monitorn för towers släpps
+        // T2: kan nu ta monitorn för towers.
+        synchronized (towers) {
+            // Kritisk sektion.
+            towers.clear();
+        }
+    }
+
+    private void pelle2() { // implicit synchronized(this)
+        synchronized(towers) {
+            // Do stuff
+        }
+    }
+
 
     public Tower getTowerInCell(int x, int y){
         for(Tower t: towers){
@@ -350,6 +374,7 @@ public class Game extends Observable1 implements Updatable {
         }
         return null;
     }
+
     public int getArrayIndex(int x_placement, int y_placement){
         int placeInArray = 0;
         for(int i =0; i < b.getBOARD_WIDTH(); i++){

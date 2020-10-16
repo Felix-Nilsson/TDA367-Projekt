@@ -1,11 +1,8 @@
 package Model.Towers;
 
-import Model.Cell.BaseCell;
-
 import Model.Cell.Cell;
 
 import Model.Enemy.Enemy;
-import Model.UpdateModel;
 import javafx.scene.image.Image;
 
 import java.util.List;
@@ -27,11 +24,10 @@ public class BaseTower implements Tower {
     private int enemyPosY;
 
 
-    private UpdateModel updateModel;
 
     private Targeting target;
 
-    public BaseTower(UpdateModel updateModel, Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public BaseTower( Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
         this.position = position;
         //längst upp till vänster är (25,15). Varje cell är 40 pixlar
         posX = position.getX()*40 +25;
@@ -43,8 +39,6 @@ public class BaseTower implements Tower {
         this.price = price;
         this.range = range;
         this.attackSpeed = attackSpeed;
-
-        this.updateModel = updateModel;
 
         //Temp, example of tower setting the color to the cell
         position.setColor("000000");
@@ -99,7 +93,7 @@ public class BaseTower implements Tower {
         System.out.println("attaaaaack");
         System.out.println("angle: " +Math.toDegrees(angle));
         //currentProjectile = new Projectile(this.posX,this.posY,angle, updateModel);
-        currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY, updateModel);
+        currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
     }
 
     @Override

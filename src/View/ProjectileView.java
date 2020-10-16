@@ -1,12 +1,8 @@
 package View;
 
-import Model.Game;
 import Model.Towers.Projectile;
-import Model.Updatable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
 
 public class ProjectileView {
 

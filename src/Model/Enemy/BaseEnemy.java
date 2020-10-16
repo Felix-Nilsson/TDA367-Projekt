@@ -14,7 +14,7 @@ public class BaseEnemy implements Enemy {
     private final int movementSpeed;
     private final int magicResist;
     private final int armor;
-
+    private final int maxHp;
 
     public enum Direction {NORTH,EAST,SOUTH,WEST}
 
@@ -31,6 +31,7 @@ public class BaseEnemy implements Enemy {
 
     public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         this.health=health;
+        this.maxHp = health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
         this.armor=armor;
@@ -46,12 +47,12 @@ public class BaseEnemy implements Enemy {
     //Dessa metoder ska kallas varje gång model ska uppdateras
     @Override
     public void update(){
-        followPath();
-        move();
+
     }
 
     //movementspeed = pixels per millisecond
     public void move(){
+        followPath();
         switch (direction) {
             case NORTH : positionY = positionY - movementSpeed; break;
             case EAST : positionX = positionX + movementSpeed; break;
@@ -186,6 +187,12 @@ public class BaseEnemy implements Enemy {
     public int getHealth(){
         return health;
     }
+
+    @Override
+    public int getMaxHealth() {
+        return maxHp;
+    }
+
     protected int getMovementSpeed(){
         return movementSpeed;
     }

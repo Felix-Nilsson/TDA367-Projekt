@@ -3,8 +3,6 @@ package Model.Towers;
 import Model.Cell.Cell;
 
 import Model.Enemy.Enemy;
-import Model.UpdateModel;
-import javafx.scene.image.Image;
 
 import java.util.List;
 
@@ -12,10 +10,10 @@ public class MageTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel) {
-        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed);
+    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+        this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed);
         baseTower.setTowerImage("img/mageTower.png");
-        updateModel.add(this);
+
     }
 
 
