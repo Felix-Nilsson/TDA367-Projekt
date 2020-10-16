@@ -42,6 +42,7 @@ public class MapController extends AnchorPane implements Observer {
     @FXML private Button restart;
 
     @FXML private RadioButton gridLayoutRadioButton;
+    @FXML private RadioButton autoStartRadioButton;
 
     @FXML private AnchorPane sidebar;
     @FXML private AnchorPane settings;
@@ -173,7 +174,9 @@ public class MapController extends AnchorPane implements Observer {
 
 
     }
-
+    @FXML private boolean autoStart(){
+        return ((!waveRunning) && autoStartRadioButton.isSelected());
+    }
     @FXML private void changeGridVisibilty(){
         mapHandler.changeToplayerGridVisible(gridLayoutRadioButton.isSelected());
     }
@@ -225,6 +228,7 @@ public class MapController extends AnchorPane implements Observer {
         game.nextRound();
 
     }
+
     protected List<Enemy> getEnemies(){
         return game.getEnemiesInWave();
     }
@@ -256,7 +260,7 @@ public class MapController extends AnchorPane implements Observer {
             }
 
             else{
-                //round over
+
             }
         }
     }
@@ -268,9 +272,9 @@ public class MapController extends AnchorPane implements Observer {
         img.setPreserveRatio(true);
         img.toBack();
     }
-    protected void roundOver(){
+    /*protected void roundOver(){
         game.pause();
-    }
+    }*/
     protected void pause(){
         game.pause();
         paused = true;
@@ -286,7 +290,7 @@ public class MapController extends AnchorPane implements Observer {
 
     public void openSettings(){
         if(isWaveRunning()){
-            pause();
+           pause();
         }
         mapHandler.openSettings(settingsPane);
     }

@@ -161,11 +161,6 @@ public class Game implements Updatable {
 
     }
 
-
-
-
-
-
     public boolean isWaveRunning(){
         return waveRunning;
     }
@@ -292,7 +287,6 @@ public class Game implements Updatable {
         money += toAdd;
         System.out.println("after: " + money);
     }
-
 
 
 
