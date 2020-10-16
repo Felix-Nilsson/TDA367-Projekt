@@ -154,19 +154,26 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
         parentController.removeToolFromHash(tower);
         game.removeTower(tower);
 
-
     }
 
     @FXML
     private void towerUpgradeLeft(){
         if(game.getMoney() >= tower.getLeftUpgradeCost()){
+            //Upgrades tower
             parentController.leftUpgradeTower(tower);
+
+            //JavaFX
             leftUpgradeButton.setDisable(true);
             leftUpgradeCostLabel.setText("Unavailable");
+
+            //Changes money
             game.addMoney(-tower.getLeftUpgradeCost());
+
+            //JavaFX again
             updateToolbar();
             updateUpgradeAvaialble();
             parentController.updateSidebar();
+
         }
     }
 

@@ -1,12 +1,10 @@
 package Model.Towers;
 
+
 import Model.Cell.Cell;
-import Model.Towers.MageTower;
-import Model.Towers.Targeting;
-import Model.Towers.Tower;
 
 public abstract class TowerUpgrade implements Tower {
-    private Tower tower;
+    protected Tower tower;
 
     public TowerUpgrade(Tower tower){
         this.tower = tower;
@@ -14,7 +12,7 @@ public abstract class TowerUpgrade implements Tower {
 
     @Override
     public Tower leftUpgrade(Tower t) {
-        return this;
+        return tower;
     }
 
     @Override
@@ -22,134 +20,108 @@ public abstract class TowerUpgrade implements Tower {
         return this;
     }
 
-    @Override
     public void update() {
-
+        tower.update();
     }
 
-    @Override
     public void checkRadius(double x, double y) {
-
+        tower.checkRadius(x, y);
     }
 
-    @Override
     public void attack() {
-
+        tower.attack();
     }
 
-    @Override
     public int getPrice() {
-        return 0;
+        return tower.getPrice();
     }
 
-    @Override
-    public int getPosX() {
-        return 0;
-    }
-
-    @Override
-    public int getPosY() {
-        return 0;
-    }
-
-    @Override
-    public int getRange() {
-        return 0;
-    }
-
-    @Override
-    public void setAngle(double angle) {
-
-    }
-
-    @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
-    }
-
-    @Override
-    public int getMagicDmg() {
-        return 0;
-    }
-
-    @Override
-    public int getPhysicalDmg() {
-        return 0;
-    }
-
-    @Override
-    public double getAttackSpeed() {
-        return 0;
-    }
-
-    @Override
-    public void setMagicDmg(int amount) {
-
-    }
-
-    @Override
-    public void setPhysicalDmg(int amount) {
-
-    }
-
-    @Override
-    public void setAttackSpeed(double amount) {
-
-    }
-
-    @Override
-    public String getImage() {
-        return null;
-    }
-
-    @Override
-    public Targeting getTarget() {
-        return null;
-    }
-
-    @Override
-    public void setTarget(Targeting target) {
-
-    }
-
-    @Override
-    public Cell getPosition() {
-        return null;
-    }
-
-    @Override
     public int getLeftUpgradeCost() {
-        return 0;
+        return tower.getLeftUpgradeCost();
     }
 
-    @Override
     public int getRightUpgradeCost() {
-        return 0;
+        return tower.getRightUpgradeCost();
     }
 
-    @Override
     public String getLeftUpgradeLabel() {
-        return null;
+        return tower.getLeftUpgradeLabel();
     }
 
-    @Override
     public String getRightUpgradeLabel() {
-        return null;
+        return tower.getRightUpgradeLabel();
     }
 
-    @Override
+    public int getPosX() {
+        return tower.getPosX();
+    }
+
+    public int getPosY() {
+        return tower.getPosY();
+    }
+
+    public int getRange() {
+        return tower.getRange();
+    }
+
+    public void setAngle(double angle) {
+        tower.setAngle(angle);
+    }
+
+    public int getX() {
+        return tower.getX();
+    }
+
+    public int getY() {
+        return tower.getY();
+    }
+
+    public int getMagicDmg() {
+        return tower.getMagicDmg();
+    }
+
+    public int getPhysicalDmg() {
+        return tower.getPhysicalDmg();
+    }
+
+    public double getAttackSpeed() {
+        return tower.getAttackSpeed();
+    }
+
+    public void setMagicDmg(int amount) {
+        tower.setMagicDmg(amount);
+    }
+
+    public void setPhysicalDmg(int amount) {
+        tower.setPhysicalDmg(amount);
+    }
+
+    public void setAttackSpeed(double amount) {
+        tower.setAttackSpeed(amount);
+    }
+
+    public String getImage() {
+        return tower.getImage();
+    }
+
     public String getLeftUpgradeImage() {
-        return null;
+        return tower.getLeftUpgradeImage();
     }
 
-    @Override
     public String getRightUpgradeImage() {
-        return null;
+        return tower.getRightUpgradeImage();
+    }
+
+    public Targeting getTarget() {
+        return tower.getTarget();
+    }
+
+    public void setTarget(Targeting target) {
+        tower.setTarget(target);
+    }
+
+    public Cell getPosition() {
+        return tower.getPosition();
     }
 
 

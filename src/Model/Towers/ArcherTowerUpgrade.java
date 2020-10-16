@@ -1,21 +1,23 @@
 package Model.Towers;
 
+import Model.Cell.Cell;
+
 public class ArcherTowerUpgrade extends TowerUpgrade{
-    private Tower t;
 
     public ArcherTowerUpgrade(Tower t) {
         super(t);
-        this.t = t;
     }
 
     public Tower leftUpgrade(){
-        t.setPhysicalDmg(t.getPhysicalDmg()+20);
-        return super.leftUpgrade(t);
+        tower.setPhysicalDmg(tower.getPhysicalDmg()+20); //MIght need to make upgrades call to the tower before or smthing
+        return super.leftUpgrade(tower);
     }
 
     public Tower rightUpgrade(){
-        t.setAttackSpeed(t.getAttackSpeed()+1);
-        return super.rightUpgrade(t);
+        tower.setAttackSpeed(tower.getAttackSpeed()+1);
+        return super.rightUpgrade(tower);
     }
+
+
 
 }

@@ -29,6 +29,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -196,6 +197,7 @@ public class MapController extends AnchorPane implements Observer {
 
     private void setToolCont(Tower t){
         toolbarAnchorPane.getChildren().clear();
+        System.out.println(toolbarTowerHashMap.get(t));
         toolbarAnchorPane.getChildren().add(toolbarTowerHashMap.get(t));
     }
 
@@ -317,12 +319,44 @@ public class MapController extends AnchorPane implements Observer {
         }
     }
 
-    public void leftUpgradeTower(Tower t){
-        game.leftUpgradeTower(t);
+
+
+    private void updateToolbarHashmap(Tower oldT, Tower newT){
+        //Uppdates the fking hashhhmap
+        HashMap<ToolbarController, Tower> reverseMap = new HashMap<>();
+
+        System.out.println("start: "+toolbarTowerHashMap);
+        toolbarTowerHashMap.put(newT, toolbarTowerHashMap.get(oldT));
+        toolbarTowerHashMap.remove(oldT, toolbarTowerHashMap.get(oldT));
+        
+        //Removes all null values
+        for(Iterator<Map.Entry<Tower, ToolbarController>> i = toolbarTowerHashMap.entrySet().iterator(); i.hasNext();){
+            Map.Entry<Tower, ToolbarController> e = i.next();
+            if(e.getValue() == null){
+                i.remove();
+            }
+        }
+
+
+
+
+
+
+        //toolbarTowerHashMap.put(newT, toolbarTowerHashMap.get(oldT));
+        //toolbarTowerHashMap.remove(oldT);
+
+
+        System.out.println("Slut: "+ toolbarTowerHashMap);
     }
 
-    public void rightUpgradeTower(Tower t){
-        game.rightUpgradeTower(t);
+    public void leftUpgradeTower(Tower oldT){
+        Tower newT = game.leftUpgradeTower(oldT);
+        updateToolbarHashmap(oldT, newT);
+    }
+
+    public void rightUpgradeTower(Tower oldT){
+        Tower newT = game.rightUpgradeTower(oldT);
+        updateToolbarHashmap(oldT, newT);
     }
 
 

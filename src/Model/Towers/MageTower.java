@@ -147,16 +147,16 @@ public class MageTower implements Tower {
 
     @Override
     public Tower leftUpgrade(Tower t) {
-        MageTowerUpgrade mtu = new MageTowerUpgrade(t);
-        mtu.leftUpgrade();
-        return this;
+        MageTowerLeftUpgrade mtlu = new MageTowerLeftUpgrade(t);
+        mtlu.leftUpgrade();
+        return mtlu;
     }
 
     @Override
     public Tower rightUpgrade(Tower t) {
-        MageTowerUpgrade mtu = new MageTowerUpgrade(t);
-        mtu.rightUpgrade();
-        return this;
+        MageTowerRightUpgrade mtru = new MageTowerRightUpgrade(t);
+        mtru.rightUpgrade();
+        return mtru;
     }
 
     @Override
