@@ -23,12 +23,11 @@ public class Game implements Updatable {
     private boolean waveRunning = false;
     private Thread gameLoopThread;
     private Thread enemyCreatorThread;
-    private Updatable updatable;
-    private final List<BaseEnemy.Direction> enemyPath;
+    //private Updatable updatable;
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
     int round = 1;
-    private int gameSpeed = 20;
+    private final int gameSpeed;
     private int enemyCounter;
     private int totalNumberOfRounds;
 
@@ -38,8 +37,8 @@ public class Game implements Updatable {
         observable = new Observable();
         updateModel = new UpdateModel();
         b= new Board(mapNumber);
-        this.enemyPath = b.getPath();
-        waveManager = new WaveManager(difficulty,enemyPath,b.getStartPos());
+        List<BaseEnemy.Direction> enemyPath = b.getPath();
+        waveManager = new WaveManager(difficulty, enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
         this.gameSpeed = 20;
@@ -117,6 +116,7 @@ public class Game implements Updatable {
         gameLoopThread.start();
     }
     private void threadSleep(int time){
+
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
@@ -307,14 +307,9 @@ public class Game implements Updatable {
 
 
     public void removeTower(Tower t){
-
-        try{
-            towers.remove(t);
+        if(!towers.remove(t)){
+            System.out.println("tower not found ");
         }
-        catch (NullPointerException e){
-            System.out.println("not found tower");
-        }
-
     }
 
     public void addMoney(int toAdd){
@@ -322,11 +317,5 @@ public class Game implements Updatable {
         money += toAdd;
         System.out.println("after: " + money);
     }
-    public int getMapNumber(){
-        return mapNumber;
-    }
 
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
 }

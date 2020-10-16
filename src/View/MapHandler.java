@@ -16,9 +16,9 @@ import java.util.List;
 
 public class MapHandler {
 
-    @FXML private AnchorPane gameBoardAnchorPane;
-    @FXML private GridPane gameBoardGrid;
-    @FXML private GridPane toplayerGrid;
+    @FXML private final AnchorPane gameBoardAnchorPane;
+    @FXML private final GridPane gameBoardGrid;
+    @FXML private final GridPane toplayerGrid;
 
     private final List<Cell> map;
     private ImageView cave;
@@ -33,9 +33,8 @@ public class MapHandler {
     }
 
 
-    public void createMap(int startPos, int endPos, ImageView caveView, ImageView baseView){
-        this.cave = caveView;
-        this.base = baseView;
+    public void createMap(int startPos, int endPos){
+
 
         //add startcave
         cave = new ImageView("/img/cave.png");

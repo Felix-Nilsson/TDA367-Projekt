@@ -59,21 +59,17 @@ public class MapController extends AnchorPane implements Observer {
     private boolean paused = false;
     private final Game game;
 
-    private SidebarController sidebarController;
-    private final List<Cell> map;
     private List<Enemy> enemies;
     private HashMap<Enemy,ImageView> enemyHashMap;
-    private HashMap<Tower,ImageView> towerHashMap;
-    private HashMap<Tower, ToolbarController> toolbarTowerHashMap;
-    private boolean waveRunning;
-    private ImageView cave;
-    private ImageView base;
-    private MapHandler mapHandler;
+    private final HashMap<Tower,ImageView> towerHashMap;
+    private final HashMap<Tower, ToolbarController> toolbarTowerHashMap;
+    //private ImageView cave;
+    //private ImageView base;
+    private final MapHandler mapHandler;
     private TowerFactory towerFactory;
-    private MenuController parentController;
+    private final MenuController parentController;
 
     public MapController(Game game, List<Cell> map,MenuController parentController) {
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -83,7 +79,6 @@ public class MapController extends AnchorPane implements Observer {
             e.printStackTrace();
         }
         this.parentController = parentController;
-        this.map = map;
         this.game = game;
         this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, toplayerGrid,map);
         towerHashMap = new HashMap<>(); //Might need to move
@@ -209,13 +204,13 @@ public class MapController extends AnchorPane implements Observer {
 
     public void createSidebar(){
         //add sidebar fxml
-        sidebarController = new SidebarController(game,this);
+        SidebarController sidebarController = new SidebarController(game, this);
         sidebar.getChildren().add(sidebarController);
         int startPos = game.getStartPos();
         int endPos = game.getEndPos();
 
         //Creating map
-        mapHandler.createMap(startPos,endPos, cave, base);
+        mapHandler.createMap(startPos,endPos);
     }
     @FXML private void closeGame(){
         System.exit(0);}
@@ -232,9 +227,7 @@ public class MapController extends AnchorPane implements Observer {
         game.nextRound();
 
     }
-    protected List<Enemy> getEnemies(){
-        return game.getEnemiesInWave();
-    }
+
     @Override
     public void notifyGameOver() {
         Platform.runLater(()->gameOverScreen.toFront());
@@ -250,7 +243,10 @@ public class MapController extends AnchorPane implements Observer {
         Platform.runLater(()->gameWonScreen.toFront());
     }
 
-
+    /**
+     * prints out enemies from (game : enemiesInWave)
+     * or if enemy already exist, then update x y position of enemy image
+     */
     public void update(){
         if (game.getEnemiesInWave()!= null ) {
             if(game.getEnemiesInWave().size() > 0){
@@ -286,9 +282,7 @@ public class MapController extends AnchorPane implements Observer {
         img.setPreserveRatio(true);
         img.toBack();
     }
-    protected void roundOver(){
-        game.pause();
-    }
+
     protected void pause(){
         game.pause();
         paused = true;
@@ -345,11 +339,9 @@ public class MapController extends AnchorPane implements Observer {
     public void updateSidebar(){
         game.notifyAllObservers();
     }
-
-
-
-
-
+    protected List<Enemy> getEnemies(){
+        return game.getEnemiesInWave();
+    }
 
 }
 

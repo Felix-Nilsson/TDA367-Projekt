@@ -56,9 +56,6 @@ public class WaveManager  {
         return wave.size()-1;
     }
 
-
-
-
     private void enemyCreator(int amount, enemies enemy) {
 
         switch (difficulty) {
@@ -89,10 +86,6 @@ public class WaveManager  {
             case ENEMY_RED : return  new EnemyFactoryRed(enemyPath,startPos);
         }
         return null;
-    }
-
-    public List<Enemy> getWave(){
-        return wave;
     }
 
 }
