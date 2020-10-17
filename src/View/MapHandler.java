@@ -169,6 +169,10 @@ public class MapHandler implements MapObserver {
                 pb.setLayoutX(e.getPositionX());
                 pb.setLayoutY(e.getPositionY());
 
+                pb.setMaxWidth(45);
+                pb.setMaxHeight(10);
+                pb.styleProperty().set("-fx-accent: red");
+
                 Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(pb));
                 progressBarHashMap.put(e, pb);
 
