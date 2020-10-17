@@ -158,7 +158,7 @@ public class Game  {
         observable.update(); //notifies view to update graphics
 
     }
-    private synchronized void checkIfProjectilesHit() {
+    private void checkIfProjectilesHit() {
         if (projectileList != null) {
             Iterator<Projectile> iterator = projectileList.listIterator();
             while (iterator.hasNext()) {
@@ -256,7 +256,7 @@ public class Game  {
             for (Tower t : towers){ // Time of Use
                 //TODO if (t.cooldown == false)
                 t.attackIfEnemyInRange(enemiesInWave);
-                //TODO p har inte alltid en projectile
+                //sidoeffekt av t.getProjectile() är att currentProjectile sätts till null (ska vara så just nu)
                 Projectile p = t.getProjectile();
                 if (p!=null){
                     projectileList.add(p);

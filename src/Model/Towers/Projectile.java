@@ -14,7 +14,7 @@ public class Projectile {
     private double enemyPosY;
     //angle is in radians
     private double angle;
-    private int vMultiplier=10;
+    private int vMultiplier=30;
     //private final ImageView imageView;
     private boolean exists;
 

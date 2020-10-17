@@ -29,8 +29,10 @@ public class ProjectileHandler implements ProjectileObserver {
     public void notifyProjectileAdded(Projectile p) {
         ImageView projectileImage = new ImageView("/img/projectile_1.png");
         fixProjectileImage(projectileImage,p);
+
         projectileHashMap.put(p, projectileImage);
         Platform.runLater(()->gameBoardAnchorPane.getChildren().add(projectileImage));
+
     }
 
     @Override
@@ -43,12 +45,17 @@ public class ProjectileHandler implements ProjectileObserver {
             @Override
             public void run() {
                 System.out.println("----------------------------------------------");
+                System.out.println("HASHMAP SIZE BEFORE: ---------- "+projectileHashMap.size());
+
                 if(gameBoardAnchorPane.getChildren().remove(projectileHashMap.get(p))){
+                    projectileHashMap.remove(p);
+
+                    System.out.println("HASHMAP SIZE AFTER: ---------- "+projectileHashMap.size());
                     System.out.println("----------------------------------------------");
-                    //projectileHashMap.remove(p);
+
                 }
                 System.out.println("projectile was removed from hashMap2");
-                projectileHashMap.remove(p);
+
 
             }
         });
