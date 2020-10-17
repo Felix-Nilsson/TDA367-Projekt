@@ -3,7 +3,7 @@ package Model.Towers;
 import Model.Cell.Cell;
 import Model.Updatable;
 
-public interface Tower<T extends Tower> extends Updatable {
+public interface Tower extends Updatable {
     void update();
     void checkRadius(double x, double y);
     void attack();

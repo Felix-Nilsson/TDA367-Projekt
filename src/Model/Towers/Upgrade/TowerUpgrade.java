@@ -21,7 +21,7 @@ public abstract class TowerUpgrade implements Tower {
         return t;
     }
 
-    public void update() {
+    public void update() { 
         tower.update();
     }
 
