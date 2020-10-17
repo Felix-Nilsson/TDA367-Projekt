@@ -24,6 +24,7 @@ public interface Tower {
     int getMagicDmg();
     int getPhysicalDmg();
     double getAttackSpeed();
+    boolean getIsReadyToFire();
 
     String getImage();
 

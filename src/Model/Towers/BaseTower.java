@@ -6,6 +6,8 @@ import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class BaseTower implements Tower {
@@ -22,6 +24,9 @@ public class BaseTower implements Tower {
     private Projectile currentProjectile;
     private int enemyPosX;
     private int enemyPosY;
+    private double currentCooldown;
+    private final int timerDelayInMilliseconds;
+    private boolean isReadyToFire;
 
 
 
@@ -40,12 +45,41 @@ public class BaseTower implements Tower {
         this.range = range;
         this.attackSpeed = attackSpeed;
 
+        //Tower ska kunna attackera direkt
+        currentCooldown=0;
+        isReadyToFire=true;
+
+        timerDelayInMilliseconds=100;
+
         //Temp, example of tower setting the color to the cell
         position.setColor("000000");
 
         //Default is closest
         target = Targeting.FIRST;
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask,timerDelayInMilliseconds,timerDelayInMilliseconds);
 
+    }
+
+    TimerTask timerTask = new TimerTask(){
+        @Override
+        public void run() {
+            checkCooldown();
+        }
+    };
+
+    private void checkCooldown(){
+        if(currentCooldown>0){
+            currentCooldown--;
+        }
+        else{
+            isReadyToFire=true;
+        }
+    }
+
+    @Override
+    public boolean getIsReadyToFire(){
+        return isReadyToFire;
     }
 
     public int getPosX(){
@@ -84,13 +118,19 @@ public class BaseTower implements Tower {
                 //e.tookDamage(5);
             }
         }
-
-
     }
-
 
     public void attack() {
         currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
+        resetCurrentCooldown();
+    }
+    private void resetCurrentCooldown(){
+        /* the attackspeed is attacks/second, for example:
+            attackspeed=0.5, then 1/attackspeed==2 attacks per second. However cooldown is modified more than once a second, in fact ()
+            To compensate for this, the numerator is 1000 (milliseconds) and the denominator is attackspeed*timerDelayInMilliseconds
+         */
+        currentCooldown = 1000/(attackSpeed*timerDelayInMilliseconds);
+        isReadyToFire = false;
     }
 
 

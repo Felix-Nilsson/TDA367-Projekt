@@ -255,14 +255,17 @@ public class Game  {
         if (towers.size() > 0 && enemiesInWave.size() > 0) { // Time of Check
             for (Tower t : towers){ // Time of Use
                 //TODO if (t.cooldown == false)
-                t.attackIfEnemyInRange(enemiesInWave);
-                //sidoeffekt av t.getProjectile() är att currentProjectile sätts till null (ska vara så just nu)
-                Projectile p = t.getProjectile();
-                if (p!=null){
-                    projectileList.add(p);
-                    System.out.println("projectile was added----------------------------------------------");
-                    observable.notifyProjectileAdded(p);
+                if(t.getIsReadyToFire()){
+                    t.attackIfEnemyInRange(enemiesInWave);
+                    //sidoeffekt av t.getProjectile() är att currentProjectile sätts till null (ska vara så just nu)
+                    Projectile p = t.getProjectile();
+                    if (p!=null){
+                        projectileList.add(p);
+                        System.out.println("projectile was added----------------------------------------------");
+                        observable.notifyProjectileAdded(p);
+                    }
                 }
+
             }
         }
 
