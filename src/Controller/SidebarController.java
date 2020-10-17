@@ -1,10 +1,8 @@
 package Controller;
 
-import Model.Enemy.Enemy;
 import Model.Game;
 import Model.Towers.*;
 import View.SidebarHandler;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +39,7 @@ public class SidebarController extends AnchorPane  {
     private final SidebarHandler sidebarHandler;
 
     public SidebarController(Game game,MapController parentController) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/fxml/Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {

@@ -244,7 +244,7 @@ public class Game  {
         }
     }
 
-    synchronized void checksRadius(){
+    private synchronized void checksRadius(){
         // TOCTOU
         if (towers.size() > 0 && enemiesInWave.size() > 0) { // Time of Check
             for (Tower t : towers){ // Time of Use

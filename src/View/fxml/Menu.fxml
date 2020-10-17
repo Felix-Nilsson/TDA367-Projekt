@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@Menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../style/Menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuController">
 
    <children>
       <AnchorPane fx:id="map" prefHeight="768.0" prefWidth="1366.0" />
@@ -17,7 +17,7 @@
          <children>
             <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
                <image>
-                  <Image url="@../img/menuBackground.jpg" />
+                  <Image url="@../../img/menuBackground.jpg" />
                </image>
             </ImageView>
             <Label alignment="CENTER" layoutX="533.0" layoutY="48.0" prefHeight="72.0" prefWidth="303.0" styleClass="titleMainMenu" text="Options">
@@ -40,7 +40,7 @@
                <graphic>
                   <ImageView fitHeight="61.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/back_arrow.png" />
+                        <Image url="@../../img/back_arrow.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -50,7 +50,7 @@
          <children>
             <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
                <image>
-                  <Image url="@../img/menuBackground2.jpg" />
+                  <Image url="@../../img/menuBackground2.jpg" />
                </image>
             </ImageView>
             <Label layoutX="485.0" layoutY="40.0" prefHeight="117.0" prefWidth="459.0" text="Map Selection" textFill="WHITE">
@@ -60,17 +60,17 @@
             </Label>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="683.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/map_1.PNG" />
+                  <Image url="@../../img/map_1.PNG" />
                </image>
             </ImageView>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="715.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/question.png" />
+                  <Image url="@../../img/question.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="715.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/question.png" />
+                  <Image url="@../../img/question.png" />
                </image>
             </ImageView>
             <RadioButton fx:id="radioButtonMap1" layoutX="404.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#selectMap1" prefHeight="76.0" prefWidth="264.0" styleClass="RadioButtonSelected" text="Curvy snake" />
@@ -83,7 +83,7 @@
                <graphic>
                   <ImageView fitHeight="61.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/back_arrow.png" />
+                        <Image url="@../../img/back_arrow.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -94,7 +94,7 @@
          <children>
             <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
                <image>
-                  <Image url="@../img/menuBackground.jpg" />
+                  <Image url="@../../img/menuBackground.jpg" />
                </image>
             </ImageView>
             <Button fx:id="newGameButton" layoutX="529.0" layoutY="265.0" mnemonicParsing="false" onMouseClicked="#newGame" prefHeight="142.0" prefWidth="303.0" text="New Game">
@@ -131,12 +131,12 @@
                <graphic>
                   <ImageView fitHeight="51.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/exit.png" />
+                        <Image url="@../../img/exit.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Label alignment="CENTER" layoutX="605.0" layoutY="58.0" prefHeight="93.0" prefWidth="166.0" styleClass="titleMainMenu" stylesheets="@Menu.css" text="Alien ">
+            <Label alignment="CENTER" layoutX="605.0" layoutY="58.0" prefHeight="93.0" prefWidth="166.0" styleClass="titleMainMenu" stylesheets="@../style/Menu.css" text="Alien ">
                <font>
                   <Font name="Berlin Sans FB Bold" size="70.0" />
                </font>
@@ -150,7 +150,7 @@
                   <String fx:value="buttonMainMenuSmall" />
                </styleClass>
             </Button>
-            <Label alignment="CENTER" layoutX="577.0" layoutY="130.0" prefHeight="93.0" prefWidth="233.0" styleClass="titleMainMenu" stylesheets="@Menu.css" text="Defense">
+            <Label alignment="CENTER" layoutX="577.0" layoutY="130.0" prefHeight="93.0" prefWidth="233.0" styleClass="titleMainMenu" stylesheets="@../style/Menu.css" text="Defense">
                <font>
                   <Font name="Berlin Sans FB Bold" size="70.0" />
                </font>

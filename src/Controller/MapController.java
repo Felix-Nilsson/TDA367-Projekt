@@ -94,7 +94,7 @@ public class MapController extends AnchorPane {
     private HashMap<Enemy, ProgressBar> progressBarHashMap;
 
     public MapController(Game game, List<Cell> map, MenuController parentController) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/fxml/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {

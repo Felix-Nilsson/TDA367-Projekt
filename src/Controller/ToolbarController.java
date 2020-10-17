@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Enemy.Enemy;
 import Model.Game;
 import Model.Towers.Targeting;
 import Model.Towers.Tower;
@@ -12,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -48,7 +46,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     private final ToolbarHandler toolbarHandler;
 
     public ToolbarController(Game game, MapController parentController, T t){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Toolbar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/fxml/Toolbar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
