@@ -35,15 +35,24 @@ public class ProjectileHandler implements ProjectileObserver {
 
     @Override
     public void notifyProjectileRemoved(Projectile p) {
+
+
+        System.out.println("projectile was removed from hashMap1");
         Platform.runLater(new Runnable(){
 
             @Override
             public void run() {
+                System.out.println("----------------------------------------------");
                 if(gameBoardAnchorPane.getChildren().remove(projectileHashMap.get(p))){
-                    projectileHashMap.remove(p);
+                    System.out.println("----------------------------------------------");
+                    //projectileHashMap.remove(p);
                 }
+                System.out.println("projectile was removed from hashMap2");
+                projectileHashMap.remove(p);
+
             }
         });
+
     }
 
 
@@ -67,6 +76,7 @@ public class ProjectileHandler implements ProjectileObserver {
         }
     }
     public void updateProjectile(Projectile p){
+        System.out.println("projectileHashMap.size() should be==projectileList: "+ projectileHashMap.size() +"==" + projectileList.size());
         ImageView img = projectileHashMap.get(p);
         img.setX(p.getPosX());
         img.setY(p.getPosY());

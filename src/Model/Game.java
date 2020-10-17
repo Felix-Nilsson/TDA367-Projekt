@@ -147,12 +147,30 @@ public class Game  {
             }
         }
         for(Tower t : towers){
+            //finns ingenting i towers update just nu
             t.update();
+        }
+        for (Projectile p : projectileList){
+            p.update();
         }
         checksRadius();
         checkIfProjectilesHit();
         observable.update(); //notifies view to update graphics
 
+    }
+    private synchronized void checkIfProjectilesHit() {
+        if (projectileList != null) {
+            Iterator<Projectile> iterator = projectileList.listIterator();
+            while (iterator.hasNext()) {
+                Projectile p = iterator.next();
+                if (!p.isExisting()) {
+                    System.out.println("p ska vara false " + p.isExisting());
+                    removeProjectile(p);
+                    //iterator.remove();
+                    break;
+                }
+            }
+        }
     }
     private void enemyIsDead(Enemy e){
         health--;
@@ -230,19 +248,7 @@ public class Game  {
         return this.observable.addObserver(projectileObserver);
     }
 
-    private synchronized void checkIfProjectilesHit() {
-        if (projectileList != null) {
-            Iterator<Projectile> iterator = projectileList.listIterator();
-            while (iterator.hasNext()) {
-                Projectile p = iterator.next();
-                if (!p.isExisting()) {
-                    removeProjectile(p);
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
-    }
+
 
     private synchronized void checksRadius(){
         // TOCTOU
@@ -254,6 +260,7 @@ public class Game  {
                 Projectile p = t.getProjectile();
                 if (p!=null){
                     projectileList.add(p);
+                    System.out.println("projectile was added----------------------------------------------");
                     observable.notifyProjectileAdded(p);
                 }
             }

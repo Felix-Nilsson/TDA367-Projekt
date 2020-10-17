@@ -43,7 +43,7 @@ public class WaveManager  {
     public void createWave(int round) {
         wave = new ArrayList<>();
 
-                /*
+
         switch (round){
             case 1:
                 enemyCreator(1, enemies.ENEMY_BLUE);break;
@@ -70,10 +70,12 @@ public class WaveManager  {
                 //enemyCreator(5,enemies.ENEMY_RED); break;
         }
 
-                 */
+            /*
 
         enemyCreator((2+round)*difficultyModifier, enemies.ENEMY_BLUE);
         enemyCreator((2+round)*difficultyModifier,enemies.ENEMY_RED);
+
+             */
 
     }
 
