@@ -43,7 +43,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
     @FXML private RadioButton closestRadioButton;
 
     private ToggleGroup targetingToggleGroup;
-    private T tower;
+    private Tower tower;
     private final Game game;
     private final MapController parentController;
 
@@ -163,7 +163,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
             Tower tempTower = parentController.leftUpgradeTower(tower);
 
             //Updates the controller with the new tower
-            //this.tower = tempTower;
+            this.tower = tempTower;
 
             //JavaFX
             leftUpgradeButton.setDisable(true);
@@ -184,10 +184,20 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
     @FXML
     private void towerUpgradeRight(){
         if(game.getMoney() >= tower.getRightUpgradeCost()){
-            parentController.rightUpgradeTower(tower);
+            //Upgrades tower
+            Tower tempTower = parentController.rightUpgradeTower(tower);
+
+            //Updates the controller with the new tower
+            this.tower = tempTower;
+
+            //JavaFX
             rightUpgradeButton.setDisable(true);
             rightUpgradeCostLabel.setText("Unavailable");
-            game.addMoney(-tower.getRightUpgradeCost());
+
+            //Changes money
+            game.addMoney(-tower.getLeftUpgradeCost());
+
+            //JavaFX again
             updateToolbar();
             updateUpgradeAvaialble();
             parentController.updateSidebar();

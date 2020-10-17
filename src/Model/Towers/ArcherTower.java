@@ -2,8 +2,9 @@ package Model.Towers;
 
 import Model.Cell.Cell;
 
+import Model.Towers.Upgrade.ArcherTowerLeftUpgrade;
+import Model.Towers.Upgrade.ArcherTowerRightUpgrade;
 import Model.UpdateModel;
-import javafx.scene.image.Image;
 
 
 public class ArcherTower implements Tower {

@@ -1,7 +1,9 @@
-package Model.Towers;
+package Model.Towers.Upgrade;
 
 
 import Model.Cell.Cell;
+import Model.Towers.Targeting;
+import Model.Towers.Tower;
 
 public abstract class TowerUpgrade implements Tower {
     protected Tower tower;
@@ -10,14 +12,13 @@ public abstract class TowerUpgrade implements Tower {
         this.tower = tower;
     }
 
-    @Override
+
     public Tower leftUpgrade(Tower t) {
-        return tower;
+        return t;
     }
 
-    @Override
     public Tower rightUpgrade(Tower t){
-        return this;
+        return t;
     }
 
     public void update() {
@@ -124,6 +125,9 @@ public abstract class TowerUpgrade implements Tower {
         return tower.getPosition();
     }
 
-
-
+    @Override
+    public String toString() {
+        return tower.toString();
+        //Can append tower upgrades here, but not neccessary in current version
+    }
 }

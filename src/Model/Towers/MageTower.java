@@ -2,6 +2,8 @@ package Model.Towers;
 
 import Model.Cell.Cell;
 
+import Model.Towers.Upgrade.MageTowerLeftUpgrade;
+import Model.Towers.Upgrade.MageTowerRightUpgrade;
 import Model.UpdateModel;
 
 public class MageTower implements Tower {
@@ -148,7 +150,7 @@ public class MageTower implements Tower {
     @Override
     public Tower leftUpgrade(Tower t) {
         MageTowerLeftUpgrade mtlu = new MageTowerLeftUpgrade(t);
-        mtlu.leftUpgrade();
+        mtlu.leftUpgrade(t);
         return mtlu;
     }
 
