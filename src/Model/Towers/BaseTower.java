@@ -124,12 +124,14 @@ public class BaseTower implements Tower {
         currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
         resetCurrentCooldown();
     }
+    
+    //sätter cooldown beroende på attackspeed så att Tower inte kan attackera konstant
     private void resetCurrentCooldown(){
-        /* the attackspeed is attacks/second, for example:
-            attackspeed=0.5, then 1/attackspeed==2 attacks per second. However cooldown is modified more than once a second, in fact ()
-            To compensate for this, the numerator is 1000 (milliseconds) and the denominator is attackspeed*timerDelayInMilliseconds
-         */
-        currentCooldown = 1000/(attackSpeed*timerDelayInMilliseconds);
+        //the attackspeed is attacks/second, for example:
+        //attackspeed=0.5, then 1/attackspeed==2 attacks per second. However cooldown is modified more than once a second, in fact every (timerDelayInMilliseconds/1000) seconds
+        // To compensate for this, the numerator is 1000 (milliseconds) and the denominator is attackspeed*timerDelayInMilliseconds
+
+        currentCooldown = (1000/(attackSpeed*timerDelayInMilliseconds));
         isReadyToFire = false;
     }
 
