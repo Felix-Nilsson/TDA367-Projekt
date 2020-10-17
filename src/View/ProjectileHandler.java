@@ -3,7 +3,6 @@ package View;
 import Model.Game;
 import Model.Towers.Projectile;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
@@ -78,11 +77,12 @@ public class ProjectileHandler implements ProjectileObserver {
         projectileList = game.getProjectileList();
         if (projectileList.size()>0){
             for (Projectile p : projectileList) {
-                updateProjectile(p);
+                updateProjectileView(p);
+                System.out.println("inuti for loop i projectileHandlers update()");
             }
         }
     }
-    public void updateProjectile(Projectile p){
+    public void updateProjectileView(Projectile p){
         System.out.println("projectileHashMap.size() should be==projectileList: "+ projectileHashMap.size() +"==" + projectileList.size());
         ImageView img = projectileHashMap.get(p);
         img.setX(p.getPosX());
