@@ -73,6 +73,6 @@ public class SidebarHandler implements MapObserver {
         playButtonImg.setImage(new Image("/img/pause.png"));
     }
     public void setPlayImg(){
-        playButtonImg.setImage(new Image("/img/pause.png"));
+        playButtonImg.setImage(new Image("/img/play_button.png"));
     }
 }

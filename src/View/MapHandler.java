@@ -97,14 +97,14 @@ public class MapHandler implements MapObserver {
         img.setPreserveRatio(true);
         img.toBack();
     }
-    public void updateEnemy(HashMap<Enemy, ImageView> enemyHashMap, Enemy e){
+    public void updateEnemy( Enemy e){
         ImageView img = enemyHashMap.get(e);
         img.setX(e.getPositionX());
         img.setY(e.getPositionY());
     }
 
-    public void updateProgressBar(HashMap<Enemy, ProgressBar> pbHashMap, Enemy e){
-        ProgressBar pb = pbHashMap.get(e);
+    public void updateProgressBar(Enemy e){
+        ProgressBar pb = progressBarHashMap.get(e);
         pb.setProgress((double)(e.getHealth())/(double)e.getMaxHealth());
 
         pb.setLayoutX(e.getPositionX()-10);
@@ -174,8 +174,8 @@ public class MapHandler implements MapObserver {
 
 
             }
-            updateEnemy(enemyHashMap, e);
-            updateProgressBar(progressBarHashMap, e);
+            updateEnemy(e);
+            updateProgressBar(e);
         }
     }
 

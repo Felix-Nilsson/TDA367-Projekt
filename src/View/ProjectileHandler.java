@@ -25,9 +25,16 @@ public class ProjectileHandler implements ProjectileObserver {
         game.addProjectileObserver(this);
         projectileHashMap = new HashMap<>();
     }
+    @Override
+    public void notifyProjectileAdded(Projectile p) {
+        ImageView projectileImage = new ImageView("/img/projectile_1.png");
+        fixProjectileImage(projectileImage,p);
+        projectileHashMap.put(p, projectileImage);
+        Platform.runLater(()->gameBoardAnchorPane.getChildren().add(projectileImage));
+    }
 
-
-    private void removeViewFromHashMap(Projectile p){
+    @Override
+    public void notifyProjectileRemoved(Projectile p) {
         Platform.runLater(new Runnable(){
 
             @Override
@@ -37,15 +44,9 @@ public class ProjectileHandler implements ProjectileObserver {
                 }
             }
         });
-
     }
 
-    private void addViewToHashMap(Projectile p){
-        ImageView projectileImage = new ImageView("/img/projectile_1.png");
-        fixProjectileImage(projectileImage,p);
-        projectileHashMap.put(p, projectileImage);
-        Platform.runLater(()->gameBoardAnchorPane.getChildren().add(projectileImage));
-    }
+
     private void fixProjectileImage(ImageView img,Projectile projectile){
         assert img != null;
         img.setX(projectile.getPosX());
@@ -65,20 +66,12 @@ public class ProjectileHandler implements ProjectileObserver {
             }
         }
     }
-    public void updateProjectile( Projectile p){
+    public void updateProjectile(Projectile p){
         ImageView img = projectileHashMap.get(p);
         img.setX(p.getPosX());
         img.setY(p.getPosY());
     }
 
 
-    @Override
-    public void notifyProjectileAdded(Projectile p) {
-        addViewToHashMap(p);
-    }
 
-    @Override
-    public void notifyProjectileRemoved(Projectile p) {
-        removeViewFromHashMap(p);
-    }
 }

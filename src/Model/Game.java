@@ -143,15 +143,15 @@ public class Game  {
                 break;
             }
             else{
-                e.move();//moves enemy
+                e.move();
             }
         }
         for(Tower t : towers){
             t.update();
         }
-        observable.update(); //notifies view to update graphics
         checksRadius();
         checkIfProjectilesHit();
+        observable.update(); //notifies view to update graphics
 
     }
     private void enemyIsDead(Enemy e){
