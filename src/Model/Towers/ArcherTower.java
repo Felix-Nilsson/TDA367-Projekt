@@ -154,16 +154,16 @@ public class ArcherTower implements Tower {
 
     @Override
     public Tower leftUpgrade(Tower t) {
-        ArcherTowerUpgrade atu = new ArcherTowerUpgrade(t);
-        atu.leftUpgrade();
-        return this;
+        ArcherTowerLeftUpgrade atlu = new ArcherTowerLeftUpgrade(t);
+        atlu.leftUpgrade();
+        return atlu;
     }
 
     @Override
     public Tower rightUpgrade(Tower t) {
-        ArcherTowerUpgrade atu = new ArcherTowerUpgrade(t);
-        atu.rightUpgrade();
-        return this;
+        ArcherTowerRightUpgrade atru = new ArcherTowerRightUpgrade(t);
+        atru.rightUpgrade();
+        return atru;
     }
 
     @Override

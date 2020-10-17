@@ -5,10 +5,8 @@ import Model.Cell.Cell;
 import Model.Enemy.BaseEnemy;
 import Model.Enemy.Enemy;
 import Controller.Observer;
-import Model.Towers.MageTower;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
-import Model.Towers.MageTowerUpgrade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -287,12 +285,13 @@ public class Game implements Updatable {
         for (Tower t1 : towers) {
             if (t1 == t) {
                 towers.set(i, tower);
+                break;
             }
             i++;
-            return tower;
+
         }
 
-        return null; //TODO Exception
+        return tower;
     }
 
     public Tower rightUpgradeTower(Tower t) {
@@ -303,12 +302,12 @@ public class Game implements Updatable {
         for (Tower t1 : towers) {
             if (t1 == t) {
                 towers.set(i, tower);
+                break;
             }
             i++;
-            return tower;
         }
 
-        return null; //TODO Exception
+        return tower;
     }
 
 }

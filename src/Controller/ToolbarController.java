@@ -160,7 +160,10 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
     private void towerUpgradeLeft(){
         if(game.getMoney() >= tower.getLeftUpgradeCost()){
             //Upgrades tower
-            parentController.leftUpgradeTower(tower);
+            Tower tempTower = parentController.leftUpgradeTower(tower);
+
+            //Updates the controller with the new tower
+            //this.tower = tempTower;
 
             //JavaFX
             leftUpgradeButton.setDisable(true);
@@ -173,6 +176,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
             updateToolbar();
             updateUpgradeAvaialble();
             parentController.updateSidebar();
+
 
         }
     }
