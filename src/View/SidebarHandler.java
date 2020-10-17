@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class SidebarHandler implements Observer{
+public class SidebarHandler implements MapObserver {
     private ImageView playButtonImg;
     private final Label health;
     private final Label money;
@@ -24,7 +24,7 @@ public class SidebarHandler implements Observer{
         this.mageTowerAvailable = mageTowerAvailable;
         this.archerTowerAvailable = archerTowerAvailable;
         updatePlayerStats();
-        game.addObserver(this);
+        game.addMapObserver(this);
     }
     @Override
     public void notifyGameOver() {

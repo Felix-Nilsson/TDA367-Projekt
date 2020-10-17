@@ -7,26 +7,25 @@ import Model.Enemy.Enemy;
 import Model.Towers.Projectile;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
-import View.Observer;
+import View.MapObserver;
+import View.ProjectileObserver;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Game extends Observable1  {
+public class Game  {
 
     private final Difficulty difficulty;
     private final int mapNumber;
     private int health;
     private int money;
     private final Observable observable;
-    private final Observable1 observable1;
     private final Board b;
     private final WaveManager waveManager;
     private boolean waveRunning = false;
     private Thread gameLoopThread;
     private Thread enemyCreatorThread;
-    //private Updatable updatable;
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
     private List <Projectile> projectileList;
@@ -42,7 +41,6 @@ public class Game extends Observable1  {
         this.difficulty = difficulty;
         this.mapNumber = mapNumber;
         observable = new Observable();
-        observable1 = new Observable1();
         b= new Board(mapNumber);
         List<BaseEnemy.Direction> enemyPath = b.getPath();
         waveManager = new WaveManager(difficulty, enemyPath,b.getStartPos());
@@ -141,27 +139,27 @@ public class Game extends Observable1  {
         checkIfGameOver();
         for(Enemy e : enemiesInWave){
             if(e.isDead()){
-                observable.notifyEnemyDead(e);
                 enemyIsDead(e);
-                enemiesInWave.remove(e);
+                break;
             }
             else{
                 e.move();//moves enemy
-                observable.update(); //notifies view to update graphics
-
             }
-
         }
         for(Tower t : towers){
             t.update();
         }
+        observable.update(); //notifies view to update graphics
         checksRadius();
         checkIfProjectilesHit();
 
     }
     private void enemyIsDead(Enemy e){
         health--;
-        removeEnemy(e);
+        observable.notifyEnemyDead(e);
+        if(!enemiesInWave.remove(e)){
+            System.out.println("error in removing enemy");
+        }
     }
 
     private void checkIfGameOver(){
@@ -212,15 +210,10 @@ public class Game extends Observable1  {
         waveRunning = false;
         round++;
     }
-
-    public void removeEnemy(Enemy enemy){
-        if(enemiesInWave.remove(enemy)){
-            System.out.println("error in removing enemy");
-        }
-    }
     public void removeProjectile(Projectile p){
-        if (projectileList.remove(p)){
-            System.out.println("proj was removed");
+        observable.notifyProjectileRemoved(p);
+        if (!projectileList.remove(p)){
+            System.out.println("Error in removing projectile");
         }
     }
 
@@ -229,52 +222,25 @@ public class Game extends Observable1  {
     }
 
 
-    public boolean addObserver(final Observer observer){
-        return this.observable.addObserver(observer);
+    public boolean addMapObserver(final MapObserver mapObserver){
+        return this.observable.addObserver(mapObserver);
     }
 
-
-    @Override
-    public void addObserver1(Observer1 observer) {
-        super.addObserver1(observer);
-    }
-
-    @Override
-    public void notifyObservers1ThatProjWasAdded(Projectile p) {
-        super.notifyObservers1ThatProjWasAdded(p);
+    public boolean addProjectileObserver(ProjectileObserver projectileObserver) {
+        return this.observable.addObserver(projectileObserver);
     }
 
     private synchronized void checkIfProjectilesHit() {
-        if (projectileList.size() > 0) {
-            System.out.println("projList.size(): " + projectileList.size());
+        if (projectileList != null) {
             Iterator<Projectile> iterator = projectileList.listIterator();
-
             while (iterator.hasNext()) {
                 Projectile p = iterator.next();
                 if (!p.isExisting()) {
-
-                    super.notifyObservers1ThatProjWasRemoved(p);
-                    //projectileList.remove(p);
-                    System.out.println("size before iterator.remove(): " + projectileList.size());
+                    removeProjectile(p);
                     iterator.remove();
-                    System.out.println("size after iterator.remove(): " + projectileList.size());
+                    break;
                 }
             }
-            /*
-            for (Projectile p : projectileList){
-                if (!p.isExisting()){
-                    //TODO Ordningen på metodkallningarna kanske påverkar
-
-                    super.notifyObservers1ThatProjWasRemoved(p);
-                    projectileList.remove(p);
-                    System.out.println("SER JAG NÅNSIN DETTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                }
-            }
-
-            System.out.println("projectile was remooooooooooooooooved");
-            System.out.println("projList.size(): " + projectileList.size());
-
-             */
         }
     }
 
@@ -287,10 +253,8 @@ public class Game extends Observable1  {
                 //TODO p har inte alltid en projectile
                 Projectile p = t.getProjectile();
                 if (p!=null){
-                    System.out.println("p är inte null");
                     projectileList.add(p);
-                    System.out.println(projectileList.size());
-                    this.notifyObservers1ThatProjWasAdded(p);
+                    observable.notifyProjectileAdded(p);
                 }
             }
         }
@@ -300,10 +264,6 @@ public class Game extends Observable1  {
         return this.projectileList;
 
     }
-
-
-
-
 
     //sets initial values of health and money
     private void setValues(){

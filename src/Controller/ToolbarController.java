@@ -4,6 +4,7 @@ import Model.Enemy.Enemy;
 import Model.Game;
 import Model.Towers.Targeting;
 import Model.Towers.Tower;
+import View.ToolbarHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +45,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     private final T tower;
     private final Game game;
     private final MapController parentController;
+    private final ToolbarHandler toolbarHandler;
 
     public ToolbarController(Game game, MapController parentController, T t){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Toolbar.fxml"));
@@ -58,6 +60,8 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         this.parentController = parentController;
         this.tower = t;
         targetingToggleGroup = new ToggleGroup();
+        toolbarHandler = new ToolbarHandler(tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView);
+
         init();
         eventHandlers();
         updateToolbar();
@@ -79,23 +83,11 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         firstRadioButton.setToggleGroup(targetingToggleGroup);
         closestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setSelected(true);
-
-        //towerImageView.setImage(tower.getImage());
-        //towerLabel.setText("Archer"); //temp
-
-        //sellButton.setText((tower.getPrice()*(0.5)) + "");
-
     }
 
 
     private void updateToolbar(){
-        towerLabel.setText(tower.toString());
-        tImageView.setImage(new Image(tower.getImage()));
-        sellButton.setText("Sell: "+ (int)(tower.getPrice() * 0.5));
-        magicLabel.setText("Magic: " + tower.getMagicDmg());
-        attackLabel.setText("Physical: " + tower.getPhysicalDmg());
-        attackSpeedLabel.setText("Speed: " + tower.getAttackSpeed());
-        rangeLabel.setText("Range: " + tower.getRange());
+        toolbarHandler.setTextOfObjects();
         switch(tower.getTarget()){
             case FIRST: firstRadioButton.setSelected(true); break;
             case STRONGEST: strongestRadioButton.setSelected(true); break;
@@ -106,7 +98,6 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     @FXML
     private void updateTargeting(){
         RadioButton r = (RadioButton)(targetingToggleGroup.getSelectedToggle());
-
         if(r.equals(firstRadioButton)){
             tower.setTarget(Targeting.FIRST);
         }

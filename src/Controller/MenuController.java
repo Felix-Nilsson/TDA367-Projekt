@@ -3,6 +3,7 @@ package Controller;
 import Controller.MapController;
 import Model.Difficulty;
 import Model.Game;
+import View.MenuHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -44,9 +45,11 @@ public class MenuController extends AnchorPane implements Initializable {
 
     private final ToggleGroup radioButtonGroupDifficulty = new ToggleGroup();
     private final ToggleGroup radioButtonGroupMapNumber = new ToggleGroup();
+    private  MenuHandler menuHandler;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        menuHandler = new MenuHandler(map,options,mapSelectionAnchorPane,mainMenuAnchorPane);
         activateRadioButtons();
         update();
     }
@@ -67,22 +70,21 @@ public class MenuController extends AnchorPane implements Initializable {
         playClickUIButtonSound();
         Game game = new Game(difficulty,mapNumber);
         MapController mapController = new MapController(game,game.getBoard(),this);
-        map.toFront();
-        map.getChildren().add(mapController);
+        menuHandler.mapToFront(mapController);
     }
     @FXML private void loadGame(){
         playClickUIButtonSound();
     }
     @FXML private void options(){
         playClickUIButtonSound();
-        options.toFront();
+        menuHandler.optionsToFront();
     }
     @FXML private void mapSelection(){
         playClickUIButtonSound();
-        mapSelectionAnchorPane.toFront();
+        menuHandler.mapSelectionPaneToFront();
     }
     @FXML protected void openMenu(){
-        mainMenuAnchorPane.toFront();
+        menuHandler.mainMenuAnchorPaneToFront();
     }
     @FXML private void exitGame(){ System.exit(0); }
 
@@ -109,6 +111,7 @@ public class MenuController extends AnchorPane implements Initializable {
 
     /**
      * These methods change the css/style of buttons, not very important
+     * Can be argued that these need to go into VIEW. But these methods have strong controller behaviours
      */
     @FXML private void selectEasyDifficulty(){
         radioButtonEasy.getStyleClass().clear();

@@ -47,27 +47,27 @@ public class BaseTower implements Tower {
         target = Targeting.FIRST;
 
     }
-    @Override
+
     public int getPosX(){
         return posX;
     }
-    @Override
+
     public int getPosY(){
         return posY;
     }
 
-    @Override
+
     public void setAngle(double angle) {
         this.angle=angle;
     }
 
 
-    @Override
+
     public void update() {
         //TODO måste finnas metod som kollar cooldown
     }
 
-    @Override
+
     public void attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
             enemyPosX = e.getPositionX();
@@ -88,72 +88,69 @@ public class BaseTower implements Tower {
 
     }
 
-    @Override
+
     public void attack() {
-        System.out.println("attaaaaack");
-        System.out.println("angle: " +Math.toDegrees(angle));
-        //currentProjectile = new Projectile(this.posX,this.posY,angle, updateModel);
         currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
     }
 
-    @Override
+
     public Projectile getProjectile(){
         Projectile tmp = currentProjectile;
         currentProjectile=null;
         return tmp;
     }
 
-    @Override
+
     public int getPrice() {
         return price;
     }
 
-    @Override
+
     public int getX() {
         return position.getX();
     }
 
-    @Override
+
     public int getY() {
         return position.getY();
     }
 
-    @Override
+
     public int getMagicDmg() {
         return magicDmg;
     }
 
-    @Override
+
     public int getPhysicalDmg() {
         return physicalDmg;
     }
 
-    @Override
+
     public double getAttackSpeed() {
         return attackSpeed;
     }
 
-    @Override
+
     public String getImage() {
         return this.getImage();  //TODO might be wierd
     }
 
-    @Override
+
     public int getRange() {
         return range;
     }
 
-    @Override
+
     public Targeting getTarget() {
         return target;
     }
 
-    @Override
+
     public void setTarget(Targeting target) {
         this.target = target;
     }
 
-    @Override
+
     public Cell getPosition() {
         return position;
     }

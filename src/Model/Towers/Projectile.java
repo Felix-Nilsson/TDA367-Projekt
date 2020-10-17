@@ -15,14 +15,13 @@ public class Projectile {
     //angle is in radians
     private double angle;
     private int vMultiplier=50;
-    private final ImageView imageView;
+    //private final ImageView imageView;
     private boolean exists;
 
 
     //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
     //Om projectile inte är hitscan och tower har en Angle blir det lätt att implementera en riktig projektil (collision måste dock skapas då)
     public Projectile(double towerPosX, double towerPosY, double enemyPosX, double enemyPosY){
-        System.out.println("Projectile was created");
         this.posX=towerPosX;
         this.posY=towerPosY;
         this.enemyPosX=enemyPosX;
@@ -34,27 +33,11 @@ public class Projectile {
         //this.angle=tower.getAngle();
         this.angle=angle;
         calculateVelocity();
-
-        Image image = new Image((getClass().getClassLoader().getResourceAsStream("img/pokeBall.png")));
-        imageView = new ImageView(image);
-        fixImage(imageView);
         exists=true;
     }
 
-    public ImageView getImageView(){
-        return imageView;
-    }
-    private void fixImage(ImageView img){
-        img.setX(posX);
-        img.setY(posY);
-        img.setFitHeight(25);
-        img.setFitWidth(25);
-        img.setPreserveRatio(true);
-        img.toFront();
-    }
 
     private void damageEnemy(Enemy enemy, DamageType damageType){
-
         //temporärt
         enemy.tookDamage(5,damageType);
     }

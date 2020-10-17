@@ -6,9 +6,7 @@ import Model.Enemy.Enemy;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
-import View.Observer;
-import View.ViewManager1;
-import javafx.application.Platform;
+import View.ProjectileHandler;
 import javafx.scene.control.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,8 +24,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
-import javax.tools.Tool;
-import java.awt.*;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -115,7 +111,7 @@ public class MapController extends AnchorPane {
         createSidebar();
 
         eventHandlers();
-        new ViewManager1(this.game, gameBoardAnchorPane);
+        new ProjectileHandler(this.game, gameBoardAnchorPane);
     }
 
     private void eventHandlers() {
@@ -255,10 +251,7 @@ public class MapController extends AnchorPane {
 
     public void nextRound() {
         waveNumber.setText("Wave: " + game.getRound());
-
-
         game.nextRound();
-
     }
 
 

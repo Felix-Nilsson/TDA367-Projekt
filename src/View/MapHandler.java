@@ -4,8 +4,6 @@ import Model.Cell.Cell;
 import Model.Enemy.Enemy;
 import Model.Game;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +15,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapHandler implements Observer {
+public class MapHandler implements MapObserver {
 
     private final AnchorPane gameBoardAnchorPane;
     private final GridPane gameBoardGrid;
@@ -47,7 +45,7 @@ public class MapHandler implements Observer {
         this.gameWonScreen = gameWonScreen;
         progressBarHashMap = new HashMap<>();
         enemyHashMap = new HashMap<>();
-        game.addObserver(this);
+        game.addMapObserver(this);
     }
 
 
@@ -72,7 +70,7 @@ public class MapHandler implements Observer {
         base.setFitWidth(40);
         base.setPreserveRatio(true);
         base.toFront();
-        base.setX(gameBoardAnchorPane.getWidth()-cave.getFitWidth()); //TODO gameboardanchorpane width does not work in map handler for some reason
+        base.setX(1040-cave.getFitWidth()); //TODO gameboardanchorpane width does not work in map handler for some reason
         base.setY((endPos - 1) *40);
         gameBoardAnchorPane.getChildren().add(base);
 

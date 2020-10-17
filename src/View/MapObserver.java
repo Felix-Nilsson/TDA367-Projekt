@@ -2,7 +2,7 @@ package View;
 
 import Model.Enemy.Enemy;
 
-public interface Observer {
+public interface MapObserver {
     void notifyGameOver();
     void notifyRoundOver();
     void notifyGameWon();
