@@ -17,10 +17,10 @@ public class EnemyFactoryRed implements EnemyFactory {
     }
     @Override
     public RedEnemy createEnemyMedium() {
-        return new RedEnemy(150,5,15,15,enemyPath,startPos);
+        return new RedEnemy(150,5,25,25,enemyPath,startPos);
     }
     @Override
     public RedEnemy createEnemyHard() {
-        return new RedEnemy(200,6,20,20,enemyPath,startPos);
+        return new RedEnemy(200,6,50,50,enemyPath,startPos);
     }
 }

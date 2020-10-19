@@ -1,19 +1,20 @@
 package Model.Enemy;
 
-import Model.Updatable;
+import Model.DamageType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 
-
-public interface Enemy extends Updatable {
+public interface Enemy  {
     void update();
     void followPath();
-    void tookDamage(int damage);
+    void tookDamage(double damage, DamageType damageType);
     Image getImage();
     int getPositionX();
     int getPositionY();
     void move();
     boolean isDead();
     int spawnTime();
+    int getHealth();
+
+    int getMaxHealth();
 }

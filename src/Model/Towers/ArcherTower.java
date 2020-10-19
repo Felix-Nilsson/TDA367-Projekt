@@ -4,22 +4,18 @@ import Model.Cell.Cell;
 
 import Model.Towers.Upgrade.ArcherTowerLeftUpgrade;
 import Model.Towers.Upgrade.ArcherTowerRightUpgrade;
-import Model.UpdateModel;
+import Model.Enemy.Enemy;
 
+import java.util.List;
 
 public class ArcherTower implements Tower {
 
     private BaseTower baseTower ;
 
+    public ArcherTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
 
-    public ArcherTower(UpdateModel updateModel,Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
-
-        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
+        this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
         baseTower.setTowerImage("img/archerTower.png");
-        baseTower.setColor("000000");
-
-        updateModel.add(this);
-
     }
 
 
@@ -29,8 +25,8 @@ public class ArcherTower implements Tower {
     }
 
     @Override
-    public void checkRadius(double x, double y) {
-        baseTower.checkRadius(x,y);
+    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+        baseTower.attackIfEnemyInRange(enemyList);
     }
 
     @Override
@@ -115,6 +111,11 @@ public class ArcherTower implements Tower {
 
 
     @Override
+    public boolean getIsReadyToFire() {
+        return baseTower.getIsReadyToFire();
+    }
+
+    @Override
     public String getImage() {
         return "/img/archerTower.png";
     }
@@ -165,6 +166,11 @@ public class ArcherTower implements Tower {
         ArcherTowerRightUpgrade atru = new ArcherTowerRightUpgrade(t);
         atru.rightUpgrade();
         return atru;
+    }
+
+    public Projectile getProjectile() {
+        return baseTower.getProjectile();
+
     }
 
     @Override

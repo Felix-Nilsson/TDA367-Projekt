@@ -4,16 +4,19 @@ import Model.Cell.Cell;
 
 import Model.Towers.Upgrade.MageTowerLeftUpgrade;
 import Model.Towers.Upgrade.MageTowerRightUpgrade;
-import Model.UpdateModel;
+import Model.Enemy.Enemy;
+import java.util.List;
 
 public class MageTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed,UpdateModel updateModel, int leftUpgradeCost, int rightUpgradeCost) {
-        this.baseTower = new BaseTower(updateModel,position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
+
+    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
+        this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
+
         baseTower.setTowerImage("img/mageTower.png");
-        updateModel.add(this);
+
     }
 
 
@@ -23,8 +26,8 @@ public class MageTower implements Tower {
     }
 
     @Override
-    public void checkRadius(double x, double y) {
-        baseTower.checkRadius(x,y);
+    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+        baseTower.attackIfEnemyInRange(enemyList);
     }
 
     @Override
@@ -95,6 +98,7 @@ public class MageTower implements Tower {
     }
 
     @Override
+
     public void setMagicDmg(int amount) {
         baseTower.setMagicDmg(amount);
     }
@@ -107,6 +111,12 @@ public class MageTower implements Tower {
     @Override
     public void setAttackSpeed(double amount) {
         baseTower.setAttackSpeed(amount);
+    }
+
+
+    public boolean getIsReadyToFire() {
+        return baseTower.getIsReadyToFire();
+
     }
 
     @Override
@@ -159,6 +169,12 @@ public class MageTower implements Tower {
         MageTowerRightUpgrade mtru = new MageTowerRightUpgrade(t);
         mtru.rightUpgrade();
         return mtru;
+    }
+
+
+    public Projectile getProjectile() {
+        return baseTower.getProjectile();
+
     }
 
     @Override

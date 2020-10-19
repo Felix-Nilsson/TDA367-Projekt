@@ -3,6 +3,7 @@ package Controller;
 import Model.Game;
 import Model.Towers.Targeting;
 import Model.Towers.Tower;
+import View.ToolbarHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class ToolbarController <T extends Tower> extends AnchorPane implements Observer {
+public class ToolbarController <T extends Tower> extends AnchorPane  {
     @FXML private AnchorPane toolbarPane;
 
     @FXML private Label towerLabel;
@@ -46,9 +47,10 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
     private Tower tower;
     private final Game game;
     private final MapController parentController;
+    private final ToolbarHandler toolbarHandler;
 
     public ToolbarController(Game game, MapController parentController, T t){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Toolbar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/fxml/Toolbar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -59,18 +61,16 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
         this.game = game;
         this.parentController = parentController;
         this.tower = t;
-        game.addObserver(this);
         targetingToggleGroup = new ToggleGroup();
+        toolbarHandler = new ToolbarHandler(tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView);
+
         init();
         eventHandlers();
         updateToolbar();
 
     }
 
-    @Override
-    public void update() {
 
-    }
 
     private void eventHandlers(){
         closeButton.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -87,6 +87,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
         firstRadioButton.setToggleGroup(targetingToggleGroup);
         closestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setSelected(true);
+
         lUImageView.setImage(new Image(tower.getLeftUpgradeImage()));
         leftUpgradeCostLabel.setText(tower.getLeftUpgradeLabel() + ": " +tower.getLeftUpgradeCost()+"$");
         leftUpgradeCostLabel.setAlignment(Pos.CENTER);
@@ -98,31 +99,22 @@ public class ToolbarController <T extends Tower> extends AnchorPane implements O
 
         //sellButton.setText((tower.getPrice()*(0.5)) + "");
 
+
     }
 
 
     private void updateToolbar(){
-        towerLabel.setText(tower.toString());
-        tImageView.setImage(new Image(tower.getImage()));
-        sellButton.setText("Sell: "+ (int)(tower.getPrice() * 0.5));
-
-        magicLabel.setText("Magic: " + tower.getMagicDmg());
-        attackLabel.setText("Physical: " + tower.getPhysicalDmg());
-        attackSpeedLabel.setText("Speed: " + tower.getAttackSpeed());
-        rangeLabel.setText("Range: " + tower.getRange());
-
+        toolbarHandler.setTextOfObjects();
         switch(tower.getTarget()){
             case FIRST: firstRadioButton.setSelected(true); break;
             case STRONGEST: strongestRadioButton.setSelected(true); break;
             case CLOSEST: closestRadioButton.setSelected(true); break;
         }
-
     }
 
     @FXML
     private void updateTargeting(){
         RadioButton r = (RadioButton)(targetingToggleGroup.getSelectedToggle());
-
         if(r.equals(firstRadioButton)){
             tower.setTarget(Targeting.FIRST);
         }

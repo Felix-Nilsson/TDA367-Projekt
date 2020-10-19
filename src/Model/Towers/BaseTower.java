@@ -1,12 +1,13 @@
 package Model.Towers;
 
-import Model.Cell.BaseCell;
-
 import Model.Cell.Cell;
 
-import Model.UpdateModel;
+import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class BaseTower implements Tower {
@@ -25,12 +26,19 @@ public class BaseTower implements Tower {
     private String leftUpgradeLabel;
     private String rightUpgradeLabel;
 
+    private Projectile currentProjectile;
+    private int enemyPosX;
+    private int enemyPosY;
+    private double currentCooldown;
+    private final int timerDelayInMilliseconds;
+    private boolean isReadyToFire;
 
-    private UpdateModel updateModel;
+
+
 
     private Targeting target;
 
-    public BaseTower(UpdateModel updateModel, Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
+    public BaseTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
         this.position = position;
         //längst upp till vänster är (25,15). Varje cell är 40 pixlar
         posX = position.getX()*40 +25;
@@ -40,24 +48,54 @@ public class BaseTower implements Tower {
         this.price = price;
         this.range = range;
         this.attackSpeed = attackSpeed;
-        this.updateModel = updateModel;
         this.leftUpgradeCost = leftUpgradeCost;
         this.rightUpgradeCost = rightUpgradeCost;
 
+        //Tower ska kunna attackera direkt
+        currentCooldown=0;
+        isReadyToFire=true;
+        timerDelayInMilliseconds=100;
+
+        //Temp, example of tower setting the color to the cell
+        position.setColor("000000");
+
         //Default is closest
         target = Targeting.FIRST;
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask,timerDelayInMilliseconds,timerDelayInMilliseconds);
 
     }
+
+    TimerTask timerTask = new TimerTask(){
+        @Override
+        public void run() {
+            checkCooldown();
+        }
+    };
+
+    private void checkCooldown(){
+        if(currentCooldown>0){
+            currentCooldown--;
+        }
+        else{
+            isReadyToFire=true;
+        }
+    }
+
     @Override
+    public boolean getIsReadyToFire(){
+        return isReadyToFire;
+    }
+
     public int getPosX(){
         return posX;
     }
-    @Override
+
     public int getPosY(){
         return posY;
     }
 
-    @Override
+
     public void setAngle(double angle) {
         this.angle=angle;
     }
@@ -67,39 +105,57 @@ public class BaseTower implements Tower {
     }
 
 
-    @Override
+
     public void update() {
         //TODO måste finnas metod som kollar cooldown
     }
 
-    @Override
-    public void checkRadius(double x, double y) {
 
-        double distX = x-posX;
-        //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. angle reflekterar nu verkligheten.
-        //i Projectile skapa finns det minus framför vy för att återställa detta igen
-        double distY = -(y-posY);
-        double distHyp = Math.sqrt(distX*distX + distY*distY);
-        //System.out.println(distHyp);
-        if (distHyp<this.range) {
-            this.angle = Math.atan2(distY, distX);
-            attack();
+    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+        for (Enemy e : enemyList){
+            enemyPosX = e.getPositionX();
+            enemyPosY = e.getPositionY();
+            double distX = enemyPosX-posX;
+            //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. angle reflekterar nu verkligheten.
+            //i Projectile skapa finns det minus framför vy för att återställa detta igen
+            double distY = -(enemyPosY-posY);
+            double distHyp = Math.sqrt(distX*distX + distY*distY);
+            //System.out.println(distHyp);
+            if (distHyp<this.range) {
+                this.angle = Math.atan2(distY, distX);
+                attack();
+                //e.tookDamage(5);
+            }
         }
-
-
     }
 
-    @Override
     public void attack() {
-        System.out.println("attaaaaack");
-        System.out.println("angle: " +Math.toDegrees(angle));
-        new Projectile(posX,posY,angle);
+        currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
+        resetCurrentCooldown();
+    }
+    
+    //sätter cooldown beroende på attackspeed så att Tower inte kan attackera konstant
+    private void resetCurrentCooldown(){
+        //the attackspeed is attacks/second, for example:
+        //attackspeed=0.5, then 1/attackspeed==2 attacks per second. However cooldown is modified more than once a second, in fact every (timerDelayInMilliseconds/1000) seconds
+        // To compensate for this, the numerator is 1000 (milliseconds) and the denominator is attackspeed*timerDelayInMilliseconds
+
+        currentCooldown = (1000/(attackSpeed*timerDelayInMilliseconds));
+        isReadyToFire = false;
     }
 
-    @Override
+
+    public Projectile getProjectile(){
+        Projectile tmp = currentProjectile;
+        currentProjectile=null;
+        return tmp;
+    }
+
+
     public int getPrice() {
         return price;
     }
+
 
     @Override
     public int getLeftUpgradeCost() {
@@ -121,27 +177,27 @@ public class BaseTower implements Tower {
         return null;
     }
 
-    @Override
+
     public int getX() {
         return position.getX();
     }
 
-    @Override
+
     public int getY() {
         return position.getY();
     }
 
-    @Override
+
     public int getMagicDmg() {
         return magicDmg;
     }
 
-    @Override
+
     public int getPhysicalDmg() {
         return physicalDmg;
     }
 
-    @Override
+
     public double getAttackSpeed() {
         return attackSpeed;
     }
@@ -163,35 +219,36 @@ public class BaseTower implements Tower {
 
     @Override
     public String getImage() {
-        return this.getImage();  //TODO might be wierd
+        return this.getImage();  //TODO might be weird
     }
 
     @Override
     public String getLeftUpgradeImage() {
-        return null;
+        return null; //Should never get here
     }
 
     @Override
     public String getRightUpgradeImage() {
-        return null;
+        return null; //Should never get here
     }
 
-    @Override
+
+
     public int getRange() {
         return range;
     }
 
-    @Override
+
     public Targeting getTarget() {
         return target;
     }
 
-    @Override
+
     public void setTarget(Targeting target) {
         this.target = target;
     }
 
-    @Override
+
     public Cell getPosition() {
         return position;
     }

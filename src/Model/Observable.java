@@ -1,39 +1,78 @@
 package Model;
 
-import Controller.Observer;
+import Model.Enemy.Enemy;
+import Model.Towers.Projectile;
+import View.MapObserver;
+import View.ProjectileObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Observable implements Observer{
-    private final List<Observer> observers;
+public class Observable implements MapObserver, ProjectileObserver {
+    private final List<MapObserver> mapObservers;
+    private List<ProjectileObserver> projectileObservers = new ArrayList<ProjectileObserver>();
 
     public Observable(){
-        observers = new ArrayList<>();
-    }
-
-
-    public boolean addObserver(Observer observer){
-        final boolean alreadyObserving = this.observers.contains(observer);
-        if(!alreadyObserving){
-            this.observers.add(observer);
-        }
-        return !alreadyObserving;
-    }
-
-    public boolean removeObserver(final Observer observer) {
-        final boolean alreadyObserving = this.observers.contains(observer);
-        if (!alreadyObserving) {
-            this.observers.remove(observer);
-        }
-        return !alreadyObserving;
+        mapObservers = new ArrayList<>();
     }
 
     public void update(){
-        for(Observer observer : observers){
-            observer.update();
+        for(MapObserver mapObserver : mapObservers){
+            mapObserver.update();
         }
+        for(ProjectileObserver projectileObserver : projectileObservers){
+            projectileObserver.update();
+        }
+    }
+    public boolean addObserver(MapObserver mapObserver){
+        final boolean alreadyObserving = this.mapObservers.contains(mapObserver);
+        if(!alreadyObserving){
+            this.mapObservers.add(mapObserver);
+        }
+        return !alreadyObserving;
+    }
+
+    public void notifyGameOver(){
+        for(MapObserver mapObserver : mapObservers){
+            mapObserver.notifyGameOver();
+        }
+    }
+    public void notifyRoundOver(){
+        for(MapObserver mapObserver : mapObservers){
+            mapObserver.notifyRoundOver();
+        }
+    }
+    public void notifyGameWon(){
+        for(MapObserver mapObserver : mapObservers){
+            mapObserver.notifyGameWon();
+        }
+    }
+
+    public void notifyEnemyDead(Enemy e) {
+        for(MapObserver mapObserver : mapObservers){
+            mapObserver.notifyEnemyDead(e);
+        }
+    }
 
 
+    public boolean addObserver(ProjectileObserver projectileObserver){
+        final boolean alreadyObserving = this.projectileObservers.contains(projectileObserver);
+        if(!alreadyObserving){
+            this.projectileObservers.add(projectileObserver);
+        }
+        return !alreadyObserving;
+    }
+
+
+    public void notifyProjectileAdded(Projectile p){
+        for(ProjectileObserver observers : projectileObservers){
+            observers.notifyProjectileAdded(p);
+        }
+    }
+    public void notifyProjectileRemoved(Projectile p){
+        for(ProjectileObserver observer : projectileObservers){
+            observer.notifyProjectileRemoved(p);
+        }
     }
 
 }

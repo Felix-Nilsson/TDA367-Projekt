@@ -7,8 +7,8 @@ import Model.Towers.MageTower;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
-import javafx.application.Platform;
-
+import View.ProjectileHandler;
+import javafx.scene.control.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,9 +22,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
-import javax.tools.Tool;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -34,44 +34,73 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MapController extends AnchorPane implements Observer {
-    @FXML private GridPane gameBoardGrid;
-    @FXML private Rectangle tile;
-    @FXML private ImageView toolbarBackgroundImage;
-    @FXML private Label money;
-    @FXML private Label waveNumber;
+public class MapController extends AnchorPane {
+    @FXML
+    private GridPane gameBoardGrid;
+    @FXML
+    private Rectangle tile;
+    @FXML
+    private ImageView toolbarBackgroundImage;
+    @FXML
+    private Label money;
+    @FXML
+    private Label waveNumber;
 
-    @FXML private Button continueButton;
-    @FXML private Button home;
-    @FXML private Button exit;
-    @FXML private Button restart;
+    @FXML
+    private Button continueButton;
+    @FXML
+    private Button home;
+    @FXML
+    private Button exit;
+    @FXML
+    private Button restart;
 
-    @FXML private AnchorPane sidebar;
-    @FXML private AnchorPane settings;
-    @FXML private AnchorPane settingsPane;
-    @FXML private AnchorPane mapAnchorPane;
-    @FXML private AnchorPane toolbarAnchorPane;
-    @FXML private AnchorPane toolbarCover;
-    @FXML private AnchorPane gameBoardAnchorPane;
+    @FXML
+    private RadioButton gridLayoutRadioButton;
 
+    @FXML
+    private AnchorPane sidebar;
+    @FXML
+    private AnchorPane settings;
+    @FXML
+    private AnchorPane settingsPane;
+    @FXML
+    private AnchorPane mapAnchorPane;
+    @FXML
+    private AnchorPane toolbarAnchorPane;
+    @FXML
+    private AnchorPane toolbarCover;
+    @FXML
+    private AnchorPane gameBoardAnchorPane;
+    @FXML
+    private GridPane toplayerGrid;
 
+    @FXML
+    private Pane gameOverScreen;
+    @FXML
+    private Pane gameWonScreen;
+
+    private boolean paused = false;
     private final Game game;
 
-    private SidebarController sidebarController;
-    private final List<Cell> map;
     private List<Enemy> enemies;
+
     private HashMap<Enemy,ImageView> enemyHashMap;
     private HashMap<Tower,ImageView> towerHashMap;  //If we want different images for upgarded towers, this need to be updated, however this wont be done here
     private HashMap<Tower, ToolbarController> toolbarTowerHashMap;
     private boolean waveRunning;
-    private ImageView cave;
-    private ImageView base;
-    private MapHandler mapHandler;
+    //private ImageView cave;
+    //private ImageView base;
+    private final MapHandler mapHandler;
+
     private TowerFactory towerFactory;
+    private final MenuController parentController;
 
-    public MapController(Game game, List<Cell> map) {
+    private ProgressBar pb;
+    private HashMap<Enemy, ProgressBar> progressBarHashMap;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Map.fxml"));
+    public MapController(Game game, List<Cell> map, MenuController parentController) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/fxml/Map.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -79,25 +108,26 @@ public class MapController extends AnchorPane implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.map = map;
+        this.parentController = parentController;
         this.game = game;
-        this.mapHandler = new MapHandler(gameBoardAnchorPane, gameBoardGrid, map);
+        this.mapHandler = new MapHandler(game,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
-        game.addObserver(this);
+        progressBarHashMap = new HashMap<>();
         createSidebar();
 
         eventHandlers();
-        
+        new ProjectileHandler(this.game, gameBoardAnchorPane);
     }
-    private void eventHandlers(){
+
+    private void eventHandlers() {
         //EventHandlers
 
         //When dragged over GridPane
         gameBoardGrid.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-                if(dragEvent.getGestureSource() != gameBoardGrid){
+                if (dragEvent.getGestureSource() != gameBoardGrid) {
                     dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
                 }
                 dragEvent.consume();
@@ -122,9 +152,8 @@ public class MapController extends AnchorPane implements Observer {
                     //Check if the cell is available
                     int index = game.getArrayIndex(x_placement, y_placement);
                     boolean occupied = game.isCellOccupied(index);
-                    if (!occupied && towerFactory.getPrice()<=game.getMoney()) {
 
-
+                    if (!occupied && towerFactory.getPrice() <= game.getMoney()) {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
 
@@ -135,7 +164,7 @@ public class MapController extends AnchorPane implements Observer {
                         towerHashMap.put(game.getTowerInCell(x_placement, y_placement), image);
 
                         //Change money
-                        game.addMoney(- towerFactory.getPrice());
+                        game.addMoney(-towerFactory.getPrice());
                         updateSidebar();
 
                         //Creates a new toolbar with the tower
@@ -147,9 +176,6 @@ public class MapController extends AnchorPane implements Observer {
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
-
-
-
                 }
 
                 dragEvent.setDropCompleted(true);
@@ -166,108 +192,84 @@ public class MapController extends AnchorPane implements Observer {
                 int y_placement = getGridY(node);
 
                 Tower t = game.getTowerInCell(x_placement, y_placement);
-                if(t != null){
+                if (t != null) {
                     moveToolbarFront();
                     setToolCont(t);
                 }
             }
         });
 
-        
-
 
     }
 
-    private int getGridX(Node node){
+    @FXML
+    private void changeGridVisibilty() {
+        mapHandler.changeToplayerGridVisible(gridLayoutRadioButton.isSelected());
+    }
+
+    private int getGridX(Node node) {
         Integer cIndex = GridPane.getColumnIndex(node);
-        int x = cIndex == null ? 0 :cIndex;
+        int x = cIndex == null ? 0 : cIndex;
         return x;
     }
 
-    private int getGridY(Node node){
+    private int getGridY(Node node) {
         Integer rIndex = GridPane.getRowIndex(node);
-        int y = rIndex == null ? 0 :rIndex;
+        int y = rIndex == null ? 0 : rIndex;
         return y;
     }
 
-    private <T extends Tower> void createToolbar(T t){
+    private <T extends Tower> void createToolbar(T t) {
         ToolbarController<T> toolbarController = new ToolbarController(game, this, t);
         toolbarTowerHashMap.put(t, toolbarController);
     }
 
-    private void setToolCont(Tower t){
+    private void setToolCont(Tower t) {
         toolbarAnchorPane.getChildren().clear();
         System.out.println(toolbarTowerHashMap.get(t));
         toolbarAnchorPane.getChildren().add(toolbarTowerHashMap.get(t));
     }
 
-    public void removeToolFromHash(Tower t){
+    public void removeToolFromHash(Tower t) {
         toolbarTowerHashMap.remove(t);
     }
 
-    public void createSidebar(){
-        //add sidebar fxml
-        sidebarController = new SidebarController(game,this);
+    public void createSidebar() {
+        SidebarController sidebarController = new SidebarController(game, this);
         sidebar.getChildren().add(sidebarController);
-        int startPos = game.getStartPos();
-        int endPos = game.getEndPos();
-
-        //Creating map
-        mapHandler.createMap(startPos,endPos, cave, base);
+        mapHandler.createMap();
     }
 
-    public void nextRound(){
+    @FXML
+    private void closeGame() {
+        System.exit(0);
+    }
+
+    @FXML
+    private void mainMenu() {
+        parentController.openMenu();
+    }
+
+    @FXML
+    private void restart() {
+        parentController.newGame();
+
+    }
+
+
+    public void nextRound() {
         waveNumber.setText("Wave: " + game.getRound());
-        enemyHashMap = new HashMap<>();
         game.nextRound();
-
-    }
-    protected List<Enemy> getEnemies(){
-        return game.getEnemiesInWave();
     }
 
-    public void update(){
 
-
-        if (game.getEnemiesInWave()!= null ) {
-            if(game.getEnemiesInWave().size() > 0){
-                for(Enemy e : game.getEnemiesInWave()){
-                    if(e.isDead()){
-                        Platform.runLater(()->gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
-                        game.getEnemiesInWave().remove(e);
-                        game.enemyIsOut();
-                        System.out.println("is dead");
-                        break;
-                    }
-                    else{
-                        if (!enemyHashMap.containsKey(e)) {
-                            mapHandler.drawEnemy(e, enemyHashMap);
-                        }
-                        mapHandler.updateEnemy(enemyHashMap,e);
-
-                    }
-                }
-            }
-            /*
-            else{
-                game.endRound();
-                System.out.println("Round over");
-
-            }
-
-             */
-
-
-        }
-    }
-    protected void roundOver(){
-        game.pause();
-    }
     protected void pause(){
         game.pause();
+        paused = true;
     }
     protected void play(){
         game.play();
+        paused = false;
     }
 
     protected boolean isWaveRunning(){
@@ -275,11 +277,17 @@ public class MapController extends AnchorPane implements Observer {
     }
 
     public void openSettings(){
+        if(isWaveRunning()){
+            pause();
+        }
         mapHandler.openSettings(settingsPane);
     }
 
-    @FXML //TODO Not currently implementet
-    public void openMap(){
+
+    @FXML private void openMap(){
+        if (paused){
+            play();
+        }
         mapHandler.closeSettings(mapAnchorPane);
     }
 
@@ -309,9 +317,12 @@ public class MapController extends AnchorPane implements Observer {
 
 
     public void updateSidebar(){
-        sidebarController.updatePlayerStats();
-        sidebarController.updateAvailable();
+        game.notifyAllObservers();
     }
+    protected List<Enemy> getEnemies(){
+        return game.getEnemiesInWave();
+    }
+
 
     public void updateToolbar(){
         //Updates every controller in toolbarcontroller
@@ -319,8 +330,6 @@ public class MapController extends AnchorPane implements Observer {
             entry.getValue().updateUpgradeAvaialble();
         }
     }
-
-
 
     private void updateToolbarHashmap(Tower oldT, Tower newT){
         //Uppdates the fking hashhhmap

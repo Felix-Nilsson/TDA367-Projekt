@@ -1,11 +1,13 @@
 package Model.Towers;
 
 import Model.Cell.Cell;
-import Model.Updatable;
+import Model.Enemy.Enemy;
 
-public interface Tower extends Updatable {
+import java.util.List;
+
+public interface Tower {
     void update();
-    void checkRadius(double x, double y);
+    void attackIfEnemyInRange(List<Enemy> enemyList);
     void attack();
 
     int getPrice();
@@ -25,6 +27,7 @@ public interface Tower extends Updatable {
     int getMagicDmg();
     int getPhysicalDmg();
     double getAttackSpeed();
+    boolean getIsReadyToFire();
 
     void setMagicDmg(int amount);
     void setPhysicalDmg(int amount);
@@ -38,6 +41,7 @@ public interface Tower extends Updatable {
     Targeting getTarget();
     void setTarget(Targeting target);
     Cell getPosition();
+    Projectile getProjectile();
 
     Tower leftUpgrade(Tower t);
     Tower rightUpgrade(Tower t);

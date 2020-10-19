@@ -1,5 +1,6 @@
 package Model.Enemy;
 
+import Model.DamageType;
 import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 
@@ -36,8 +37,8 @@ public class RedEnemy implements Enemy {
         parent.followPath();
     }
     @Override
-    public void tookDamage(int damage){
-        parent.tookDamage(damage);
+    public void tookDamage(double damage, DamageType damageType){
+        parent.tookDamage(damage,damageType);
     }
     protected void turn(BaseEnemy.Direction dir){
         parent.direction=dir;
@@ -68,9 +69,15 @@ public class RedEnemy implements Enemy {
     public BaseEnemy.Direction getDirection(){
         return parent.direction;
     }
-    protected int getHealth(){
+    public int getHealth(){
         return parent.getHealth();
     }
+
+    @Override
+    public int getMaxHealth() {
+        return parent.getMaxHealth();
+    }
+
     protected int getMovementSpeed(){
         return parent.getMovementSpeed();
     }

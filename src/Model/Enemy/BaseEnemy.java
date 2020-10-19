@@ -1,5 +1,6 @@
 package Model.Enemy;
 
+import Model.DamageType;
 import javafx.scene.image.Image;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ public class BaseEnemy implements Enemy {
     private final int movementSpeed;
     private final int magicResist;
     private final int armor;
-
+    private final int maxHp;
 
     public enum Direction {NORTH,EAST,SOUTH,WEST}
 
@@ -30,11 +31,12 @@ public class BaseEnemy implements Enemy {
 
     public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         this.health=health;
+        this.maxHp = health;
         this.movementSpeed=movementSpeed;
         this.magicResist=magicResist;
         this.armor=armor;
         this.positionX=0;
-        this.positionY=(startPos-1) * 40 + 10;
+        this.positionY=(startPos-1) * 40;
         this.path = path;
         isDead = false;
         //så länge enemy spawnas på 25,75... ska denna inte behövas
@@ -45,12 +47,12 @@ public class BaseEnemy implements Enemy {
     //Dessa metoder ska kallas varje gång model ska uppdateras
     @Override
     public void update(){
-        followPath();
-        move();
+
     }
 
     //movementspeed = pixels per millisecond
     public void move(){
+        followPath();
         switch (direction) {
             case NORTH : positionY = positionY - movementSpeed; break;
             case EAST : positionX = positionX + movementSpeed; break;
@@ -153,12 +155,18 @@ public class BaseEnemy implements Enemy {
 
 
     // ska antagligen ta in damage type (ad/ap)
-    public void tookDamage(int damage){
+    public void tookDamage(double damage, DamageType damageType){
         //TODO lägga in beräkningar beroende på damage type och armor/mr
-        health=health-damage;
 
+        if (damageType == DamageType.MAGICAL){
+            health = (int) (health-(damage*((100.0-magicResist)/100)));
+        }
+        else if (damageType == DamageType.PHYSICAL){
+            health = (int) (health-damage*((100.0-armor)/100));
+        }
+        System.out.println(this + "Health: ");
         if (health<=0){
-            //TODO delete this object
+            isDead = true;
         }
     }
 
@@ -176,9 +184,15 @@ public class BaseEnemy implements Enemy {
     protected Direction getDirection(){
         return direction;
     }
-    protected int getHealth(){
+    public int getHealth(){
         return health;
     }
+
+    @Override
+    public int getMaxHealth() {
+        return maxHp;
+    }
+
     protected int getMovementSpeed(){
         return movementSpeed;
     }

@@ -1,13 +1,9 @@
 package Controller;
 
 import Model.Game;
-
 import Model.Towers.*;
-//import Controller.Observer;
-import javafx.application.Platform;
+import View.SidebarHandler;
 import javafx.event.EventHandler;
-
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -16,13 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
-
 import java.io.IOException;
 
 
-public class SidebarController extends AnchorPane implements Observer {
+public class SidebarController extends AnchorPane  {
     @FXML private ImageView sidebarBackground;
     @FXML private ImageView moneyIcon;
     @FXML private ImageView healthIcon;
@@ -39,13 +33,13 @@ public class SidebarController extends AnchorPane implements Observer {
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
 
-    private final Game game;
     private final MapController parentController;
     private MageTowerFactory mF;
     private ArcherTowerFactory aF;
+    private final SidebarHandler sidebarHandler;
 
     public SidebarController(Game game,MapController parentController) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Sidebar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/fxml/Sidebar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -53,11 +47,12 @@ public class SidebarController extends AnchorPane implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.game = game;
         this.parentController = parentController;
-        game.addObserver(this);
-        setValues();
-
+        sidebarHandler = new SidebarHandler(game, health,money,playButtonImg,mageTowerAvailable,archerTowerAvailable);
+        eventHandlers();
+        updateAvailable();
+    }
+    private void eventHandlers(){
         mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -72,7 +67,7 @@ public class SidebarController extends AnchorPane implements Observer {
                 MageTowerFactory mf = new MageTowerFactory();
                 sendTowerToMap(mf);
                 updateAvailable();
-                updatePlayerStats();
+                sidebarHandler.updatePlayerStats();
             }
         });
         archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -88,77 +83,40 @@ public class SidebarController extends AnchorPane implements Observer {
                 ArcherTowerFactory af = new ArcherTowerFactory();
                 sendTowerToMap(af);
                 updateAvailable();
-                updatePlayerStats();
+                sidebarHandler.updatePlayerStats();
             }
         });
-
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
-        updateAvailable();
-        updatePlayerStats();
-
-
     }
 
     private <TF extends TowerFactory> void sendTowerToMap(TF towerFactory){
         parentController.receiveTowerFactory(towerFactory);
     }
 
-    private void setValues(){
-
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
-    }
-
-    public void updatePlayerStats(){
-        health.setText(game.getHealth()+"");
-        money.setText(game.getMoney()+"");
-    }
-
-    public void update(){
-
-        Platform.runLater(()->money.setText(""+ game.getMoney()));
-        Platform.runLater(()->health.setText(""+ game.getHealth()));
-        updateAvailable();
-        updatePlayerStats();
-
-        if(!parentController.isWaveRunning()){
-            roundOver();
-        }
-    }
-    public void roundOver(){
-        playButtonImg.setImage(new Image("/img/play_button.png"));
-        parentController.roundOver();
-    }
     @FXML private void nextRound(){
         //pressed play
         if(!parentController.isWaveRunning()){
             //if there exists enemies on map
             if(parentController.getEnemies() != null){
                 if(parentController.getEnemies().size() > 0 ){
-                    playButtonImg.setImage(new Image("/img/pause.png"));
+                    sidebarHandler.setPauseImg();
                     parentController.play();
                 }
                 else{
+                    sidebarHandler.setPauseImg();
                     parentController.nextRound();
-                    playButtonImg.setImage(new Image("/img/pause.png"));
                 }
-
             }
             //first round when enemy list is null
             else{
                 parentController.nextRound();
-                playButtonImg.setImage(new Image("/img/pause.png"));
+                sidebarHandler.setPauseImg();
             }
-
 
         }
         //pressed pause
         else{
-            playButtonImg.setImage(new Image("/img/play_button.png"));
-            System.out.println("pressed pause");
+            sidebarHandler.setPlayImg();
             parentController.pause();
-
         }
     }
 
@@ -169,29 +127,7 @@ public class SidebarController extends AnchorPane implements Observer {
 
 
     @FXML public void updateAvailable(){
-
-        //TODO View beteende
-
-        if(game.getMoney() >= 150){ //Price of mageTower might need to get
-            mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
-        }
-        else {
-            mageTowerAvailable.setStyle("-fx-background-color:red");
-        }
-        if(game.getMoney() >= 100){ //Price of archerTower might need to get
-            archerTowerAvailable.setStyle("-fx-background-color:Lightgreen");
-        }
-        else {
-            archerTowerAvailable.setStyle("-fx-background-color:red");
-        }
-
-
-
+        sidebarHandler.updateAvailable();
     }
-
-
-
-
-
 
 }
