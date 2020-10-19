@@ -4,6 +4,7 @@ import Model.Cell.Cell;
 import Model.Enemy.Enemy;
 import Model.Game;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -23,11 +24,12 @@ public class MapHandler implements MapObserver {
     private final Pane gameWonScreen;
     private final Pane gameOverScreen;
     private HashMap<Enemy, ImageView> enemyHashMap;
+    private Label waveNumber;
 
     private final List<Cell> map;
     private ImageView cave;
     private ImageView base;
-    private Game game;
+    private final Game game;
     private HashMap<Enemy, ProgressBar> progressBarHashMap;
 
     //TODO: Add a reference to game to get info from, rather than map
@@ -35,7 +37,7 @@ public class MapHandler implements MapObserver {
     //TODO: Add a blurb justifying design choices
 
 
-    public MapHandler(Game game, Pane gameOverScreen, Pane gameWonScreen,AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map){
+    public MapHandler(Game game, Label waveNumber, Pane gameOverScreen, Pane gameWonScreen, AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map){
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.gameBoardGrid = gameBoardGrid;
         this.toplayerGrid = toplayerGrid;
@@ -43,6 +45,7 @@ public class MapHandler implements MapObserver {
         this.game = game;
         this.gameOverScreen = gameOverScreen;
         this.gameWonScreen = gameWonScreen;
+        this.waveNumber = waveNumber;
         progressBarHashMap = new HashMap<>();
         enemyHashMap = new HashMap<>();
         game.addMapObserver(this);
@@ -89,6 +92,7 @@ public class MapHandler implements MapObserver {
     public void changeToplayerGridVisible(boolean visible){
         toplayerGrid.setGridLinesVisible(visible);
     }
+
     private void fixImage(ImageView img,Enemy e){
         img.setX(e.getPositionX());
         img.setY(e.getPositionY());
@@ -144,12 +148,18 @@ public class MapHandler implements MapObserver {
     }
 
     @Override
+    public void notifyRoundStart() {
+        Platform.runLater(() ->waveNumber.setText("Wave: " + game.getRound()));
+    }
+
+    @Override
     public void notifyGameWon() {
         Platform.runLater(gameWonScreen::toFront);
     }
 
     @Override
     public void notifyEnemyDead(Enemy e) {
+        Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(progressBarHashMap.get(e)));
         Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
     }
 

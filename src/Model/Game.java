@@ -4,9 +4,7 @@ package Model;
 import Model.Cell.Cell;
 import Model.Enemy.BaseEnemy;
 import Model.Enemy.Enemy;
-import Model.Towers.Projectile;
-import Model.Towers.Tower;
-import Model.Towers.TowerFactory;
+import Model.Towers.*;
 import View.MapObserver;
 import View.ProjectileObserver;
 
@@ -30,6 +28,7 @@ public class Game  {
     private List<Enemy> enemiesInWave;
     private List<Tower> towers;
     private List <Projectile> projectileList;
+    private boolean autostart;
 
     int round = 1;
 
@@ -83,6 +82,9 @@ public class Game  {
 
     public int getEndPos() {
         return b.getEndPos();
+    }
+    public void setAutostart(boolean a){
+        autostart = a;
     }
 
 
@@ -233,10 +235,23 @@ public class Game  {
 
     public void endRound(){
         observable.notifyRoundOver();
-        stopEnemyCreatorThread();
-        stopGameLoopThread();
-        waveRunning = false;
-        round++;
+        if(autostart){
+            money = money +round*100;
+            round++;
+            observable.notifyRoundStart();
+            stopEnemyCreatorThread();
+            stopGameLoopThread();
+            nextRound();
+
+        }
+        else{
+            stopEnemyCreatorThread();
+            stopGameLoopThread();
+            waveRunning = false;
+            money = money +round*100;
+            round++;
+        }
+
     }
     public void removeProjectile(Projectile p){
         observable.notifyProjectileRemoved(p);
@@ -263,7 +278,7 @@ public class Game  {
 
 
     private synchronized void checksRadius(){
-        // TOCTOU
+        // TOTOU
         if (towers.size() > 0 && enemiesInWave.size() > 0) { // Time of Check
             for (Tower t : towers){ // Time of Use
                 //TODO if (t.cooldown == false)
@@ -402,6 +417,12 @@ public class Game  {
 
     public void addMoney(int toAdd) {
         money += toAdd;
+    }
+    public int getMageTowerPrice(){
+      return  new MageTowerFactory().getPrice();
+    }
+    public int getArcherTowerPrice(){
+        return new ArcherTowerFactory().getPrice();
     }
 
     public Tower leftUpgradeTower(Tower t) {

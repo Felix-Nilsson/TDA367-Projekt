@@ -214,7 +214,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="autoStartRadioButton" layoutX="219.0" layoutY="190.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="156.0" text="[on/off]">
+                  <RadioButton fx:id="autoStartRadioButton" layoutX="219.0" layoutY="190.0" mnemonicParsing="false" onMouseClicked="#autoStartPressed" prefHeight="36.0" prefWidth="156.0" text="[on/off]">
                      <font>
                         <Font size="24.0" />
                      </font></RadioButton>

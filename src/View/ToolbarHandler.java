@@ -22,6 +22,7 @@ public class ToolbarHandler implements MapObserver{
     private final Button rightUpgradeButton;
 
 
+
     private final Tower tower;
 
     private final Button sellButton;
@@ -45,6 +46,7 @@ public class ToolbarHandler implements MapObserver{
         this.tImageView = tImageView;
         this.leftUpgradeButton = leftUpgradeButton;
         this.rightUpgradeButton = rightUpgradeButton;
+
     }
     public void setTextOfObjects(){
         towerLabel.setText(tower.toString());
@@ -64,6 +66,11 @@ public class ToolbarHandler implements MapObserver{
 
     @Override
     public void notifyRoundOver() {
+
+    }
+
+    @Override
+    public void notifyRoundStart() {
 
     }
 

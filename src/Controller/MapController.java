@@ -58,6 +58,8 @@ public class MapController extends AnchorPane {
     @FXML
     private RadioButton gridLayoutRadioButton;
 
+    @FXML private RadioButton autoStartRadioButton;
+
     @FXML
     private AnchorPane sidebar;
     @FXML
@@ -110,7 +112,7 @@ public class MapController extends AnchorPane {
         }
         this.parentController = parentController;
         this.game = game;
-        this.mapHandler = new MapHandler(game,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
+        this.mapHandler = new MapHandler(game,waveNumber,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
         progressBarHashMap = new HashMap<>();
@@ -206,6 +208,10 @@ public class MapController extends AnchorPane {
     private void changeGridVisibilty() {
         mapHandler.changeToplayerGridVisible(gridLayoutRadioButton.isSelected());
     }
+    @FXML private void autoStartPressed(){
+        game.setAutostart(autoStartRadioButton.isSelected());
+    }
+
 
     private int getGridX(Node node) {
         Integer cIndex = GridPane.getColumnIndex(node);
@@ -255,7 +261,6 @@ public class MapController extends AnchorPane {
 
 
     public void nextRound() {
-        waveNumber.setText("Wave: " + game.getRound());
         game.nextRound();
     }
 

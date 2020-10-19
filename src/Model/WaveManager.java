@@ -42,41 +42,8 @@ public class WaveManager  {
      */
     public void createWave(int round) {
         wave = new ArrayList<>();
-
-
-        switch (round){
-            case 1:
-                enemyCreator(1, enemies.ENEMY_BLUE);break;
-            case 2:
-                enemyCreator(5,enemies.ENEMY_RED); break;
-
-            case 3:
-                enemyCreator(5, enemies.ENEMY_BLUE);
-                enemyCreator(5,enemies.ENEMY_RED); break;
-            case 4:
-                enemyCreator(8, enemies.ENEMY_BLUE);
-                enemyCreator(8,enemies.ENEMY_RED); break;
-            case 5:
-                //enemyCreator(5,enemies.ENEMY_RED); break;
-            case 6:
-                //enemyCreator(5,enemies.ENEMY_RED); break;
-            case 7:
-                //enemyCreator(5,enemies.ENEMY_RED); break;
-            case 8:
-                //enemyCreator(5,enemies.ENEMY_RED); break;
-            case 9:
-                //enemyCreator(5,enemies.ENEMY_RED); break;
-            case 10:
-                //enemyCreator(5,enemies.ENEMY_RED); break;
-        }
-
-            /*
-
         enemyCreator((2+round)*difficultyModifier, enemies.ENEMY_BLUE);
         enemyCreator((2+round)*difficultyModifier,enemies.ENEMY_RED);
-
-             */
-
     }
 
     public Enemy getEnemy(int counter){
