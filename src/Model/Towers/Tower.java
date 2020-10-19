@@ -25,6 +25,8 @@ public interface Tower {
     int getPhysicalDmg();
     double getAttackSpeed();
     boolean getIsReadyToFire();
+    void stopTimer();
+    void startTimer();
 
     String getImage();
 

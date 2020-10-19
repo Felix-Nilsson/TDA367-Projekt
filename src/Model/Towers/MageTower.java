@@ -80,6 +80,16 @@ public class MageTower implements Tower {
     }
 
     @Override
+    public void stopTimer() {
+        baseTower.stopTimer();
+    }
+
+    @Override
+    public void startTimer() {
+        baseTower.startTimer();
+    }
+
+    @Override
     public String getImage() {
         return "/img/mageTower.png";
     }

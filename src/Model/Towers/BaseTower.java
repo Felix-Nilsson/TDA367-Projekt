@@ -27,6 +27,8 @@ public class BaseTower implements Tower {
     private double currentCooldown;
     private final int timerDelayInMilliseconds;
     private boolean isReadyToFire;
+    private Timer timer;
+    private boolean timerIsRunning;
 
 
 
@@ -49,6 +51,7 @@ public class BaseTower implements Tower {
         currentCooldown=0;
         isReadyToFire=true;
 
+        timerIsRunning=false;
         timerDelayInMilliseconds=100;
 
         //Temp, example of tower setting the color to the cell
@@ -56,17 +59,37 @@ public class BaseTower implements Tower {
 
         //Default is closest
         target = Targeting.FIRST;
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask,timerDelayInMilliseconds,timerDelayInMilliseconds);
+        System.out.println("TOWER CREATED.............................................................................................");
+        startTimer();
 
     }
-
-    TimerTask timerTask = new TimerTask(){
-        @Override
-        public void run() {
-            checkCooldown();
+    @Override
+    public void stopTimer(){
+        if(timerIsRunning){
+            System.out.println("stopTimer()");
+            timer.cancel();
+            timer.purge();
+            timerIsRunning=false;
         }
-    };
+
+    }
+    @Override
+    public void startTimer(){
+        if(!timerIsRunning){
+            System.out.println("startTimer()");
+            TimerTask timerTask = new TimerTask(){
+                @Override
+                public void run() {
+                    checkCooldown();
+                    System.out.println("HEJSAAAAN");
+                }
+            };
+            this.timer = new Timer(true);
+            timer.scheduleAtFixedRate(timerTask,timerDelayInMilliseconds,timerDelayInMilliseconds);
+            timerIsRunning=true;
+        }
+    }
+
 
     private void checkCooldown(){
         if(currentCooldown>0){

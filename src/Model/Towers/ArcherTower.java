@@ -84,6 +84,16 @@ public class ArcherTower implements Tower {
     }
 
     @Override
+    public void stopTimer() {
+        baseTower.stopTimer();
+    }
+
+    @Override
+    public void startTimer() {
+        baseTower.startTimer();
+    }
+
+    @Override
     public String getImage() {
         return "/img/archerTower.png";
     }

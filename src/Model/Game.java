@@ -66,6 +66,7 @@ public class Game  {
         enemyCounter = waveManager.getWaveSize(round);
         enemiesInWave = new ArrayList<>();
         waveRunning = true;
+        startAllTowerTimers();
         run();
 
     }
@@ -191,11 +192,13 @@ public class Game  {
     }
     private void gameOver(){
         observable.notifyGameOver();
+        stopAllTowerTimers();
         stopGameLoopThread();
         stopEnemyCreatorThread();
 
     }
     private void gameWon(){
+        stopAllTowerTimers();
         observable.notifyGameWon();
     }
 
@@ -213,16 +216,19 @@ public class Game  {
     }
     public void pause(){
         waveRunning = false;
+        stopAllTowerTimers();
         stopEnemyCreatorThread();
         stopGameLoopThread();
     }
     public void play(){
         waveRunning = true;
+        startAllTowerTimers();
         startEnemyCreatorThread();
         startGameLoopThread();
     }
     public void endRound(){
         observable.notifyRoundOver();
+        stopAllTowerTimers();
         stopEnemyCreatorThread();
         stopGameLoopThread();
         waveRunning = false;
@@ -234,6 +240,18 @@ public class Game  {
             System.out.println("Error in removing projectile");
         }
     }
+    private void stopAllTowerTimers(){
+        for (Tower t : towers){
+            t.stopTimer();
+        }
+    }
+    private void startAllTowerTimers(){
+        for (Tower t : towers){
+            t.startTimer();
+        }
+    }
+
+
 
     public boolean isWaveRunning(){
         return waveRunning;
@@ -362,6 +380,7 @@ public class Game  {
 
 
     public void removeTower(Tower t){
+        t.stopTimer();
         if(!towers.remove(t)){
             System.out.println("tower not found ");
         }
