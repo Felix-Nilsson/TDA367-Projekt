@@ -2,6 +2,7 @@ package Model.Towers;
 
 import Model.Cell.Cell;
 
+import Model.DamageType;
 import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 
@@ -124,7 +125,12 @@ public class BaseTower implements Tower {
             if (distHyp<this.range) {
                 this.angle = Math.atan2(distY, distX);
                 attack();
-                //e.tookDamage(5);
+                if(physicalDmg>0){
+                    e.tookDamage(physicalDmg, DamageType.PHYSICAL);
+                }
+                if(magicDmg>0){
+                    e.tookDamage(magicDmg, DamageType.MAGICAL);
+                }
             }
         }
     }
