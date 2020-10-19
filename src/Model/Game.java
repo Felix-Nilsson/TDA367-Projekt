@@ -145,7 +145,13 @@ public class Game  {
     public void update(){
         checkIfGameOver();
         for(Enemy e : enemiesInWave){
-            if(e.isDead()){
+            if(e.isKilled()){
+                money = money + 20;
+                enemyIsDead(e);
+                break;
+            }
+            else if(e.isOut()){
+                health--;
                 enemyIsDead(e);
                 break;
             }
@@ -182,7 +188,6 @@ public class Game  {
         }
     }
     private void enemyIsDead(Enemy e){
-        health--;
         observable.notifyEnemyDead(e);
         if(!enemiesInWave.remove(e)){
             System.out.println("error in removing enemy");

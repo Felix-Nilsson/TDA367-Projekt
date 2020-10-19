@@ -26,7 +26,8 @@ public class BaseEnemy implements Enemy {
     protected Direction direction;
     private List<Point> positionList; //Lista med alla pathens nodpositioner
     private int stepNr = 0;//används för att gå igenom path
-    private boolean isDead;
+    private boolean isKilled = false;
+    private boolean isOut = false;
 
 
     public BaseEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
@@ -38,7 +39,7 @@ public class BaseEnemy implements Enemy {
         this.positionX=0;
         this.positionY=(startPos-1) * 40;
         this.path = path;
-        isDead = false;
+
         //så länge enemy spawnas på 25,75... ska denna inte behövas
         this.direction=path.get(0);
         convertPathToCoordinates();
@@ -62,9 +63,11 @@ public class BaseEnemy implements Enemy {
     }
 
 
-    @Override
-    public boolean isDead() {
-        return isDead;
+    public boolean isKilled() {
+        return isKilled;
+    }
+    public boolean isOut() {
+        return isOut;
     }
 
 
@@ -144,7 +147,7 @@ public class BaseEnemy implements Enemy {
             }
         }
         else {
-        isDead = true;
+        isOut = true;
 
         }
 
@@ -166,7 +169,7 @@ public class BaseEnemy implements Enemy {
         }
         System.out.println(this + "Health: ");
         if (health<=0){
-            isDead = true;
+            isKilled = true;
         }
     }
 
