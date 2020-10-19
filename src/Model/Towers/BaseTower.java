@@ -2,6 +2,7 @@ package Model.Towers;
 
 import Model.Cell.Cell;
 
+import Model.DamageType;
 import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 
@@ -81,7 +82,6 @@ public class BaseTower implements Tower {
                 @Override
                 public void run() {
                     checkCooldown();
-                    System.out.println("HEJSAAAAN");
                 }
             };
             this.timer = new Timer(true);
@@ -138,7 +138,11 @@ public class BaseTower implements Tower {
             if (distHyp<this.range) {
                 this.angle = Math.atan2(distY, distX);
                 attack();
-                //e.tookDamage(5);
+                //Standard beteende. Damage och DamageType är beroende av vilken typ av Tower det är, ex. ArcherTower.
+                //TODO ArcherTower och BaseTower måste ha override på denna metod
+                e.tookDamage(50, DamageType.PHYSICAL);
+                System.out.println(e.getHealth());
+                break;
             }
         }
     }
