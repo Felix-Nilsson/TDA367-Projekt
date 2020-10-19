@@ -1,6 +1,10 @@
 package Model.Towers.Upgrade;
 
+import Model.Enemy.Enemy;
+import Model.Towers.Projectile;
 import Model.Towers.Tower;
+
+import java.util.List;
 
 public class ArcherTowerLeftUpgrade extends TowerUpgrade{
 

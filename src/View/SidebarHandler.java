@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class SidebarHandler implements MapObserver {
-    private ImageView playButtonImg;
+    private final ImageView playButtonImg;
     private final Label health;
     private final Label money;
     private final Game game;

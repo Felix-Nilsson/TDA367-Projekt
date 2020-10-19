@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class ToolbarController <T extends Tower> extends AnchorPane  {
+
     @FXML private AnchorPane toolbarPane;
 
     @FXML private Label towerLabel;
@@ -62,7 +63,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         this.parentController = parentController;
         this.tower = t;
         targetingToggleGroup = new ToggleGroup();
-        toolbarHandler = new ToolbarHandler(tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView);
+        toolbarHandler = new ToolbarHandler(game, tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView, leftUpgradeButton, rightUpgradeButton);
 
         init();
         eventHandlers();
@@ -105,6 +106,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
     private void updateToolbar(){
         toolbarHandler.setTextOfObjects();
+        updateUpgradeAvaialble();
         switch(tower.getTarget()){
             case FIRST: firstRadioButton.setSelected(true); break;
             case STRONGEST: strongestRadioButton.setSelected(true); break;
@@ -140,7 +142,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
         //Changes the money amount when selling
         game.addMoney((int)(tower.getPrice()*0.5));
-        parentController.updateSidebar(); //Might cause cycle dependency
+        parentController.updateSidebar(); //TODO Might cause cycle dependency
 
         //Removes the tower and controller from the hashmap
         parentController.removeToolFromHash(tower);
@@ -158,18 +160,16 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             this.tower = tempTower;
 
             //JavaFX
-            leftUpgradeButton.setDisable(true);
-            leftUpgradeCostLabel.setText("Unavailable");
+            toolbarHandler.updateLeftUpgrade();
 
             //Changes money
             game.addMoney(-tower.getLeftUpgradeCost());
 
             //JavaFX again
             updateToolbar();
-            updateUpgradeAvaialble();
+
+            //updateUpgradeAvaialble();
             parentController.updateSidebar();
-
-
         }
     }
 
@@ -183,34 +183,25 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             this.tower = tempTower;
 
             //JavaFX
-            rightUpgradeButton.setDisable(true);
-            rightUpgradeCostLabel.setText("Unavailable");
+            toolbarHandler.updateRightUpgrade();
 
             //Changes money
             game.addMoney(-tower.getLeftUpgradeCost());
 
             //JavaFX again
             updateToolbar();
-            updateUpgradeAvaialble();
+
+
+            //updateUpgradeAvaialble();
             parentController.updateSidebar();
         }
 
     }
 
-    public void updateUpgradeAvaialble(){
-        if(game.getMoney()>=tower.getLeftUpgradeCost()){
-            leftUpgradeButton.setStyle("-fx-background-color:Lightgreen");
-        }
-        else{
-            leftUpgradeButton.setStyle("-fx-background-color:red");
-        }
-        if(game.getMoney()>=tower.getRightUpgradeCost()){
-            rightUpgradeButton.setStyle("-fx-background-color:Lightgreen");
-        }
-        else{
-            rightUpgradeButton.setStyle("-fx-background-color:red");
-        }
+    public void updateUpgradeAvaialble() {
+        toolbarHandler.updateUpgradeAvaialble();
     }
+
 
 
 

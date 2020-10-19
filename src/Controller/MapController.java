@@ -86,8 +86,8 @@ public class MapController extends AnchorPane {
     private List<Enemy> enemies;
 
     private HashMap<Enemy,ImageView> enemyHashMap;
-    private HashMap<Tower,ImageView> towerHashMap;  //If we want different images for upgarded towers, this need to be updated, however this wont be done here
-    private HashMap<Tower, ToolbarController> toolbarTowerHashMap;
+    private final HashMap<Tower,ImageView> towerHashMap;  //If we want different images for upgarded towers, this need to be updated, however this wont be done here
+    private final HashMap<Tower, ToolbarController> toolbarTowerHashMap;
     private boolean waveRunning;
     //private ImageView cave;
     //private ImageView base;
@@ -163,12 +163,12 @@ public class MapController extends AnchorPane {
                         //After the tower has been added, add to hashmap
                         towerHashMap.put(game.getTowerInCell(x_placement, y_placement), image);
 
-                        //Change money
-                        game.addMoney(-towerFactory.getPrice());
-                        updateSidebar();
-
                         //Creates a new toolbar with the tower
                         createToolbar(game.getTowerInCell(x_placement, y_placement));
+
+                        //Change money
+                        game.addMoney(-towerFactory.getPrice());
+                        updateSidebar(); //TODO Error here, need to update Toolbar Handler
 
                         //Updates the previous toolbarcontroller
                         updateToolbar();
@@ -209,14 +209,12 @@ public class MapController extends AnchorPane {
 
     private int getGridX(Node node) {
         Integer cIndex = GridPane.getColumnIndex(node);
-        int x = cIndex == null ? 0 : cIndex;
-        return x;
+        return cIndex == null ? 0 : cIndex;
     }
 
     private int getGridY(Node node) {
         Integer rIndex = GridPane.getRowIndex(node);
-        int y = rIndex == null ? 0 : rIndex;
-        return y;
+        return rIndex == null ? 0 : rIndex;
     }
 
     private <T extends Tower> void createToolbar(T t) {
@@ -226,7 +224,6 @@ public class MapController extends AnchorPane {
 
     private void setToolCont(Tower t) {
         toolbarAnchorPane.getChildren().clear();
-        System.out.println(toolbarTowerHashMap.get(t));
         toolbarAnchorPane.getChildren().add(toolbarTowerHashMap.get(t));
     }
 
@@ -312,13 +309,12 @@ public class MapController extends AnchorPane {
         ImageView image = towerHashMap.get(t);
         mapHandler.removeImageFromGrid(image);
         towerHashMap.remove(t);
-
     }
-
 
     public void updateSidebar(){
         game.notifyAllObservers();
     }
+
     protected List<Enemy> getEnemies(){
         return game.getEnemiesInWave();
     }
@@ -333,33 +329,37 @@ public class MapController extends AnchorPane {
 
     private void updateToolbarHashmap(Tower oldT, Tower newT){
         //Uppdates the fking hashhhmap
-        System.out.println("start: "+ toolbarTowerHashMap);
 
         toolbarTowerHashMap.put(newT, toolbarTowerHashMap.get(oldT));
         toolbarTowerHashMap.remove(oldT, toolbarTowerHashMap.get(oldT));
         
         //Removes all null values
-        for(Iterator<Map.Entry<Tower, ToolbarController>> i = toolbarTowerHashMap.entrySet().iterator(); i.hasNext();){
-            Map.Entry<Tower, ToolbarController> e = i.next();
-            if(e.getValue() == null){
-                i.remove();
-            }
-        }
-        System.out.println("Tower Hashmap: " + towerHashMap);
-
-        System.out.println("End: "+ toolbarTowerHashMap);
+        toolbarTowerHashMap.entrySet().removeIf(e -> e.getValue() == null);
 
     }
+
+    private void updateTowerHashmap(Tower oldT, Tower newT){
+        //Uppdates the fking hashhhmap
+
+        towerHashMap.put(newT, towerHashMap.get(oldT));
+        towerHashMap.remove(oldT, towerHashMap.get(oldT));
+
+        //Removes all null values
+        towerHashMap.entrySet().removeIf(e -> e.getValue() == null);
+    }
+
 
     public Tower leftUpgradeTower(Tower oldT){
         Tower newT = game.leftUpgradeTower(oldT);
         updateToolbarHashmap(oldT, newT);
+        updateTowerHashmap(oldT, newT);
         return newT;
     }
 
     public Tower rightUpgradeTower(Tower oldT){
         Tower newT = game.rightUpgradeTower(oldT);
         updateToolbarHashmap(oldT, newT);
+        updateTowerHashmap(oldT, newT);
         return newT;
     }
 

@@ -2,8 +2,12 @@ package Model.Towers.Upgrade;
 
 
 import Model.Cell.Cell;
+import Model.Enemy.Enemy;
+import Model.Towers.Projectile;
 import Model.Towers.Targeting;
 import Model.Towers.Tower;
+
+import java.util.List;
 
 public abstract class TowerUpgrade implements Tower {
     protected Tower tower;
@@ -23,10 +27,6 @@ public abstract class TowerUpgrade implements Tower {
 
     public void update() { 
         tower.update();
-    }
-
-    public void checkRadius(double x, double y) {
-        tower.checkRadius(x, y);
     }
 
     public void attack() {
@@ -129,5 +129,19 @@ public abstract class TowerUpgrade implements Tower {
     public String toString() {
         return tower.toString();
         //Can append tower upgrades here, but not neccessary in current version
+    }
+
+
+    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+        tower.attackIfEnemyInRange(enemyList);
+    }
+
+    @Override
+    public boolean getIsReadyToFire() {
+        return tower.getIsReadyToFire();
+    }
+
+    public Projectile getProjectile() {
+        return tower.getProjectile();
     }
 }
