@@ -199,7 +199,7 @@ public class MapController extends AnchorPane {
                         + node.getLayoutX() + " " + node.getLayoutY() + " " + node);
                 mapHandler.setSelectedTower(node);
 
-                
+
                 if (t != null) {
                     moveToolbarFront();
                     setToolCont(t);

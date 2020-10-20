@@ -14,28 +14,29 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Game  {
-
-    private final Difficulty difficulty;
-    private final int mapNumber;
+    private int round = 1;
+    private final int gameSpeed;
+    private int enemyCounter;
+    private int totalNumberOfRounds;
+    private final int mapNumber; //only one now but can change later
     private int health;
     private int money;
+
+    private boolean waveRunning = false;
+    private boolean autostart;
+
+    private final Difficulty difficulty;
     private final Observable observable;
     private final Board b;
     private final WaveManager waveManager;
-    private boolean waveRunning = false;
+
     private Thread gameLoopThread;
     private Thread enemyCreatorThread;
-    private  List<Enemy> enemiesInWave;
+
+    private List<Enemy> enemiesInWave;
     private List<Tower> towers;
     private List <Projectile> projectileList;
-    private boolean autostart;
 
-    int round = 1;
-
-    private final int gameSpeed;
-
-    private int enemyCounter;
-    private int totalNumberOfRounds;
 
     public Game(Difficulty difficulty, int mapNumber) {
         this.difficulty = difficulty;
