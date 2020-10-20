@@ -85,11 +85,14 @@ public class MapController extends AnchorPane {
     private Pane gameOverScreen;
     @FXML
     private Pane gameWonScreen;
+    @FXML Slider musicSlider;
 
     private boolean paused = false;
     private final Game game;
 
     private List<Enemy> enemies;
+
+    private MediaPlayer mediaPlayer;
 
     private HashMap<Enemy,ImageView> enemyHashMap;
     private final HashMap<Tower,ImageView> towerHashMap;  //If we want different images for upgarded towers, this need to be updated, however this wont be done here
@@ -221,11 +224,18 @@ public class MapController extends AnchorPane {
     @FXML private void autoStartPressed(){
         game.setAutostart(autoStartRadioButton.isSelected());
     }
-
+    @FXML private void setBackgroundSound(){
+       mediaPlayer.setVolume(musicSlider.getValue());
+    }
     private void playBackgroundMusic(){
         URL resource = getClass().getResource("/View/sound/game_music.mp3");
         Media media = new Media(resource.toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer = new MediaPlayer(media);
+        musicSlider.setValue(1);
+        musicSlider.setMax(0.05);
+        musicSlider.setMin(0);
+        mediaPlayer.setVolume(musicSlider.getMax());
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
 
     }

@@ -189,7 +189,7 @@
                         <String fx:value="exitButton" />
                      </styleClass>
                   </Button>
-                  <Slider fx:id="musicSlider" layoutX="681.0" layoutY="243.0" />
+                  <Slider fx:id="musicSlider" layoutX="681.0" layoutY="243.0" onMouseReleased="#setBackgroundSound" />
                   <Label layoutX="736.0" layoutY="172.0" prefHeight="49.0" prefWidth="69.0" text="Music">
                      <font>
                         <Font size="24.0" />
