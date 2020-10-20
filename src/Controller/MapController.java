@@ -3,7 +3,6 @@ package Controller;
 import Model.*;
 import Model.Cell.Cell;
 import Model.Enemy.Enemy;
-import Model.Towers.MageTower;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
@@ -32,7 +31,6 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -156,7 +154,7 @@ public class MapController extends AnchorPane {
 
                     //Check if the cell is available
                     int index = game.getArrayIndex(x_placement, y_placement);
-                    boolean occupied = game.isCellOccupied(index);
+                    boolean occupied = game.getCellOccupied(index);
 
                     if (!occupied && towerFactory.getPrice() <= game.getMoney()) {
                         //Place the image in the cell
@@ -166,10 +164,10 @@ public class MapController extends AnchorPane {
                         setTowerOnCell(index);
 
                         //After the tower has been added, add to hashmap
-                        towerHashMap.put(game.getTowerInCell(x_placement, y_placement), image);
+                        towerHashMap.put(game.getTower(x_placement, y_placement), image);
 
                         //Creates a new toolbar with the tower
-                        createToolbar(game.getTowerInCell(x_placement, y_placement));
+                        createToolbar(game.getTower(x_placement, y_placement));
 
                         //Change money
                         game.addMoney(-towerFactory.getPrice());
@@ -196,12 +194,12 @@ public class MapController extends AnchorPane {
                 int x_placement = getGridX(node);
                 int y_placement = getGridY(node);
 
-                Tower t = game.getTowerInCell(x_placement, y_placement);
-
+                Tower t = game.getTower(x_placement, y_placement);
                 System.out.println("inte labans prints hehe: "
                         + node.getLayoutX() + " " + node.getLayoutY() + " " + node);
                 mapHandler.setSelectedTower(node);
 
+                
                 if (t != null) {
                     moveToolbarFront();
                     setToolCont(t);
@@ -284,7 +282,7 @@ public class MapController extends AnchorPane {
     }
 
     protected boolean isWaveRunning(){
-        return game.isWaveRunning();
+        return game.getWaveRunning();
     }
 
     public void openSettings(){
@@ -304,7 +302,7 @@ public class MapController extends AnchorPane {
 
 
     public void setTowerOnCell(int index){
-        game.updateArrayWithTower(index,this.towerFactory);
+        game.createTower(index,this.towerFactory);
     }
 
     public void receiveTowerFactory(TowerFactory towerFactory){
