@@ -144,4 +144,15 @@ public abstract class TowerUpgrade implements Tower {
     public Projectile getProjectile() {
         return tower.getProjectile();
     }
+
+    @Override
+    public void stopTimer() {
+        tower.stopTimer();
+    }
+
+    @Override
+    public void startTimer() {
+        tower.startTimer();
+
+    }
 }
