@@ -21,10 +21,13 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -194,6 +197,11 @@ public class MapController extends AnchorPane {
                 int y_placement = getGridY(node);
 
                 Tower t = game.getTowerInCell(x_placement, y_placement);
+
+                System.out.println("inte labans prints hehe: "
+                        + node.getLayoutX() + " " + node.getLayoutY() + " " + node);
+                mapHandler.setSelectedTower(node);
+
                 if (t != null) {
                     moveToolbarFront();
                     setToolCont(t);
@@ -231,6 +239,7 @@ public class MapController extends AnchorPane {
     private void setToolCont(Tower t) {
         toolbarAnchorPane.getChildren().clear();
         toolbarAnchorPane.getChildren().add(toolbarTowerHashMap.get(t));
+
     }
 
     public void removeToolFromHash(Tower t) {

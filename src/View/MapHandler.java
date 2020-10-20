@@ -4,6 +4,7 @@ import Model.Cell.Cell;
 import Model.Enemy.Enemy;
 import Model.Game;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
@@ -31,6 +32,8 @@ public class MapHandler implements MapObserver {
     private ImageView base;
     private final Game game;
     private HashMap<Enemy, ProgressBar> progressBarHashMap;
+
+    private Rectangle selectedTower;
 
     //TODO: Add a reference to game to get info from, rather than map
 
@@ -170,7 +173,25 @@ public class MapHandler implements MapObserver {
         Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(progressBarHashMap.get(e)));
         Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
     }
+    public void setSelectedTower(Node node){
+        if (gameBoardGrid.getChildren().contains(selectedTower)){
+            gameBoardGrid.getChildren().remove(selectedTower);
+        }
 
+        int logicalX = (int)(node.getLayoutX()/39);
+        int logicalY = (int)(node.getLayoutY()/39);
+        //System.out.println("logx: " + logicalX + " logy: "+ logicalY);
+
+        selectedTower = new Rectangle();
+
+        selectedTower.setOpacity(0.5);
+        selectedTower.setStyle("-fx-background-color: yellow");
+
+        GridPane.setColumnIndex(selectedTower,logicalX);
+        GridPane.setRowIndex(selectedTower,logicalY);
+
+        gameBoardGrid.getChildren().add(selectedTower);
+    }
     @Override
     public void update() {
         if(game.getEnemiesInWave() != null){
