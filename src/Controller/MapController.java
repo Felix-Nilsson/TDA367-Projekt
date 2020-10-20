@@ -23,12 +23,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
 import java.io.IOException;
 
+import java.net.URL;
 import java.util.HashMap;
 
 import java.util.List;
@@ -121,6 +124,7 @@ public class MapController extends AnchorPane {
 
         eventHandlers();
         new ProjectileHandler(this.game, gameBoardAnchorPane);
+        playBackgroundMusic();
     }
 
     private void eventHandlers() {
@@ -218,7 +222,13 @@ public class MapController extends AnchorPane {
         game.setAutostart(autoStartRadioButton.isSelected());
     }
 
+    private void playBackgroundMusic(){
+        URL resource = getClass().getResource("/View/sound/game_music.mp3");
+        Media media = new Media(resource.toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
 
+    }
     private int getGridX(Node node) {
         Integer cIndex = GridPane.getColumnIndex(node);
         return cIndex == null ? 0 : cIndex;
