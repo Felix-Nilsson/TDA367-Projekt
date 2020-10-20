@@ -5,11 +5,13 @@ import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.scene.Parent;
 
-public class Main extends Application{
+import java.util.Objects;
+
+public class AlienDefense extends Application{
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Menu.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Menu.fxml")));
         Scene scene = new Scene(root,1366,768);
         stage.setResizable(false);
         stage.setTitle("Tower Defense");

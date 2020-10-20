@@ -1,7 +1,7 @@
-package main.java.Model.Towers;
+package Model.Towers;
 
-import main.java.Model.Cell.Cell;
-import main.java.Model.Enemy.Enemy;
+import Model.Cell.Cell;
+import Model.Enemy.Enemy;
 
 import java.util.List;
 

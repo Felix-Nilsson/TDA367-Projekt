@@ -1,4 +1,4 @@
-package main.java.Model.Cell;
+package Model.Cell;
 
 public interface Cell {
 

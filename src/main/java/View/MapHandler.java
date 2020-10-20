@@ -1,8 +1,8 @@
-package main.java.View;
+package View;
 
-import main.java.Model.Cell.Cell;
-import main.java.Model.Enemy.Enemy;
-import main.java.Model.Game;
+import Model.Cell.Cell;
+import Model.Enemy.Enemy;
+import Model.Game;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

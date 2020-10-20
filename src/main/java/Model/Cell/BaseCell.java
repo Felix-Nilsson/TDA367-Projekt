@@ -1,4 +1,4 @@
-package main.java.Model.Cell;
+package Model.Cell;
 
 public class BaseCell implements Cell {
     private int x;

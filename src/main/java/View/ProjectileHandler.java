@@ -1,7 +1,7 @@
-package main.java.View;
+package View;
 
-import main.java.Model.Game;
-import main.java.Model.Towers.Projectile;
+import Model.Game;
+import Model.Towers.Projectile;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;

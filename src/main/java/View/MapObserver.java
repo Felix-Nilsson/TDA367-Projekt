@@ -1,6 +1,6 @@
-package main.java.View;
+package View;
 
-import main.java.Model.Enemy.Enemy;
+import Model.Enemy.Enemy;
 
 public interface MapObserver {
     void notifyGameOver();

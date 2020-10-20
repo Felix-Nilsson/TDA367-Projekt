@@ -1,4 +1,4 @@
-package main.java.Model.Towers;
+package Model.Towers;
 
 public enum  Targeting {
     FIRST,

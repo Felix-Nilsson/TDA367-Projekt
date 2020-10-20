@@ -1,9 +1,9 @@
-package main.java.Controller;
+package Controller;
 
-import main.java.Model.Game;
-import main.java.Model.Towers.Targeting;
-import main.java.Model.Towers.Tower;
-import main.java.View.ToolbarHandler;
+import Model.Game;
+import Model.Towers.Targeting;
+import Model.Towers.Tower;
+import View.ToolbarHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

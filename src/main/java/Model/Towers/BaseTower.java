@@ -1,9 +1,9 @@
-package main.java.Model.Towers;
+package Model.Towers;
 
-import main.java.Model.Cell.Cell;
+import Model.Cell.Cell;
 
-import main.java.Model.DamageType;
-import main.java.Model.Enemy.Enemy;
+import Model.DamageType;
+import Model.Enemy.Enemy;
 
 import java.util.List;
 import java.util.Timer;

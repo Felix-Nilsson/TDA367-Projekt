@@ -1,6 +1,6 @@
-package main.java.Model.Towers;
+package Model.Towers;
 
-import main.java.Model.Cell.Cell;
+import Model.Cell.Cell;
 
 
 public class ArcherTowerFactory implements TowerFactory{

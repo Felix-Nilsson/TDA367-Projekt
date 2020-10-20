@@ -1,7 +1,7 @@
-package main.java.Model;
+package Model;
 
 
-import main.java.Model.Cell.*;
+import Model.Cell.*;
 
 import java.util.ArrayList;
 import java.util.List;

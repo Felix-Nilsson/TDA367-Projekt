@@ -1,6 +1,6 @@
-package main.java.Model.Enemy;
+package Model.Enemy;
 
-import main.java.Model.DamageType;
+import Model.DamageType;
 import javafx.scene.image.Image;
 
 

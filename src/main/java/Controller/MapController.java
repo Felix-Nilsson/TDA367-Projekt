@@ -1,19 +1,17 @@
-package main.java.Controller;
+package Controller;
 
-import main.java.Model.*;
-import main.java.Model.Cell.Cell;
-import main.java.Model.Enemy.Enemy;
-import main.java.Model.Towers.Tower;
-import main.java.Model.Towers.TowerFactory;
-import main.java.View.MapHandler;
-import main.java.View.ProjectileHandler;
-import javafx.scene.control.*;
+import Model.Cell.Cell;
+import Model.Enemy.Enemy;
+import Model.Game;
+import Model.Towers.Tower;
+import Model.Towers.TowerFactory;
+import View.MapHandler;
+import View.ProjectileHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -27,10 +25,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
-
 import java.net.URL;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 

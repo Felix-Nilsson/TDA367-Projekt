@@ -1,4 +1,4 @@
-package main.java.Model.Cell;
+package Model.Cell;
 
 public enum TerrainType {
     GROUND,WATER,PATH,OBSTACLE

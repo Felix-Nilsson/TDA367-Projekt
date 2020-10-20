@@ -1,8 +1,8 @@
-package main.java.Controller;
+package Controller;
 
-import main.java.Model.Difficulty;
-import main.java.Model.Game;
-import main.java.View.MenuHandler;
+import Model.Difficulty;
+import Model.Game;
+import View.MenuHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

@@ -1,11 +1,11 @@
-package main.java.Model.Towers.Upgrade;
+package Model.Towers.Upgrade;
 
 
-import main.java.Model.Cell.Cell;
-import main.java.Model.Enemy.Enemy;
-import main.java.Model.Towers.Projectile;
-import main.java.Model.Towers.Targeting;
-import main.java.Model.Towers.Tower;
+import Model.Cell.Cell;
+import Model.Enemy.Enemy;
+import Model.Towers.Projectile;
+import Model.Towers.Targeting;
+import Model.Towers.Tower;
 
 import java.util.List;
 

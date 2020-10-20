@@ -1,6 +1,6 @@
-package main.java.Model.Towers.Upgrade;
+package Model.Towers.Upgrade;
 
-import main.java.Model.Towers.Tower;
+import Model.Towers.Tower;
 
 public class ArcherTowerLeftUpgrade extends TowerUpgrade{
 

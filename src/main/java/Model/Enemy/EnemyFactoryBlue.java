@@ -1,6 +1,6 @@
-package main.java.Model.Enemy;
+package Model.Enemy;
 
-import main.java.Model.Direction;
+import Model.Direction;
 
 import java.util.List;
 
