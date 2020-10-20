@@ -4,6 +4,7 @@ import Model.Cell.Cell;
 import Model.Enemy.Enemy;
 import Model.Game;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class MapHandler implements MapObserver {
@@ -31,6 +33,8 @@ public class MapHandler implements MapObserver {
     private ImageView base;
     private final Game game;
     private HashMap<Enemy, ProgressBar> progressBarHashMap;
+
+    private Rectangle selectedTower;
 
     //TODO: Add a reference to game to get info from, rather than map
 
@@ -58,7 +62,7 @@ public class MapHandler implements MapObserver {
         int endPos = game.getEndPos();
 
         //add startcave
-        cave = new ImageView("/img/cave.png");
+        cave = new ImageView("/View/img/cave.png");
         cave.setX(0);
         cave.setY((startPos - 1) *40);
         cave.setFitHeight(40);
@@ -69,7 +73,7 @@ public class MapHandler implements MapObserver {
 
         //add endcave
 
-        base = new ImageView("/img/base.png");
+        base = new ImageView("/View/img/base.png");
         base.setFitHeight(40);
         base.setFitWidth(40);
         base.setPreserveRatio(true);
@@ -152,6 +156,7 @@ public class MapHandler implements MapObserver {
 
     @Override
     public void notifyRoundOver() {
+
         enemyHashMap = new HashMap<>();
     }
 
@@ -170,11 +175,33 @@ public class MapHandler implements MapObserver {
         Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(progressBarHashMap.get(e)));
         Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
     }
+    public void setSelectedTower(Node node){
+        if (gameBoardGrid.getChildren().contains(selectedTower)){
+            gameBoardGrid.getChildren().remove(selectedTower);
+        }
 
+        //System.out.println("HERERERE");
+
+        //actual coordinates in the grid
+        int logicalX = (int)(node.getLayoutX()/39);
+        int logicalY = (int)(node.getLayoutY()/39);
+
+        selectedTower = new Rectangle();
+
+        selectedTower.setOpacity(0.5);
+        selectedTower.setStyle("-fx-background-color: yellow");
+
+        gameBoardGrid.setColumnIndex(selectedTower,logicalX);
+        gameBoardGrid.setRowIndex(selectedTower,logicalY);
+
+        gameBoardGrid.getChildren().add(selectedTower);
+    }
     @Override
-    public void update() {
+    public synchronized void update() {
         if(game.getEnemiesInWave() != null){
-            for(Enemy e : game.getEnemiesInWave()){
+            Iterator<Enemy> enemyIterator = game.getEnemiesInWave().listIterator();
+            while(enemyIterator.hasNext()){
+                Enemy e = enemyIterator.next();
                 if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
 
                     ImageView img = new ImageView(e.getImage());

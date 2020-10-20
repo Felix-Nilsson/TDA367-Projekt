@@ -17,7 +17,7 @@ public class RedEnemy implements Enemy {
     public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
 
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/red_Monster.png")));
+        this.image = new Image((getClass().getClassLoader().getResourceAsStream("View/img/red_Monster.png")));
     }
 
     /**
