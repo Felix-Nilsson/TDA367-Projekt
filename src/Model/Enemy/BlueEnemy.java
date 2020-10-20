@@ -73,11 +73,7 @@ public class BlueEnemy implements Enemy {
 
     @Override
     public int spawnTime() {
-        if(10 - getMovementSpeed() > 0){
-            return 10 - getMovementSpeed();
-        }
-        return 10;
-
+        return parent.spawnTime();
     }
 
     public Direction getDirection(){

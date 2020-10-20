@@ -2,16 +2,17 @@ package Model.Enemy;
 
 import Model.DamageType;
 import Model.Direction;
-import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
-
 import java.util.List;
 
+/**
+ * has a reference to a BaseEnemy that can be used for the delegation of methods.
+ * @author Simon Larsson
+ */
 public class RedEnemy implements Enemy {
     private final BaseEnemy parent;
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private Image image;
-
 
     public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
@@ -19,6 +20,9 @@ public class RedEnemy implements Enemy {
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/red_Monster.png")));
     }
 
+    /**
+     * updates the enemy
+     */
     @Override
     public void update(){
         //TODO ska eventuellt vara individuell för varje enemy
@@ -41,9 +45,6 @@ public class RedEnemy implements Enemy {
     @Override
     public void tookDamage(double damage, DamageType damageType){
         parent.tookDamage(damage,damageType);
-    }
-    protected void turn(Direction dir){
-        parent.direction=dir;
     }
 
     public int getPositionX(){
@@ -71,7 +72,7 @@ public class RedEnemy implements Enemy {
 
     @Override
     public int spawnTime() {
-        return 10 - getMovementSpeed();
+        return parent.spawnTime();
     }
 
     public Direction getDirection(){
