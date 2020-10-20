@@ -49,6 +49,7 @@ public class MapHandler implements MapObserver {
         progressBarHashMap = new HashMap<>();
         enemyHashMap = new HashMap<>();
         game.addMapObserver(this);
+
     }
 
 
@@ -108,11 +109,18 @@ public class MapHandler implements MapObserver {
     }
 
     public void updateProgressBar(Enemy e){
-        ProgressBar pb = progressBarHashMap.get(e);
-        pb.setProgress((double)(e.getHealth())/(double)e.getMaxHealth());
+        Platform.runLater(new Runnable(){
 
-        pb.setLayoutX(e.getPositionX()-10);
-        pb.setLayoutY(e.getPositionY()-15);
+            @Override
+            public void run() {
+                ProgressBar pb = progressBarHashMap.get(e);
+                pb.setProgress((double)(e.getHealth())/(double)e.getMaxHealth());
+
+                pb.setLayoutX(e.getPositionX()-10);
+                pb.setLayoutY(e.getPositionY()-15);
+            }
+        });
+
     }
 
     public void openSettings(AnchorPane settingsPane){

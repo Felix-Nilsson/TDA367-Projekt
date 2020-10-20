@@ -62,7 +62,7 @@ public class BaseTower implements Tower {
 
         //Default is closest
         target = Targeting.FIRST;
-        Timer timer = new Timer();
+        Timer timer = new Timer(true);
         timer.scheduleAtFixedRate(timerTask,timerDelayInMilliseconds,timerDelayInMilliseconds);
 
     }
@@ -112,7 +112,7 @@ public class BaseTower implements Tower {
     }
 
 
-    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+    public synchronized void attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
             enemyPosX = e.getPositionX();
             enemyPosY = e.getPositionY();

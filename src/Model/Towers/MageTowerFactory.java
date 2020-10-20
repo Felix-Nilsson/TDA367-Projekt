@@ -7,7 +7,7 @@ public class MageTowerFactory implements TowerFactory{
     @Override
 
     public MageTower createTower(Cell cell) {
-        return new MageTower(cell,0,10,150,50,0.5,100, 100);
+        return new MageTower(cell,0,100,150,50,5,100, 100);
     }
 
     @Override

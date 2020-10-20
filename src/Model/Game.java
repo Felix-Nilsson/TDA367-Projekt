@@ -25,7 +25,7 @@ public class Game  {
     private boolean waveRunning = false;
     private Thread gameLoopThread;
     private Thread enemyCreatorThread;
-    private List<Enemy> enemiesInWave;
+    private  List<Enemy> enemiesInWave;
     private List<Tower> towers;
     private List <Projectile> projectileList;
     private boolean autostart;
@@ -63,6 +63,7 @@ public class Game  {
      * resets list (enemiesInWave)
      */
     public void nextRound(){
+        observable.notifyRoundStart();
         enemyCounter = waveManager.getWaveSize(round);
         enemiesInWave = new ArrayList<>();
         waveRunning = true;
@@ -142,38 +143,59 @@ public class Game  {
     }
 
 
-    public void update(){
+    private synchronized void update(){
         checkIfGameOver();
-        for(Enemy e : enemiesInWave){
-            if(e.isKilled()){
-                money = money + 20;
-                enemyIsDead(e);
-                break;
-            }
-            else if(e.isOut()){
-                health--;
-                enemyIsDead(e);
-                break;
-            }
-            else{
-                e.move();
+
+        if(enemiesInWave != null){
+            Iterator<Enemy> enemyIterator = enemiesInWave.listIterator();
+            while (enemyIterator.hasNext()){
+                Enemy e = enemyIterator.next();
+                if(e.isKilled()){
+                    money = money + 20;
+                    enemyIsDead(e);
+                    break;
+                }
+                else if(e.isOut()){
+                    health--;
+                    enemyIsDead(e);
+                    break;
+                }
+                else{
+                    e.move();
+                }
             }
         }
-        for(Tower t : towers){
-            //finns ingenting i towers update just nu
-            t.update();
+        if(projectileList !=null){
+            Iterator<Projectile> projectileIterator = projectileList.listIterator();
+            while(projectileIterator.hasNext()){
+                Projectile p = projectileIterator.next();
+                p.update();
+            }
         }
-        for (Projectile p : projectileList){
-            p.update();
-        }
-        checksRadius();
+        checkTowerRadius();
         checkIfProjectilesHit();
         observable.update(); //notifies view to update graphics
-
-
     }
+    private synchronized void checkTowerRadius(){
 
-    private void checkIfProjectilesHit() {
+        if(enemiesInWave != null && towers != null){
+            Iterator<Tower> towerIterator = towers.listIterator();
+            while (towerIterator.hasNext()){
+                Tower tower = towerIterator.next();
+                if(tower.getIsReadyToFire()){
+                    tower.attackIfEnemyInRange(enemiesInWave);
+                    //sidoeffekt av t.getProjectile() är att currentProjectile sätts till null (ska vara så just nu)
+                    Projectile p = tower.getProjectile();
+                    if (p!=null){
+                        projectileList.add(p);
+                        System.out.println("projectile was added----------------------------------------------");
+                        observable.notifyProjectileAdded(p);
+                    }
+                }
+            }
+        }
+    }
+    private synchronized void checkIfProjectilesHit() {
         if (projectileList != null) {
             Iterator<Projectile> iterator = projectileList.listIterator();
             while (iterator.hasNext()) {
@@ -187,7 +209,7 @@ public class Game  {
             }
         }
     }
-    private void enemyIsDead(Enemy e){
+    private synchronized void enemyIsDead(Enemy e){
         observable.notifyEnemyDead(e);
         if(!enemiesInWave.remove(e)){
             System.out.println("error in removing enemy");
@@ -282,26 +304,7 @@ public class Game  {
     }
 
 
-    private synchronized void checksRadius(){
-        // TOTOU
-        if (towers.size() > 0 && enemiesInWave.size() > 0) { // Time of Check
-            for (Tower t : towers){ // Time of Use
-                //TODO if (t.cooldown == false)
-                if(t.getIsReadyToFire()){
-                    t.attackIfEnemyInRange(enemiesInWave);
-                    //sidoeffekt av t.getProjectile() är att currentProjectile sätts till null (ska vara så just nu)
-                    Projectile p = t.getProjectile();
-                    if (p!=null){
-                        projectileList.add(p);
-                        System.out.println("projectile was added----------------------------------------------");
-                        observable.notifyProjectileAdded(p);
-                    }
-                }
 
-            }
-        }
-
-    }
 
     public List<Projectile> getProjectileList() {
         return this.projectileList;

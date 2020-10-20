@@ -10,8 +10,7 @@ public class RedEnemy implements Enemy {
     private final BaseEnemy parent;
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private Image image;
-    private boolean isKilled = false;
-    private boolean isOut = false;
+
 
     public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
@@ -60,12 +59,12 @@ public class RedEnemy implements Enemy {
 
     @Override
     public boolean isKilled() {
-        return isKilled;
+        return parent.isKilled();
     }
 
     @Override
     public boolean isOut() {
-        return isOut;
+        return parent.isOut();
     }
 
 
