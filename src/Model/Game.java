@@ -50,58 +50,42 @@ public class Game  {
         this.gameSpeed = 30;
     }
 
-    public List<Enemy> getEnemiesInWave() {
-        return enemiesInWave;
-    }
 
     /**
-     * Enemy counter keeps track of amount of enemies in current wave
+     * creates enemy counter that keeps track of amount of enemies in current wave
      * resets list (enemiesInWave)
+     * calls run
      */
     public void nextRound(){
         observable.notifyRoundStart();
         enemyCounter = waveManager.getWaveSize(round);
         enemiesInWave = new ArrayList<>();
         waveRunning = true;
-        startAllTowerTimers();
         run();
     }
+
     public void notifyAllObservers(){
         observable.update();
     }
 
-    public int getRound() {
-        return round;
-    }
-
-    public int getStartPos() {
-        return b.getStartPos();
-    }
-
-    public int getEndPos() {
-        return b.getEndPos();
-    }
-    public void setAutostart(boolean a){
-        autostart = a;
-    }
-
-
+    /**
+     * starts secondary threads
+     */
     public void run() {
         startEnemyCreatorThread();
         startGameLoopThread();
-
+        startAllTowerTimers();
     }
-
+    /**
+     * created a new thread that adds enemies to List:enemiesInWave
+     * after a delay
+     */
     private void startEnemyCreatorThread(){
         enemyCreatorThread = new Thread(()->{
             waveManager.createWave(round);
             while (waveRunning && enemyCounter>=0) {
                 Enemy enemy = waveManager.getEnemy(enemyCounter);
-
-                synchronized (enemiesInWave){
-                    enemiesInWave.add(enemy);
-                }
-                //enemiesInWave.add(enemy);
+                enemiesInWave.add(enemy);
                 threadSleep(enemy.spawnTime() * 100);
                 enemyCounter--;
             }
@@ -111,9 +95,12 @@ public class Game  {
         enemyCreatorThread.start();
     }
 
+    /**
+     * creates a new thread that loops update
+     * ends the round if there are no more enemies left
+     */
     private void startGameLoopThread(){
         gameLoopThread = new Thread(() -> {
-
             while (waveRunning) {
                 if(enemiesInWave.size() > 0) {
                     update();
@@ -123,14 +110,16 @@ public class Game  {
                     System.out.println("round ended");
                 }
                 threadSleep(gameSpeed);
-
-
             }
         });
         gameLoopThread.setDaemon(true);
         gameLoopThread.start();
     }
 
+    /**
+     * sleeps the current thread wherever it is called
+     * @param time thread is asleep in milliseconds
+     */
     private void threadSleep(int time){
 
         try {
@@ -143,9 +132,14 @@ public class Game  {
         }
     }
 
-
+    /**
+     * this acts as the main game loop
+     * loops through all enemies and checks if it has been killed or is out if not the move
+     * loops through projectiles that need to be updated
+     * checks tower radius, if projectiles hit and if game is over
+     * Updates View
+     */
     private void update(){
-
         synchronized (enemiesInWave){
             if(enemiesInWave != null){
                 Iterator<Enemy> enemyIterator = enemiesInWave.listIterator();
@@ -180,33 +174,38 @@ public class Game  {
         observable.update(); //notifies view to update graphics
         checkIfGameOver();
     }
-    private synchronized void checkTowerRadius(){
 
+    /**
+     * Loops through all the towers to first check if they are ready to fire
+     * if ready then attack and create a projectile
+     * add the projectile to List:ProjectileList and observable
+     */
+    private synchronized void checkTowerRadius(){
         if(enemiesInWave != null && towers != null){
             Iterator<Tower> towerIterator = towers.listIterator();
             while (towerIterator.hasNext()){
-
                 Tower tower = towerIterator.next();
                 if(tower.getIsReadyToFire()){
                     tower.attackIfEnemyInRange(enemiesInWave);
-                    //sidoeffekt av t.getProjectile() är att currentProjectile sätts till null (ska vara så just nu)
                     Projectile p = tower.getProjectile();
                     if (p!=null){
                         projectileList.add(p);
-                        System.out.println("projectile was added----------------------------------------------");
                         observable.notifyProjectileAdded(p);
                     }
                 }
             }
         }
     }
+
+    /**
+     * loops through a list as an iterator and checks if they are to be removed
+     */
     private synchronized void checkIfProjectilesHit() {
         if (projectileList != null) {
             Iterator<Projectile> iterator = projectileList.listIterator();
             while (iterator.hasNext()) {
                 Projectile p = iterator.next();
                 if (!p.isExisting()) {
-                    System.out.println("p ska vara false " + p.isExisting());
                     removeProjectile(p);
                     //iterator.remove();
                     break;
@@ -214,6 +213,11 @@ public class Game  {
             }
         }
     }
+
+    /**
+     * removes enemy e from observable and List:enemiesInWave
+     * @param e Enemy to be removed
+     */
     private synchronized void enemyIsDead(Enemy e){
         observable.notifyEnemyDead(e);
         if(!enemiesInWave.remove(e)){
@@ -221,6 +225,9 @@ public class Game  {
         }
     }
 
+    /**
+     * checks if game is over or game is won
+     */
     private void checkIfGameOver(){
         if(health <= 0){
             gameOver();
@@ -230,31 +237,50 @@ public class Game  {
             gameWon();
         }
     }
+    /**
+     * Stops all secondary threads
+     * notifies view that game is over
+     */
     private void gameOver(){
         observable.notifyGameOver();
         stopAllTowerTimers();
         stopGameLoopThread();
         stopEnemyCreatorThread();
-
     }
+
+    /**
+     * Stops all secondary threads
+     * notifies view that game is won
+     */
     private void gameWon(){
         stopAllTowerTimers();
         observable.notifyGameWon();
         stopGameLoopThread();
         stopEnemyCreatorThread();
     }
-
+    /**
+     * checks if the thread is alive
+     * interrupts the thread
+     */
     private void stopEnemyCreatorThread(){
-
         if(enemyCreatorThread.isAlive()){
             enemyCreatorThread.interrupt();
         }
     }
+
+    /**
+     * checks if the thread is alive
+     * interrupts the thread
+     */
     private void stopGameLoopThread(){
         if(gameLoopThread.isAlive()){
             gameLoopThread.interrupt();
         }
     }
+    /**
+     * stops all secondary Threads
+     * sets waverunning to false
+     */
     public void pause(){
         waveRunning = false;
         stopAllTowerTimers();
@@ -262,86 +288,76 @@ public class Game  {
         stopGameLoopThread();
     }
 
+    /**
+     * starts all secondary Threads
+     * sets waverunning to true
+     */
     public void play() {
         waveRunning = true;
-
         startAllTowerTimers();
-
-
         if (enemyCreatorThread.isInterrupted()) {
             startEnemyCreatorThread();
         }
-
         startGameLoopThread();
     }
 
+    /**
+     * notifies observers that round is over
+     * if autostart active start new round
+     * stops enemyCreatorThread, and GameLoopThread
+     * adds money
+     * increments round
+     */
     public void endRound(){
         observable.notifyRoundOver();
-
-
+        stopEnemyCreatorThread();
+        stopGameLoopThread();
+        money = money + round*50;
         if(autostart){
-            money = money +round*100;
-            round++;
             observable.notifyRoundStart();
-            stopEnemyCreatorThread();
-            stopGameLoopThread();
             nextRound();
 
         }
         else{
-            stopEnemyCreatorThread();
-            stopGameLoopThread();
             waveRunning = false;
-            money = money +round*100;
-            round++;
             stopAllTowerTimers();
         }
-
+        round++;
     }
+
+    /**
+     * Removes a projectile from the observable list and the projectile list
+     * @param p The projectile to be removed
+     */
     public void removeProjectile(Projectile p){
         observable.notifyProjectileRemoved(p);
         if (!projectileList.remove(p)){
             System.out.println("Error in removing projectile");
         }
     }
+
+    /**
+     * loops through all towers and stops their timer
+     */
     private void stopAllTowerTimers(){
         for (Tower t : towers){
             t.stopTimer();
         }
     }
+
+    /**
+     * loops through all towers and starts their timer
+     */
     private void startAllTowerTimers(){
         for (Tower t : towers){
             t.startTimer();
         }
     }
 
-
-
-
-
-    public boolean isWaveRunning() {
-        return waveRunning;
-    }
-
-
-
-    public boolean addMapObserver(final MapObserver mapObserver){
-        return this.observable.addObserver(mapObserver);
-    }
-
-    public boolean addProjectileObserver(ProjectileObserver projectileObserver) {
-        return this.observable.addObserver(projectileObserver);
-    }
-
-
-
-
-    public List<Projectile> getProjectileList() {
-        return this.projectileList;
-    }
-
-
-    //sets initial values of health and money
+    /**
+     * sets initial values of multiple in game attributes
+     * depending on the games difficulty
+     */
     private void setValues() {
         switch (difficulty) {
             case EASY:
@@ -362,70 +378,58 @@ public class Game  {
         }
     }
 
-    public List<Cell> getBoard() {
-        return b.getBoard();
+    /**
+     *  adds a final mapobserver to the list of observers in Observerable
+     * @param mapObserver a class that implements MapObserver
+     * @return if the mapobserver is already observing
+     */
+    public boolean addMapObserver(final MapObserver mapObserver){
+        return this.observable.addObserver(mapObserver);
+    }
+    /**
+     *  adds a  projectileObserver to the list of observers in Observerable
+     * @param projectileObserver a class that implements ProjectileObserver
+     * @return if the projectileObserver is already observing
+     */
+    public boolean addProjectileObserver(ProjectileObserver projectileObserver) {
+        return this.observable.addObserver(projectileObserver);
     }
 
-    public int getHealth() {
-        return health;
-    }
 
-    public int getMoney() {
-        return money;
-    }
-
-    public boolean isCellOccupied(int index) {
-        return b.isCellOccupied(index);
-    }
-
-    public void setCellOccupied(int index) {
-        b.setCellOccupied(index);
-    }
-
-    public void setCellUnoccupied(int index) {
-        b.setCellUnoccupied(index);
-    }
-
-    public void updateArrayWithTower(int index, TowerFactory towerFactory) {
-        setCellOccupied(index);
-        Tower t = towerFactory.createTower(getBoard().get(index));
-        towers.add(t);
-    }
-
-    public Tower getTowerInCell(int x, int y) {
+    /**
+     * gets the tower in a specific cell
+     * @param x position of Cell
+     * @param y position of Cell
+     * @return the Tower
+     */
+    public Tower getTower(int x, int y) {
         for (Tower t : towers) {
             if (t.getX() == x && t.getY() == y) {
                 return t;
             }
         }
-        return null; //Should never get here
+        return null;
     }
 
-    private void usePelle() { // implicit synchronized(this)
-        // Do stuff
-        // T1: pelle2() -> tar monitorn för towers
-        // T2: pelle2() -> kan inte ta monitorn för att den has av T1
-        // T1: klar med pelle2() -> monitorn för towers släpps
-        // T2: kan nu ta monitorn för towers.
-        synchronized (towers) {
-            // Kritisk sektion.
-            towers.clear();
-        }
+    /**
+     * adds a new tower to the tower array
+     * sets a specific cell occupied
+     * @param index the position of the cell
+     * @param towerFactory sends in the specific towerfactory so
+     *                     a new tower can be created
+     */
+    public void createTower(int index, TowerFactory towerFactory) {
+        setCellOccupied(index);
+        Tower t = towerFactory.createTower(getBoard().get(index));
+        towers.add(t);
     }
 
-    private void pelle2() { // implicit synchronized(this)
-        synchronized(towers) {
-            // Do stuff
-        }
-    }
-
-
-
-
-
-
-
-
+    /**
+     * gets the index in an array of cells
+     * @param x_placement of a cell
+     * @param y_placement of a cell
+     * @return index of cell
+     */
     public int getArrayIndex(int x_placement, int y_placement){
 
         int placeInArray = 0;
@@ -437,64 +441,109 @@ public class Game  {
                 placeInArray++;
             }
         }
-
-        //TODO Replace with exception
         return -1;
     }
 
-
-
+    /**
+     * removes tower t from towers array
+     * stops the timer of the tower
+     * prints out error if tower t does not exist in towers array
+     * @param t the tower to be removed
+     */
     public void removeTower(Tower t){
         t.stopTimer();
         if(!towers.remove(t)){
             System.out.println("tower not found ");
         }
     }
+    /**
+     * updates the tower array with the new tower
+     * @param t type of tower
+     * @return the the upgraded tower
+     */
+    public Tower leftUpgradeTower(Tower t) {
+        Tower tower = t.leftUpgrade(t);
+        int i = 0;
+        for (Tower t1 : towers) {
+            if (t1 == t) {
+                towers.set(i, tower);
+                break;
+            }
+            i++;
 
+        }
+        return tower;
+    }
+    /**
+     * updates the tower array with the new tower
+     * @param t type of tower
+     * @return the the upgraded tower
+     */
+    public Tower rightUpgradeTower(Tower t) {
+        Tower tower = t.rightUpgrade(t);
+        int i = 0;
+        for (Tower t1 : towers) {
+            if (t1 == t) {
+                towers.set(i, tower);
+                break;
+            }
+            i++;
+        }
 
-    public void addMoney(int toAdd) {
-        money += toAdd;
+        return tower;
+    }
+
+    /**
+     * getters and setters
+     */
+    public List<Enemy> getEnemiesInWave() {
+        return enemiesInWave;
+    }
+    public int getRound() {
+        return round;
+    }
+    public int getStartPos() {
+        return b.getStartPos();
+    }
+    public int getEndPos() {
+        return b.getEndPos();
+    }
+    public void setAutostart(boolean a){
+        autostart = a;
+    }
+    public boolean getWaveRunning() {
+        return waveRunning;
+    }
+    public List<Projectile> getProjectileList() {
+        return this.projectileList;
+    }
+    public List<Cell> getBoard() {
+        return b.getBoard();
+    }
+    public int getHealth() {
+        return health;
+    }
+    public int getMoney() {
+        return money;
+    }
+    public boolean getCellOccupied(int index) {
+        return b.isCellOccupied(index);
+    }
+    public void setCellOccupied(int index) {
+        b.setCellOccupied(index);
+    }
+    public void setCellUnoccupied(int index) {
+        b.setCellUnoccupied(index);
     }
     public int getMageTowerPrice(){
-      return  new MageTowerFactory().getPrice();
+        return  new MageTowerFactory().getPrice();
     }
     public int getArcherTowerPrice(){
         return new ArcherTowerFactory().getPrice();
     }
-
-    public Tower leftUpgradeTower(Tower t) {
-        Tower tower = t.leftUpgrade(t);
-
-        //This shiiett updates the tower array with the new tower
-        int i = 0;
-        for (Tower t1 : towers) {
-            if (t1 == t) {
-                towers.set(i, tower);
-                break;
-            }
-            i++;
-
-        }
-
-        return tower;
+    public void addMoney(int toAdd) {
+        money += toAdd;
     }
-
-    public Tower rightUpgradeTower(Tower t) {
-        Tower tower = t.rightUpgrade(t);
-
-        //This shiiett updates the tower array with the new tower
-        int i = 0;
-        for (Tower t1 : towers) {
-            if (t1 == t) {
-                towers.set(i, tower);
-                break;
-            }
-            i++;
-        }
-
-        return tower;
-    }
-
 
 
 }
