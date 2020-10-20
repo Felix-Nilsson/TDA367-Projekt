@@ -1,12 +1,14 @@
 package Model.Enemy;
 
+import Model.Direction;
+
 import java.util.List;
 
 public class EnemyFactoryRed implements EnemyFactory {
-    private final List<BaseEnemy.Direction> enemyPath;
+    private final List<Direction> enemyPath;
     private final int startPos;
 
-    public EnemyFactoryRed(List<BaseEnemy.Direction> enemyPath, int startPos){
+    public EnemyFactoryRed(List<Direction> enemyPath, int startPos){
         this.enemyPath = enemyPath;
         this.startPos = startPos;
     }
