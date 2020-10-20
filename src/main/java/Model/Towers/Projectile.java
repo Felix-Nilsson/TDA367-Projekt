@@ -1,7 +1,7 @@
-package Model.Towers;
+package main.java.Model.Towers;
 
-import Model.DamageType;
-import Model.Enemy.Enemy;
+import main.java.Model.DamageType;
+import main.java.Model.Enemy.Enemy;
 
 public class Projectile {
     private double vx;

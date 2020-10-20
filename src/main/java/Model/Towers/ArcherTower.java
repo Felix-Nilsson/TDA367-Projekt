@@ -1,10 +1,10 @@
-package Model.Towers;
+package main.java.Model.Towers;
 
-import Model.Cell.Cell;
+import main.java.Model.Cell.Cell;
 
-import Model.Towers.Upgrade.ArcherTowerLeftUpgrade;
-import Model.Towers.Upgrade.ArcherTowerRightUpgrade;
-import Model.Enemy.Enemy;
+import main.java.Model.Towers.Upgrade.ArcherTowerLeftUpgrade;
+import main.java.Model.Towers.Upgrade.ArcherTowerRightUpgrade;
+import main.java.Model.Enemy.Enemy;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package View;
+package main.java.View;
 
-import Model.Towers.Projectile;
+import main.java.Model.Towers.Projectile;
 
 public interface ProjectileObserver {
     void notifyProjectileAdded(Projectile p);

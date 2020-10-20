@@ -1,6 +1,6 @@
-package View;
+package main.java.View;
 
-import Controller.MapController;
+import main.java.Controller.MapController;
 import javafx.scene.layout.AnchorPane;
 
 public class MenuHandler {

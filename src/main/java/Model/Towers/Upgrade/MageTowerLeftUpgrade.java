@@ -1,6 +1,6 @@
-package Model.Towers.Upgrade;
+package main.java.Model.Towers.Upgrade;
 
-import Model.Towers.Tower;
+import main.java.Model.Towers.Tower;
 
 public class MageTowerLeftUpgrade extends TowerUpgrade{
 

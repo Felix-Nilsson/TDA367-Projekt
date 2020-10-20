@@ -1,7 +1,7 @@
-package View;
+package main.java.View;
 
-import Model.Enemy.Enemy;
-import Model.Game;
+import main.java.Model.Enemy.Enemy;
+import main.java.Model.Game;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

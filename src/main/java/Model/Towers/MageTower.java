@@ -1,10 +1,10 @@
-package Model.Towers;
+package main.java.Model.Towers;
 
-import Model.Cell.Cell;
+import main.java.Model.Cell.Cell;
 
-import Model.Towers.Upgrade.MageTowerLeftUpgrade;
-import Model.Towers.Upgrade.MageTowerRightUpgrade;
-import Model.Enemy.Enemy;
+import main.java.Model.Towers.Upgrade.MageTowerLeftUpgrade;
+import main.java.Model.Towers.Upgrade.MageTowerRightUpgrade;
+import main.java.Model.Enemy.Enemy;
 import java.util.List;
 
 public class MageTower implements Tower {

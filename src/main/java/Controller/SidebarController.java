@@ -1,8 +1,8 @@
-package Controller;
+package main.java.Controller;
 
-import Model.Game;
-import Model.Towers.*;
-import View.SidebarHandler;
+import main.java.Model.Game;
+import main.java.Model.Towers.*;
+import main.java.View.SidebarHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

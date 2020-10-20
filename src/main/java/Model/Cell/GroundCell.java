@@ -1,4 +1,4 @@
-package Model.Cell;
+package main.java.Model.Cell;
 
 import javafx.scene.paint.Color;
 

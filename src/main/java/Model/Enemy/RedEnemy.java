@@ -1,7 +1,7 @@
-package Model.Enemy;
+package main.java.Model.Enemy;
 
-import Model.DamageType;
-import Model.Direction;
+import main.java.Model.DamageType;
+import main.java.Model.Direction;
 import javafx.scene.image.Image;
 import java.util.List;
 

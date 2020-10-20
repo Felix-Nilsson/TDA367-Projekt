@@ -1,6 +1,6 @@
-package Model;
+package main.java.Model;
 
-import Model.Enemy.*;
+import main.java.Model.Enemy.*;
 
 import java.util.ArrayList;
 import java.util.List;

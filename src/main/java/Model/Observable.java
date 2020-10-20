@@ -1,9 +1,9 @@
-package Model;
+package main.java.Model;
 
-import Model.Enemy.Enemy;
-import Model.Towers.Projectile;
-import View.MapObserver;
-import View.ProjectileObserver;
+import main.java.Model.Enemy.Enemy;
+import main.java.Model.Towers.Projectile;
+import main.java.View.MapObserver;
+import main.java.View.ProjectileObserver;
 
 import java.util.ArrayList;
 import java.util.List;

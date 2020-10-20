@@ -1,4 +1,4 @@
-package Model.Enemy;
+package main.java.Model.Enemy;
 
 public interface EnemyFactory {
     Enemy createEnemyEasy();

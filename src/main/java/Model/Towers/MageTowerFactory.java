@@ -1,6 +1,6 @@
-package Model.Towers;
+package main.java.Model.Towers;
 
-import Model.Cell.Cell;
+import main.java.Model.Cell.Cell;
 
 public class MageTowerFactory implements TowerFactory{
 

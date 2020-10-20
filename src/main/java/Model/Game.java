@@ -1,11 +1,11 @@
-package Model;
+package main.java.Model;
 
 
-import Model.Cell.Cell;
-import Model.Enemy.Enemy;
-import Model.Towers.*;
-import View.MapObserver;
-import View.ProjectileObserver;
+import main.java.Model.Cell.Cell;
+import main.java.Model.Enemy.Enemy;
+import main.java.Model.Towers.*;
+import main.java.View.MapObserver;
+import main.java.View.ProjectileObserver;
 
 
 import java.util.ArrayList;
