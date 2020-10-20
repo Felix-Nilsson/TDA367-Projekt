@@ -180,17 +180,19 @@ public class MapHandler implements MapObserver {
             gameBoardGrid.getChildren().remove(selectedTower);
         }
 
+        //System.out.println("HERERERE");
+
+        //actual coordinates in the grid
         int logicalX = (int)(node.getLayoutX()/39);
         int logicalY = (int)(node.getLayoutY()/39);
-        //System.out.println("logx: " + logicalX + " logy: "+ logicalY);
 
         selectedTower = new Rectangle();
 
         selectedTower.setOpacity(0.5);
         selectedTower.setStyle("-fx-background-color: yellow");
 
-        GridPane.setColumnIndex(selectedTower,logicalX);
-        GridPane.setRowIndex(selectedTower,logicalY);
+        gameBoardGrid.setColumnIndex(selectedTower,logicalX);
+        gameBoardGrid.setRowIndex(selectedTower,logicalY);
 
         gameBoardGrid.getChildren().add(selectedTower);
     }
