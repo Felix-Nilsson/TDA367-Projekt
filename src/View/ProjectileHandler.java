@@ -26,7 +26,7 @@ public class ProjectileHandler implements ProjectileObserver {
     }
     @Override
     public void notifyProjectileAdded(Projectile p) {
-        ImageView projectileImage = new ImageView("/img/projectile_1.png");
+        ImageView projectileImage = new ImageView("/View/img/projectile_1.png");
         fixProjectileImage(projectileImage,p);
 
         projectileHashMap.put(p, projectileImage);

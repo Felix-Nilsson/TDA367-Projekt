@@ -2,7 +2,6 @@ package Model.Enemy;
 
 import Model.DamageType;
 import Model.Direction;
-import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class BlueEnemy implements Enemy {
 
     public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor, path, startPos);
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/blue_Monster.png")));
+        this.image = new Image((getClass().getClassLoader().getResourceAsStream("View/img/blue_Monster.png")));
 
     }
 

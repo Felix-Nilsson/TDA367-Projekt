@@ -15,7 +15,7 @@ public class MageTower implements Tower {
     public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
 
-        baseTower.setTowerImage("img/mageTower.png");
+        baseTower.setTowerImage("View/img/mageTower.png");
 
     }
 
@@ -131,17 +131,17 @@ public class MageTower implements Tower {
 
     @Override
     public String getImage() {
-        return "/img/mageTower.png";
+        return "/View/img/mageTower.png";
     }
 
     @Override
     public String getLeftUpgradeImage() {
-        return "/img/mageTowerDmgUpgrade.png";
+        return "/View/img/mageTowerDmgUpgrade.png";
     }
 
     @Override
     public String getRightUpgradeImage() {
-        return "/img/atkSpdUpgrade.png";
+        return "/View/img/atkSpdUpgrade.png";
     }
 
     @Override

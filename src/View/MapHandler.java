@@ -62,7 +62,7 @@ public class MapHandler implements MapObserver {
         int endPos = game.getEndPos();
 
         //add startcave
-        cave = new ImageView("/img/cave.png");
+        cave = new ImageView("/View/img/cave.png");
         cave.setX(0);
         cave.setY((startPos - 1) *40);
         cave.setFitHeight(40);
@@ -73,7 +73,7 @@ public class MapHandler implements MapObserver {
 
         //add endcave
 
-        base = new ImageView("/img/base.png");
+        base = new ImageView("/View/img/base.png");
         base.setFitHeight(40);
         base.setFitWidth(40);
         base.setPreserveRatio(true);

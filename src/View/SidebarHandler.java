@@ -38,12 +38,12 @@ public class SidebarHandler implements MapObserver {
 
     @Override
     public void notifyRoundOver() {
-        playButtonImg.setImage(new Image("/img/play_button.png"));
+        playButtonImg.setImage(new Image("/View/img/play_button.png"));
     }
 
     @Override
     public void notifyRoundStart() {
-        playButtonImg.setImage(new Image("/img/pause.png"));
+        playButtonImg.setImage(new Image("/View/img/pause.png"));
     }
 
     @Override
@@ -84,9 +84,9 @@ public class SidebarHandler implements MapObserver {
         }
     }
     public void setPauseImg(){
-        playButtonImg.setImage(new Image("/img/pause.png"));
+        playButtonImg.setImage(new Image("/View/img/pause.png"));
     }
     public void setPlayImg(){
-        playButtonImg.setImage(new Image("/img/play_button.png"));
+        playButtonImg.setImage(new Image("/View/img/play_button.png"));
     }
 }
