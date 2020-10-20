@@ -280,11 +280,13 @@ public class MapController extends AnchorPane {
     @FXML
     private void mainMenu() {
         parentController.openMenu();
+        mediaPlayer.stop();
     }
 
     @FXML
     private void restart() {
         parentController.newGame();
+        mediaPlayer.stop();
 
     }
 
