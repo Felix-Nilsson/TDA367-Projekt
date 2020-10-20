@@ -6,16 +6,16 @@ import javafx.scene.image.Image;
 
 public interface Enemy  {
     void update();
+    void move();
     void followPath();
     void tookDamage(double damage, DamageType damageType);
-    Image getImage();
-    int getPositionX();
-    int getPositionY();
-    void move();
+
     boolean isKilled();
     boolean isOut();
     int spawnTime();
+    int getPositionX();
+    int getPositionY();
     int getHealth();
-
     int getMaxHealth();
+    Image getImage();
 }

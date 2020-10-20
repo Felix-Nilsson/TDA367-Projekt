@@ -69,7 +69,7 @@ public class BaseEnemy implements Enemy {
      * is called in the main loop in Game. Currently only updates enemy's position
      * @author Simon Larsson
      */
-    @Override
+
     public void update(){
         move();
     }
@@ -236,9 +236,7 @@ public class BaseEnemy implements Enemy {
     public int getPositionY(){
         return positionY;
     }
-    protected Direction getDirection(){
-        return direction;
-    }
+
     public int getHealth(){
         return health;
     }
@@ -248,14 +246,6 @@ public class BaseEnemy implements Enemy {
         return maxHp;
     }
 
-    protected int getMovementSpeed(){
-        return movementSpeed;
-    }
-    protected int getMagicResist(){
-        return magicResist;
-    }
-    protected int getArmor(){
-        return armor;
-    }
+
 
 }
