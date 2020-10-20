@@ -85,7 +85,9 @@ public class MapController extends AnchorPane {
     private Pane gameOverScreen;
     @FXML
     private Pane gameWonScreen;
-    @FXML Slider musicSlider;
+    @FXML private Slider musicSlider;
+    @FXML private Label nameOfMapLabel;
+    @FXML private Label difficultyLabel;
 
     private boolean paused = false;
     private final Game game;
@@ -119,7 +121,7 @@ public class MapController extends AnchorPane {
         }
         this.parentController = parentController;
         this.game = game;
-        this.mapHandler = new MapHandler(game,waveNumber,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
+        this.mapHandler = new MapHandler(game,nameOfMapLabel,difficultyLabel,waveNumber,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
         progressBarHashMap = new HashMap<>();

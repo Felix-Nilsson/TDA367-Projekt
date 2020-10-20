@@ -33,6 +33,8 @@ public class MapHandler implements MapObserver {
     private ImageView base;
     private final Game game;
     private HashMap<Enemy, ProgressBar> progressBarHashMap;
+    private Label nameOfMapLabel;
+    private Label difficultyLabel;
 
     private Rectangle selectedTower;
 
@@ -41,7 +43,7 @@ public class MapHandler implements MapObserver {
     //TODO: Add a blurb justifying design choices
 
 
-    public MapHandler(Game game, Label waveNumber, Pane gameOverScreen, Pane gameWonScreen, AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map){
+    public MapHandler(Game game, Label nameOfMapLabel,Label difficultyLabel, Label waveNumber, Pane gameOverScreen, Pane gameWonScreen, AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map){
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.gameBoardGrid = gameBoardGrid;
         this.toplayerGrid = toplayerGrid;
@@ -50,10 +52,17 @@ public class MapHandler implements MapObserver {
         this.gameOverScreen = gameOverScreen;
         this.gameWonScreen = gameWonScreen;
         this.waveNumber = waveNumber;
+        this.nameOfMapLabel = nameOfMapLabel;
+        this.difficultyLabel = difficultyLabel;
         progressBarHashMap = new HashMap<>();
         enemyHashMap = new HashMap<>();
         game.addMapObserver(this);
+        setLabels();
 
+    }
+    private void setLabels(){
+        nameOfMapLabel.setText(game.getNameOfMap());
+        difficultyLabel.setText(game.getDifficulty().name());
     }
 
 

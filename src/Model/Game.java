@@ -22,6 +22,8 @@ public class Game  {
     private int health;
     private int money;
 
+    private String nameOfMap;
+
     private boolean waveRunning = false;
     private boolean autostart;
 
@@ -377,6 +379,17 @@ public class Game  {
                 this.totalNumberOfRounds = 15;
                 break;
         }
+        switch(mapNumber){
+            case 1:
+                this.nameOfMap = "Curvy Snake";
+                break;
+            case 2:
+                this.nameOfMap = "TBH";
+                break;
+            case 3:
+                this.nameOfMap = "TBH2";
+                break;
+        }
     }
 
     /**
@@ -545,6 +558,11 @@ public class Game  {
     public void addMoney(int toAdd) {
         money += toAdd;
     }
+    public String getNameOfMap() {
+        return nameOfMap;
+    }
 
-
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
 }
