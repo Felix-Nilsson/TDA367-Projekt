@@ -16,7 +16,7 @@ public class BaseTower implements Tower {
     private int physicalDmg;
     private int magicDmg;
     private final int price;
-    private final int range;
+    private  int range;
     private double attackSpeed;
     private double angle;
     private int posX;
