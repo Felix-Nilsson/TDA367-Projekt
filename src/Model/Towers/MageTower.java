@@ -2,16 +2,19 @@ package Model.Towers;
 
 import Model.Cell.Cell;
 
+import Model.Towers.Upgrade.MageTowerLeftUpgrade;
+import Model.Towers.Upgrade.MageTowerRightUpgrade;
 import Model.Enemy.Enemy;
-
 import java.util.List;
 
 public class MageTower implements Tower {
     private BaseTower baseTower ;
 
 
-    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
-        this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed);
+
+    public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
+        this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
+
         baseTower.setTowerImage("img/mageTower.png");
 
     }
@@ -36,6 +39,26 @@ public class MageTower implements Tower {
     @Override
     public int getPrice() {
         return baseTower.getPrice();
+    }
+
+    @Override
+    public int getLeftUpgradeCost() {
+        return baseTower.getLeftUpgradeCost();
+    }
+
+    @Override
+    public int getRightUpgradeCost() {
+        return baseTower.getRightUpgradeCost();
+    }
+
+    @Override
+    public String getLeftUpgradeLabel() {
+        return "Add 20 magic damage";
+    }
+
+    @Override
+    public String getRightUpgradeLabel() {
+        return "Add 1 speed";
     }
 
     @Override
@@ -75,8 +98,25 @@ public class MageTower implements Tower {
     }
 
     @Override
+
+    public void setMagicDmg(int amount) {
+        baseTower.setMagicDmg(amount);
+    }
+
+    @Override
+    public void setPhysicalDmg(int amount) {
+        baseTower.setPhysicalDmg(amount);
+    }
+
+    @Override
+    public void setAttackSpeed(double amount) {
+        baseTower.setAttackSpeed(amount);
+    }
+
+
     public boolean getIsReadyToFire() {
         return baseTower.getIsReadyToFire();
+
     }
 
     @Override
@@ -92,6 +132,16 @@ public class MageTower implements Tower {
     @Override
     public String getImage() {
         return "/img/mageTower.png";
+    }
+
+    @Override
+    public String getLeftUpgradeImage() {
+        return "/img/mageTowerDmgUpgrade.png";
+    }
+
+    @Override
+    public String getRightUpgradeImage() {
+        return "/img/atkSpdUpgrade.png";
     }
 
     @Override
@@ -118,8 +168,23 @@ public class MageTower implements Tower {
     }
 
     @Override
+    public Tower leftUpgrade(Tower t) {
+        MageTowerLeftUpgrade mtlu = new MageTowerLeftUpgrade(t);
+        mtlu.leftUpgrade(t);
+        return mtlu;
+    }
+
+    @Override
+    public Tower rightUpgrade(Tower t) {
+        MageTowerRightUpgrade mtru = new MageTowerRightUpgrade(t);
+        mtru.rightUpgrade();
+        return mtru;
+    }
+
+
     public Projectile getProjectile() {
         return baseTower.getProjectile();
+
     }
 
     @Override

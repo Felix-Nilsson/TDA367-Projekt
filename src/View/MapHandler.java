@@ -4,6 +4,7 @@ import Model.Cell.Cell;
 import Model.Enemy.Enemy;
 import Model.Game;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -23,11 +24,12 @@ public class MapHandler implements MapObserver {
     private final Pane gameWonScreen;
     private final Pane gameOverScreen;
     private HashMap<Enemy, ImageView> enemyHashMap;
+    private Label waveNumber;
 
     private final List<Cell> map;
     private ImageView cave;
     private ImageView base;
-    private Game game;
+    private final Game game;
     private HashMap<Enemy, ProgressBar> progressBarHashMap;
 
     //TODO: Add a reference to game to get info from, rather than map
@@ -35,7 +37,7 @@ public class MapHandler implements MapObserver {
     //TODO: Add a blurb justifying design choices
 
 
-    public MapHandler(Game game, Pane gameOverScreen, Pane gameWonScreen,AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map){
+    public MapHandler(Game game, Label waveNumber, Pane gameOverScreen, Pane gameWonScreen, AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map){
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.gameBoardGrid = gameBoardGrid;
         this.toplayerGrid = toplayerGrid;
@@ -43,9 +45,11 @@ public class MapHandler implements MapObserver {
         this.game = game;
         this.gameOverScreen = gameOverScreen;
         this.gameWonScreen = gameWonScreen;
+        this.waveNumber = waveNumber;
         progressBarHashMap = new HashMap<>();
         enemyHashMap = new HashMap<>();
         game.addMapObserver(this);
+
     }
 
 
@@ -89,6 +93,7 @@ public class MapHandler implements MapObserver {
     public void changeToplayerGridVisible(boolean visible){
         toplayerGrid.setGridLinesVisible(visible);
     }
+
     private void fixImage(ImageView img,Enemy e){
         img.setX(e.getPositionX());
         img.setY(e.getPositionY());
@@ -104,11 +109,18 @@ public class MapHandler implements MapObserver {
     }
 
     public void updateProgressBar(Enemy e){
-        ProgressBar pb = progressBarHashMap.get(e);
-        pb.setProgress((double)(e.getHealth())/(double)e.getMaxHealth());
+        Platform.runLater(new Runnable(){
 
-        pb.setLayoutX(e.getPositionX()-10);
-        pb.setLayoutY(e.getPositionY()-15);
+            @Override
+            public void run() {
+                ProgressBar pb = progressBarHashMap.get(e);
+                pb.setProgress((double)(e.getHealth())/(double)e.getMaxHealth());
+
+                pb.setLayoutX(e.getPositionX()-10);
+                pb.setLayoutY(e.getPositionY()-15);
+            }
+        });
+
     }
 
     public void openSettings(AnchorPane settingsPane){
@@ -144,43 +156,52 @@ public class MapHandler implements MapObserver {
     }
 
     @Override
+    public void notifyRoundStart() {
+        Platform.runLater(() ->waveNumber.setText("Wave: " + game.getRound()));
+    }
+
+    @Override
     public void notifyGameWon() {
         Platform.runLater(gameWonScreen::toFront);
     }
 
     @Override
     public void notifyEnemyDead(Enemy e) {
+        Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(progressBarHashMap.get(e)));
         Platform.runLater(() -> gameBoardAnchorPane.getChildren().remove(enemyHashMap.get(e)));
     }
 
     @Override
     public void update() {
-        for(Enemy e : game.getEnemiesInWave()){
-            if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
+        if(game.getEnemiesInWave() != null){
+            for(Enemy e : game.getEnemiesInWave()){
+                if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
 
-                ImageView img = new ImageView(e.getImage());
-                fixImage(img, e);
-                enemyHashMap.put(e, img);
-                Platform.runLater(()->gameBoardAnchorPane.getChildren().add(img));
-                Platform.runLater(()->cave.toFront()); //sets the cave to be in front of the enemies
-                Platform.runLater(()->base.toFront());
+                    ImageView img = new ImageView(e.getImage());
+                    fixImage(img, e);
+                    enemyHashMap.put(e, img);
+                    Platform.runLater(()->gameBoardAnchorPane.getChildren().add(img));
+                    Platform.runLater(()->cave.toFront()); //sets the cave to be in front of the enemies
+                    Platform.runLater(()->base.toFront());
 
-                ProgressBar pb = new ProgressBar((double) (e.getHealth()) / e.getMaxHealth());
-                pb.setLayoutX(e.getPositionX());
-                pb.setLayoutY(e.getPositionY());
+                    ProgressBar pb = new ProgressBar((double) (e.getHealth()) / e.getMaxHealth());
+                    pb.setLayoutX(e.getPositionX());
+                    pb.setLayoutY(e.getPositionY());
 
-                pb.setMaxWidth(45);
-                pb.setMaxHeight(10);
-                pb.styleProperty().set("-fx-accent: red");
+                    pb.setMaxWidth(45);
+                    pb.setMaxHeight(10);
+                    pb.styleProperty().set("-fx-accent: red");
 
-                Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(pb));
-                progressBarHashMap.put(e, pb);
+                    Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(pb));
+                    progressBarHashMap.put(e, pb);
 
 
+                }
+                updateEnemy(e);
+                updateProgressBar(e);
             }
-            updateEnemy(e);
-            updateProgressBar(e);
         }
+
     }
 
 }

@@ -42,6 +42,11 @@ public class Observable implements MapObserver, ProjectileObserver {
             mapObserver.notifyRoundOver();
         }
     }
+    public void notifyRoundStart(){
+        for(MapObserver mapObserver : mapObservers){
+            mapObserver.notifyRoundStart();
+        }
+    }
     public void notifyGameWon(){
         for(MapObserver mapObserver : mapObservers){
             mapObserver.notifyGameWon();

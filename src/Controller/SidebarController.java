@@ -32,6 +32,8 @@ public class SidebarController extends AnchorPane  {
     @FXML private GridPane gridPane;
     @FXML private Label money;
     @FXML private AnchorPane toolbar;
+    @FXML private Label archerTowerPriceLabel;
+    @FXML private Label mageTowerPriceLabel;
 
     private final MapController parentController;
     private MageTowerFactory mF;
@@ -48,7 +50,7 @@ public class SidebarController extends AnchorPane  {
             e.printStackTrace();
         }
         this.parentController = parentController;
-        sidebarHandler = new SidebarHandler(game, health,money,playButtonImg,mageTowerAvailable,archerTowerAvailable);
+        sidebarHandler = new SidebarHandler(game, mageTowerPriceLabel, archerTowerPriceLabel, health,money,playButtonImg,mageTowerAvailable,archerTowerAvailable);
         eventHandlers();
         updateAvailable();
     }

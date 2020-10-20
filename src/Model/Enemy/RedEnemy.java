@@ -11,6 +11,7 @@ public class RedEnemy implements Enemy {
     //TODO Finns bara här för att testa. Denna ska bort senare eftersom View-delar inte ska finnas i Model.
     private Image image;
 
+
     public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
 
@@ -57,9 +58,15 @@ public class RedEnemy implements Enemy {
     }
 
     @Override
-    public boolean isDead() {
-        return parent.isDead();
+    public boolean isKilled() {
+        return parent.isKilled();
     }
+
+    @Override
+    public boolean isOut() {
+        return parent.isOut();
+    }
+
 
     @Override
     public int spawnTime() {

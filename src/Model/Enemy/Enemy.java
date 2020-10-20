@@ -12,7 +12,8 @@ public interface Enemy  {
     int getPositionX();
     int getPositionY();
     void move();
-    boolean isDead();
+    boolean isKilled();
+    boolean isOut();
     int spawnTime();
     int getHealth();
 

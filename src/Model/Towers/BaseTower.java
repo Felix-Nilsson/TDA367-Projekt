@@ -13,15 +13,20 @@ import java.util.TimerTask;
 
 public class BaseTower implements Tower {
     private final Cell position;
-    private final int physicalDmg;
-    private final int magicDmg;
+    private int physicalDmg;
+    private int magicDmg;
     private final int price;
-    private final int range;
-    private final double attackSpeed;
-    private Image towerImage;
+    private int range;
+    private double attackSpeed;
     private double angle;
     private int posX;
     private int posY;
+    private int leftUpgradeCost;
+    private int rightUpgradeCost;
+    private String towerImage;
+    private String leftUpgradeLabel;
+    private String rightUpgradeLabel;
+
     private Projectile currentProjectile;
     private int enemyPosX;
     private int enemyPosY;
@@ -33,26 +38,29 @@ public class BaseTower implements Tower {
 
 
 
+
     private Targeting target;
 
-    public BaseTower( Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed) {
+    public BaseTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
         this.position = position;
         //längst upp till vänster är (25,15). Varje cell är 40 pixlar
         posX = position.getX()*40 +25;
         posY = position.getY()*40 +15;
-        //System.out.println("x: "+ posX);
-        //System.out.println("y: "+ posY);
         this.physicalDmg = physicalDmg;
         this.magicDmg = magicDmg;
         this.price = price;
         this.range = range;
         this.attackSpeed = attackSpeed;
+        this.leftUpgradeCost = leftUpgradeCost;
+        this.rightUpgradeCost = rightUpgradeCost;
 
         //Tower ska kunna attackera direkt
         currentCooldown=0;
         isReadyToFire=true;
 
+
         timerIsRunning=false;
+
         timerDelayInMilliseconds=100;
 
         //Temp, example of tower setting the color to the cell
@@ -60,8 +68,10 @@ public class BaseTower implements Tower {
 
         //Default is closest
         target = Targeting.FIRST;
+
         System.out.println("TOWER CREATED.............................................................................................");
         startTimer();
+
 
     }
     @Override
@@ -118,14 +128,18 @@ public class BaseTower implements Tower {
         this.angle=angle;
     }
 
-
-
-    public void update() {
-        //TODO måste finnas metod som kollar cooldown
+    public void setTowerImage(String img){
+        this.towerImage = img;
     }
 
 
-    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+
+    public void update() {
+
+    }
+
+
+    public synchronized void attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
             enemyPosX = e.getPositionX();
             enemyPosY = e.getPositionY();
@@ -134,14 +148,19 @@ public class BaseTower implements Tower {
             //i Projectile skapa finns det minus framför vy för att återställa detta igen
             double distY = -(enemyPosY-posY);
             double distHyp = Math.sqrt(distX*distX + distY*distY);
-            //System.out.println(distHyp);
+            System.out.println("distHyp: "+ distHyp);
+            System.out.println("range: " + this.range);
             if (distHyp<this.range) {
                 this.angle = Math.atan2(distY, distX);
                 attack();
-                //Standard beteende. Damage och DamageType är beroende av vilken typ av Tower det är, ex. ArcherTower.
-                //TODO ArcherTower och BaseTower måste ha override på denna metod
-                e.tookDamage(50, DamageType.PHYSICAL);
-                System.out.println(e.getHealth());
+                System.out.println("ATTACK");
+
+                if(physicalDmg>0){
+                    e.tookDamage(physicalDmg, DamageType.PHYSICAL);
+                }
+                if(magicDmg>0){
+                    e.tookDamage(magicDmg, DamageType.MAGICAL);
+                }
                 break;
             }
         }
@@ -175,6 +194,27 @@ public class BaseTower implements Tower {
     }
 
 
+    @Override
+    public int getLeftUpgradeCost() {
+        return this.leftUpgradeCost;
+    }
+
+    @Override
+    public int getRightUpgradeCost() {
+        return this.rightUpgradeCost;
+    }
+
+    @Override
+    public String getLeftUpgradeLabel() {
+        return null;
+    }
+
+    @Override
+    public String getRightUpgradeLabel() {
+        return null;
+    }
+
+
     public int getX() {
         return position.getX();
     }
@@ -199,10 +239,36 @@ public class BaseTower implements Tower {
         return attackSpeed;
     }
 
-
-    public String getImage() {
-        return this.getImage();  //TODO might be wierd
+    @Override
+    public void setMagicDmg(int amount) {
+        this.magicDmg = amount;
     }
+
+    @Override
+    public void setPhysicalDmg(int amount) {
+        this.physicalDmg = amount;
+    }
+
+    @Override
+    public void setAttackSpeed(double amount) {
+        this.attackSpeed = amount;
+    }
+
+    @Override
+    public String getImage() {
+        return this.getImage();  //TODO might be weird
+    }
+
+    @Override
+    public String getLeftUpgradeImage() {
+        return null; //Should never get here
+    }
+
+    @Override
+    public String getRightUpgradeImage() {
+        return null; //Should never get here
+    }
+
 
 
     public int getRange() {
@@ -224,10 +290,14 @@ public class BaseTower implements Tower {
         return position;
     }
 
-
-    public void setTowerImage(String img){
-        towerImage = new Image(getClass().getClassLoader().getResourceAsStream(img));
+    public Tower leftUpgrade(Tower t) {
+        return null; //Error
     }
+
+    public Tower rightUpgrade(Tower t) {
+        return null; //Error
+    }
+
 
     public void setColor(String s){
         this.position.setColor(s);

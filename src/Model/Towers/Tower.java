@@ -11,6 +11,10 @@ public interface Tower {
     void attack();
 
     int getPrice();
+    int getLeftUpgradeCost();
+    int getRightUpgradeCost();
+    String getLeftUpgradeLabel();
+    String getRightUpgradeLabel();
 
     int getPosX();
     int getPosY();
@@ -20,7 +24,6 @@ public interface Tower {
     int getX();
     int getY();
 
-
     int getMagicDmg();
     int getPhysicalDmg();
     double getAttackSpeed();
@@ -28,12 +31,21 @@ public interface Tower {
     void stopTimer();
     void startTimer();
 
+    void setMagicDmg(int amount);
+    void setPhysicalDmg(int amount);
+    void setAttackSpeed(double amount);
+
     String getImage();
+    String getLeftUpgradeImage();
+    String getRightUpgradeImage();
+
 
     Targeting getTarget();
     void setTarget(Targeting target);
-
     Cell getPosition();
     Projectile getProjectile();
+
+    Tower leftUpgrade(Tower t);
+    Tower rightUpgrade(Tower t);
 
 }

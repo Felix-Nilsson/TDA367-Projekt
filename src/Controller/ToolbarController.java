@@ -7,10 +7,12 @@ import View.ToolbarHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -18,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class ToolbarController <T extends Tower> extends AnchorPane  {
+
     @FXML private AnchorPane toolbarPane;
 
     @FXML private Label towerLabel;
@@ -34,13 +37,15 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     @FXML private Button closeButton;
 
     @FXML private ImageView tImageView;
+    @FXML private ImageView lUImageView;
+    @FXML private ImageView rUImageView;
 
     @FXML private RadioButton firstRadioButton;
     @FXML private RadioButton strongestRadioButton;
     @FXML private RadioButton closestRadioButton;
 
-    private final ToggleGroup targetingToggleGroup;
-    private final T tower;
+    private ToggleGroup targetingToggleGroup;
+    private Tower tower;
     private final Game game;
     private final MapController parentController;
     private final ToolbarHandler toolbarHandler;
@@ -58,11 +63,12 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         this.parentController = parentController;
         this.tower = t;
         targetingToggleGroup = new ToggleGroup();
-        toolbarHandler = new ToolbarHandler(tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView);
+        toolbarHandler = new ToolbarHandler(game, tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView, leftUpgradeButton, rightUpgradeButton);
 
         init();
         eventHandlers();
         updateToolbar();
+
     }
 
 
@@ -75,17 +81,32 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             }
         });
     }
+
     
     private void init(){
         strongestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setToggleGroup(targetingToggleGroup);
         closestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setSelected(true);
+
+        lUImageView.setImage(new Image(tower.getLeftUpgradeImage()));
+        leftUpgradeCostLabel.setText(tower.getLeftUpgradeLabel() + ": " +tower.getLeftUpgradeCost()+"$");
+        leftUpgradeCostLabel.setAlignment(Pos.CENTER);
+        rUImageView.setImage(new Image(tower.getRightUpgradeImage()));
+        rightUpgradeCostLabel.setText(tower.getRightUpgradeLabel() + ": " + tower.getRightUpgradeCost()+"$");
+        rightUpgradeCostLabel.setAlignment(Pos.CENTER);
+        //towerImageView.setImage(tower.getImage());
+        //towerLabel.setText("Archer"); //temp
+
+        //sellButton.setText((tower.getPrice()*(0.5)) + "");
+
+
     }
 
 
     private void updateToolbar(){
         toolbarHandler.setTextOfObjects();
+        updateUpgradeAvaialble();
         switch(tower.getTarget()){
             case FIRST: firstRadioButton.setSelected(true); break;
             case STRONGEST: strongestRadioButton.setSelected(true); break;
@@ -121,13 +142,68 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
         //Changes the money amount when selling
         game.addMoney((int)(tower.getPrice()*0.5));
-        parentController.updateSidebar(); //Might cause cycle dependency
+        parentController.updateSidebar(); //TODO Might cause cycle dependency
 
         //Removes the tower and controller from the hashmap
         parentController.removeToolFromHash(tower);
         game.removeTower(tower);
 
+    }
+
+    @FXML
+    private void towerUpgradeLeft(){
+        if(game.getMoney() >= tower.getLeftUpgradeCost()){
+            //Upgrades tower
+            Tower tempTower = parentController.leftUpgradeTower(tower);
+
+            //Updates the controller with the new tower
+            this.tower = tempTower;
+
+            //JavaFX
+            toolbarHandler.updateLeftUpgrade();
+
+            //Changes money
+            game.addMoney(-tower.getLeftUpgradeCost());
+
+            //JavaFX again
+            updateToolbar();
+
+            //updateUpgradeAvaialble();
+            parentController.updateSidebar();
+        }
+    }
+
+    @FXML
+    private void towerUpgradeRight(){
+        if(game.getMoney() >= tower.getRightUpgradeCost()){
+            //Upgrades tower
+            Tower tempTower = parentController.rightUpgradeTower(tower);
+
+            //Updates the controller with the new tower
+            this.tower = tempTower;
+
+            //JavaFX
+            toolbarHandler.updateRightUpgrade();
+
+            //Changes money
+            game.addMoney(-tower.getLeftUpgradeCost());
+
+            //JavaFX again
+            updateToolbar();
+
+
+            //updateUpgradeAvaialble();
+            parentController.updateSidebar();
+        }
 
     }
+
+    public void updateUpgradeAvaialble() {
+        toolbarHandler.updateUpgradeAvaialble();
+    }
+
+
+
+
 
 }

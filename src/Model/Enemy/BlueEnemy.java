@@ -12,6 +12,7 @@ public class BlueEnemy implements Enemy {
     private Image image;
 
 
+
     public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor, path, startPos);
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/blue_Monster.png")));
@@ -58,9 +59,16 @@ public class BlueEnemy implements Enemy {
     }
 
     @Override
-    public boolean isDead() {
-        return parent.isDead();
+    public boolean isKilled() {
+        return parent.isKilled();
     }
+
+    @Override
+    public boolean isOut() {
+        return parent.isOut();
+    }
+
+
 
     @Override
     public int spawnTime() {

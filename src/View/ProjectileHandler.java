@@ -66,8 +66,8 @@ public class ProjectileHandler implements ProjectileObserver {
         assert img != null;
         img.setX(projectile.getPosX());
         img.setY(projectile.getPosY());
-        img.setFitHeight(5);
-        img.setFitWidth(5);
+        img.setFitHeight(25);
+        img.setFitWidth(25);
         img.setPreserveRatio(true);
         img.toFront();
     }

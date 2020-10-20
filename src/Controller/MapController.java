@@ -3,6 +3,7 @@ package Controller;
 import Model.*;
 import Model.Cell.Cell;
 import Model.Enemy.Enemy;
+import Model.Towers.MageTower;
 import Model.Towers.Tower;
 import Model.Towers.TowerFactory;
 import View.MapHandler;
@@ -28,7 +29,9 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class MapController extends AnchorPane {
@@ -54,6 +57,8 @@ public class MapController extends AnchorPane {
 
     @FXML
     private RadioButton gridLayoutRadioButton;
+
+    @FXML private RadioButton autoStartRadioButton;
 
     @FXML
     private AnchorPane sidebar;
@@ -82,11 +87,14 @@ public class MapController extends AnchorPane {
 
     private List<Enemy> enemies;
 
-    private final HashMap<Tower, ImageView> towerHashMap;
+    private HashMap<Enemy,ImageView> enemyHashMap;
+    private final HashMap<Tower,ImageView> towerHashMap;  //If we want different images for upgarded towers, this need to be updated, however this wont be done here
     private final HashMap<Tower, ToolbarController> toolbarTowerHashMap;
+    private boolean waveRunning;
     //private ImageView cave;
     //private ImageView base;
     private final MapHandler mapHandler;
+
     private TowerFactory towerFactory;
     private final MenuController parentController;
 
@@ -104,7 +112,7 @@ public class MapController extends AnchorPane {
         }
         this.parentController = parentController;
         this.game = game;
-        this.mapHandler = new MapHandler(game,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
+        this.mapHandler = new MapHandler(game,waveNumber,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
         progressBarHashMap = new HashMap<>();
@@ -146,29 +154,30 @@ public class MapController extends AnchorPane {
                     //Check if the cell is available
                     int index = game.getArrayIndex(x_placement, y_placement);
                     boolean occupied = game.isCellOccupied(index);
+
                     if (!occupied && towerFactory.getPrice() <= game.getMoney()) {
                         //Place the image in the cell
                         ImageView image = new ImageView(db.getImage());
 
-                        gameBoardGrid.add(image, x_placement, y_placement); // Just adds an image to the gridpane grid
+                        gameBoardGrid.add(image, x_placement, y_placement);
                         setTowerOnCell(index);
 
                         //After the tower has been added, add to hashmap
                         towerHashMap.put(game.getTowerInCell(x_placement, y_placement), image);
 
-                        //Change money
-                        game.addMoney(-towerFactory.getPrice());
-                        updateSidebar();
-
                         //Creates a new toolbar with the tower
                         createToolbar(game.getTowerInCell(x_placement, y_placement));
 
+                        //Change money
+                        game.addMoney(-towerFactory.getPrice());
+                        updateSidebar(); //TODO Error here, need to update Toolbar Handler
+
+                        //Updates the previous toolbarcontroller
+                        updateToolbar();
 
                     } else {
                         //TODO Some sort of error or could just leave it empty
                     }
-
-
                 }
 
                 dragEvent.setDropCompleted(true);
@@ -199,17 +208,19 @@ public class MapController extends AnchorPane {
     private void changeGridVisibilty() {
         mapHandler.changeToplayerGridVisible(gridLayoutRadioButton.isSelected());
     }
+    @FXML private void autoStartPressed(){
+        game.setAutostart(autoStartRadioButton.isSelected());
+    }
+
 
     private int getGridX(Node node) {
         Integer cIndex = GridPane.getColumnIndex(node);
-        int x = cIndex == null ? 0 : cIndex;
-        return x;
+        return cIndex == null ? 0 : cIndex;
     }
 
     private int getGridY(Node node) {
         Integer rIndex = GridPane.getRowIndex(node);
-        int y = rIndex == null ? 0 : rIndex;
-        return y;
+        return rIndex == null ? 0 : rIndex;
     }
 
     private <T extends Tower> void createToolbar(T t) {
@@ -250,7 +261,6 @@ public class MapController extends AnchorPane {
 
 
     public void nextRound() {
-        waveNumber.setText("Wave: " + game.getRound());
         game.nextRound();
     }
 
@@ -304,16 +314,60 @@ public class MapController extends AnchorPane {
         ImageView image = towerHashMap.get(t);
         mapHandler.removeImageFromGrid(image);
         towerHashMap.remove(t);
-
     }
-
 
     public void updateSidebar(){
         game.notifyAllObservers();
     }
+
     protected List<Enemy> getEnemies(){
         return game.getEnemiesInWave();
     }
+
+
+    public void updateToolbar(){
+        //Updates every controller in toolbarcontroller
+        for(Map.Entry<Tower, ToolbarController> entry : toolbarTowerHashMap.entrySet()){
+            entry.getValue().updateUpgradeAvaialble();
+        }
+    }
+
+    private void updateToolbarHashmap(Tower oldT, Tower newT){
+        //Uppdates the fking hashhhmap
+
+        toolbarTowerHashMap.put(newT, toolbarTowerHashMap.get(oldT));
+        toolbarTowerHashMap.remove(oldT, toolbarTowerHashMap.get(oldT));
+        
+        //Removes all null values
+        toolbarTowerHashMap.entrySet().removeIf(e -> e.getValue() == null);
+
+    }
+
+    private void updateTowerHashmap(Tower oldT, Tower newT){
+        //Uppdates the fking hashhhmap
+
+        towerHashMap.put(newT, towerHashMap.get(oldT));
+        towerHashMap.remove(oldT, towerHashMap.get(oldT));
+
+        //Removes all null values
+        towerHashMap.entrySet().removeIf(e -> e.getValue() == null);
+    }
+
+
+    public Tower leftUpgradeTower(Tower oldT){
+        Tower newT = game.leftUpgradeTower(oldT);
+        updateToolbarHashmap(oldT, newT);
+        updateTowerHashmap(oldT, newT);
+        return newT;
+    }
+
+    public Tower rightUpgradeTower(Tower oldT){
+        Tower newT = game.rightUpgradeTower(oldT);
+        updateToolbarHashmap(oldT, newT);
+        updateTowerHashmap(oldT, newT);
+        return newT;
+    }
+
 
 }
 
