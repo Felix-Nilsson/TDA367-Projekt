@@ -1,6 +1,7 @@
 package Model.Enemy;
 
 import Model.DamageType;
+import Model.Direction;
 import Model.Enemy.Enemy;
 import javafx.scene.image.Image;
 
@@ -12,7 +13,7 @@ public class RedEnemy implements Enemy {
     private Image image;
 
 
-    public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<BaseEnemy.Direction> path, int startPos){
+    public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
 
         this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/red_Monster.png")));
@@ -41,7 +42,7 @@ public class RedEnemy implements Enemy {
     public void tookDamage(double damage, DamageType damageType){
         parent.tookDamage(damage,damageType);
     }
-    protected void turn(BaseEnemy.Direction dir){
+    protected void turn(Direction dir){
         parent.direction=dir;
     }
 
@@ -73,7 +74,7 @@ public class RedEnemy implements Enemy {
         return 10 - getMovementSpeed();
     }
 
-    public BaseEnemy.Direction getDirection(){
+    public Direction getDirection(){
         return parent.direction;
     }
     public int getHealth(){

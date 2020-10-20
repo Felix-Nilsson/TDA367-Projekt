@@ -1,6 +1,7 @@
 package Model.Enemy;
 
 import Model.DamageType;
+import Model.Direction;
 import javafx.scene.image.Image;
 
 import java.awt.*;
@@ -15,8 +16,6 @@ public class BaseEnemy implements Enemy {
     private final int magicResist;
     private final int armor;
     private final int maxHp;
-
-    public enum Direction {NORTH,EAST,SOUTH,WEST}
 
     //TODO path ska finnas med som parameter i BaseEnemy. Då vet varje enemy hur de ska gå m.h.a. path, t.ex. EAST,EAST,SOUTH,SOUTH med 50 pixlar mellan varje.
     //TODO update ska t.ex. kolla: if(positionX % 50 == 25), turn(path.get(stepNr)), stepNr=stepNr+1
