@@ -10,7 +10,7 @@
       <Label fx:id="towerLabel" layoutX="14.0" layoutY="7.0" prefHeight="30.0" prefWidth="144.0" text="[tower name here]" />
       <ImageView fx:id="tImageView" fitHeight="97.0" fitWidth="128.0" layoutX="14.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../img/archerTower.png" />
+            <Image url="@../img/archerTower.png" />
          </image></ImageView>
       <Label fx:id="leftUpgradeCostLabel" layoutX="263.0" layoutY="117.0" prefHeight="17.0" prefWidth="166.0" text="100" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="rightUpgradeCostLabel" layoutX="435.0" layoutY="117.0" prefHeight="17.0" prefWidth="138.0" text="100" textAlignment="CENTER" />

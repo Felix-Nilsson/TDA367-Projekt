@@ -1,11 +1,9 @@
 package Controller;
 
-import Controller.MapController;
 import Model.Difficulty;
 import Model.Game;
 import View.MenuHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -13,7 +11,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.media.Media;
@@ -161,7 +158,7 @@ public class MenuController extends AnchorPane implements Initializable {
 
 
      private void playClickUIButtonSound(){
-         URL resource = getClass().getResource("/sound/click.mp3");
+         URL resource = getClass().getResource("/View/sound/click.mp3");
          Media media = new Media(resource.toString());
          MediaPlayer mediaPlayer = new MediaPlayer(media);
          mediaPlayer.play();

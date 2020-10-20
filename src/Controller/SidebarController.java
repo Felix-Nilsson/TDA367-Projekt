@@ -61,7 +61,7 @@ public class SidebarController extends AnchorPane  {
 
                 Dragboard db = startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
-                Image tempIMG = new Image("/img/mageTower.png", 40, 40, false, false, false);
+                Image tempIMG = new Image("/View/img/mageTower.png", 40, 40, false, false, false);
                 content.putImage(tempIMG);
                 db.setContent(content);
                 mouseEvent.consume();
@@ -77,7 +77,7 @@ public class SidebarController extends AnchorPane  {
             public void handle(MouseEvent mouseEvent) {
                 Dragboard db = startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
-                Image tempIMG = new Image("/img/archerTower.png", 40, 40, false, false, false);
+                Image tempIMG = new Image("/View/img/archerTower.png", 40, 40, false, false, false);
                 content.putImage(tempIMG);
                 db.setContent(content);
                 mouseEvent.consume();

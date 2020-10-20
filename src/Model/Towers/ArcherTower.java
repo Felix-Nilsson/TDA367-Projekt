@@ -15,7 +15,7 @@ public class ArcherTower implements Tower {
     public ArcherTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
 
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
-        baseTower.setTowerImage("img/archerTower.png");
+        baseTower.setTowerImage("View/img/archerTower.png");
     }
 
 
@@ -127,17 +127,17 @@ public class ArcherTower implements Tower {
 
     @Override
     public String getImage() {
-        return "/img/archerTower.png";
+        return "/View/img/archerTower.png";
     }
 
     @Override
     public String getLeftUpgradeImage() {
-        return "/img/archerTowerDmgUpgrade.png";
+        return "/View/img/archerTowerDmgUpgrade.png";
     }
 
     @Override
     public String getRightUpgradeImage() {
-        return "/img/atkSpdUpgrade.png";
+        return "/View/img/atkSpdUpgrade.png";
     }
 
     @Override
