@@ -42,7 +42,7 @@ public class Game  {
         this.mapNumber = mapNumber;
         observable = new Observable();
         b= new Board(mapNumber);
-        List<BaseEnemy.Direction> enemyPath = b.getPath();
+        List<Direction> enemyPath = b.getPath();
         waveManager = new WaveManager(difficulty, enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();

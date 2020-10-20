@@ -8,7 +8,7 @@ import java.util.List;
 public class WaveManager  {
     private final Difficulty difficulty;
     private  int difficultyModifier;
-    private final List<BaseEnemy.Direction> enemyPath;
+    private final List<Direction> enemyPath;
     private final int startPos;
     private EnemyFactory enemyFactory;
     private List<Enemy> wave;
@@ -17,7 +17,7 @@ public class WaveManager  {
         ENEMY_RED
     }
 
-    public WaveManager(Difficulty difficulty, List<BaseEnemy.Direction> enemyPath, int startPos) {
+    public WaveManager(Difficulty difficulty, List<Direction> enemyPath, int startPos) {
         this.difficulty = difficulty;
         this.enemyPath = enemyPath;
         this.startPos = startPos;

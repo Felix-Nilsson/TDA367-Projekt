@@ -13,7 +13,7 @@ public class Board {
     private final int BOARD_HEIGHT = 18;
     private  ArrayList<Cell> board;
     private int mapNumber;
-    private final List<BaseEnemy.Direction> enemyPath = new ArrayList<>();
+    private final List<Direction> enemyPath = new ArrayList<>();
     private int[][] currentMap;
     private int startPos;
     private int endPos;
@@ -111,7 +111,7 @@ public class Board {
     private void setBoard(ArrayList<Cell> board) {
         this.board = board;
     }
-    public List<BaseEnemy.Direction> getPath(){
+    public List<Direction> getPath(){
         return enemyPath;
     }
 
@@ -119,30 +119,30 @@ public class Board {
     private void fillPath(int j, int i, int[][]map){
 
         //sätter start direction till EAST för att enemies antagligen aldrig börjar åka åt vänster så while-loopen fungerar
-        BaseEnemy.Direction prevDir = BaseEnemy.Direction.EAST;
+        Direction prevDir = Direction.EAST;
         while(i<BOARD_WIDTH-1){
                 //checks to the right
-                if((map[j][i+1]==1) && prevDir!= BaseEnemy.Direction.WEST){
-                    enemyPath.add(BaseEnemy.Direction.EAST);
-                    prevDir= BaseEnemy.Direction.EAST;
+                if((map[j][i+1]==1) && prevDir!= Direction.WEST){
+                    enemyPath.add(Direction.EAST);
+                    prevDir= Direction.EAST;
                     i++;
                 }
                 //checks below
-                else if((map[j+1][i]==1) && prevDir!= BaseEnemy.Direction.NORTH){
-                    enemyPath.add(BaseEnemy.Direction.SOUTH);
-                    prevDir= BaseEnemy.Direction.SOUTH;
+                else if((map[j+1][i]==1) && prevDir!= Direction.NORTH){
+                    enemyPath.add(Direction.SOUTH);
+                    prevDir= Direction.SOUTH;
                     j++;
                 }
                 //checks above
-                else if((map[j-1][i]==1) && prevDir!= BaseEnemy.Direction.SOUTH){
-                    enemyPath.add(BaseEnemy.Direction.NORTH);
-                    prevDir= BaseEnemy.Direction.NORTH;
+                else if((map[j-1][i]==1) && prevDir!= Direction.SOUTH){
+                    enemyPath.add(Direction.NORTH);
+                    prevDir= Direction.NORTH;
                     j--;
                 }
                 //checks left
-                else if((map[j][i-1]==1) && prevDir!= BaseEnemy.Direction.EAST){
-                    enemyPath.add(BaseEnemy.Direction.WEST);
-                    prevDir= BaseEnemy.Direction.WEST;
+                else if((map[j][i-1]==1) && prevDir!= Direction.EAST){
+                    enemyPath.add(Direction.WEST);
+                    prevDir= Direction.WEST;
                     i--;
                 }
             }
