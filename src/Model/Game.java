@@ -46,12 +46,8 @@ public class Game  {
         waveManager = new WaveManager(difficulty, enemyPath,b.getStartPos());
         setValues();
         towers = new ArrayList<>();
-
         projectileList = new ArrayList<>();
-
         this.gameSpeed = 30;
-
-
     }
 
     public List<Enemy> getEnemiesInWave() {
