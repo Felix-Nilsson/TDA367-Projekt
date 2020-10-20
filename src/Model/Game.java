@@ -97,7 +97,11 @@ public class Game  {
             waveManager.createWave(round);
             while (waveRunning && enemyCounter>=0) {
                 Enemy enemy = waveManager.getEnemy(enemyCounter);
-                enemiesInWave.add(enemy);
+
+                synchronized (enemiesInWave){
+                    enemiesInWave.add(enemy);
+                }
+                //enemiesInWave.add(enemy);
                 threadSleep(enemy.spawnTime() * 100);
                 enemyCounter--;
             }
@@ -140,28 +144,30 @@ public class Game  {
     }
 
 
-    private synchronized void update(){
-        checkIfGameOver();
+    private void update(){
 
-        if(enemiesInWave != null){
-            Iterator<Enemy> enemyIterator = enemiesInWave.listIterator();
-            while (enemyIterator.hasNext()){
-                Enemy e = enemyIterator.next();
-                if(e.isKilled()){
-                    money = money + 20;
-                    enemyIsDead(e);
-                    break;
-                }
-                else if(e.isOut()){
-                    health--;
-                    enemyIsDead(e);
-                    break;
-                }
-                else{
-                    e.move();
+        synchronized (enemiesInWave){
+            if(enemiesInWave != null){
+                Iterator<Enemy> enemyIterator = enemiesInWave.listIterator();
+                while (enemyIterator.hasNext()){
+                    Enemy e = enemyIterator.next();
+                    if(e.isKilled()){
+                        money = money + 20;
+                        enemyIsDead(e);
+                        break;
+                    }
+                    else if(e.isOut()){
+                        health--;
+                        enemyIsDead(e);
+                        break;
+                    }
+                    else{
+                        e.move();
+                    }
                 }
             }
         }
+
         if(projectileList !=null){
             Iterator<Projectile> projectileIterator = projectileList.listIterator();
             while(projectileIterator.hasNext()){
@@ -172,6 +178,7 @@ public class Game  {
         checkTowerRadius();
         checkIfProjectilesHit();
         observable.update(); //notifies view to update graphics
+        checkIfGameOver();
     }
     private synchronized void checkTowerRadius(){
 
@@ -218,8 +225,8 @@ public class Game  {
         if(health <= 0){
             gameOver();
         }
-        //if its the last wave and there are no more enemies
-        else if(round == totalNumberOfRounds && enemiesInWave.size() == 0){
+        //if its the last wave and there are no more enemies and enemies arent being created
+        else if(round == totalNumberOfRounds && enemiesInWave.size() == 0 && !enemyCreatorThread.isAlive()){
             gameWon();
         }
     }
@@ -233,6 +240,8 @@ public class Game  {
     private void gameWon(){
         stopAllTowerTimers();
         observable.notifyGameWon();
+        stopGameLoopThread();
+        stopEnemyCreatorThread();
     }
 
     private void stopEnemyCreatorThread(){
@@ -268,6 +277,7 @@ public class Game  {
 
     public void endRound(){
         observable.notifyRoundOver();
+
 
         if(autostart){
             money = money +round*100;

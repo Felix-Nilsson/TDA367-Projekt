@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class MapHandler implements MapObserver {
@@ -152,6 +153,7 @@ public class MapHandler implements MapObserver {
 
     @Override
     public void notifyRoundOver() {
+
         enemyHashMap = new HashMap<>();
     }
 
@@ -172,9 +174,11 @@ public class MapHandler implements MapObserver {
     }
 
     @Override
-    public void update() {
+    public synchronized void update() {
         if(game.getEnemiesInWave() != null){
-            for(Enemy e : game.getEnemiesInWave()){
+            Iterator<Enemy> enemyIterator = game.getEnemiesInWave().listIterator();
+            while(enemyIterator.hasNext()){
+                Enemy e = enemyIterator.next();
                 if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
 
                     ImageView img = new ImageView(e.getImage());
