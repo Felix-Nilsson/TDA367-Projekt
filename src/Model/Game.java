@@ -159,7 +159,7 @@ public class Game  {
                         break;
                     }
                     else{
-                        e.move();
+                        e.update();
                     }
                 }
             }
