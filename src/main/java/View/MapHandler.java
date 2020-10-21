@@ -208,34 +208,34 @@ public class MapHandler implements MapObserver {
     @Override
     public synchronized void update() {
         if(game.getEnemiesInWave() != null){
-            Iterator<Enemy> enemyIterator = game.getEnemiesInWave().listIterator();
-            while(enemyIterator.hasNext()){
-                Enemy e = enemyIterator.next();
-                if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
+            synchronized (game.getEnemiesInWave()){
+                for (Enemy e : game.getEnemiesInWave()) {
+                    if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
 
-                    ImageView img = new ImageView(e.getImage());
-                    fixImage(img, e);
-                    enemyHashMap.put(e, img);
-                    Platform.runLater(()->gameBoardAnchorPane.getChildren().add(img));
-                    Platform.runLater(()->cave.toFront()); //sets the cave to be in front of the enemies
-                    Platform.runLater(()->base.toFront());
+                        ImageView img = new ImageView(e.getImage());
+                        fixImage(img, e);
+                        enemyHashMap.put(e, img);
+                        Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(img));
+                        Platform.runLater(() -> cave.toFront()); //sets the cave to be in front of the enemies
+                        Platform.runLater(() -> base.toFront());
 
-                    ProgressBar pb = new ProgressBar((double) (e.getHealth()) / e.getMaxHealth());
-                    pb.setLayoutX(e.getPositionX());
-                    pb.setLayoutY(e.getPositionY());
+                        ProgressBar pb = new ProgressBar((double) (e.getHealth()) / e.getMaxHealth());
+                        pb.setLayoutX(e.getPositionX());
+                        pb.setLayoutY(e.getPositionY());
 
-                    pb.setMaxWidth(45);
-                    pb.setMaxHeight(10);
-                    pb.styleProperty().set("-fx-accent: red");
+                        pb.setMaxWidth(45);
+                        pb.setMaxHeight(10);
+                        pb.styleProperty().set("-fx-accent: red");
 
-                    Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(pb));
-                    progressBarHashMap.put(e, pb);
+                        Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(pb));
+                        progressBarHashMap.put(e, pb);
 
-
+                    }
+                    updateEnemy(e);
+                    updateProgressBar(e);
                 }
-                updateEnemy(e);
-                updateProgressBar(e);
             }
+
         }
 
     }

@@ -149,12 +149,16 @@ public class Game  {
                     Enemy e = enemyIterator.next();
                     if(e.isKilled()){
                         money = money + 20;
-                        enemyIsDead(e);
+                        //enemyIsDead(e);
+                        enemyIterator.remove();
+                        observable.notifyEnemyDead(e);
                         break;
                     }
                     else if(e.isOut()){
                         health--;
-                        enemyIsDead(e);
+                        //enemyIsDead(e);
+                        enemyIterator.remove();
+                        observable.notifyEnemyDead(e);
                         break;
                     }
                     else{
@@ -182,20 +186,24 @@ public class Game  {
      * if ready then attack and create a projectile
      * add the projectile to List:ProjectileList and observable
      */
-    private synchronized void checkTowerRadius(){
-        if(enemiesInWave != null && towers != null){
-            Iterator<Tower> towerIterator = towers.listIterator();
-            while (towerIterator.hasNext()){
-                Tower tower = towerIterator.next();
-                if(tower.getIsReadyToFire()){
-                    tower.attackIfEnemyInRange(enemiesInWave);
-                    Projectile p = tower.getProjectile();
-                    if (p!=null){
-                        projectileList.add(p);
-                        observable.notifyProjectileAdded(p);
+    private void checkTowerRadius(){
+        synchronized (enemiesInWave){
+            if(enemiesInWave != null && towers != null){
+                synchronized(towers){
+                    for (Tower tower : towers) {
+                        if (tower.getIsReadyToFire()) {
+                            tower.attackIfEnemyInRange(enemiesInWave);
+                            Projectile p = tower.getProjectile();
+                            if (p != null) {
+                                projectileList.add(p);
+                                observable.notifyProjectileAdded(p);
+                            }
+                        }
                     }
                 }
-            }
+
+        }
+
         }
     }
 
@@ -208,8 +216,9 @@ public class Game  {
             while (iterator.hasNext()) {
                 Projectile p = iterator.next();
                 if (!p.isExisting()) {
-                    removeProjectile(p);
-                    //iterator.remove();
+                    //removeProjectile(p);
+                    iterator.remove();
+                    observable.notifyProjectileRemoved(p);
                     break;
                 }
             }
