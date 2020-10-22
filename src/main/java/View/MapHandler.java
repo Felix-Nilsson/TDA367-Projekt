@@ -1,8 +1,5 @@
 package main.java.View;
 
-import main.java.Model.Cell.Cell;
-import main.java.Model.Enemy.Enemy;
-import main.java.Model.Game;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -13,9 +10,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import main.java.Model.Cell.Cell;
+import main.java.Model.Enemy.Enemy;
+import main.java.Model.Game;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class MapHandler implements MapObserver {
@@ -38,7 +37,6 @@ public class MapHandler implements MapObserver {
 
     private Rectangle selectedTower;
 
-    //TODO: Add a reference to game to get info from, rather than map
 
     //TODO: Add a blurb justifying design choices
 
@@ -206,37 +204,42 @@ public class MapHandler implements MapObserver {
         gameBoardGrid.getChildren().add(selectedTower);
     }
     @Override
-    public synchronized void update() {
-        if(game.getEnemiesInWave() != null){
-            synchronized (game.getEnemiesInWave()){
-                for (Enemy e : game.getEnemiesInWave()) {
-                    if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
+    public  void update() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(game.getEnemiesInWave()!=null) {
+                    synchronized (game.getEnemiesInWave()) {
+                        for (Enemy e : game.getEnemiesInWave()) {
+                            if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
 
-                        ImageView img = new ImageView(e.getImage());
-                        fixImage(img, e);
-                        enemyHashMap.put(e, img);
-                        Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(img));
-                        Platform.runLater(() -> cave.toFront()); //sets the cave to be in front of the enemies
-                        Platform.runLater(() -> base.toFront());
+                                ImageView img = new ImageView(e.getImage());
+                                fixImage(img, e);
+                                enemyHashMap.put(e, img);
+                                Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(img));
+                                Platform.runLater(() -> cave.toFront()); //sets the cave to be in front of the enemies
+                                Platform.runLater(() -> base.toFront());
 
-                        ProgressBar pb = new ProgressBar((double) (e.getHealth()) / e.getMaxHealth());
-                        pb.setLayoutX(e.getPositionX());
-                        pb.setLayoutY(e.getPositionY());
+                                ProgressBar pb = new ProgressBar((double) (e.getHealth()) / e.getMaxHealth());
+                                pb.setLayoutX(e.getPositionX());
+                                pb.setLayoutY(e.getPositionY());
 
-                        pb.setMaxWidth(45);
-                        pb.setMaxHeight(10);
-                        pb.styleProperty().set("-fx-accent: red");
+                                pb.setMaxWidth(45);
+                                pb.setMaxHeight(10);
+                                pb.styleProperty().set("-fx-accent: red");
 
-                        Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(pb));
-                        progressBarHashMap.put(e, pb);
+                                Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(pb));
+                                progressBarHashMap.put(e, pb);
 
+                            }
+                            updateEnemy(e);
+                            updateProgressBar(e);
+                        }
                     }
-                    updateEnemy(e);
-                    updateProgressBar(e);
+
                 }
             }
-
-        }
+        });
 
     }
 

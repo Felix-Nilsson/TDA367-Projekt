@@ -140,7 +140,7 @@ public class BaseTower implements Tower {
     }
 
 
-    public synchronized void attackIfEnemyInRange(List<Enemy> enemyList) {
+    public void attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
             enemyPosX = e.getPositionX();
             enemyPosY = e.getPositionY();
@@ -149,13 +149,9 @@ public class BaseTower implements Tower {
             //i Projectile skapa finns det minus framför vy för att återställa detta igen
             double distY = -(enemyPosY-posY);
             double distHyp = Math.sqrt(distX*distX + distY*distY);
-            System.out.println("distHyp: "+ distHyp);
-            System.out.println("range: " + this.range);
             if (distHyp<this.range) {
                 this.angle = Math.atan2(distY, distX);
                 attack();
-                System.out.println("ATTACK");
-
                 if(physicalDmg>0){
                     e.tookDamage(physicalDmg, DamageType.PHYSICAL);
                 }
@@ -184,9 +180,7 @@ public class BaseTower implements Tower {
 
 
     public Projectile getProjectile(){
-        Projectile tmp = currentProjectile;
-        currentProjectile=null;
-        return tmp;
+        return currentProjectile;
     }
 
 

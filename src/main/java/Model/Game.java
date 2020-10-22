@@ -35,7 +35,7 @@ public class Game  {
     private Thread enemyCreatorThread;
 
     private List<Enemy> enemiesInWave;
-    private List<Tower> towers;
+    private final List<Tower> towers;
     private List <Projectile> projectileList;
 
 
@@ -83,18 +83,24 @@ public class Game  {
      * after a delay
      */
     private void startEnemyCreatorThread(){
-        enemyCreatorThread = new Thread(()->{
-            waveManager.createWave(round);
-            while (waveRunning && enemyCounter>=0) {
-                Enemy enemy = waveManager.getEnemy(enemyCounter);
-                enemiesInWave.add(enemy);
-                threadSleep(enemy.spawnTime() * 100);
-                enemyCounter--;
-            }
 
-        });
-        enemyCreatorThread.setDaemon(true);
-        enemyCreatorThread.start();
+            enemyCreatorThread = new Thread(()->{
+                waveManager.createWave(round);
+                while (waveRunning && enemyCounter>=0) {
+
+                        Enemy enemy = waveManager.getEnemy(enemyCounter);
+                        synchronized (enemiesInWave) {
+                        enemiesInWave.add(enemy);
+                        }
+                        threadSleep(enemy.spawnTime() * 100);
+                        enemyCounter--;
+
+                }
+
+            });
+            enemyCreatorThread.setDaemon(true);
+            enemyCreatorThread.start();
+
     }
 
     /**
@@ -141,7 +147,7 @@ public class Game  {
      * checks tower radius, if projectiles hit and if game is over
      * Updates main.java.View
      */
-    private void update(){
+    private synchronized void update(){
         synchronized (enemiesInWave){
             if(enemiesInWave != null){
                 Iterator<Enemy> enemyIterator = enemiesInWave.listIterator();
@@ -187,22 +193,25 @@ public class Game  {
      * add the projectile to List:ProjectileList and observable
      */
     private void checkTowerRadius(){
-        synchronized (enemiesInWave){
             if(enemiesInWave != null && towers != null){
-                synchronized(towers){
+                synchronized (towers){
                     for (Tower tower : towers) {
                         if (tower.getIsReadyToFire()) {
-                            tower.attackIfEnemyInRange(enemiesInWave);
+                            synchronized (enemiesInWave){
+                                tower.attackIfEnemyInRange(enemiesInWave);
+                            }
                             Projectile p = tower.getProjectile();
-                            if (p != null) {
-                                projectileList.add(p);
+
+                            if (!projectileList.contains(p) && p!= null) {
+                                synchronized (projectileList){
+                                    projectileList.add(p);
+                                }
                                 observable.notifyProjectileAdded(p);
                             }
                         }
                     }
                 }
 
-        }
 
         }
     }
@@ -210,7 +219,7 @@ public class Game  {
     /**
      * loops through a list as an iterator and checks if they are to be removed
      */
-    private synchronized void checkIfProjectilesHit() {
+    private void checkIfProjectilesHit() {
         if (projectileList != null) {
             Iterator<Projectile> iterator = projectileList.listIterator();
             while (iterator.hasNext()) {
@@ -229,7 +238,7 @@ public class Game  {
      * removes enemy e from observable and List:enemiesInWave
      * @param e Enemy to be removed
      */
-    private synchronized void enemyIsDead(Enemy e){
+    private void enemyIsDead(Enemy e){
         observable.notifyEnemyDead(e);
         if(!enemiesInWave.remove(e)){
             System.out.println("error in removing enemy");
@@ -443,7 +452,10 @@ public class Game  {
     public void createTower(int index, TowerFactory towerFactory) {
         setCellOccupied(index);
         Tower t = towerFactory.createTower(getBoard().get(index));
-        towers.add(t);
+        synchronized (towers){
+            towers.add(t);
+        }
+
     }
 
     /**
@@ -474,8 +486,10 @@ public class Game  {
      */
     public void removeTower(Tower t){
         t.stopTimer();
-        if(!towers.remove(t)){
-            System.out.println("tower not found ");
+        synchronized (towers){
+            if(!towers.remove(t)){
+                System.out.println("tower not found ");
+            }
         }
     }
     /**

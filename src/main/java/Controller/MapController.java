@@ -170,7 +170,10 @@ public class MapController extends AnchorPane {
                         setTowerOnCell(index);
 
                         //After the tower has been added, add to hashmap
-                        towerHashMap.put(game.getTower(x_placement, y_placement), image);
+                        synchronized (towerHashMap){
+                            towerHashMap.put(game.getTower(x_placement, y_placement), image);
+                        }
+
 
                         //Creates a new toolbar with the tower
                         createToolbar(game.getTower(x_placement, y_placement));
@@ -260,7 +263,9 @@ public class MapController extends AnchorPane {
     }
 
     public void removeToolFromHash(Tower t) {
-        toolbarTowerHashMap.remove(t);
+        synchronized (toolbarTowerHashMap){
+            toolbarTowerHashMap.remove(t);
+        }
     }
 
     public void createSidebar() {
@@ -341,7 +346,10 @@ public class MapController extends AnchorPane {
     public void removeImageFromGrid(Tower t){
         ImageView image = towerHashMap.get(t);
         mapHandler.removeImageFromGrid(image);
-        towerHashMap.remove(t);
+        synchronized (towerHashMap){
+            towerHashMap.remove(t);
+        }
+
     }
 
     public void updateSidebar(){
