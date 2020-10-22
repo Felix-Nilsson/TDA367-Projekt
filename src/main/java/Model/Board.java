@@ -2,6 +2,9 @@ package main.java.Model;
 
 
 import main.java.Model.Cell.*;
+import main.java.Model.Level.CurvySnakeFactory;
+import main.java.Model.Level.Level;
+import main.java.Model.Level.LevelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,28 +23,8 @@ public class Board {
         //restrictions:
         // 8 is always the start position,
         // on the last column there can only be one "1" which is the end position
-    private final int[][] map_1= {
-            {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,3,0},
-            {8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,1,0,0,0},
-            {0,0,0,3,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,3,0,1,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,1,0,0,0},
-            {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
-            {0,0,1,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0},
-            {0,0,1,0,0,0,0,3,0,0,0,0,0,2,2,3,2,0,0,0,0,0,0,0,0,0},
-            {0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0},
-            {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
-            {0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,2,2,2,2,2,2,2,1,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,1,2,2},
-            {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2},
-            {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
-            {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0},
-
-    };
-
+    private LevelFactory levelFactory;
+    private Level level;
 
 
     public Board(int mapNumber){
@@ -68,8 +51,12 @@ public class Board {
     private void createBoard(){
         switch (mapNumber){
             case 1:
-                createMapGrid(map_1);
-                currentMap = map_1;
+                levelFactory = new CurvySnakeFactory();
+                level = levelFactory.createLevel();
+
+                createMapGrid(level.getLayout());
+                currentMap = level.getLayout();
+
             case 2: /*create another map */;
         }
     }

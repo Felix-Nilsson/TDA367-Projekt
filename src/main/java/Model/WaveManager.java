@@ -12,10 +12,6 @@ public class WaveManager  {
     private final int startPos;
     private EnemyFactory enemyFactory;
     private List<Enemy> wave;
-    private enum enemies{
-        ENEMY_BLUE,
-        ENEMY_RED
-    }
 
     public WaveManager(Difficulty difficulty, List<Direction> enemyPath, int startPos) {
         this.difficulty = difficulty;
@@ -42,8 +38,8 @@ public class WaveManager  {
      */
     public void createWave(int round) {
         wave = new ArrayList<>();
-        enemyCreator((2+round)*difficultyModifier, enemies.ENEMY_BLUE);
-        enemyCreator((2+round)*difficultyModifier,enemies.ENEMY_RED);
+        enemyCreator((2+round)*difficultyModifier, new EnemyFactoryBlue(enemyPath,startPos));
+        enemyCreator((2+round)*difficultyModifier, new EnemyFactoryRed(enemyPath,startPos));
     }
 
     public Enemy getEnemy(int counter){
@@ -56,36 +52,28 @@ public class WaveManager  {
         return wave.size()-1;
     }
 
-    private void enemyCreator(int amount, enemies enemy) {
+    private void enemyCreator(int amount, EnemyFactory ef) {
 
         switch (difficulty) {
             case EASY:
                 for (int i = 0; i < amount; i++) {
-                    Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyEasy();
+                    Enemy tmpEnemy = ef.createEnemyEasy();
                     wave.add(tmpEnemy);
                 }
                 break;
             case MEDIUM:
                 for (int i = 0; i < amount + 2; i++) {
-                    Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyMedium();
+                    Enemy tmpEnemy = ef.createEnemyMedium();
                     wave.add(tmpEnemy);
                 }
                break;
             case HARD:
                 for (int i = 0; i < amount + 5; i++) {
-                    Enemy tmpEnemy = getEnemyFactory(enemy).createEnemyHard();
+                    Enemy tmpEnemy = ef.createEnemyHard();
                     wave.add(tmpEnemy);
                 }
                 break;
         }
-    }
-    private EnemyFactory getEnemyFactory(enemies enemy){
-
-        switch(enemy){
-            case ENEMY_BLUE : return new EnemyFactoryBlue(enemyPath,startPos);
-            case ENEMY_RED : return  new EnemyFactoryRed(enemyPath,startPos);
-        }
-        return null;
     }
 
 }
