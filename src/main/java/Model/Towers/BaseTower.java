@@ -24,9 +24,6 @@ public class BaseTower implements Tower {
     private int posY;
     private int leftUpgradeCost;
     private int rightUpgradeCost;
-    private String towerImage;
-    private String leftUpgradeLabel;
-    private String rightUpgradeLabel;
 
     private Projectile currentProjectile;
     private int enemyPosX;
@@ -37,8 +34,8 @@ public class BaseTower implements Tower {
     private Timer timer;
     private boolean timerIsRunning;
 
-
-
+    //todo remove pls very not good yes
+    private String towerImage;
 
     private Targeting target;
 
@@ -128,12 +125,6 @@ public class BaseTower implements Tower {
     public void setAngle(double angle) {
         this.angle=angle;
     }
-
-    public void setTowerImage(String img){
-        this.towerImage = img;
-    }
-
-
 
     public void update() {
 
@@ -296,5 +287,10 @@ public class BaseTower implements Tower {
 
     public void setColor(String s){
         this.position.setColor(s);
+    }
+
+    //todo: badbadbadbad remove pls
+    public void setTowerImage(String img){
+        this.towerImage = img;
     }
 }
