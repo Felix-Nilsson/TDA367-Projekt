@@ -1,19 +1,23 @@
 
 package main.java.Model;
 
+import main.java.Model.Cell.Cell;
 import main.java.Model.Cell.GroundCell;
 import main.java.Model.Difficulty;
 import main.java.Model.Game;
-import main.java.Model.Towers.MageTower;
-import main.java.Model.Towers.MageTowerFactory;
-import main.java.Model.Towers.Tower;
+import main.java.Model.Towers.*;
 import main.java.Model.Towers.Upgrade.MageTowerRightUpgrade;
 import org.junit.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class GameTest {
+    /**
+     * Test suite for Game
+     * @author Felix Nilsson
+     * @author Hannes Svahn
+     */
 
     @Test
     public void getNameOfMap() {
@@ -44,7 +48,41 @@ public class GameTest {
 
     @Test
     public void removeTower(){
+
         Game game = new Game(Difficulty.EASY, 1);
+        game.createTower(0,new ArcherTowerFactory());
+
+        Tower t = game.getTower(0,0);
+
+        //Supposed to work
+        boolean success = true;
+        try {
+            game.removeTower(t);
+        }
+        catch (NullPointerException e){
+            success = false;
+            assertFalse(true);
+        }
+        if(success){
+            assertTrue(true);
+        }
+
+        TowerFactory tf = new ArcherTowerFactory();
+        t = tf.createTower(new GroundCell(0,0,false));
+
+        //Supposed to not work
+        success = false;
+        try {
+            game.removeTower(t);
+        }
+        catch (NullPointerException e){
+            success = true;
+            assertTrue(true);
+        }
+        if(success){
+            assertFalse(true);
+        }
+
     }
 }
 

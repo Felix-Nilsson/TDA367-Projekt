@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectileTest {
+    /**
+     * Test suite for Projectile
+     * @author Felix Nilsson
+     * @author Simon Larsson
+     */
 
     @Test
     void getTargetPosX() {
