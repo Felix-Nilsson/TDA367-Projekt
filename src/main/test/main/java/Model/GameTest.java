@@ -1,42 +1,50 @@
-package main.test.main.java.Model;
+
+package main.java.Model;
 
 import main.java.Model.Cell.GroundCell;
 import main.java.Model.Difficulty;
 import main.java.Model.Game;
 import main.java.Model.Towers.MageTower;
 import main.java.Model.Towers.MageTowerFactory;
+import main.java.Model.Towers.Tower;
 import main.java.Model.Towers.Upgrade.MageTowerRightUpgrade;
-import org.testng.annotations.Test;
+import org.junit.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class GameTest {
 
     @Test
-    void getNameOfMap() {
+    public void getNameOfMap() {
         Game game = new Game(Difficulty.EASY, 1);
         assertEquals("Curvy Snake" ,game.getNameOfMap());
     }
 
     @Test
-    void getDifficulty(){
+    public void getDifficulty(){
         Game game = new Game(Difficulty.EASY, 1);
         assertEquals(Difficulty.EASY, game.getDifficulty());
     }
 
     @Test
-    void rightUpgradeTower(){
+    public void rightUpgradeTower(){
         Game game = new Game(Difficulty.EASY, 1);
         MageTowerFactory mtf = new MageTowerFactory();
         GroundCell cell = new GroundCell(1,1,false);
         MageTower t = mtf.createTower(cell);
-        MageTowerRightUpgrade mtru = new MageTowerRightUpgrade(t);
-        assertEquals(mtru, game.rightUpgradeTower(t));
+
+        double tAttackSpeedOld = t.getAttackSpeed(); //AS before upgrade
+
+        MageTowerRightUpgrade mtru = new MageTowerRightUpgrade(t); // AS after upgrade
+        Tower tower = mtru.rightUpgrade();
+
+        assertEquals(tAttackSpeedOld+1.0,tower.getAttackSpeed());
     }
 
     @Test
-    void removeTower(){
+    public void removeTower(){
         Game game = new Game(Difficulty.EASY, 1);
     }
 }
+

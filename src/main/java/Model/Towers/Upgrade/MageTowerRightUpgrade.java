@@ -8,7 +8,7 @@ public class MageTowerRightUpgrade extends TowerUpgrade{
     }
 
     public Tower rightUpgrade(){
-        tower.setAttackSpeed(tower.getAttackSpeed()+1);
+        tower.setAttackSpeed(tower.getAttackSpeed()+1.0);
         return super.rightUpgrade(tower);
     }
 
