@@ -27,10 +27,28 @@
             <artifactId>javafx-media</artifactId>
             <version>12.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test/main.java.Model</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test/main.java.Model</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/java/</sourceDirectory>
+        <sourceDirectory>src/</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
