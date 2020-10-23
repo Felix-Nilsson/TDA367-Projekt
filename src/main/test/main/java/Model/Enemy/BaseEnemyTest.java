@@ -1,4 +1,4 @@
-/*
+
 package main.java.Model.Enemy;
 
 import main.java.Model.DamageType;
@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+
 class BaseEnemyTest {
     /**
      * Test suite for BaseEnemy
      * @author Felix Nilsson
      */
-/*
+
     @Test
     void move() {
         List<Direction> path = new ArrayList();
@@ -146,4 +146,4 @@ class BaseEnemyTest {
     }
 }
 
- */
+

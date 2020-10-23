@@ -1,19 +1,16 @@
-/*
+
 package main.java.Model;
 
-import main.java.Model.Cell.Cell;
-import main.java.Model.Level.CurvySnakeFactory;
-import main.java.Model.Level.Level;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoardTest {
     /**
      * Testing suite for Board
      * @author Felix Nilsson
      */
-/*
+
     @Test
     void getStartPos() {
         Board b = new Board(1);
@@ -64,4 +61,4 @@ class BoardTest {
     }
 }
 
- */
+

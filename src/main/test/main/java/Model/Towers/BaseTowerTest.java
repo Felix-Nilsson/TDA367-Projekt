@@ -1,15 +1,12 @@
-/*
+
 package main.java.Model.Towers;
 
 
 import main.java.Model.Cell.GroundCell;
-import main.java.Model.Towers.BaseTower;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
- */
-/*
+
 class BaseTowerTest {
 
     @Test
@@ -154,5 +151,5 @@ class BaseTowerTest {
     }
 }
 
- */
+
 
