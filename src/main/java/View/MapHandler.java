@@ -99,7 +99,7 @@ public class MapHandler implements MapObserver {
             tile.setY(p.getY());
 
             switch (p.getTerrainType()){
-                case PATH -> tile.setFill(Paint.valueOf("b8824b")); //brown
+                case PATH -> tile.setFill(Paint.valueOf("78410a")); //brown
                 case WATER -> tile.setFill(Paint.valueOf("0f79ba")); //blue
                 case GROUND -> tile.setFill(Paint.valueOf("489a49")); //green
                 case OBSTACLE -> tile.setFill(Paint.valueOf("696969")); //grey
