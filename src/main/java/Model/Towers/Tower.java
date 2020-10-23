@@ -12,6 +12,10 @@ import java.util.List;
 public interface Tower {
     boolean attackIfEnemyInRange(List<Enemy> enemyList);
 
+    int getId();
+    int getLeftUpgradeId();
+    int getRightUpgradeId();
+
     int getPrice();
     int getLeftUpgradeCost();
     int getRightUpgradeCost();
@@ -34,13 +38,6 @@ public interface Tower {
     void setPhysicalDmg(int amount);
     void setAttackSpeed(double amount);
 
-    /**
-     * These should not be here since images are not part of the model
-     * @return image of current tower
-     */
-    String getLeftUpgradeImage();
-    String getRightUpgradeImage();
-
     Targeting getTarget();
     void setTarget(Targeting target);
     Cell getPosition();
@@ -48,5 +45,7 @@ public interface Tower {
 
     Tower leftUpgrade(Tower t);
     Tower rightUpgrade(Tower t);
+
+
 
 }
