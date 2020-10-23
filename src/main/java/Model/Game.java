@@ -36,7 +36,7 @@ public class Game  {
 
     private List<Enemy> enemiesInWave;
     private final List<Tower> towers;
-    private List <Projectile> projectileList;
+    private final List <Projectile> projectileList;
 
 
     public Game(Difficulty difficulty, int mapNumber) {
@@ -222,20 +222,6 @@ public class Game  {
         }
     }
 
-
-
-
-    /**
-     * removes enemy e from observable and List:enemiesInWave
-     * @param e Enemy to be removed
-     */
-    private void enemyIsDead(Enemy e){
-        observable.notifyEnemyDead(e);
-        if(!enemiesInWave.remove(e)){
-            System.out.println("error in removing enemy");
-        }
-    }
-
     /**
      * checks if game is over or game is won
      */
@@ -387,6 +373,9 @@ public class Game  {
                 this.totalNumberOfRounds = 15;
                 break;
         }
+        /**
+         * the names of these maps are currently hardcoded, but they should depend on the actual Level
+         */
         switch(mapNumber){
             case 1:
                 this.nameOfMap = "Curvy Snake";
@@ -411,10 +400,9 @@ public class Game  {
     /**
      *  adds a  projectileObserver to the list of observers in Observerable
      * @param projectileObserver a class that implements ProjectileObserver
-     * @return if the projectileObserver is already observing
      */
-    public boolean addProjectileObserver(ProjectileObserver projectileObserver) {
-        return this.observable.addObserver(projectileObserver);
+    public void addProjectileObserver(ProjectileObserver projectileObserver) {
+        this.observable.addObserver(projectileObserver);
     }
 
 
@@ -426,7 +414,7 @@ public class Game  {
      */
     public Tower getTower(int x, int y) {
         for (Tower t : towers) {
-            if (t.getX() == x && t.getY() == y) {
+            if (t.getCellIndexX() == x && t.getCellIndexY() == y) {
                 return t;
             }
         }

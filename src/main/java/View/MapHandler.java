@@ -212,8 +212,8 @@ public class MapHandler implements MapObserver {
                     synchronized (game.getEnemiesInWave()) {
                         for (Enemy e : game.getEnemiesInWave()) {
                             if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
-
-                                ImageView img = new ImageView(e.getImage());
+                                EnemyView enemyImage= new EnemyView(e);
+                                ImageView img = new ImageView(enemyImage.getImage());
                                 fixImage(img, e);
                                 enemyHashMap.put(e, img);
                                 Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(img));
