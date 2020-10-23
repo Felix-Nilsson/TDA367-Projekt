@@ -22,10 +22,5 @@ public interface Enemy  {
     int getMaxHealth();
 
 
-    /**
-     *should be in VIEW not MODEL
-     * @return image
-     */
-    Image getImage();
 
 }

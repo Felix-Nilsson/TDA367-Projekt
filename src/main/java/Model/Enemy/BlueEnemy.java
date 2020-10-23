@@ -12,7 +12,6 @@ import java.util.List;
 public class BlueEnemy implements Enemy {
 
     private final BaseEnemy parent;
-    //TODO Finns bara här för att testa. Denna ska bort senare eftersom main.java.View-delar inte ska finnas i main.java.Model.
 
 
     public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
@@ -24,7 +23,6 @@ public class BlueEnemy implements Enemy {
      */
     @Override
     public void update(){
-        //TODO ska eventuellt vara individuell för varje enemy
         parent.update();
     }
     @Override

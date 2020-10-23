@@ -23,7 +23,6 @@ public class RedEnemy implements Enemy {
      */
     @Override
     public void update(){
-        //TODO ska eventuellt vara individuell för varje enemy
         parent.update();
     }
 
