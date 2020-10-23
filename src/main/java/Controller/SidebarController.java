@@ -73,6 +73,8 @@ public class SidebarController extends AnchorPane  {
             updateAvailable();
             sidebarHandler.updatePlayerStats();
         });
+
+
         archerTower.setOnDragDetected(mouseEvent -> {
             Dragboard db = startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();

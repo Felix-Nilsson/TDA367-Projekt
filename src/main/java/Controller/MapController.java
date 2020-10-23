@@ -156,7 +156,11 @@ public class MapController extends AnchorPane {
                     }
 
                     //Creates a new toolbar with the tower
-                    createToolbar(game.getTower(x_placement, y_placement), db.getString());
+                    try {
+                        createToolbar(game.getTower(x_placement, y_placement), db.getString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     //Change money
                     game.addMoney(-towerFactory.getPrice());
@@ -248,7 +252,7 @@ public class MapController extends AnchorPane {
         return rIndex == null ? 0 : rIndex;
     }
 
-    private <T extends Tower> void createToolbar(T t, String imageUrl) {
+    private <T extends Tower> void createToolbar(T t, String imageUrl) throws Exception {
         ToolbarController<?> toolbarController = new ToolbarController<>(game, this, t, imageUrl);
         toolbarTowerHashMap.put(t, toolbarController);
     }

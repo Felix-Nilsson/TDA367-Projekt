@@ -25,7 +25,7 @@ public class MapHandler implements MapObserver {
     private final Pane gameWonScreen;
     private final Pane gameOverScreen;
     private HashMap<Enemy, ImageView> enemyHashMap;
-    private Label waveNumber;
+    private final Label waveNumber;
     private RadioButton gridLayout;
 
     private final List<Cell> map;
@@ -216,10 +216,16 @@ public class MapHandler implements MapObserver {
                         for (Enemy e : game.getEnemiesInWave()) {
                             if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
                                 EnemyView enemyImage= new EnemyView(e);
-                                ImageView img = new ImageView(enemyImage.getImage());
+                                ImageView img = null;
+                                try {
+                                    img = new ImageView(enemyImage.getImage());
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
                                 fixImage(img, e);
                                 enemyHashMap.put(e, img);
-                                Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(img));
+                                ImageView finalImg = img;
+                                Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(finalImg));
                                 Platform.runLater(() -> cave.toFront()); //sets the cave to be in front of the enemies
                                 Platform.runLater(() -> base.toFront());
 

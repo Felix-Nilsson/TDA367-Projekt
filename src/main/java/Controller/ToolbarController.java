@@ -2,7 +2,6 @@ package main.java.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -49,7 +48,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     private final ToolbarHandler toolbarHandler;
     private final Image towerImage; //Stays here for future development (Upgrading tower images)
 
-    public ToolbarController(Game game, MapController parentController, T t, String towerImage){
+    public ToolbarController(Game game, MapController parentController, T t, String towerImage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Toolbar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -64,7 +63,8 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         this.towerImage = new Image(towerImage);
         targetingToggleGroup = new ToggleGroup();
         toolbarHandler = new ToolbarHandler(game, tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,
-                leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView, leftUpgradeButton, rightUpgradeButton, this.towerImage);
+                leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView, leftUpgradeButton, rightUpgradeButton,
+                this.towerImage, lUImageView, rUImageView);
 
         init();
         eventHandlers();
@@ -79,22 +79,16 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     }
 
     
-    private void init(){
+    private void init() throws Exception {
         strongestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setToggleGroup(targetingToggleGroup);
         closestRadioButton.setToggleGroup(targetingToggleGroup);
         firstRadioButton.setSelected(true);
 
-        lUImageView.setImage(new Image(tower.getLeftUpgradeImage()));
-        leftUpgradeCostLabel.setText(tower.getLeftUpgradeLabel() + ": " +tower.getLeftUpgradeCost()+"$");
-        leftUpgradeCostLabel.setAlignment(Pos.CENTER);
-        rUImageView.setImage(new Image(tower.getRightUpgradeImage()));
-        rightUpgradeCostLabel.setText(tower.getRightUpgradeLabel() + ": " + tower.getRightUpgradeCost()+"$");
-        rightUpgradeCostLabel.setAlignment(Pos.CENTER);
-        //towerImageView.setImage(tower.getImage());
-        //towerLabel.setText("Archer"); //temp
 
-        //sellButton.setText((tower.getPrice()*(0.5)) + "");
+
+        toolbarHandler.setToolbarUpgradeView(tower);
+
 
 
     }
