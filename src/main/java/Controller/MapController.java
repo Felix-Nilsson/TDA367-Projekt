@@ -167,7 +167,7 @@ public class MapController extends AnchorPane {
 
                 } else {
                     try {
-                        throw new Exception("Tower Placement Error");
+                        throw new Exception("Tower Placement Error: Can't place tower there!");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -345,7 +345,7 @@ public class MapController extends AnchorPane {
     public void updateToolbar(){
         //Updates every controller in toolbarcontroller
         for(Map.Entry<Tower, ToolbarController<?>> entry : toolbarTowerHashMap.entrySet()){
-            entry.getValue().updateUpgradeAvaialble();
+            entry.getValue().updateUpgradeAvailable();
         }
     }
 
