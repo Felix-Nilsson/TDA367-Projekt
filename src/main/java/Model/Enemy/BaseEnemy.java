@@ -2,7 +2,6 @@ package main.java.Model.Enemy;
 
 import main.java.Model.DamageType;
 import main.java.Model.Direction;
-import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -221,10 +220,6 @@ public class BaseEnemy implements Enemy {
     @Override
     public int getId() {
         return -1;
-    }
-
-    public Image getImage() {
-        return null;
     }
 
     public int getPositionX(){
