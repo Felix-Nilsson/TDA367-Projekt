@@ -2,7 +2,6 @@ package main.java.Model.Enemy;
 
 import main.java.Model.DamageType;
 import main.java.Model.Direction;
-import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -39,7 +38,6 @@ public class BaseEnemy implements Enemy {
     private int stepNr = 0;//används för att gå igenom path
     private boolean isKilled = false;
     private boolean isOut = false;
-
     /**
      * @param health when hp<0 enemy is removed from the game
      * @param movementSpeed how many pixels enemy moves each update
@@ -57,13 +55,10 @@ public class BaseEnemy implements Enemy {
         this.positionX=0;
         this.positionY=(startPos-1) * 40;
         this.path = path;
-
-        //så länge enemy spawnas på 25,75... ska denna inte behövas
         this.direction=path.get(0);
         convertPathToCoordinates();
     }
 
-    //Dessa metoder ska kallas varje gång model ska uppdateras
 
     /**
      * is called in the main loop in Game. Currently only updates enemy's position
@@ -203,10 +198,6 @@ public class BaseEnemy implements Enemy {
     }
 
 
-
-
-    // ska antagligen ta in damage type (ad/ap)
-
     /**
      * calculates how much damage it takes
      * @param damage amount of flat damage
@@ -225,8 +216,9 @@ public class BaseEnemy implements Enemy {
         }
     }
 
-    public Image getImage() {
-        return null;
+    @Override
+    public int getId() {
+        return -1;
     }
 
     public int getPositionX(){

@@ -102,7 +102,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
     private void updateToolbar(){
         toolbarHandler.setTextOfObjects();
-        updateUpgradeAvaialble();
+        updateUpgradeAvailable();
         switch (tower.getTarget()) {
             case FIRST -> firstRadioButton.setSelected(true);
             case STRONGEST -> strongestRadioButton.setSelected(true);
@@ -144,6 +144,9 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         parentController.removeToolFromHash(tower);
         game.removeTower(tower);
 
+        //Uppdates the upgrade view
+        updateUpgradeAvailable();
+
     }
 
     @FXML
@@ -169,6 +172,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     @FXML
     private void towerUpgradeRight(){
         if(game.getMoney() >= tower.getRightUpgradeCost()){
+
             //Upgrades tower and updates the the controller
             this.tower = parentController.rightUpgradeTower(tower);
 
@@ -187,8 +191,8 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
     }
 
-    public void updateUpgradeAvaialble() {
-        toolbarHandler.updateUpgradeAvaialble();
+    public void updateUpgradeAvailable() {
+        toolbarHandler.updateUpgradeAvailable();
     }
 
 

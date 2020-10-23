@@ -1,7 +1,6 @@
 package main.java.Model.Enemy;
 
 import main.java.Model.DamageType;
-import javafx.scene.image.Image;
 
 /**
  * The interface shared by all enemies. As long as the reference variable is of type Enemy, these methods are available.
@@ -13,7 +12,7 @@ public interface Enemy  {
     void move();
     void followPath();
     void tookDamage(double damage, DamageType damageType);
-
+    int getId();
     boolean isKilled();
     boolean isOut();
     int spawnTime();
@@ -22,9 +21,11 @@ public interface Enemy  {
     int getHealth();
     int getMaxHealth();
 
+
     /**
      *should be in VIEW not MODEL
      * @return image
      */
     Image getImage();
+
 }
