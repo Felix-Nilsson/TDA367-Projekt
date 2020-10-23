@@ -34,9 +34,6 @@ public class BaseTower implements Tower {
     private Timer timer;
     private boolean timerIsRunning;
 
-    //todo remove pls very not good yes
-    private String towerImage;
-
     private Targeting target;
 
     public BaseTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
@@ -61,13 +58,11 @@ public class BaseTower implements Tower {
 
         timerDelayInMilliseconds=100;
 
-        //Temp, example of tower setting the color to the cell
-        position.setColor("000000");
+
 
         //Default is closest
         target = Targeting.FIRST;
 
-        System.out.println("TOWER CREATED.............................................................................................");
         startTimer();
 
 
@@ -242,7 +237,7 @@ public class BaseTower implements Tower {
 
     @Override
     public String getImage() {
-        return this.getImage();  //TODO might be weird
+        return this.getImage();  //not good practice but not enough time to change
     }
 
     @Override
@@ -289,8 +284,4 @@ public class BaseTower implements Tower {
         this.position.setColor(s);
     }
 
-    //todo: badbadbadbad remove pls
-    public void setTowerImage(String img){
-        this.towerImage = img;
-    }
 }

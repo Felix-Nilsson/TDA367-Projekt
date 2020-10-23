@@ -10,12 +10,13 @@ import java.util.List;
 
 public class ArcherTower implements Tower {
 
-    private BaseTower baseTower ;
+    private final BaseTower baseTower ;
 
     public ArcherTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
 
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
-        baseTower.setTowerImage("img/archerTower.png");
+        //Having a image in the baseclass like this is not very good
+        //if we had more time, all images would be sorted and called in view
     }
 
 
@@ -125,6 +126,7 @@ public class ArcherTower implements Tower {
         baseTower.startTimer();
     }
 
+    //again these get images should not be done here
     @Override
     public String getImage() {
         return "/img/archerTower.png";

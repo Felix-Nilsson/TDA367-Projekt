@@ -14,17 +14,11 @@ public class Board {
     private final int BOARD_WIDTH = 26;
     private final int BOARD_HEIGHT = 18;
     private ArrayList<Cell> board;
-    private int mapNumber;
+    private final int mapNumber;
     private final List<Direction> enemyPath = new ArrayList<>();
     private int[][] currentMap;
     private int startPos;
     private int endPos;
-
-    //restrictions:
-    // 8 is always the start position,
-    // on the last column there can only be one "1" which is the end position
-    private LevelFactory levelFactory;
-    private Level level;
 
 
     public Board(int mapNumber) {
@@ -50,8 +44,11 @@ public class Board {
     private void createBoard() {
         switch (mapNumber) {
             case 1:
-                levelFactory = new CurvySnakeFactory();
-                level = levelFactory.createLevel();
+                //restrictions:
+                // 8 is always the start position,
+                // on the last column there can only be one "1" which is the end position
+                LevelFactory levelFactory = new CurvySnakeFactory();
+                Level level = levelFactory.createLevel();
 
                 createMapGrid(level.getLayout());
                 currentMap = level.getLayout();

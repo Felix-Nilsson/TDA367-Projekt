@@ -8,14 +8,13 @@ import main.java.Model.Enemy.Enemy;
 import java.util.List;
 
 public class MageTower implements Tower {
-    private BaseTower baseTower ;
+    private final BaseTower baseTower ;
 
 
 
     public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
 
-        baseTower.setTowerImage("img/mageTower.png");
 
     }
 
