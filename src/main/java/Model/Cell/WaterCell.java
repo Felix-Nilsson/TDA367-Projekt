@@ -1,11 +1,8 @@
 package main.java.Model.Cell;
 
-import javafx.scene.paint.Color;
-
 public class WaterCell implements Cell {
 
-    BaseCell base;
-    private Color color;
+    private final BaseCell base;
 
     public WaterCell(int x, int y, boolean occupied){
         base = new BaseCell(x, y, TerrainType.WATER, occupied, "2d6ecf");

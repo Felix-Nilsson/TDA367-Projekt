@@ -1,13 +1,12 @@
 
-package main.java.Model;
+package main.test.main.java.Model;
 
-import main.java.Model.Cell.Cell;
 import main.java.Model.Cell.GroundCell;
 import main.java.Model.Difficulty;
 import main.java.Model.Game;
 import main.java.Model.Towers.*;
 import main.java.Model.Towers.Upgrade.MageTowerRightUpgrade;
-import org.junit.*;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 

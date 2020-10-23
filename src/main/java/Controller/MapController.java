@@ -85,16 +85,11 @@ public class MapController extends AnchorPane {
     private boolean paused = false;
     private final Game game;
 
-    private List<Enemy> enemies;
-
     private MediaPlayer mediaPlayer;
 
-    private HashMap<Enemy,ImageView> enemyHashMap;
     private final HashMap<Tower,ImageView> towerHashMap;  //If we want different images for upgarded towers, this need to be updated, however this wont be done here
     private final HashMap<Tower, ToolbarController> toolbarTowerHashMap;
-    private boolean waveRunning;
-    //private ImageView cave;
-    //private ImageView base;
+
     private final MapHandler mapHandler;
 
     private TowerFactory towerFactory;

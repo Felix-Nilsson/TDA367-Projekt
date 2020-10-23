@@ -65,7 +65,7 @@ public class Board {
                 } else if (map[j][i] == 1) {
                     tempBoard.add(new PathCell(i, j, true));
                 } else if (map[j][i] == 2) {
-                    tempBoard.add(new WaterCell(i, j, false));
+                    tempBoard.add(new WaterCell(i, j, true));
                 } else if (map[j][i] == 3) {
                     tempBoard.add(new ObstacleCell(i, j, true));
                 }
