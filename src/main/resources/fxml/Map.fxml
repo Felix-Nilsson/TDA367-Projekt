@@ -360,7 +360,7 @@
                   </GridPane>
                </children>
             </AnchorPane>
-            <Label fx:id="waveNumber" layoutX="20.0" layoutY="22.0" prefHeight="70.0" prefWidth="406.0">
+            <Label fx:id="waveNumber" disable="true" layoutX="20.0" layoutY="22.0" prefHeight="70.0" prefWidth="406.0">
                <font>
                   <Font size="48.0" />
                </font>
