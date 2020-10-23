@@ -253,11 +253,6 @@
       </AnchorPane>
       <AnchorPane fx:id="mapAnchorPane" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: green;">
          <children>
-            <Label fx:id="waveNumber" layoutX="20.0" layoutY="28.0" prefHeight="79.0" prefWidth="400.0">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
             <AnchorPane fx:id="sidebar" layoutX="1100.0" prefHeight="768.0" prefWidth="266.0" />
             <AnchorPane fx:id="toolbarAnchorPane" layoutX="287.0" layoutY="625.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: white;" />
             <AnchorPane fx:id="toolbarCover" layoutX="138.0" layoutY="747.6" prefHeight="27.0" prefWidth="864.0" style="-fx-background-color: green;" />
@@ -365,6 +360,11 @@
                   </GridPane>
                </children>
             </AnchorPane>
+            <Label fx:id="waveNumber" layoutX="20.0" layoutY="22.0" prefHeight="70.0" prefWidth="406.0">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
     </children>

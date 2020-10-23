@@ -22,8 +22,8 @@ public class Projectile {
     public Projectile(double towerPosX, double towerPosY, double enemyPosX, double enemyPosY){
         this.posX=towerPosX;
         this.posY=towerPosY;
-        this.enemyPosX=enemyPosX;
-        this.enemyPosY=enemyPosY;
+        this.enemyPosX=enemyPosX + 15;
+        this.enemyPosY=enemyPosY + 15;
         calculateVelocity();
         exists=true;
     }
