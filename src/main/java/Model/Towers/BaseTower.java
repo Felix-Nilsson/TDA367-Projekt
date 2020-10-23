@@ -9,21 +9,23 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * The BaseTower holds the standard implementation for methods declared in the Tower interface
+ */
 public class BaseTower implements Tower {
     private final Cell position;
     private int physicalDmg;
     private int magicDmg;
     private final int price;
 
-    private int range;
+    private final int range;
 
     private double attackSpeed;
     private double angle;
-    private int posX;
-    private int posY;
-    private int leftUpgradeCost;
-    private int rightUpgradeCost;
+    private final int posX;
+    private final int posY;
+    private final int leftUpgradeCost;
+    private final int rightUpgradeCost;
 
     private Projectile currentProjectile;
     private int enemyPosX;
@@ -106,24 +108,6 @@ public class BaseTower implements Tower {
         return isReadyToFire;
     }
 
-    public int getPosX(){
-        return posX;
-    }
-
-    public int getPosY(){
-        return posY;
-    }
-
-
-    public void setAngle(double angle) {
-        this.angle=angle;
-    }
-
-    public void update() {
-
-    }
-
-
     public boolean attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
             enemyPosX = e.getPositionX();
@@ -135,7 +119,6 @@ public class BaseTower implements Tower {
             double distHyp = Math.sqrt(distX*distX + distY*distY);
             if (distHyp<this.range) {
                 this.angle = Math.atan2(distY, distX);
-                attack();
                 if(physicalDmg>0){
                     e.tookDamage(physicalDmg, DamageType.PHYSICAL);
                 }
@@ -147,11 +130,6 @@ public class BaseTower implements Tower {
             }
         }
         return false;
-    }
-
-    public void attack() {
-       //currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
-
     }
     
     //sätter cooldown beroende på attackspeed så att Tower inte kan attackera konstant
@@ -196,12 +174,12 @@ public class BaseTower implements Tower {
     }
 
 
-    public int getX() {
+    public int getCellIndexX() {
         return position.getX();
     }
 
 
-    public int getY() {
+    public int getCellIndexY() {
         return position.getY();
     }
 

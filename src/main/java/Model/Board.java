@@ -20,7 +20,6 @@ public class Board {
     private int startPos;
     private int endPos;
 
-
     public Board(int mapNumber) {
         this.mapNumber = mapNumber;
         createBoard();
@@ -49,10 +48,10 @@ public class Board {
                 // on the last column there can only be one "1" which is the end position
                 LevelFactory levelFactory = new CurvySnakeFactory();
                 Level level = levelFactory.createLevel();
+                System.out.println(level.getLevelName());
 
                 createMapGrid(level.getLayout());
                 currentMap = level.getLayout();
-
         }
     }
 

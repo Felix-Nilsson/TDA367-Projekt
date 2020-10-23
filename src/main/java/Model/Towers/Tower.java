@@ -5,10 +5,12 @@ import main.java.Model.Enemy.Enemy;
 
 import java.util.List;
 
+/**
+ * The interface shared by all towers. As long as the reference variable is of type Tower, these methods are available.
+ * At the moment it is too large and could be separated further to follow the Interface Segregation Principle.
+ */
 public interface Tower {
-    void update();
     boolean attackIfEnemyInRange(List<Enemy> enemyList);
-    void attack();
 
     int getPrice();
     int getLeftUpgradeCost();
@@ -16,13 +18,10 @@ public interface Tower {
     String getLeftUpgradeLabel();
     String getRightUpgradeLabel();
 
-    int getPosX();
-    int getPosY();
     int getRange();
-    void setAngle(double angle);
 
-    int getX();
-    int getY();
+    int getCellIndexX();
+    int getCellIndexY();
 
     int getMagicDmg();
     int getPhysicalDmg();
@@ -35,9 +34,12 @@ public interface Tower {
     void setPhysicalDmg(int amount);
     void setAttackSpeed(double amount);
 
+    /**
+     * These should not be here since images are not part of the model
+     * @return image of current tower
+     */
     String getLeftUpgradeImage();
     String getRightUpgradeImage();
-
 
     Targeting getTarget();
     void setTarget(Targeting target);

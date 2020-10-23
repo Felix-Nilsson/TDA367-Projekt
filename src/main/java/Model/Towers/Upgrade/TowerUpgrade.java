@@ -25,13 +25,6 @@ public abstract class TowerUpgrade implements Tower {
         return t;
     }
 
-    public void update() { 
-        tower.update();
-    }
-
-    public void attack() {
-        tower.attack();
-    }
 
     public int getPrice() {
         return tower.getPrice();
@@ -53,28 +46,16 @@ public abstract class TowerUpgrade implements Tower {
         return tower.getRightUpgradeLabel();
     }
 
-    public int getPosX() {
-        return tower.getPosX();
-    }
-
-    public int getPosY() {
-        return tower.getPosY();
-    }
-
     public int getRange() {
         return tower.getRange();
     }
 
-    public void setAngle(double angle) {
-        tower.setAngle(angle);
+    public int getCellIndexX() {
+        return tower.getCellIndexX();
     }
 
-    public int getX() {
-        return tower.getX();
-    }
-
-    public int getY() {
-        return tower.getY();
+    public int getCellIndexY() {
+        return tower.getCellIndexY();
     }
 
     public int getMagicDmg() {

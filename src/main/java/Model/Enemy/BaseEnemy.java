@@ -220,7 +220,6 @@ public class BaseEnemy implements Enemy {
         else if (damageType == DamageType.PHYSICAL){
             health = (int) (health-damage*((100.0-armor)/100));
         }
-        System.out.println(this + "Health: ");
         if (health<=0){
             isKilled = true;
         }
