@@ -110,13 +110,8 @@ public class Game  {
     private void startGameLoopThread(){
         gameLoopThread = new Thread(() -> {
             while (waveRunning) {
-                if(enemiesInWave.size() > 0) {
                     update();
-                }
-                else if(!enemyCreatorThread.isAlive()){ //waits until all enemies have been created
-                    endRound();
-                    System.out.println("round ended");
-                }
+
                 threadSleep(gameSpeed);
             }
         });
@@ -193,6 +188,10 @@ public class Game  {
         checkTowerRadius();
         checkIfGameOver();
         observable.update(); //notifies view to update graphics
+        if(!enemyCreatorThread.isAlive() && enemiesInWave.size()<= 0 && projectileList.size() <= 0){ //waits until all enemies have been created
+            endRound();
+            System.out.println("round ended");
+        }
     }
 
     /**
@@ -306,20 +305,23 @@ public class Game  {
      * increments round
      */
     public void endRound(){
-        observable.notifyRoundOver();
-        stopEnemyCreatorThread();
-        stopGameLoopThread();
-        money = money + round*50;
-        if(autostart){
-            observable.notifyRoundStart();
-            nextRound();
+        if(projectileList.size() == 0){
+            observable.notifyRoundOver();
+            stopEnemyCreatorThread();
+            stopGameLoopThread();
+            money = money + round*50;
+            if(autostart){
+                observable.notifyRoundStart();
+                nextRound();
 
+            }
+            else{
+                waveRunning = false;
+                stopAllTowerTimers();
+            }
+            round++;
         }
-        else{
-            waveRunning = false;
-            stopAllTowerTimers();
-        }
-        round++;
+
     }
 
     /**

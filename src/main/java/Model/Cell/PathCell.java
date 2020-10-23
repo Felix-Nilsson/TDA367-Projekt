@@ -1,11 +1,8 @@
 package main.java.Model.Cell;
 
-import javafx.scene.paint.Color;
-
 public class PathCell implements Cell {
 
-    BaseCell base;
-    private Color color;
+    private final BaseCell base;
 
     public PathCell(int x, int y, boolean occupied){
         base = new BaseCell(x, y, TerrainType.PATH, occupied, "#7C4E4E");

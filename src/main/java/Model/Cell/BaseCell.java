@@ -1,9 +1,9 @@
 package main.java.Model.Cell;
 
 public class BaseCell implements Cell {
-    private int x;
-    private int y;
-    private TerrainType terrain;
+    private final int x;
+    private final int y;
+    private final TerrainType terrain;
     private boolean occupied;
 
     public BaseCell(int x, int y, TerrainType terrain, boolean occupied, String color){

@@ -47,6 +47,12 @@ public class ProjectileHandler implements ProjectileObserver {
         });
     }
 
+    @Override
+    public void notifyRoundOver() {
+        for(Projectile p : game.getProjectileList()){
+            notifyProjectileRemoved(p);
+        }
+    }
 
 
     private void fixProjectileImage(ImageView img,Projectile projectile){
