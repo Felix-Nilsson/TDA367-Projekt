@@ -128,11 +128,6 @@ public class ArcherTower implements Tower {
 
     //again these get images should not be done here
     @Override
-    public String getImage() {
-        return "/img/archerTower.png";
-    }
-
-    @Override
     public String getLeftUpgradeImage() {
         return "/img/archerTowerDmgUpgrade.png";
     }

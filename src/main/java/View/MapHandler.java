@@ -142,14 +142,14 @@ public class MapHandler implements MapObserver {
         mapAnchorPane.toFront();
     }
 
-    public void moveToolbarBack(AnchorPane toolbarAnchorPane, AnchorPane toolbarCover){
+    public void moveToolbarBack(AnchorPane toolbarAnchorPane){
         toolbarAnchorPane.toBack();
-        toolbarCover.toFront();
+
     }
 
-    public void moveToolbarFront(AnchorPane toolbarAnchorPane, AnchorPane toolbarCover){
+    public void moveToolbarFront(AnchorPane toolbarAnchorPane){
         toolbarAnchorPane.toFront();
-        toolbarCover.toBack();
+
     }
 
     public void removeImageFromGrid(ImageView image){

@@ -44,13 +44,14 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     @FXML private RadioButton strongestRadioButton;
     @FXML private RadioButton closestRadioButton;
 
-    private ToggleGroup targetingToggleGroup;
+    private final ToggleGroup targetingToggleGroup;
     private Tower tower;
     private final Game game;
     private final MapController parentController;
     private final ToolbarHandler toolbarHandler;
+    private Image towerImage;
 
-    public ToolbarController(Game game, MapController parentController, T t){
+    public ToolbarController(Game game, MapController parentController, T t, String towerImage){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Toolbar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -62,8 +63,10 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         this.game = game;
         this.parentController = parentController;
         this.tower = t;
+        this.towerImage = new Image(towerImage);
         targetingToggleGroup = new ToggleGroup();
-        toolbarHandler = new ToolbarHandler(game, tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView, leftUpgradeButton, rightUpgradeButton);
+        toolbarHandler = new ToolbarHandler(game, tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,
+                leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView, leftUpgradeButton, rightUpgradeButton, this.towerImage);
 
         init();
         eventHandlers();

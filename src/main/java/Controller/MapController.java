@@ -1,19 +1,10 @@
 package main.java.Controller;
 
-import main.java.Model.*;
-import main.java.Model.Cell.Cell;
-import main.java.Model.Enemy.Enemy;
-import main.java.Model.Towers.Tower;
-import main.java.Model.Towers.TowerFactory;
-import main.java.View.MapHandler;
-import main.java.View.ProjectileHandler;
-import javafx.scene.control.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -25,12 +16,17 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
+import main.java.Model.Cell.Cell;
+import main.java.Model.Enemy.Enemy;
+import main.java.Model.Game;
+import main.java.Model.Towers.Tower;
+import main.java.Model.Towers.TowerFactory;
+import main.java.View.MapHandler;
+import main.java.View.ProjectileHandler;
 
 import java.io.IOException;
-
 import java.net.URL;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 
@@ -174,9 +170,8 @@ public class MapController extends AnchorPane {
                             towerHashMap.put(game.getTower(x_placement, y_placement), image);
                         }
 
-
                         //Creates a new toolbar with the tower
-                        createToolbar(game.getTower(x_placement, y_placement));
+                        createToolbar(game.getTower(x_placement, y_placement), db.getString());
 
                         //Change money
                         game.addMoney(-towerFactory.getPrice());
@@ -251,8 +246,8 @@ public class MapController extends AnchorPane {
         return rIndex == null ? 0 : rIndex;
     }
 
-    private <T extends Tower> void createToolbar(T t) {
-        ToolbarController<T> toolbarController = new ToolbarController(game, this, t);
+    private <T extends Tower> void createToolbar(T t, String imageUrl) {
+        ToolbarController<T> toolbarController = new ToolbarController(game, this, t, imageUrl);
         toolbarTowerHashMap.put(t, toolbarController);
     }
 
@@ -336,11 +331,11 @@ public class MapController extends AnchorPane {
     }
 
     public void moveToolbarBack(){
-        mapHandler.moveToolbarBack(toolbarAnchorPane, toolbarCover);
+        mapHandler.moveToolbarBack(toolbarAnchorPane);
     }
 
     public void moveToolbarFront(){
-        mapHandler.moveToolbarFront(toolbarAnchorPane, toolbarCover);
+        mapHandler.moveToolbarFront(toolbarAnchorPane);
     }
 
     public void removeImageFromGrid(Tower t){

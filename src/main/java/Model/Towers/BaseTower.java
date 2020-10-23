@@ -235,7 +235,7 @@ public class BaseTower implements Tower {
         this.attackSpeed = amount;
     }
 
-    @Override
+   
     public String getImage() {
         return this.getImage();  //not good practice but not enough time to change
     }
@@ -249,7 +249,6 @@ public class BaseTower implements Tower {
     public String getRightUpgradeImage() {
         return null; //Should never get here
     }
-
 
 
     public int getRange() {

@@ -35,7 +35,6 @@ public interface Tower {
     void setPhysicalDmg(int amount);
     void setAttackSpeed(double amount);
 
-    String getImage();
     String getLeftUpgradeImage();
     String getRightUpgradeImage();
 

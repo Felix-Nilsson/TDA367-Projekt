@@ -101,10 +101,6 @@ public abstract class TowerUpgrade implements Tower {
         tower.setAttackSpeed(amount);
     }
 
-    public String getImage() {
-        return tower.getImage();
-    }
-
     public String getLeftUpgradeImage() {
         return tower.getLeftUpgradeImage();
     }
