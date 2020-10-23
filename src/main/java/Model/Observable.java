@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Observable implements MapObserver, ProjectileObserver {
     private final List<MapObserver> mapObservers;
-    private List<ProjectileObserver> projectileObservers = new ArrayList<ProjectileObserver>();
+    private final List<ProjectileObserver> projectileObservers = new ArrayList<ProjectileObserver>();
 
     public Observable(){
         mapObservers = new ArrayList<>();
