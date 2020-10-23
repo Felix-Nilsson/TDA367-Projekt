@@ -23,14 +23,6 @@ public class PathCell implements Cell {
     }
 
     @Override
-    public String getColor() {
-        return base.getColor();
-    }
-
-    @Override
-    public void setColor(String s) {base.setColor(s); }
-
-    @Override
     public int getX() {
         return base.getX();
     }

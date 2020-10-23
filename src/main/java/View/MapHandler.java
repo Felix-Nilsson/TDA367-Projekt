@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import main.java.Model.Cell.Cell;
 import main.java.Model.Enemy.Enemy;
@@ -96,7 +97,14 @@ public class MapHandler implements MapObserver {
             Rectangle tile = new Rectangle(40,40);
             tile.setX(p.getX());
             tile.setY(p.getY());
-            tile.setFill(Color.web(p.getColor()));
+
+            switch (p.getTerrainType()){
+                case PATH -> tile.setFill(Paint.valueOf("b8824b")); //brown
+                case WATER -> tile.setFill(Paint.valueOf("0f79ba")); //blue
+                case GROUND -> tile.setFill(Paint.valueOf("008000")); //green
+                case OBSTACLE -> tile.setFill(Paint.valueOf("696969")); //grey
+            }
+            //tile.setFill(Color.web(p.getColor()));
             gameBoardGrid.add(tile, p.getX(), p.getY());
         }
     }

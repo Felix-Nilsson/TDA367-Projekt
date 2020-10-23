@@ -22,11 +22,6 @@ public class GroundCell implements Cell {
     }
 
     @Override
-    public String getColor() {
-        return base.getColor();
-    }
-
-    @Override
     public int getX() {
         return base.getX();
     }
@@ -46,5 +41,4 @@ public class GroundCell implements Cell {
         base.setOccupiedFalse();
     }
 
-    public void setColor(String s){base.setColor(s);}
 }
