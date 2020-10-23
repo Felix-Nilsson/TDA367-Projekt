@@ -13,9 +13,11 @@ import java.util.List;
 public class RedEnemy implements Enemy {
 
     private final BaseEnemy parent;
+    private final int id;
 
     public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
+        id = 2;
     }
 
     /**
@@ -41,7 +43,7 @@ public class RedEnemy implements Enemy {
 
     @Override
     public int getId() {
-        return 2;
+        return this.id;
     }
 
 

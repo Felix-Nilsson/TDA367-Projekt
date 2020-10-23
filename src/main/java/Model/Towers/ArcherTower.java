@@ -11,12 +11,31 @@ import java.util.List;
 public class ArcherTower implements Tower {
 
     private final BaseTower baseTower ;
+    private final int id;
 
     public ArcherTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
-
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
+
+        id = 2;
+
     }
 
+
+
+    @Override
+    public int getId(){
+        return this.id;
+    }
+
+    @Override
+    public int getLeftUpgradeId(){
+        return 2;
+    }
+
+    @Override
+    public int getRightUpgradeId(){
+        return 3;
+    }
 
     @Override
     public boolean attackIfEnemyInRange(List<Enemy> enemyList) {
@@ -102,17 +121,6 @@ public class ArcherTower implements Tower {
     @Override
     public void startTimer() {
         baseTower.startTimer();
-    }
-
-    //again these get images should not be done here
-    @Override
-    public String getLeftUpgradeImage() {
-        return "/img/archerTowerDmgUpgrade.png";
-    }
-
-    @Override
-    public String getRightUpgradeImage() {
-        return "/img/atkSpdUpgrade.png";
     }
 
     @Override

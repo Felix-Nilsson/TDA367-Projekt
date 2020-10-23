@@ -1,12 +1,12 @@
-/*
-package main.test.main.java.Model.Towers;
+package main.java.Model.Towers;
+
 
 import main.java.Model.Cell.GroundCell;
 import main.java.Model.Towers.BaseTower;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-/*
+
 class BaseTowerTest {
 
     @Test
@@ -33,23 +33,6 @@ class BaseTowerTest {
         //Todo: make a game that is actually testable
     }
 
-    @Test
-    void getPosX() {
-        GroundCell g = new GroundCell(0,0,true);
-        BaseTower b = new BaseTower(g,5,5,10,
-                5,1,10,10);
-
-        assertEquals(25,b.getPosX());
-    }
-
-    @Test
-    void getPosY() {
-        GroundCell g = new GroundCell(0,0,true);
-        BaseTower b = new BaseTower(g,5,5,10,
-                5,1,10,10);
-
-        assertEquals(15,b.getPosY());
-    }
 
     @Test
     void setAngle() {
@@ -168,4 +151,3 @@ class BaseTowerTest {
     }
 }
 
- */

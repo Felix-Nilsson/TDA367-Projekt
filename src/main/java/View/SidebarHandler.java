@@ -20,7 +20,8 @@ public class SidebarHandler implements MapObserver {
     private final Label archerTowerPriceLabel;
     private final Label mageTowerPriceLabel;
 
-    public SidebarHandler(Game game,Label mageTowerPriceLabel,Label archerTowerPriceLabel, Label health, Label money, ImageView playButtonImg, AnchorPane mageTowerAvailable, AnchorPane archerTowerAvailable){
+    public SidebarHandler(Game game,Label mageTowerPriceLabel,Label archerTowerPriceLabel, Label health, Label money,
+                          ImageView playButtonImg, AnchorPane mageTowerAvailable, AnchorPane archerTowerAvailable){
         this.playButtonImg = playButtonImg;
         this.health = health;
         this.money = money;

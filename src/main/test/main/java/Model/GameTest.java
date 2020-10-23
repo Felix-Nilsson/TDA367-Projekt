@@ -1,4 +1,4 @@
-/*
+
 package main.test.main.java.Model;
 
 import main.java.Model.Cell.GroundCell;
@@ -17,7 +17,7 @@ public class GameTest {
      * @author Felix Nilsson
      * @author Hannes Svahn
      */
-/*
+
     @Test
     public void getNameOfMap() {
         Game game = new Game(Difficulty.EASY, 1);
@@ -85,5 +85,5 @@ public class GameTest {
     }
 }
 
- */
+
 

@@ -82,14 +82,6 @@ public abstract class TowerUpgrade implements Tower {
         tower.setAttackSpeed(amount);
     }
 
-    public String getLeftUpgradeImage() {
-        return tower.getLeftUpgradeImage();
-    }
-
-    public String getRightUpgradeImage() {
-        return tower.getRightUpgradeImage();
-    }
-
     public Targeting getTarget() {
         return tower.getTarget();
     }
@@ -106,6 +98,24 @@ public abstract class TowerUpgrade implements Tower {
     public String toString() {
         return tower.toString();
         //Can append tower upgrades here, but not neccessary in current version
+    }
+
+    @Override
+    public int getId(){
+        return tower.getId();
+        /*
+        Should be moved to each upgraded tower in the future so to easier
+        see differences
+         */
+    }
+
+    public int getLeftUpgradeId(){
+        return tower.getLeftUpgradeId();
+    }
+
+
+    public int getRightUpgradeId(){
+        return tower.getRightUpgradeId();
     }
 
 

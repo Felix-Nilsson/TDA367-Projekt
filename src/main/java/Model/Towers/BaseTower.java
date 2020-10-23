@@ -131,7 +131,20 @@ public class BaseTower implements Tower {
         }
         return false;
     }
-    
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+    @Override
+    public int getLeftUpgradeId(){
+        return 0;
+    }
+    @Override
+    public int getRightUpgradeId(){
+        return 0;
+    }
+
     //sätter cooldown beroende på attackspeed så att Tower inte kan attackera konstant
     private void resetCurrentCooldown(){
         //the attackspeed is attacks/second, for example:
@@ -218,15 +231,6 @@ public class BaseTower implements Tower {
         return this.getImage();  //not good practice but not enough time to change
     }
 
-    @Override
-    public String getLeftUpgradeImage() {
-        return null; //Should never get here
-    }
-
-    @Override
-    public String getRightUpgradeImage() {
-        return null; //Should never get here
-    }
 
 
     public int getRange() {
@@ -256,9 +260,5 @@ public class BaseTower implements Tower {
         return null; //Error
     }
 
-
-    public void setColor(String s){
-        this.position.setColor(s);
-    }
 
 }

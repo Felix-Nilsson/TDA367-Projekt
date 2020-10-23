@@ -1,5 +1,6 @@
 package main.java.View;
 
+import javafx.geometry.Pos;
 import main.java.Model.Enemy.Enemy;
 import main.java.Model.Game;
 import main.java.Model.Towers.Tower;
@@ -19,7 +20,8 @@ public class ToolbarHandler implements MapObserver{
     private final Label rightUpgradeCostLabel;
     private final Button leftUpgradeButton;
     private final Button rightUpgradeButton;
-
+    private final ImageView leftUpgradeImageView;
+    private final ImageView rightUpgradeImageView;
 
 
     private final Tower tower;
@@ -35,7 +37,7 @@ public class ToolbarHandler implements MapObserver{
     public ToolbarHandler(Game game, Tower tower, Label towerLabel, Label attackLabel, Label magicLabel,
                           Label attackSpeedLabel, Label rangeLabel, Label leftUpgradeCostLabel, Label rightUpgradeCostLabel,
                           Button sellButton, ImageView tImageView, Button leftUpgradeButton, Button rightUpgradeButton,
-                          Image towerImage){
+                          Image towerImage, ImageView leftUpgradeImageView, ImageView rightUpgradeImageView){
         this.game = game;
         this.tower = tower;
         this.towerLabel = towerLabel;
@@ -50,6 +52,8 @@ public class ToolbarHandler implements MapObserver{
         this.leftUpgradeButton = leftUpgradeButton;
         this.rightUpgradeButton = rightUpgradeButton;
         this.towerImage = towerImage;
+        this.leftUpgradeImageView = leftUpgradeImageView;
+        this.rightUpgradeImageView = rightUpgradeImageView;
         game.addMapObserver(this);
     }
     public void setTextOfObjects(){
@@ -120,6 +124,17 @@ public class ToolbarHandler implements MapObserver{
         updateUpgradeAvailable();
     }
 
+    public void setToolbarUpgradeView(Tower tower) throws Exception {
+        //View Beteende
 
+        TowerUpgradeView tuv = new TowerUpgradeView(tower);
+
+        leftUpgradeImageView.setImage(tuv.getImage(tower.getLeftUpgradeId()));
+        leftUpgradeCostLabel.setText(tower.getLeftUpgradeLabel() + ": " +tower.getLeftUpgradeCost()+"$");
+        leftUpgradeCostLabel.setAlignment(Pos.CENTER);
+        rightUpgradeImageView.setImage(tuv.getImage(tower.getRightUpgradeId()));
+        rightUpgradeCostLabel.setText(tower.getRightUpgradeLabel() + ": " + tower.getRightUpgradeCost()+"$");
+        rightUpgradeCostLabel.setAlignment(Pos.CENTER);
+    }
 
 }
