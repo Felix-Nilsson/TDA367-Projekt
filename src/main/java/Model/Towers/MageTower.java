@@ -128,11 +128,7 @@ public class MageTower implements Tower {
     public void startTimer() {
         baseTower.startTimer();
     }
-
-    @Override
-    public String getImage() {
-        return "/img/mageTower.png";
-    }
+    
 
     @Override
     public String getLeftUpgradeImage() {

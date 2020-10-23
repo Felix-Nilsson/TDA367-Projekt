@@ -28,10 +28,14 @@ public class ToolbarHandler implements MapObserver{
 
     private final ImageView tImageView;
 
+    private final Image towerImage;
+
     private final Game game;
 
     public ToolbarHandler(Game game, Tower tower, Label towerLabel, Label attackLabel, Label magicLabel,
-                          Label attackSpeedLabel, Label rangeLabel, Label leftUpgradeCostLabel, Label rightUpgradeCostLabel, Button sellButton, ImageView tImageView, Button leftUpgradeButton, Button rightUpgradeButton){
+                          Label attackSpeedLabel, Label rangeLabel, Label leftUpgradeCostLabel, Label rightUpgradeCostLabel,
+                          Button sellButton, ImageView tImageView, Button leftUpgradeButton, Button rightUpgradeButton,
+                          Image towerImage){
         this.game = game;
         this.tower = tower;
         this.towerLabel = towerLabel;
@@ -45,11 +49,12 @@ public class ToolbarHandler implements MapObserver{
         this.tImageView = tImageView;
         this.leftUpgradeButton = leftUpgradeButton;
         this.rightUpgradeButton = rightUpgradeButton;
+        this.towerImage = towerImage;
 
     }
     public void setTextOfObjects(){
         towerLabel.setText(tower.toString());
-        tImageView.setImage(new Image(tower.getImage()));
+        tImageView.setImage(towerImage);
         sellButton.setText("Sell: "+ (int)(tower.getPrice() * 0.5));
         magicLabel.setText("Magic: " + tower.getMagicDmg());
         attackLabel.setText("Physical: " + tower.getPhysicalDmg());

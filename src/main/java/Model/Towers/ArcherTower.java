@@ -126,11 +126,6 @@ public class ArcherTower implements Tower {
     }
 
     @Override
-    public String getImage() {
-        return "/img/archerTower.png";
-    }
-
-    @Override
     public String getLeftUpgradeImage() {
         return "/img/archerTowerDmgUpgrade.png";
     }

@@ -241,11 +241,6 @@ public class BaseTower implements Tower {
     }
 
     @Override
-    public String getImage() {
-        return this.getImage();  //TODO might be weird
-    }
-
-    @Override
     public String getLeftUpgradeImage() {
         return null; //Should never get here
     }
@@ -254,7 +249,6 @@ public class BaseTower implements Tower {
     public String getRightUpgradeImage() {
         return null; //Should never get here
     }
-
 
 
     public int getRange() {
