@@ -70,7 +70,6 @@ public class BaseTower implements Tower {
     @Override
     public void stopTimer(){
         if(timerIsRunning){
-            System.out.println("stopTimer()");
             timer.cancel();
             timer.purge();
             timerIsRunning=false;
@@ -80,7 +79,6 @@ public class BaseTower implements Tower {
     @Override
     public void startTimer(){
         if(!timerIsRunning){
-            System.out.println("startTimer()");
             TimerTask timerTask = new TimerTask(){
                 @Override
                 public void run() {
@@ -126,7 +124,7 @@ public class BaseTower implements Tower {
     }
 
 
-    public void attackIfEnemyInRange(List<Enemy> enemyList) {
+    public boolean attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
             enemyPosX = e.getPositionX();
             enemyPosY = e.getPositionY();
@@ -144,14 +142,16 @@ public class BaseTower implements Tower {
                 if(magicDmg>0){
                     e.tookDamage(magicDmg, DamageType.MAGICAL);
                 }
-                break;
+                resetCurrentCooldown();
+                return true;
             }
         }
+        return false;
     }
 
     public void attack() {
-        currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
-        resetCurrentCooldown();
+       //currentProjectile = new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
+
     }
     
     //sätter cooldown beroende på attackspeed så att Tower inte kan attackera konstant
@@ -166,7 +166,7 @@ public class BaseTower implements Tower {
 
 
     public Projectile getProjectile(){
-        return currentProjectile;
+        return new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
     }
 
 
@@ -235,7 +235,7 @@ public class BaseTower implements Tower {
         this.attackSpeed = amount;
     }
 
-   
+
     public String getImage() {
         return this.getImage();  //not good practice but not enough time to change
     }

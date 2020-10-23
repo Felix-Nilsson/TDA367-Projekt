@@ -128,8 +128,8 @@ public abstract class TowerUpgrade implements Tower {
     }
 
 
-    public void attackIfEnemyInRange(List<Enemy> enemyList) {
-        tower.attackIfEnemyInRange(enemyList);
+    public boolean attackIfEnemyInRange(List<Enemy> enemyList) {
+        return tower.attackIfEnemyInRange(enemyList);
     }
 
     @Override

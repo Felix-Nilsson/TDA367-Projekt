@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Tower {
     void update();
-    void attackIfEnemyInRange(List<Enemy> enemyList);
+    boolean attackIfEnemyInRange(List<Enemy> enemyList);
     void attack();
 
     int getPrice();

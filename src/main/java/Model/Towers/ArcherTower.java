@@ -26,8 +26,8 @@ public class ArcherTower implements Tower {
     }
 
     @Override
-    public void attackIfEnemyInRange(List<Enemy> enemyList) {
-        baseTower.attackIfEnemyInRange(enemyList);
+    public boolean attackIfEnemyInRange(List<Enemy> enemyList) {
+        return baseTower.attackIfEnemyInRange(enemyList);
     }
 
     @Override

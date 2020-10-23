@@ -173,18 +173,26 @@ public class Game  {
                 }
             }
         }
-
-        if(projectileList !=null){
-            Iterator<Projectile> projectileIterator = projectileList.listIterator();
-            while(projectileIterator.hasNext()){
-                Projectile p = projectileIterator.next();
-                p.update();
+        synchronized (projectileList){
+            if(projectileList != null){
+                Iterator<Projectile> projectileIterator = projectileList.listIterator();
+                while(projectileIterator.hasNext()){
+                    Projectile p = projectileIterator.next();
+                    if(!p.isExisting()){
+                        projectileIterator.remove();
+                        observable.notifyProjectileRemoved(p);
+                        break;
+                    }
+                    else{
+                        p.update();
+                    }
+                }
             }
         }
+
         checkTowerRadius();
-        checkIfProjectilesHit();
-        observable.update(); //notifies view to update graphics
         checkIfGameOver();
+        observable.update(); //notifies view to update graphics
     }
 
     /**
@@ -198,15 +206,13 @@ public class Game  {
                     for (Tower tower : towers) {
                         if (tower.getIsReadyToFire()) {
                             synchronized (enemiesInWave){
-                                tower.attackIfEnemyInRange(enemiesInWave);
-                            }
-                            Projectile p = tower.getProjectile();
-
-                            if (!projectileList.contains(p) && p!= null) {
-                                synchronized (projectileList){
-                                    projectileList.add(p);
+                                if(tower.attackIfEnemyInRange(enemiesInWave)){
+                                    Projectile p = tower.getProjectile();
+                                    synchronized (projectileList){
+                                        projectileList.add(p);
+                                        observable.notifyProjectileAdded(p);
+                                    }
                                 }
-                                observable.notifyProjectileAdded(p);
                             }
                         }
                     }
@@ -216,23 +222,8 @@ public class Game  {
         }
     }
 
-    /**
-     * loops through a list as an iterator and checks if they are to be removed
-     */
-    private void checkIfProjectilesHit() {
-        if (projectileList != null) {
-            Iterator<Projectile> iterator = projectileList.listIterator();
-            while (iterator.hasNext()) {
-                Projectile p = iterator.next();
-                if (!p.isExisting()) {
-                    //removeProjectile(p);
-                    iterator.remove();
-                    observable.notifyProjectileRemoved(p);
-                    break;
-                }
-            }
-        }
-    }
+
+
 
     /**
      * removes enemy e from observable and List:enemiesInWave
