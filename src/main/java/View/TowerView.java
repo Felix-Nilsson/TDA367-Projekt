@@ -3,7 +3,7 @@ package main.java.View;
 import javafx.scene.image.Image;
 import main.java.Model.Towers.Tower;
 
-//Does not currently have a use but should be used in the future
+//Does not currently have a use but should be used in the future when getting towers for images
 
 public class TowerView {
     private final Tower tower;
