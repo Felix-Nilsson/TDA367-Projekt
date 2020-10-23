@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<fx:root fx:id="toolbarPane" prefHeight="150.0" prefWidth="600.0" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="toolbarPane" prefHeight="150.0" prefWidth="600.0" stylesheets="@../style/Toolbar.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="towerLabel" layoutX="14.0" layoutY="7.0" prefHeight="30.0" prefWidth="144.0" text="[tower name here]" />
-      <ImageView fx:id="tImageView" fitHeight="97.0" fitWidth="128.0" layoutX="14.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e60000" height="63.0" layoutX="94.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="84.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e60000" height="32.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="144.0" />
+      <Label fx:id="towerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="1.0" prefHeight="30.0" prefWidth="144.0" text="[tower name here]" textAlignment="CENTER" textFill="WHITE" />
+      <ImageView fx:id="tImageView" fitHeight="97.0" fitWidth="128.0" layoutX="4.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/archerTower.png" />
          </image></ImageView>
       <Label fx:id="leftUpgradeCostLabel" layoutX="263.0" layoutY="117.0" prefHeight="17.0" prefWidth="166.0" text="100" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="rightUpgradeCostLabel" layoutX="435.0" layoutY="117.0" prefHeight="17.0" prefWidth="138.0" text="100" textAlignment="CENTER" />
-      <Label fx:id="attackLabel" layoutX="122.0" layoutY="32.0" prefHeight="18.0" prefWidth="74.0" text="Physical: 0" textAlignment="RIGHT" />
-      <Label fx:id="magicLabel" layoutX="122.0" layoutY="48.0" prefHeight="18.0" prefWidth="74.0" text="Magic: 0" textAlignment="RIGHT" />
-      <Label fx:id="rangeLabel" layoutX="121.0" layoutY="83.0" prefHeight="18.0" prefWidth="74.0" text="Range: 0" textAlignment="RIGHT" />
-      <RadioButton fx:id="firstRadioButton" layoutX="199.0" layoutY="46.0" mnemonicParsing="false" onAction="#updateTargeting" text="First">
+      <Label fx:id="attackLabel" layoutX="101.0" layoutY="48.0" prefHeight="18.0" prefWidth="84.0" text="Physical: 0" textAlignment="RIGHT" textFill="WHITE" />
+      <Label fx:id="magicLabel" layoutX="101.0" layoutY="64.0" prefHeight="18.0" prefWidth="84.0" text="Magic: 0" textAlignment="RIGHT" textFill="WHITE" />
+      <Label fx:id="rangeLabel" layoutX="101.0" layoutY="92.0" prefHeight="18.0" prefWidth="84.0" text="Range: 0" textAlignment="RIGHT" textFill="WHITE" />
+      <RadioButton fx:id="firstRadioButton" layoutX="187.0" layoutY="7.0" mnemonicParsing="false" onAction="#updateTargeting" prefHeight="32.0" prefWidth="97.0" text="First">
          <toggleGroup>
             <ToggleGroup fx:id="targetingToggleGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="strongestRadioButton" layoutX="199.0" layoutY="65.0" mnemonicParsing="false" onAction="#updateTargeting" text="Strongest" toggleGroup="$targetingToggleGroup" />
-      <RadioButton fx:id="closestRadioButton" layoutX="199.0" layoutY="84.0" mnemonicParsing="false" onAction="#updateTargeting" text="Closest" toggleGroup="$targetingToggleGroup" />
+      <RadioButton fx:id="strongestRadioButton" layoutX="187.0" layoutY="41.0" mnemonicParsing="false" onAction="#updateTargeting" prefHeight="32.0" prefWidth="97.0" styleClass="RadioButtoNotSelected" text="Strongest" toggleGroup="$targetingToggleGroup" />
+      <RadioButton fx:id="closestRadioButton" layoutX="187.0" layoutY="76.0" mnemonicParsing="false" onAction="#updateTargeting" prefHeight="32.0" prefWidth="97.0" text="Closest" toggleGroup="$targetingToggleGroup" />
       <Button fx:id="sellButton" layoutX="115.0" layoutY="112.0" mnemonicParsing="false" onAction="#sellTowerClicked" prefHeight="26.0" prefWidth="144.0" style="-fx-background-color: #e34a4a;" text="Sell for: 0" textFill="WHITE" />
       <Button fx:id="leftUpgradeButton" layoutX="288.0" layoutY="16.0" mnemonicParsing="false" onAction="#towerUpgradeLeft" prefHeight="97.0" prefWidth="115.0" style="-fx-background-color: #5AC18E; -fx-background-image: ..\..\..\..\..\Downloads\towerimg.png;" textFill="WHITE">
          <graphic>
@@ -33,7 +40,7 @@
          <graphic>
             <ImageView fx:id="rUImageView" fitHeight="88.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
          </graphic></Button>
-      <Label fx:id="attackSpeedLabel" layoutX="122.0" layoutY="66.0" prefHeight="18.0" prefWidth="74.0" text="Speed: 0" textAlignment="RIGHT" />
+      <Label fx:id="attackSpeedLabel" layoutX="101.0" layoutY="77.0" prefHeight="18.0" prefWidth="84.0" text="Speed: 0" textAlignment="RIGHT" textFill="WHITE" />
       <Button fx:id="closeButton" layoutX="568.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" style="-fx-background-color: #e34a4a;" text="X" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />

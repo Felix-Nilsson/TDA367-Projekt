@@ -1,6 +1,8 @@
 package main.java.View;
 
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.RadioButton;
 import main.java.Model.Enemy.Enemy;
 import main.java.Model.Game;
 import main.java.Model.Towers.Tower;
@@ -22,6 +24,7 @@ public class ToolbarHandler implements MapObserver{
     private final Button rightUpgradeButton;
     private final ImageView leftUpgradeImageView;
     private final ImageView rightUpgradeImageView;
+
 
 
     private final Tower tower;
@@ -54,6 +57,7 @@ public class ToolbarHandler implements MapObserver{
         this.towerImage = towerImage;
         this.leftUpgradeImageView = leftUpgradeImageView;
         this.rightUpgradeImageView = rightUpgradeImageView;
+
         game.addMapObserver(this);
     }
     public void setTextOfObjects(){
@@ -96,7 +100,6 @@ public class ToolbarHandler implements MapObserver{
     public void update() {
         updateUpgradeAvailable();
     }
-
     public void updateUpgradeAvailable(){
         if(game.getMoney()>=tower.getLeftUpgradeCost()){
             leftUpgradeButton.setStyle("-fx-background-color:Lightgreen");

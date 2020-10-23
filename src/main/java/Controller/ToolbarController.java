@@ -61,6 +61,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         this.parentController = parentController;
         this.tower = t;
         this.towerImage = new Image(towerImage);
+
         targetingToggleGroup = new ToggleGroup();
         toolbarHandler = new ToolbarHandler(game, tower,towerLabel,attackLabel,magicLabel,attackSpeedLabel,rangeLabel,
                 leftUpgradeCostLabel,rightUpgradeCostLabel,sellButton,tImageView, leftUpgradeButton, rightUpgradeButton,
@@ -102,6 +103,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             case STRONGEST -> strongestRadioButton.setSelected(true);
             case CLOSEST -> closestRadioButton.setSelected(true);
         }
+
     }
 
     @FXML
