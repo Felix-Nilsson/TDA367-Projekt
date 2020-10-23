@@ -2,7 +2,7 @@ package main.java.Model.Enemy;
 
 import main.java.Model.DamageType;
 import main.java.Model.Direction;
-import javafx.scene.image.Image;
+
 import java.util.List;
 /**
  * Has a reference to a BaseEnemy that can be used for the delegation of methods.
@@ -12,12 +12,10 @@ import java.util.List;
 public class BlueEnemy implements Enemy {
 
     private final BaseEnemy parent;
-    //TODO Finns bara här för att testa. Denna ska bort senare eftersom main.java.View-delar inte ska finnas i main.java.Model.
-    private Image image;
+
 
     public BlueEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor, path, startPos);
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/blue_Monster.png")));
     }
 
     /**
@@ -25,7 +23,6 @@ public class BlueEnemy implements Enemy {
      */
     @Override
     public void update(){
-        //TODO ska eventuellt vara individuell för varje enemy
         parent.update();
     }
     @Override
@@ -39,6 +36,11 @@ public class BlueEnemy implements Enemy {
     @Override
     public void tookDamage(double damage, DamageType damageType){
         parent.tookDamage(damage, damageType);
+    }
+
+    @Override
+    public int getId() {
+        return 1;
     }
 
     @Override
@@ -70,11 +72,8 @@ public class BlueEnemy implements Enemy {
     public int getMaxHealth() {
         return parent.getMaxHealth();
     }
-    //ska också tas bort senare
-    @Override
-    public Image getImage(){
-        return image;
-    }
+
+
 
 
 

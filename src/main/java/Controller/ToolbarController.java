@@ -1,10 +1,5 @@
 package main.java.Controller;
 
-import main.java.Model.Game;
-import main.java.Model.Towers.Targeting;
-import main.java.Model.Towers.Tower;
-import main.java.View.ToolbarHandler;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -14,8 +9,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import main.java.Model.Game;
+import main.java.Model.Towers.Targeting;
+import main.java.Model.Towers.Tower;
+import main.java.View.ToolbarHandler;
 
 import java.io.IOException;
 
@@ -49,7 +47,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     private final Game game;
     private final MapController parentController;
     private final ToolbarHandler toolbarHandler;
-    private final Image towerImage;
+    private final Image towerImage; //Stays here for future development (Upgrading tower images)
 
     public ToolbarController(Game game, MapController parentController, T t, String towerImage){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Toolbar.fxml"));
@@ -77,12 +75,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
 
     private void eventHandlers(){
-        closeButton.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                parentController.moveToolbarBack();
-            }
-        });
+        closeButton.setOnMousePressed(mouseEvent -> parentController.moveToolbarBack());
     }
 
     
@@ -109,11 +102,11 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
     private void updateToolbar(){
         toolbarHandler.setTextOfObjects();
-        updateUpgradeAvaialble();
-        switch(tower.getTarget()){
-            case FIRST: firstRadioButton.setSelected(true); break;
-            case STRONGEST: strongestRadioButton.setSelected(true); break;
-            case CLOSEST: closestRadioButton.setSelected(true); break;
+        updateUpgradeAvailable();
+        switch (tower.getTarget()) {
+            case FIRST -> firstRadioButton.setSelected(true);
+            case STRONGEST -> strongestRadioButton.setSelected(true);
+            case CLOSEST -> closestRadioButton.setSelected(true);
         }
     }
 
@@ -151,16 +144,16 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
         parentController.removeToolFromHash(tower);
         game.removeTower(tower);
 
+        //Uppdates the upgrade view
+        updateUpgradeAvailable();
+
     }
 
     @FXML
     private void towerUpgradeLeft(){
         if(game.getMoney() >= tower.getLeftUpgradeCost()){
-            //Upgrades tower
-            Tower tempTower = parentController.leftUpgradeTower(tower);
-
-            //Updates the controller with the new tower
-            this.tower = tempTower;
+            //Upgrades tower and updates the the controller
+            this.tower = parentController.leftUpgradeTower(tower);
 
             //JavaFX
             toolbarHandler.updateLeftUpgrade();
@@ -171,7 +164,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             //JavaFX again
             updateToolbar();
 
-            //updateUpgradeAvaialble();
+            //updatesSidebar
             parentController.updateSidebar();
         }
     }
@@ -179,11 +172,9 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     @FXML
     private void towerUpgradeRight(){
         if(game.getMoney() >= tower.getRightUpgradeCost()){
-            //Upgrades tower
-            Tower tempTower = parentController.rightUpgradeTower(tower);
 
-            //Updates the controller with the new tower
-            this.tower = tempTower;
+            //Upgrades tower and updates the the controller
+            this.tower = parentController.rightUpgradeTower(tower);
 
             //JavaFX
             toolbarHandler.updateRightUpgrade();
@@ -194,15 +185,14 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             //JavaFX again
             updateToolbar();
 
-
-            //updateUpgradeAvaialble();
+            //updates Sidebar
             parentController.updateSidebar();
         }
 
     }
 
-    public void updateUpgradeAvaialble() {
-        toolbarHandler.updateUpgradeAvaialble();
+    public void updateUpgradeAvailable() {
+        toolbarHandler.updateUpgradeAvailable();
     }
 
 

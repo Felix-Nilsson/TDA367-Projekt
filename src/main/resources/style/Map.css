@@ -22,3 +22,81 @@
 .exitButton{
     -fx-background-color:red;
 }
+.buttonMainMenuSmall{
+    -fx-font-size:22 px;
+}
+.LabelsSmall{
+    -fx-font-size:22 px;
+}
+.LabelsBig{
+    -fx-font-size: 36px;
+}
+.RadioButtonSelected{
+    -fx-text-fill:white;
+    -fx-cursor:hand;
+    -fx-background-color:-standard_red;
+    -fx-background-radius: 40px;
+    -fx-font-size:25px;
+    -fx-alignment:center;
+    -fx-padding:20px;
+
+
+}
+.buttons{
+
+    -fx-background-color: -standard_red;
+    -fx-opacity: 0.85;
+    -fx-font-family: "Berlin Sans FB";
+    -fx-background-radius: 120px;
+    -fx-text-fill: white;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+.RadioButtonSelected .radio{
+    -fx-border-width: 2px;
+    -fx-border-color: white;
+    -fx-background-color: -standard_red;
+    -fx-border-radius: 15px;
+    -fx-padding: 5px;
+}
+
+.RadioButtonSelected .dot{
+    -fx-background-radius:15px;
+    -fx-padding:8px;
+    -fx-background-color:white;
+}
+.RadioButtonNotSelected{
+    -fx-cursor:hand;
+    -fx-background-color:-standard_blue;
+    -fx-background-radius: 40px;
+    -fx-font-size:25px;
+    -fx-alignment:center;
+    -fx-padding:20px;
+    -fx-text-fill: white;
+}
+.RadioButtonNotSelected .radio{
+    -fx-border-width: 2px;
+    -fx-border-color: white;
+    -fx-background-color: -standard_blue;
+    -fx-border-radius: 15px;
+    -fx-padding: 5px;
+}
+.RadioButtonNotSelected .dot{
+    -fx-background-radius:15px;
+    -fx-padding:8px;
+    -fx-background-color:-standard_blue;
+}
+.titleMap{
+    -fx-font-size: 64px;
+    -fx-font-family: "Berlin Sans FB";
+    -fx-background-radius: 0px;
+    -fx-text-fill: white;
+    -fx-padding: 0;
+}
+.difficulty{
+    -fx-font-size: 32px;
+    -fx-font-family: "Berlin Sans FB";
+    -fx-background-radius: 0px;
+    -fx-text-fill: white;
+    -fx-padding: 0;
+}

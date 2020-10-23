@@ -38,8 +38,6 @@ public class ProjectileHandler implements ProjectileObserver {
 
     @Override
     public  void notifyProjectileRemoved(Projectile p) {
-
-
         Platform.runLater(() -> {
             if (gameBoardAnchorPane.getChildren().remove(projectileHashMap.get(p))) {
                 synchronized (projectileHashMap) {
@@ -66,10 +64,11 @@ public class ProjectileHandler implements ProjectileObserver {
 
             for (Projectile p : game.getProjectileList()) {
                 if(projectileHashMap.get(p) != null){
-                ImageView img = projectileHashMap.get(p);
-                img.setX(p.getPosX());
-                img.setY(p.getPosY());
+                    ImageView img = projectileHashMap.get(p);
+                    img.setX(p.getPosX());
+                    img.setY(p.getPosY());
                 }
+
             }
     }
 

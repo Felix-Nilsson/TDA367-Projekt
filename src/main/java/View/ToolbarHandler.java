@@ -50,7 +50,7 @@ public class ToolbarHandler implements MapObserver{
         this.leftUpgradeButton = leftUpgradeButton;
         this.rightUpgradeButton = rightUpgradeButton;
         this.towerImage = towerImage;
-
+        game.addMapObserver(this);
     }
     public void setTextOfObjects(){
         towerLabel.setText(tower.toString());
@@ -90,15 +90,12 @@ public class ToolbarHandler implements MapObserver{
 
     @Override
     public void update() {
-        updateUpgradeAvaialble();
-        updateLeftUpgrade();
-        updateRightUpgrade();
+        updateUpgradeAvailable();
     }
 
-    public void updateUpgradeAvaialble(){
+    public void updateUpgradeAvailable(){
         if(game.getMoney()>=tower.getLeftUpgradeCost()){
             leftUpgradeButton.setStyle("-fx-background-color:Lightgreen");
-
         }
         else{
             leftUpgradeButton.setStyle("-fx-background-color:red");
@@ -114,12 +111,13 @@ public class ToolbarHandler implements MapObserver{
     public void updateLeftUpgrade(){
         leftUpgradeButton.setDisable(true);
         leftUpgradeCostLabel.setText("Unavailable");
+        //updateUpgradeAvailable();
     }
 
     public void updateRightUpgrade(){
         rightUpgradeButton.setDisable(true);
         rightUpgradeCostLabel.setText("Unavailable");
-
+        updateUpgradeAvailable();
     }
 
 

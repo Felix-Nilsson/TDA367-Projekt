@@ -21,18 +21,8 @@ public class ArcherTower implements Tower {
 
 
     @Override
-    public void update() {
-        baseTower.update();
-    }
-
-    @Override
-    public void attackIfEnemyInRange(List<Enemy> enemyList) {
-        baseTower.attackIfEnemyInRange(enemyList);
-    }
-
-    @Override
-    public void attack() {
-        baseTower.attack();
+    public boolean attackIfEnemyInRange(List<Enemy> enemyList) {
+        return baseTower.attackIfEnemyInRange(enemyList);
     }
 
     @Override
@@ -60,23 +50,13 @@ public class ArcherTower implements Tower {
         return "Add 1 speed";
     }
 
-    @Override
-    public int getPosX() {
-        return baseTower.getPosX();
+    public int getCellIndexX() {
+        return baseTower.getCellIndexX();
     }
 
     @Override
-    public int getPosY() {
-        return baseTower.getPosY();
-
-    }
-    public int getX() {
-        return baseTower.getX();
-    }
-
-    @Override
-    public int getY() {
-        return baseTower.getY();
+    public int getCellIndexY() {
+        return baseTower.getCellIndexY();
     }
 
     @Override
@@ -142,11 +122,6 @@ public class ArcherTower implements Tower {
         return baseTower.getRange();
     }
 
-    @Override
-
-    public void setAngle(double angle) {
-        baseTower.setAngle(angle);
-    }
     public Targeting getTarget() {
         return baseTower.getTarget();
     }

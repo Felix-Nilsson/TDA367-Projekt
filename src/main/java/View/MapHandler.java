@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -13,7 +14,6 @@ import javafx.scene.shape.Rectangle;
 import main.java.Model.Cell.Cell;
 import main.java.Model.Enemy.Enemy;
 import main.java.Model.Game;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +26,7 @@ public class MapHandler implements MapObserver {
     private final Pane gameOverScreen;
     private HashMap<Enemy, ImageView> enemyHashMap;
     private Label waveNumber;
+    private RadioButton gridLayout;
 
     private final List<Cell> map;
     private ImageView cave;
@@ -60,6 +61,7 @@ public class MapHandler implements MapObserver {
     }
     private void setLabels(){
         nameOfMapLabel.setText(game.getNameOfMap());
+
         difficultyLabel.setText(game.getDifficulty().name());
     }
 
@@ -103,6 +105,7 @@ public class MapHandler implements MapObserver {
 
     public void changeToplayerGridVisible(boolean visible){
         toplayerGrid.setGridLinesVisible(visible);
+
     }
 
     private void fixImage(ImageView img,Enemy e){
@@ -212,8 +215,8 @@ public class MapHandler implements MapObserver {
                     synchronized (game.getEnemiesInWave()) {
                         for (Enemy e : game.getEnemiesInWave()) {
                             if (!enemyHashMap.containsKey(e) && !progressBarHashMap.containsKey(e)) {
-
-                                ImageView img = new ImageView(e.getImage());
+                                EnemyView enemyImage= new EnemyView(e);
+                                ImageView img = new ImageView(enemyImage.getImage());
                                 fixImage(img, e);
                                 enemyHashMap.put(e, img);
                                 Platform.runLater(() -> gameBoardAnchorPane.getChildren().add(img));

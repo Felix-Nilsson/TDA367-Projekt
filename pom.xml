@@ -42,8 +42,8 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
+            <version>6.14.3</version>
+            <scope>test/main.java.Model</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

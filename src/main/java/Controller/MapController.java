@@ -167,7 +167,7 @@ public class MapController extends AnchorPane {
 
                 } else {
                     try {
-                        throw new Exception("Tower Placement Error");
+                        throw new Exception("Tower Placement Error: Can't place tower there!");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -202,9 +202,26 @@ public class MapController extends AnchorPane {
     @FXML
     private void changeGridVisibilty() {
         mapHandler.changeToplayerGridVisible(gridLayoutRadioButton.isSelected());
+        gridLayoutRadioButton.getStyleClass().clear();
+        if(gridLayoutRadioButton.isSelected()){
+            gridLayoutRadioButton.getStyleClass().add("RadioButtonSelected");
+        }
+        else{
+            gridLayoutRadioButton.getStyleClass().add("RadioButtonNotSelected");
+        }
+
+
+
     }
     @FXML private void autoStartPressed(){
         game.setAutostart(autoStartRadioButton.isSelected());
+        autoStartRadioButton.getStyleClass().clear();
+        if(autoStartRadioButton.isSelected()){
+            autoStartRadioButton.getStyleClass().add("RadioButtonSelected");
+        }
+        else{
+            autoStartRadioButton.getStyleClass().add("RadioButtonNotSelected");
+        }
     }
     @FXML private void setBackgroundSound(){
        mediaPlayer.setVolume(musicSlider.getValue());
@@ -345,7 +362,7 @@ public class MapController extends AnchorPane {
     public void updateToolbar(){
         //Updates every controller in toolbarcontroller
         for(Map.Entry<Tower, ToolbarController<?>> entry : toolbarTowerHashMap.entrySet()){
-            entry.getValue().updateUpgradeAvaialble();
+            entry.getValue().updateUpgradeAvailable();
         }
     }
 

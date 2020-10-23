@@ -1,18 +1,22 @@
 package main.java.Controller;
 
-import main.java.Model.Game;
-import main.java.Model.Towers.*;
-import main.java.View.SidebarHandler;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import main.java.Model.Game;
+import main.java.Model.Towers.ArcherTowerFactory;
+import main.java.Model.Towers.MageTowerFactory;
+import main.java.Model.Towers.TowerFactory;
+import main.java.View.SidebarHandler;
+
 import java.io.IOException;
 
 
@@ -36,8 +40,6 @@ public class SidebarController extends AnchorPane  {
     @FXML private Label mageTowerPriceLabel;
 
     private final MapController parentController;
-    private MageTowerFactory mF;
-    private ArcherTowerFactory aF;
     private final SidebarHandler sidebarHandler;
 
     public SidebarController(Game game,MapController parentController) {
@@ -55,42 +57,36 @@ public class SidebarController extends AnchorPane  {
         updateAvailable();
     }
     private void eventHandlers(){
-        mageTower.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        mageTower.setOnDragDetected(mouseEvent -> {
 
-                Dragboard db = startDragAndDrop(TransferMode.ANY);
-                ClipboardContent content = new ClipboardContent();
-                String imageURL = "/img/mageTower.png";
-                Image tempIMG = new Image(imageURL, 40, 40, false, false, false);
-                content.putString(imageURL);
-                content.putImage(tempIMG);
-                db.setContent(content);
-                mouseEvent.consume();
+            Dragboard db = startDragAndDrop(TransferMode.ANY);
+            ClipboardContent content = new ClipboardContent();
+            String imageURL = "/img/mageTower.png";
+            Image tempIMG = new Image(imageURL, 40, 40, false, false, false);
+            content.putString(imageURL);
+            content.putImage(tempIMG);
+            db.setContent(content);
+            mouseEvent.consume();
 
-                MageTowerFactory mf = new MageTowerFactory();
-                sendTowerToMap(mf);
-                updateAvailable();
-                sidebarHandler.updatePlayerStats();
-            }
+            MageTowerFactory mf = new MageTowerFactory();
+            sendTowerToMap(mf);
+            updateAvailable();
+            sidebarHandler.updatePlayerStats();
         });
-        archerTower.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Dragboard db = startDragAndDrop(TransferMode.ANY);
-                ClipboardContent content = new ClipboardContent();
-                String imageURL = "/img/archerTower.png";
-                Image tempIMG = new Image(imageURL, 40, 40, false, false, false);
-                content.putString(imageURL);
-                content.putImage(tempIMG);
-                db.setContent(content);
-                mouseEvent.consume();
+        archerTower.setOnDragDetected(mouseEvent -> {
+            Dragboard db = startDragAndDrop(TransferMode.ANY);
+            ClipboardContent content = new ClipboardContent();
+            String imageURL = "/img/archerTower.png";
+            Image tempIMG = new Image(imageURL, 40, 40, false, false, false);
+            content.putString(imageURL);
+            content.putImage(tempIMG);
+            db.setContent(content);
+            mouseEvent.consume();
 
-                ArcherTowerFactory af = new ArcherTowerFactory();
-                sendTowerToMap(af);
-                updateAvailable();
-                sidebarHandler.updatePlayerStats();
-            }
+            ArcherTowerFactory af = new ArcherTowerFactory();
+            sendTowerToMap(af);
+            updateAvailable();
+            sidebarHandler.updatePlayerStats();
         });
     }
 
