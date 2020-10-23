@@ -128,7 +128,7 @@ public class MageTower implements Tower {
     public void startTimer() {
         baseTower.startTimer();
     }
-    
+
 
     @Override
     public String getLeftUpgradeImage() {

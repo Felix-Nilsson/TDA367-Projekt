@@ -331,11 +331,11 @@ public class MapController extends AnchorPane {
     }
 
     public void moveToolbarBack(){
-        mapHandler.moveToolbarBack(toolbarAnchorPane, toolbarCover);
+        mapHandler.moveToolbarBack(toolbarAnchorPane);
     }
 
     public void moveToolbarFront(){
-        mapHandler.moveToolbarFront(toolbarAnchorPane, toolbarCover);
+        mapHandler.moveToolbarFront(toolbarAnchorPane);
     }
 
     public void removeImageFromGrid(Tower t){
