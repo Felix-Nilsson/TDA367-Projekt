@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import main.java.Model.Towers.ArcherTowerFactory;
+import main.java.Model.Towers.MageTowerFactory;
 
 public class SidebarHandler implements MapObserver {
     private final ImageView playButtonImg;
@@ -70,13 +72,13 @@ public class SidebarHandler implements MapObserver {
         updateAvailable();
     }
     public void updateAvailable(){
-        if(game.getMoney() >= 150){ //Price of mageTower might need to get
+        if(game.getMoney() >= new MageTowerFactory().getPrice()){
             mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
         }
         else {
             mageTowerAvailable.setStyle("-fx-background-color:red");
         }
-        if(game.getMoney() >= 100){ //Price of archerTower might need to get
+        if(game.getMoney() >= new ArcherTowerFactory().getPrice()){
             archerTowerAvailable.setStyle("-fx-background-color:Lightgreen");
         }
         else {
