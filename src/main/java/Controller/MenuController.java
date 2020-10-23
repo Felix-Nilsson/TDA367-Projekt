@@ -1,20 +1,19 @@
 package main.java.Controller;
 
-import main.java.Model.Difficulty;
-import main.java.Model.Game;
-import main.java.View.MenuHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import main.java.Model.Difficulty;
+import main.java.Model.Game;
+import main.java.View.MenuHandler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class MenuController extends AnchorPane implements Initializable {
 
@@ -64,10 +63,17 @@ public class MenuController extends AnchorPane implements Initializable {
 
     @FXML
     protected void newGame(){
-        playClickUIButtonSound();
-        Game game = new Game(difficulty,mapNumber);
-        MapController mapController = new MapController(game,game.getBoard(),this);
-        menuHandler.mapToFront(mapController);
+        //currently under developement, only one map
+        if(mapNumber == 1){
+            playClickUIButtonSound();
+            Game game = new Game(difficulty,mapNumber);
+            MapController mapController = new MapController(game,game.getBoard(),this);
+            menuHandler.mapToFront(mapController);
+        }
+        else{
+            System.out.println("please select a valid map");
+        }
+
     }
     @FXML private void loadGame(){
         playClickUIButtonSound();
