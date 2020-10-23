@@ -257,8 +257,4 @@ public class BaseTower implements Tower {
     }
 
 
-    public void setColor(String s){
-        this.position.setColor(s);
-    }
-
 }

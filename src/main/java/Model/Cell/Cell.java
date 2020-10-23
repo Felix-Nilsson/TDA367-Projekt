@@ -6,10 +6,6 @@ public interface Cell {
 
     boolean isOccupied();
 
-    String getColor();
-
-    void setColor(String s);
-
     int getX();
 
     int getY();
