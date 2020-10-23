@@ -6,7 +6,7 @@ import main.java.Model.Difficulty;
 import main.java.Model.Game;
 import main.java.Model.Towers.*;
 import main.java.Model.Towers.Upgrade.MageTowerRightUpgrade;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
