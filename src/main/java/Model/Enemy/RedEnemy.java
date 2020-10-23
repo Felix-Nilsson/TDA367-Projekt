@@ -2,7 +2,7 @@ package main.java.Model.Enemy;
 
 import main.java.Model.DamageType;
 import main.java.Model.Direction;
-import javafx.scene.image.Image;
+
 import java.util.List;
 
 /**
@@ -13,12 +13,9 @@ import java.util.List;
 public class RedEnemy implements Enemy {
 
     private final BaseEnemy parent;
-    //TODO Finns bara här för att testa. Denna ska bort senare eftersom main.java.View-delar inte ska finnas i main.java.Model.
-    private Image image;
 
     public RedEnemy(int health, int movementSpeed, int magicResist, int armor, List<Direction> path, int startPos){
         parent=new BaseEnemy(health, movementSpeed, magicResist, armor,path, startPos);
-        this.image = new Image((getClass().getClassLoader().getResourceAsStream("img/red_Monster.png")));
     }
 
     /**
@@ -41,6 +38,11 @@ public class RedEnemy implements Enemy {
     @Override
     public void tookDamage(double damage, DamageType damageType){
         parent.tookDamage(damage,damageType);
+    }
+
+    @Override
+    public int getId() {
+        return 2;
     }
 
 
@@ -73,9 +75,5 @@ public class RedEnemy implements Enemy {
     public int getMaxHealth() {
         return parent.getMaxHealth();
     }
-    //bör också tas bort senare
-    @Override
-    public Image getImage(){
-        return image;
-    }
+
 }
