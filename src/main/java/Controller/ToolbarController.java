@@ -49,7 +49,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
     private final Game game;
     private final MapController parentController;
     private final ToolbarHandler toolbarHandler;
-    private Image towerImage;
+    private final Image towerImage;
 
     public ToolbarController(Game game, MapController parentController, T t, String towerImage){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Toolbar.fxml"));

@@ -1,14 +1,11 @@
 package main.java.Controller;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -88,7 +85,7 @@ public class MapController extends AnchorPane {
     private MediaPlayer mediaPlayer;
 
     private final HashMap<Tower,ImageView> towerHashMap;  //If we want different images for upgarded towers, this need to be updated, however this wont be done here
-    private final HashMap<Tower, ToolbarController> toolbarTowerHashMap;
+    private final HashMap<Tower, ToolbarController<?>> toolbarTowerHashMap;
 
     private final MapHandler mapHandler;
 
@@ -96,7 +93,6 @@ public class MapController extends AnchorPane {
     private final MenuController parentController;
 
     private ProgressBar pb;
-    private HashMap<Enemy, ProgressBar> progressBarHashMap;
 
     public MapController(Game game, List<Cell> map, MenuController parentController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Map.fxml"));
@@ -112,7 +108,7 @@ public class MapController extends AnchorPane {
         this.mapHandler = new MapHandler(game,nameOfMapLabel,difficultyLabel,waveNumber,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
-        progressBarHashMap = new HashMap<>();
+        HashMap<Enemy, ProgressBar> progressBarHashMap = new HashMap<>();
         createSidebar();
 
         eventHandlers();
@@ -124,85 +120,79 @@ public class MapController extends AnchorPane {
         //EventHandlers
 
         //When dragged over GridPane
-        gameBoardGrid.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                if (dragEvent.getGestureSource() != gameBoardGrid) {
-                    dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                }
-                dragEvent.consume();
+        gameBoardGrid.setOnDragOver(dragEvent -> {
+            if (dragEvent.getGestureSource() != gameBoardGrid) {
+                dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
+            dragEvent.consume();
         });
 
 
         //Upon releasing the mouse over a specific node
-        gameBoardGrid.setOnDragDropped(new EventHandler<DragEvent>() {
+        gameBoardGrid.setOnDragDropped(dragEvent -> {
+            Dragboard db = dragEvent.getDragboard();
+            Node node = dragEvent.getPickResult().getIntersectedNode();
 
-            @Override
-            public void handle(DragEvent dragEvent) {
-                Dragboard db = dragEvent.getDragboard();
-                Node node = dragEvent.getPickResult().getIntersectedNode();
+            if (node != gameBoardGrid && db.hasImage()) {
 
-                if (node != gameBoardGrid && db.hasImage()) {
-
-                    //Find Cell to place the tower
-                    int x_placement = getGridX(node);
-                    int y_placement = getGridY(node);
-
-                    //Check if the cell is available
-                    int index = game.getArrayIndex(x_placement, y_placement);
-                    boolean occupied = game.getCellOccupied(index);
-
-                    if (!occupied && towerFactory.getPrice() <= game.getMoney()) {
-                        //Place the image in the cell
-                        ImageView image = new ImageView(db.getImage());
-
-                        gameBoardGrid.add(image, x_placement, y_placement);
-                        setTowerOnCell(index);
-
-                        //After the tower has been added, add to hashmap
-                        synchronized (towerHashMap){
-                            towerHashMap.put(game.getTower(x_placement, y_placement), image);
-                        }
-
-                        //Creates a new toolbar with the tower
-                        createToolbar(game.getTower(x_placement, y_placement), db.getString());
-
-                        //Change money
-                        game.addMoney(-towerFactory.getPrice());
-                        updateSidebar(); //TODO Error here, need to update Toolbar Handler
-
-                        //Updates the previous toolbarcontroller
-                        updateToolbar();
-
-                    } else {
-                        //TODO Some sort of error or could just leave it empty
-                    }
-                }
-
-                dragEvent.setDropCompleted(true);
-                dragEvent.consume();
-            }
-        });
-
-        gameBoardGrid.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Node node = mouseEvent.getPickResult().getIntersectedNode();
-
+                //Find Cell to place the tower
                 int x_placement = getGridX(node);
                 int y_placement = getGridY(node);
 
-                Tower t = game.getTower(x_placement, y_placement);
-                System.out.println("inte labans prints hehe: "
-                        + node.getLayoutX() + " " + node.getLayoutY() + " " + node);
-                mapHandler.setSelectedTower(node);
+                //Check if the cell is available
+                int index = game.getArrayIndex(x_placement, y_placement);
+                boolean occupied = game.getCellOccupied(index);
 
+                if (!occupied && towerFactory.getPrice() <= game.getMoney()) {
+                    //Place the image in the cell
+                    ImageView image = new ImageView(db.getImage());
 
-                if (t != null) {
-                    moveToolbarFront();
-                    setToolCont(t);
+                    gameBoardGrid.add(image, x_placement, y_placement);
+                    setTowerOnCell(index);
+
+                    //After the tower has been added, add to hashmap
+                    synchronized (towerHashMap) {
+                        towerHashMap.put(game.getTower(x_placement, y_placement), image);
+                    }
+
+                    //Creates a new toolbar with the tower
+                    createToolbar(game.getTower(x_placement, y_placement), db.getString());
+
+                    //Change money
+                    game.addMoney(-towerFactory.getPrice());
+                    updateSidebar(); //TODO Error here, need to update Toolbar Handler
+
+                    //Updates the previous toolbarcontroller
+                    updateToolbar();
+
+                } else {
+                    try {
+                        throw new Exception("Tower Placement Error");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+            }
+
+            dragEvent.setDropCompleted(true);
+            dragEvent.consume();
+        });
+
+        gameBoardGrid.setOnMouseClicked(mouseEvent -> {
+            Node node = mouseEvent.getPickResult().getIntersectedNode();
+
+            int x_placement = getGridX(node);
+            int y_placement = getGridY(node);
+
+            Tower t = game.getTower(x_placement, y_placement);
+            System.out.println("inte labans prints hehe: "
+                    + node.getLayoutX() + " " + node.getLayoutY() + " " + node);
+            mapHandler.setSelectedTower(node);
+
+
+            if (t != null) {
+                moveToolbarFront();
+                setPaneWithController(t);
             }
         });
 
@@ -242,11 +232,12 @@ public class MapController extends AnchorPane {
     }
 
     private <T extends Tower> void createToolbar(T t, String imageUrl) {
-        ToolbarController<T> toolbarController = new ToolbarController(game, this, t, imageUrl);
+        ToolbarController<?> toolbarController = new ToolbarController<>(game, this, t, imageUrl);
         toolbarTowerHashMap.put(t, toolbarController);
     }
 
-    private void setToolCont(Tower t) {
+    //Adds the Connects anchorpane and controller
+    private void setPaneWithController(Tower t) {
         toolbarAnchorPane.getChildren().clear();
         toolbarAnchorPane.getChildren().add(toolbarTowerHashMap.get(t));
 
@@ -353,7 +344,7 @@ public class MapController extends AnchorPane {
 
     public void updateToolbar(){
         //Updates every controller in toolbarcontroller
-        for(Map.Entry<Tower, ToolbarController> entry : toolbarTowerHashMap.entrySet()){
+        for(Map.Entry<Tower, ToolbarController<?>> entry : toolbarTowerHashMap.entrySet()){
             entry.getValue().updateUpgradeAvaialble();
         }
     }
