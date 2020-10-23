@@ -23,10 +23,10 @@ public class Projectile {
 
 
     private void calculateVelocity(){
-        double distX = enemyPosX-posX;
+        double distX = enemyPosX-posX ;
         //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. angle reflekterar nu verkligheten.
         //i Projectile skapa finns det minus framför vy för att återställa detta igen
-        double distY = -(enemyPosY-posY);
+        double distY = -(enemyPosY-posY );
         //angle is in radians
         double angle = Math.atan2(distY, distX);
         int vMultiplier = 30;
