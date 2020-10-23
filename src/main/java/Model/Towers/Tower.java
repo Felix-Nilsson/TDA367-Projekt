@@ -34,9 +34,9 @@ public interface Tower {
     void stopTimer();
     void startTimer();
 
-    void setMagicDmg(int amount);
-    void setPhysicalDmg(int amount);
-    void setAttackSpeed(double amount);
+    void upgradeMagicDmg();
+    void upgradePhysicalDmg();
+    void upgradeAttackSpeed();
 
     Targeting getTarget();
     void setTarget(Targeting target);

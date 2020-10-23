@@ -11,13 +11,21 @@ import java.util.List;
 public class ArcherTower implements Tower {
 
     private final BaseTower baseTower ;
+
     private final int id;
+
+    private final double attackSpeedAdder;
+    private final int physicalDamageAdder;
+    private final int magicDamageAdder;
+
 
     public ArcherTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
 
         id = 2;
-
+        attackSpeedAdder = 2;
+        physicalDamageAdder = 20;
+        magicDamageAdder = 0;
     }
 
 
@@ -25,6 +33,10 @@ public class ArcherTower implements Tower {
     @Override
     public int getId(){
         return this.id;
+
+        //Having a image in the baseclass like this is not very good
+        //if we had more time, all images would be sorted and called in view
+
     }
 
     @Override
@@ -59,12 +71,12 @@ public class ArcherTower implements Tower {
 
     @Override
     public String getLeftUpgradeLabel() {
-        return "Add 20 physical damage";
+        return "Add " +physicalDamageAdder+ " physical damage";
     }
 
     @Override
     public String getRightUpgradeLabel() {
-        return "Add 1 speed";
+        return "Add " + attackSpeedAdder + " atk speed";
     }
 
     public int getCellIndexX() {
@@ -92,21 +104,21 @@ public class ArcherTower implements Tower {
 
     }
 
+
     @Override
-    public void setMagicDmg(int amount) {
-        baseTower.setMagicDmg(amount);
+    public void upgradeMagicDmg() {
+        baseTower.upgradeMagicDmgBy(magicDamageAdder);
     }
 
     @Override
-    public void setPhysicalDmg(int amount) {
-        baseTower.setPhysicalDmg(amount);
+    public void upgradePhysicalDmg() {
+        baseTower.upgradePhysicalDmgBy(physicalDamageAdder);
     }
 
     @Override
-    public void setAttackSpeed(double amount) {
-        baseTower.setAttackSpeed(amount);
+    public void upgradeAttackSpeed() {
+        baseTower.upgradeAttackSpeedBy(attackSpeedAdder);
     }
-
 
     @Override
     public boolean getIsReadyToFire() {
@@ -158,7 +170,6 @@ public class ArcherTower implements Tower {
 
     public Projectile getProjectile() {
         return baseTower.getProjectile();
-
     }
 
     @Override

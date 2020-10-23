@@ -9,13 +9,26 @@ import java.util.List;
 
 public class MageTower implements Tower {
     private final BaseTower baseTower ;
+
     private final int id;
+
+    private final double attackSpeedAdder = 0.5;
+    private final int physicalDamageAdder;
+    private final int magicDamageAdder;
+
+
 
 
     public MageTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
+
         id = 1;
+        physicalDamageAdder=0;
+        magicDamageAdder=20;
     }
+
+
+
 
 
 
@@ -58,12 +71,12 @@ public class MageTower implements Tower {
 
     @Override
     public String getLeftUpgradeLabel() {
-        return "Add 20 magic damage";
+        return "Add "+ magicDamageAdder + " magic damage";
     }
 
     @Override
     public String getRightUpgradeLabel() {
-        return "Add 1 speed";
+        return "Add " + attackSpeedAdder + " attackspeed";
     }
 
 
@@ -94,19 +107,18 @@ public class MageTower implements Tower {
     }
 
     @Override
-
-    public void setMagicDmg(int amount) {
-        baseTower.setMagicDmg(amount);
+    public void upgradeMagicDmg() {
+        baseTower.upgradeMagicDmgBy(magicDamageAdder);
     }
 
     @Override
-    public void setPhysicalDmg(int amount) {
-        baseTower.setPhysicalDmg(amount);
+    public void upgradePhysicalDmg() {
+        baseTower.upgradePhysicalDmgBy(physicalDamageAdder);
     }
 
     @Override
-    public void setAttackSpeed(double amount) {
-        baseTower.setAttackSpeed(amount);
+    public void upgradeAttackSpeed() {
+        baseTower.upgradeAttackSpeedBy( attackSpeedAdder);
     }
 
 

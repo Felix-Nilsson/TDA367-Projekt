@@ -70,16 +70,16 @@ public abstract class TowerUpgrade implements Tower {
         return tower.getAttackSpeed();
     }
 
-    public void setMagicDmg(int amount) {
-        tower.setMagicDmg(amount);
+    public void upgradeMagicDmg() {
+        tower.upgradeMagicDmg();
     }
 
-    public void setPhysicalDmg(int amount) {
-        tower.setPhysicalDmg(amount);
+    public void upgradePhysicalDmg() {
+        tower.upgradePhysicalDmg();
     }
 
-    public void setAttackSpeed(double amount) {
-        tower.setAttackSpeed(amount);
+    public void upgradeAttackSpeed() {
+        tower.upgradeAttackSpeed();
     }
 
     public Targeting getTarget() {

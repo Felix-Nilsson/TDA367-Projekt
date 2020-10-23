@@ -21,13 +21,11 @@ public class BaseTower implements Tower {
     private final int range;
 
     private double attackSpeed;
-    private double angle;
     private final int posX;
     private final int posY;
     private final int leftUpgradeCost;
     private final int rightUpgradeCost;
 
-    private Projectile currentProjectile;
     private int enemyPosX;
     private int enemyPosY;
     private double currentCooldown;
@@ -55,12 +53,9 @@ public class BaseTower implements Tower {
         currentCooldown=0;
         isReadyToFire=true;
 
-
         timerIsRunning=false;
 
         timerDelayInMilliseconds=100;
-
-
 
         //Default is closest
         target = Targeting.FIRST;
@@ -93,7 +88,9 @@ public class BaseTower implements Tower {
         }
     }
 
-
+    /**
+     * Each tower holds a timer that is used to calculate whether it is ready to fire or not
+     */
     private void checkCooldown(){
         if(currentCooldown>0){
             currentCooldown--;
@@ -108,17 +105,22 @@ public class BaseTower implements Tower {
         return isReadyToFire;
     }
 
+    /**
+     * method is called in the main loop in Game. Loops through all enemies and check if they are in range. If an enemy is in range it makes them take damage (hitscan).
+     * changed sign for distY because the GUI and a Unit Circle have opposite Y directions. Makes it easier to understand if there was an angle because it would then reflect the Unit Circle.
+     * this.angle = Math.atan2(distY, distX); There should be an angle if, for instance, the imageView can rotate.
+     * In the Projectile class, this sign change is reversed
+     */
+    @Override
     public boolean attackIfEnemyInRange(List<Enemy> enemyList) {
         for (Enemy e : enemyList){
             enemyPosX = e.getPositionX();
             enemyPosY = e.getPositionY();
             double distX = enemyPosX-posX;
-            //minus framför eftersom större y går nedåt i GUI men uppåt i enhetscirkeln. angle reflekterar nu verkligheten.
-            //i Projectile skapa finns det minus framför vy för att återställa detta igen
+
             double distY = -(enemyPosY-posY);
             double distHyp = Math.sqrt(distX*distX + distY*distY);
             if (distHyp<this.range) {
-                this.angle = Math.atan2(distY, distX);
                 if(physicalDmg>0){
                     e.tookDamage(physicalDmg, DamageType.PHYSICAL);
                 }
@@ -145,21 +147,24 @@ public class BaseTower implements Tower {
         return 0;
     }
 
-    //sätter cooldown beroende på attackspeed så att Tower inte kan attackera konstant
+    /**
+     * Sets cooldown based on attackSpeed so that towers cannot attack constantly.
+     * The attackspeed is attacks/second, for example:
+     * attackspeed=0.5, then 1/attackspeed==2 attacks per second. However, cooldown is modified more than once a second, in fact every (timerDelayInMilliseconds/1000) seconds
+     * To compensate for this, the numerator is 1000 (milliseconds) and the denominator is attackspeed*timerDelayInMilliseconds
+     */
     private void resetCurrentCooldown(){
-        //the attackspeed is attacks/second, for example:
-        //attackspeed=0.5, then 1/attackspeed==2 attacks per second. However cooldown is modified more than once a second, in fact every (timerDelayInMilliseconds/1000) seconds
-        // To compensate for this, the numerator is 1000 (milliseconds) and the denominator is attackspeed*timerDelayInMilliseconds
-
         currentCooldown = (1000/(attackSpeed*timerDelayInMilliseconds));
         isReadyToFire = false;
     }
 
-
+    /**
+     * Game requires access to projectile when a tower attacks because Game has the projectileList.
+     * @return a Projectile that is fired toward enemyPos
+     */
     public Projectile getProjectile(){
         return new Projectile(this.posX,this.posY, enemyPosX, enemyPosY);
     }
-
 
     public int getPrice() {
         return price;
@@ -212,18 +217,30 @@ public class BaseTower implements Tower {
     }
 
     @Override
-    public void setMagicDmg(int amount) {
-        this.magicDmg = amount;
+    public void upgradeMagicDmg() {
+        //standard
+        this.magicDmg = magicDmg + 20;
     }
 
     @Override
-    public void setPhysicalDmg(int amount) {
-        this.physicalDmg = amount;
+    public void upgradePhysicalDmg() {
+        //standard
+        this.physicalDmg = physicalDmg+20;
+    }
+    protected void upgradePhysicalDmgBy(int amount){
+        this.physicalDmg = physicalDmg + amount;
+    }
+    protected void upgradeMagicDmgBy(int amount){
+        this.magicDmg = magicDmg +amount;
     }
 
     @Override
-    public void setAttackSpeed(double amount) {
-        this.attackSpeed = amount;
+    public void upgradeAttackSpeed() {
+        this.attackSpeed++;
+    }
+
+    public void upgradeAttackSpeedBy(double amount) {
+        this.attackSpeed = attackSpeed + amount;
     }
 
 

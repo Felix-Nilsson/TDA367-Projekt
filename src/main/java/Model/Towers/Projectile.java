@@ -1,7 +1,17 @@
 package main.java.Model.Towers;
 
+/**
+ * Projectiles are fired by towers but at the moment it is hitscan so projectiles do not have any real purpose since there is no class that checks collision between objects.
+ * Currently it is only a single class. In the future, it might develop into a strategy pattern or standard composition to account for different behaviours for different projectiles.
+ */
 public class Projectile {
+    /**
+     * Horizontal velocity
+     */
     private double vx;
+    /**
+     * Vertical velocity
+     */
     private double vy;
     private double posX;
     private double posY;
@@ -9,9 +19,6 @@ public class Projectile {
     private final double enemyPosY;
     private boolean exists;
 
-
-    //Kan också testa med Enemy som arg istället. Blir lättare om projectiles inte kan missa eftersom man då har direkt tillgång till Enemy.
-    //Om projectile inte är hitscan och tower har en Angle blir det lätt att implementera en riktig projektil (collision måste dock skapas då)
     public Projectile(double towerPosX, double towerPosY, double enemyPosX, double enemyPosY){
         this.posX=towerPosX;
         this.posY=towerPosY;
@@ -20,7 +27,6 @@ public class Projectile {
         calculateVelocity();
         exists=true;
     }
-
 
     private void calculateVelocity(){
         double distX = enemyPosX-posX ;
@@ -45,6 +51,9 @@ public class Projectile {
         return exists;
     }
 
+    /**
+     * moves the projectile and checks if it has reached the position of the enemy when tower fired the projectile
+     */
     public void update(){
         move();
         if(targetInFirstQuadrantWasHit() || targetInSecondQuadrantWasHit() || targetInThirdQuadrantWasHit() || targetInFourthQuadrantWasHit()){

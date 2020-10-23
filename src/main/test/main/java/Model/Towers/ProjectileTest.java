@@ -1,4 +1,4 @@
-
+/*
 package main.java.Model.Towers;
 
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ class ProjectileTest {
      * @author Felix Nilsson
      * @author Simon Larsson
      */
-
+/*
     @Test
     void getTargetPosX() {
         Projectile p = new Projectile(0,0,0,10);
@@ -68,3 +68,5 @@ class ProjectileTest {
         assertEquals(0,p.getPosY());
     }
 }
+
+ */

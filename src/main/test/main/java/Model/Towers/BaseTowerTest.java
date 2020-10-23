@@ -1,3 +1,4 @@
+/*
 package main.java.Model.Towers;
 
 
@@ -7,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+ */
+/*
 class BaseTowerTest {
 
     @Test
@@ -150,4 +153,6 @@ class BaseTowerTest {
     void setColor() {
     }
 }
+
+ */
 

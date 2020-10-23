@@ -9,7 +9,7 @@ public class ArcherTowerLeftUpgrade extends TowerUpgrade{
     }
 
     public Tower leftUpgrade(){
-        tower.setPhysicalDmg(tower.getPhysicalDmg()+20); //MIght need to make upgrades call to the tower before or smthing
+        tower.upgradePhysicalDmg(); //MIght need to make upgrades call to the tower before or smthing
         return super.leftUpgrade(tower);
     }
 
