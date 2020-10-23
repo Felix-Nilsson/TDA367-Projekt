@@ -138,7 +138,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
 
         //Changes the money amount when selling
         game.addMoney((int)(tower.getPrice()*0.5));
-        parentController.updateSidebar(); //TODO Might cause cycle dependency
+        parentController.updateView();
 
         //Removes the tower and controller from the hashmap
         parentController.removeToolFromHash(tower);
@@ -165,7 +165,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             updateToolbar();
 
             //updatesSidebar
-            parentController.updateSidebar();
+            parentController.updateView();
         }
     }
 
@@ -186,7 +186,7 @@ public class ToolbarController <T extends Tower> extends AnchorPane  {
             updateToolbar();
 
             //updates Sidebar
-            parentController.updateSidebar();
+            parentController.updateView();
         }
 
     }
