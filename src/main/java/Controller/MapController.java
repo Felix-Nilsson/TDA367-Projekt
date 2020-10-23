@@ -105,7 +105,7 @@ public class MapController extends AnchorPane {
         }
         this.parentController = parentController;
         this.game = game;
-        this.mapHandler = new MapHandler(game,nameOfMapLabel,difficultyLabel,waveNumber,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map);
+        this.mapHandler = new MapHandler(game,nameOfMapLabel,difficultyLabel,waveNumber,gameOverScreen,gameWonScreen,gameBoardAnchorPane, gameBoardGrid, toplayerGrid, map,gridLayoutRadioButton,autoStartRadioButton);
         towerHashMap = new HashMap<>(); //Might need to move
         toolbarTowerHashMap = new HashMap<>();//Same
         HashMap<Enemy, ProgressBar> progressBarHashMap = new HashMap<>();
@@ -204,26 +204,10 @@ public class MapController extends AnchorPane {
     @FXML
     private void changeGridVisibilty() {
         mapHandler.changeToplayerGridVisible(gridLayoutRadioButton.isSelected());
-        gridLayoutRadioButton.getStyleClass().clear();
-        if(gridLayoutRadioButton.isSelected()){
-            gridLayoutRadioButton.getStyleClass().add("RadioButtonSelected");
-        }
-        else{
-            gridLayoutRadioButton.getStyleClass().add("RadioButtonNotSelected");
-        }
-
-
-
     }
     @FXML private void autoStartPressed(){
         game.setAutostart(autoStartRadioButton.isSelected());
-        autoStartRadioButton.getStyleClass().clear();
-        if(autoStartRadioButton.isSelected()){
-            autoStartRadioButton.getStyleClass().add("RadioButtonSelected");
-        }
-        else{
-            autoStartRadioButton.getStyleClass().add("RadioButtonNotSelected");
-        }
+        mapHandler.autoStartView();
     }
     @FXML private void setBackgroundSound(){
        mediaPlayer.setVolume(musicSlider.getValue());

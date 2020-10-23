@@ -45,7 +45,7 @@ public class MenuController extends AnchorPane implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        menuHandler = new MenuHandler(map,options,mapSelectionAnchorPane,mainMenuAnchorPane);
+        menuHandler = new MenuHandler(map,options,mapSelectionAnchorPane,mainMenuAnchorPane,radioButtonEasy,radioButtonMedium,radioButtonHard);
         activateRadioButtons();
         update();
     }
@@ -117,25 +117,15 @@ public class MenuController extends AnchorPane implements Initializable {
      * Can be argued that these need to go into VIEW. But these methods have strong controller behaviours
      */
     @FXML private void selectEasyDifficulty(){
-        radioButtonEasy.getStyleClass().clear();
-        radioButtonEasy.getStyleClass().add("RadioButtonSelected");
-        radioButtonMedium.getStyleClass().add("RadioButtonNotSelected");
-        radioButtonHard.getStyleClass().add("RadioButtonNotSelected");
+        menuHandler.selectEasyButton();
         update();
     }
     @FXML private void selectMediumDifficulty(){
-
-        radioButtonEasy.getStyleClass().add("RadioButtonNotSelected");
-        radioButtonMedium.getStyleClass().clear();
-        radioButtonMedium.getStyleClass().add("RadioButtonSelected");
-        radioButtonHard.getStyleClass().add("RadioButtonNotSelected");
+        menuHandler.selectMediumButton();
         update();
     }
     @FXML private void selectHardDifficulty(){
-        radioButtonEasy.getStyleClass().add("RadioButtonNotSelected");
-        radioButtonMedium.getStyleClass().add("RadioButtonNotSelected");
-        radioButtonHard.getStyleClass().clear();
-        radioButtonHard.getStyleClass().add("RadioButtonSelected");
+        menuHandler.selectHardButton();
         update();
     }
 
