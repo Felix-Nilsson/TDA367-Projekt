@@ -15,8 +15,6 @@ public class ArcherTower implements Tower {
     public ArcherTower(Cell position, int physicalDmg, int magicDmg, int price, int range, double attackSpeed, int leftUpgradeCost, int rightUpgradeCost) {
 
         this.baseTower = new BaseTower(position,physicalDmg,magicDmg,price,range,attackSpeed, leftUpgradeCost, rightUpgradeCost);
-        //Having a image in the baseclass like this is not very good
-        //if we had more time, all images would be sorted and called in view
     }
 
 

@@ -160,7 +160,7 @@ public class MapController extends AnchorPane {
 
                     //Change money
                     game.addMoney(-towerFactory.getPrice());
-                    updateSidebar(); //TODO Error here, need to update Toolbar Handler
+                    updateView();
 
                     //Updates the previous toolbarcontroller
                     updateToolbar();
@@ -185,8 +185,6 @@ public class MapController extends AnchorPane {
             int y_placement = getGridY(node);
 
             Tower t = game.getTower(x_placement, y_placement);
-            System.out.println("inte labans prints hehe: "
-                    + node.getLayoutX() + " " + node.getLayoutY() + " " + node);
             mapHandler.setSelectedTower(node);
 
 
@@ -253,7 +251,6 @@ public class MapController extends AnchorPane {
         toolbarTowerHashMap.put(t, toolbarController);
     }
 
-    //Adds the Connects anchorpane and controller
     private void setPaneWithController(Tower t) {
         toolbarAnchorPane.getChildren().clear();
         toolbarAnchorPane.getChildren().add(toolbarTowerHashMap.get(t));
@@ -350,7 +347,7 @@ public class MapController extends AnchorPane {
 
     }
 
-    public void updateSidebar(){
+    public void updateView(){
         game.notifyAllObservers();
     }
 
@@ -360,30 +357,21 @@ public class MapController extends AnchorPane {
 
 
     public void updateToolbar(){
-        //Updates every controller in toolbarcontroller
         for(Map.Entry<Tower, ToolbarController<?>> entry : toolbarTowerHashMap.entrySet()){
             entry.getValue().updateUpgradeAvailable();
         }
     }
 
     private void updateToolbarHashmap(Tower oldT, Tower newT){
-        //Uppdates the fking hashhhmap
-
         toolbarTowerHashMap.put(newT, toolbarTowerHashMap.get(oldT));
         toolbarTowerHashMap.remove(oldT, toolbarTowerHashMap.get(oldT));
-        
-        //Removes all null values
         toolbarTowerHashMap.entrySet().removeIf(e -> e.getValue() == null);
 
     }
 
     private void updateTowerHashmap(Tower oldT, Tower newT){
-        //Uppdates the fking hashhhmap
-
         towerHashMap.put(newT, towerHashMap.get(oldT));
         towerHashMap.remove(oldT, towerHashMap.get(oldT));
-
-        //Removes all null values
         towerHashMap.entrySet().removeIf(e -> e.getValue() == null);
     }
 
