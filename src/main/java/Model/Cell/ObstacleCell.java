@@ -1,11 +1,8 @@
 package main.java.Model.Cell;
 
-import javafx.scene.paint.Color;
-
 public class ObstacleCell implements Cell {
 
-    BaseCell base;
-    private Color color;
+    private final BaseCell base;
 
     public ObstacleCell(int x, int y, boolean occupied){
         base = new BaseCell(x, y, TerrainType.OBSTACLE, occupied, "#6f747a");

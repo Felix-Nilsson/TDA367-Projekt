@@ -1,10 +1,7 @@
 package main.java.Model.Cell;
 
-import javafx.scene.paint.Color;
-
 public class GroundCell implements Cell {
-    BaseCell base;
-    private Color color;
+    private final BaseCell base;
 
     public GroundCell(int x, int y, boolean occupied){
         base = new BaseCell(x, y, TerrainType.GROUND, occupied,  "2aa84c");
