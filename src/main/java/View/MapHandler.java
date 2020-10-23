@@ -9,12 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import main.java.Model.Cell.Cell;
 import main.java.Model.Enemy.Enemy;
 import main.java.Model.Game;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -198,8 +198,6 @@ public class MapHandler implements MapObserver {
             gameBoardGrid.getChildren().remove(selectedTower);
         }
 
-        //System.out.println("HERERERE");
-
         //actual coordinates in the grid
         int logicalX = (int)(node.getLayoutX()/39);
         int logicalY = (int)(node.getLayoutY()/39);
@@ -209,8 +207,8 @@ public class MapHandler implements MapObserver {
         selectedTower.setOpacity(0.5);
         selectedTower.setStyle("-fx-background-color: yellow");
 
-        gameBoardGrid.setColumnIndex(selectedTower,logicalX);
-        gameBoardGrid.setRowIndex(selectedTower,logicalY);
+        GridPane.setColumnIndex(selectedTower,logicalX);
+        GridPane.setRowIndex(selectedTower,logicalY);
 
         gameBoardGrid.getChildren().add(selectedTower);
     }
