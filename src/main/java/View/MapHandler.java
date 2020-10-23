@@ -27,7 +27,10 @@ public class MapHandler implements MapObserver {
     private final Pane gameOverScreen;
     private HashMap<Enemy, ImageView> enemyHashMap;
     private final Label waveNumber;
+
     private RadioButton gridLayout;
+    private RadioButton autoStart;
+
 
     private final List<Cell> map;
     private ImageView cave;
@@ -43,7 +46,8 @@ public class MapHandler implements MapObserver {
     //TODO: Add a blurb justifying design choices
 
 
-    public MapHandler(Game game, Label nameOfMapLabel,Label difficultyLabel, Label waveNumber, Pane gameOverScreen, Pane gameWonScreen, AnchorPane gameBoardAnchorPane, GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map){
+    public MapHandler(Game game, Label nameOfMapLabel,Label difficultyLabel, Label waveNumber, Pane gameOverScreen, Pane gameWonScreen, AnchorPane gameBoardAnchorPane,
+                      GridPane gameBoardGrid, GridPane toplayerGrid, List<Cell> map,RadioButton gridLayout, RadioButton autoStart){
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.gameBoardGrid = gameBoardGrid;
         this.toplayerGrid = toplayerGrid;
@@ -54,8 +58,11 @@ public class MapHandler implements MapObserver {
         this.waveNumber = waveNumber;
         this.nameOfMapLabel = nameOfMapLabel;
         this.difficultyLabel = difficultyLabel;
+        this.gridLayout = gridLayout;
+        this.autoStart = autoStart;
         progressBarHashMap = new HashMap<>();
         enemyHashMap = new HashMap<>();
+
         game.addMapObserver(this);
         setLabels();
 
@@ -113,7 +120,23 @@ public class MapHandler implements MapObserver {
 
     public void changeToplayerGridVisible(boolean visible){
         toplayerGrid.setGridLinesVisible(visible);
+        gridLayout.getStyleClass().clear();
+        if(visible){
+            gridLayout.getStyleClass().add("RadioButtonSelected");
+        }
+        else{
+            gridLayout.getStyleClass().add("RadioButtonNotSelected");
+        }
 
+    }
+    public void autoStartView(){
+        autoStart.getStyleClass().clear();
+        if(autoStart.isSelected()){
+            autoStart.getStyleClass().add("RadioButtonSelected");
+        }
+        else{
+            autoStart.getStyleClass().add("RadioButtonNotSelected");
+        }
     }
 
     private void fixImage(ImageView img,Enemy e){
