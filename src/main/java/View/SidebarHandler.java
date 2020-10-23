@@ -72,13 +72,13 @@ public class SidebarHandler implements MapObserver {
         updateAvailable();
     }
     public void updateAvailable(){
-        if(game.getMoney() >= new MageTowerFactory().getPrice()){
+        if(game.getMoney() >= game.getMageTowerPrice()){
             mageTowerAvailable.setStyle("-fx-background-color:Lightgreen");
         }
         else {
             mageTowerAvailable.setStyle("-fx-background-color:red");
         }
-        if(game.getMoney() >= new ArcherTowerFactory().getPrice()){
+        if(game.getMoney() >= game.getArcherTowerPrice()){
             archerTowerAvailable.setStyle("-fx-background-color:Lightgreen");
         }
         else {
