@@ -207,7 +207,6 @@ public class MapController extends AnchorPane {
     }
     @FXML private void autoStartPressed(){
         game.setAutostart(autoStartRadioButton.isSelected());
-        mapHandler.autoStartView();
     }
     @FXML private void setBackgroundSound(){
        mediaPlayer.setVolume(musicSlider.getValue());

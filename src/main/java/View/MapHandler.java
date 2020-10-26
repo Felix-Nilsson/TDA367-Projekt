@@ -120,24 +120,8 @@ public class MapHandler implements MapObserver {
 
     public void changeToplayerGridVisible(boolean visible){
         toplayerGrid.setGridLinesVisible(visible);
-        gridLayout.getStyleClass().clear();
-        if(visible){
-            gridLayout.getStyleClass().add("RadioButtonSelected");
-        }
-        else{
-            gridLayout.getStyleClass().add("RadioButtonNotSelected");
-        }
+    }
 
-    }
-    public void autoStartView(){
-        autoStart.getStyleClass().clear();
-        if(autoStart.isSelected()){
-            autoStart.getStyleClass().add("RadioButtonSelected");
-        }
-        else{
-            autoStart.getStyleClass().add("RadioButtonNotSelected");
-        }
-    }
 
     private void fixImage(ImageView img,Enemy e){
         img.setX(e.getPositionX());
