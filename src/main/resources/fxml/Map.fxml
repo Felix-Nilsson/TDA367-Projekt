@@ -207,12 +207,12 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="gridLayoutRadioButton" layoutX="91.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#changeGridVisibilty" prefHeight="76.0" prefWidth="213.0" selected="true" styleClass="RadioButtonSelected" text="Grid Layout">
+                  <RadioButton fx:id="gridLayoutRadioButton" layoutX="91.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#changeGridVisibilty" prefHeight="76.0" prefWidth="213.0" selected="true" text="Grid Layout">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="autoStartRadioButton" layoutX="91.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#autoStartPressed" prefHeight="76.0" prefWidth="213.0" styleClass="RadioButtonNotSelected" text="Autostart">
+                  <RadioButton fx:id="autoStartRadioButton" layoutX="91.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#autoStartPressed" prefHeight="76.0" prefWidth="213.0" text="Autostart">
                      <font>
                         <Font size="24.0" />
                      </font>
